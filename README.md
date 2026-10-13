@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="./assets/banner.svg" width="100%" alt="Pura Sed - Bar & Restaurant Platform" />
+  <img src="./assets/banner.jpg" width="100%" alt="PuraSed - Bar y Restaurante System" />
 </p>
 
 <p align="center">
   <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=18&pause=1000&color=FF2A85&center=true&vCenter=true&width=650&height=35&lines=Gestion+de+Mesas+y+Comandas+en+Tiempo+Real;Despacho+Automatico+a+Cocina+y+Bar;Menu+Interactivo+con+Blazor+WebAssembly;Servicios+RESTful+con+ASP.NET+Core+Web+API;Analitica+de+Ventas+y+Cierre+por+Jornada" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=18&pause=1000&color=0284C7&center=true&vCenter=true&width=650&height=35&lines=Gestion+de+Mesas+y+Comandas+en+Tiempo+Real;Despacho+Automatico+a+Cocina+y+Bar;Menu+Interactivo+con+Blazor+WebAssembly;Servicios+RESTful+con+ASP.NET+Core+Web+API;Analitica+de+Ventas+y+Cierre+por+Jornada" alt="Typing SVG" />
   </a>
 </p>
 
