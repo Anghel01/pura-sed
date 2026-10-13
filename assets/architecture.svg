@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 290" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="archBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0c14"/>
+      <stop offset="50%" stop-color="#120e24"/>
+      <stop offset="100%" stop-color="#090b12"/>
+    </linearGradient>
+
+    <!-- Card Gradients -->
+    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e1333"/>
+      <stop offset="100%" stop-color="#120c22"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#141a38"/>
+      <stop offset="100%" stop-color="#0d1124"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0f2638"/>
+      <stop offset="100%" stop-color="#0a1824"/>
+    </linearGradient>
+
+    <linearGradient id="cardGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2a1818"/>
+      <stop offset="100%" stop-color="#180e0e"/>
+    </linearGradient>
+
+    <!-- Arrow Gradient -->
+    <linearGradient id="arrowGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff0077"/>
+      <stop offset="100%" stop-color="#7928ca"/>
+    </linearGradient>
+    <linearGradient id="arrowGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7928ca"/>
+      <stop offset="100%" stop-color="#00e5ff"/>
+    </linearGradient>
+    <linearGradient id="arrowGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00e5ff"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Container Box -->
+  <rect width="1100" height="290" rx="16" fill="url(#archBg)" stroke="#231d38" stroke-width="1.5"/>
+
+  <!-- Subtle grid lines -->
+  <g stroke="#ffffff" stroke-width="0.5" opacity="0.03">
+    <line x1="0" y1="72" x2="1100" y2="72"/>
+    <line x1="0" y1="145" x2="1100" y2="145"/>
+    <line x1="0" y1="217" x2="1100" y2="217"/>
+  </g>
+
+  <!-- ==================== COLUMNA 1: DISPOSITIVOS CLIENTES ==================== -->
+  <g transform="translate(25, 25)">
+    <rect width="210" height="240" rx="12" fill="url(#cardGrad1)" stroke="#ff0077" stroke-width="1.5"/>
+    <rect x="0" y="0" width="210" height="36" rx="12" fill="#ff0077" fill-opacity="0.15"/>
+    <text x="105" y="24" fill="#ff77aa" font-family="sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1">1. DISPOSITIVOS</text>
+
+    <!-- Items -->
+    <g transform="translate(15, 52)">
+      <!-- Item A -->
+      <rect x="0" y="0" width="180" height="36" rx="6" fill="#180e28" stroke="#3d2159" stroke-width="1"/>
+      <text x="12" y="22" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="600">📱 Mesas (Acceso QR)</text>
+
+      <!-- Item B -->
+      <rect x="0" y="44" width="180" height="36" rx="6" fill="#180e28" stroke="#3d2159" stroke-width="1"/>
+      <text x="12" y="66" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="600">📲 Celular Meseros</text>
+
+      <!-- Item C -->
+      <rect x="0" y="88" width="180" height="36" rx="6" fill="#180e28" stroke="#3d2159" stroke-width="1"/>
+      <text x="12" y="110" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="600">🖥️ Pantalla Barra / Cocina</text>
+
+      <!-- Item D -->
+      <rect x="0" y="132" width="180" height="36" rx="6" fill="#180e28" stroke="#3d2159" stroke-width="1"/>
+      <text x="12" y="154" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="600">💻 PC Administración</text>
+    </g>
+  </g>
+
+  <!-- ARROW 1 -> 2 -->
+  <g transform="translate(242, 130)">
+    <line x1="0" y1="0" x2="40" y2="0" stroke="url(#arrowGrad1)" stroke-width="3" stroke-dasharray="4 4"/>
+    <polygon points="48,0 38,-5 38,5" fill="#7928ca"/>
+    <rect x="-8" y="-22" width="64" height="16" rx="4" fill="#1f113a" stroke="#7928ca" stroke-width="0.8"/>
+    <text x="24" y="-10" fill="#c4b5fd" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle">SPA Web</text>
+  </g>
+
+  <!-- ==================== COLUMNA 2: FRONTEND BLAZOR ==================== -->
+  <g transform="translate(295, 25)">
+    <rect width="215" height="240" rx="12" fill="url(#cardGrad2)" stroke="#7928ca" stroke-width="1.5"/>
+    <rect x="0" y="0" width="215" height="36" rx="12" fill="#7928ca" fill-opacity="0.18"/>
+    <text x="107" y="24" fill="#d8b4fe" font-family="sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1">2. FRONTEND (WASM)</text>
+
+    <!-- Details -->
+    <g transform="translate(15, 52)">
+      <rect x="0" y="0" width="185" height="42" rx="6" fill="#181335" stroke="#3b2066" stroke-width="1"/>
+      <text x="12" y="20" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="700">PuraSed.Client</text>
+      <text x="12" y="34" fill="#a855f7" font-family="sans-serif" font-size="10">Blazor WebAssembly (.NET)</text>
+
+      <g transform="translate(5, 54)">
+        <text x="0" y="16" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Componentes Razor</text>
+        <text x="0" y="36" fill="#e2e8f0" font-family="sans-serif" font-size="11">• HttpClient asíncrono</text>
+        <text x="0" y="56" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Renderizado en Navegador</text>
+        <text x="0" y="76" fill="#e2e8f0" font-family="sans-serif" font-size="11">• CSS / Bootstrap responsivo</text>
+        <text x="0" y="96" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Gestión de Estado local</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ARROW 2 -> 3 -->
+  <g transform="translate(517, 130)">
+    <line x1="0" y1="0" x2="44" y2="0" stroke="url(#arrowGrad2)" stroke-width="3" stroke-dasharray="4 4"/>
+    <polygon points="52,0 42,-5 42,5" fill="#00e5ff"/>
+    <rect x="-6" y="-22" width="64" height="16" rx="4" fill="#0d2438" stroke="#00e5ff" stroke-width="0.8"/>
+    <text x="26" y="-10" fill="#67e8f9" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle">HTTPS/JSON</text>
+  </g>
+
+  <!-- ==================== COLUMNA 3: BACKEND WEB API ==================== -->
+  <g transform="translate(575, 25)">
+    <rect width="225" height="240" rx="12" fill="url(#cardGrad3)" stroke="#00e5ff" stroke-width="1.5"/>
+    <rect x="0" y="0" width="225" height="36" rx="12" fill="#00e5ff" fill-opacity="0.15"/>
+    <text x="112" y="24" fill="#67e8f9" font-family="sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1">3. BACKEND (WEB API)</text>
+
+    <!-- Details -->
+    <g transform="translate(15, 52)">
+      <rect x="0" y="0" width="195" height="42" rx="6" fill="#0a2233" stroke="#164e63" stroke-width="1"/>
+      <text x="12" y="20" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="700">PuraSed.WebApi</text>
+      <text x="12" y="34" fill="#06b6d4" font-family="sans-serif" font-size="10">ASP.NET Core REST Services</text>
+
+      <g transform="translate(5, 54)">
+        <text x="0" y="16" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Controladores REST</text>
+        <text x="0" y="36" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Documentación Swagger</text>
+        <text x="0" y="56" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Políticas de CORS</text>
+        <text x="0" y="76" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Lógica de Combos &amp; Stock</text>
+        <text x="0" y="96" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Cifrado de Credenciales</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ARROW 3 -> 4 -->
+  <g transform="translate(807, 130)">
+    <line x1="0" y1="0" x2="42" y2="0" stroke="url(#arrowGrad3)" stroke-width="3" stroke-dasharray="4 4"/>
+    <polygon points="50,0 40,-5 40,5" fill="#f59e0b"/>
+    <rect x="-4" y="-22" width="58" height="16" rx="4" fill="#2d1d0c" stroke="#f59e0b" stroke-width="0.8"/>
+    <text x="25" y="-10" fill="#fde68a" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle">EF Core</text>
+  </g>
+
+  <!-- ==================== COLUMNA 4: BASE DE DATOS ==================== -->
+  <g transform="translate(865, 25)">
+    <rect width="210" height="240" rx="12" fill="url(#cardGrad4)" stroke="#f59e0b" stroke-width="1.5"/>
+    <rect x="0" y="0" width="210" height="36" rx="12" fill="#f59e0b" fill-opacity="0.15"/>
+    <text x="105" y="24" fill="#fde68a" font-family="sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1">4. BASE DE DATOS</text>
+
+    <!-- Details -->
+    <g transform="translate(15, 52)">
+      <rect x="0" y="0" width="180" height="42" rx="6" fill="#291410" stroke="#78350f" stroke-width="1"/>
+      <text x="12" y="20" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="700">SQL Server</text>
+      <text x="12" y="34" fill="#f59e0b" font-family="sans-serif" font-size="10">Motor Relacional ACID</text>
+
+      <g transform="translate(5, 54)">
+        <text x="0" y="16" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Catálogo &amp; Precios</text>
+        <text x="0" y="36" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Pedidos &amp; Mesas</text>
+        <text x="0" y="56" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Inventario por Áreas</text>
+        <text x="0" y="76" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Facturación &amp; Pagos</text>
+        <text x="0" y="96" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Bitácora de Auditoría</text>
+      </g>
+    </g>
+  </g>
+</svg>
