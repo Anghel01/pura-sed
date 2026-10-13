@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="PuraSed.Client/PuraSed.Client.csproj" />
+  <Project Path="PuraSed.WebApi/PuraSed.WebApi.csproj" />
+</Solution>
