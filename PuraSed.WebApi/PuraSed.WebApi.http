@@ -1,0 +1,6 @@
+@PuraSed.WebApi_HostAddress = http://localhost:5107
+
+GET {{PuraSed.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
