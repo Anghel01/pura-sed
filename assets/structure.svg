@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" width="100%" height="100%" role="img" aria-labelledby="stTitle stDesc">
+  <title id="stTitle">Estructura de la Soluci&#243;n PuraSed</title>
+  <desc id="stDesc">Organizaci&#243;n desacoplada del repositorio: Soluci&#243;n SLNX, Backend Web API, Frontend Blazor WASM y artefactos vectoriales.</desc>
+  <defs>
+    <style>
+      :root {
+        --canvas-bg: #FFFFFF;
+        --card-bg: #F8FAFC;
+        --card-border: #D8DEE4;
+        --tree-line: #94A3B8;
+        --text-ink: #1F3A4D;
+        --text-sub: #57606A;
+        --badge-bg: #F1F5F9;
+        --folder-color: #3D8FAE;
+        --file-color: #64748B;
+        --csharp-color: #512BD4;
+        --web-color: #0969DA;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --canvas-bg: #0D1117;
+          --card-bg: #161B22;
+          --card-border: #30363D;
+          --tree-line: #475569;
+          --text-ink: #F0F6FC;
+          --text-sub: #8B949E;
+          --badge-bg: #21262D;
+          --folder-color: #58A6FF;
+          --file-color: #8B949E;
+          --csharp-color: #8957E5;
+          --web-color: #58A6FF;
+        }
+      }
+
+      .s-box { fill: var(--card-bg); stroke: var(--card-border); stroke-width: 1.2; }
+      .s-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 15px; font-weight: 700; fill: var(--text-ink); }
+      .s-name  { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; font-weight: 700; fill: var(--text-ink); }
+      .s-desc  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 11px; font-weight: 500; fill: var(--text-sub); }
+      .s-chip  { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; font-weight: 700; fill: var(--web-color); }
+      .t-wire  { stroke: var(--tree-line); stroke-width: 1.5; fill: none; stroke-linecap: round; }
+    </style>
+    <filter id="stSh" x="-3%" y="-6%" width="106%" height="116%">
+      <feDropShadow flood-color="rgba(0,0,0,0.05)" dx="0" dy="3" stdDeviation="4"/>
+    </filter>
+  </defs>
+
+  <!-- L&#205;NEAS GU&#205;A DEL &#193;RBOL -->
+  <line class="t-wire" x1="50" y1="50" x2="50" y2="300"/>
+  <path class="t-wire" d="M50 115 H90"/>
+  <path class="t-wire" d="M50 205 H90"/>
+  <path class="t-wire" d="M50 295 H90"/>
+
+  <!-- NODO RA&#205;Z: pura-sed/ -->
+  <g transform="translate(30, 20)">
+    <!-- Icono Carpeta Ra&#237;z -->
+    <path d="M4 8 h8 l3 4 h13 a2 2 0 0 1 2 2 v14 a2 2 0 0 1 -2 2 h-24 a2 2 0 0 1 -2 -2 V10 a2 2 0 0 1 2 -2 Z" fill="none" stroke="var(--folder-color)" stroke-width="2"/>
+    <text class="s-name" x="38" y="24" font-size="16px">pura-sed/</text>
+    
+    <!-- Pills Ra&#237;z -->
+    <rect x="150" y="8" width="135" height="24" rx="12" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-chip" x="217" y="24" text-anchor="middle">PuraSed.slnx</text>
+
+    <rect x="295" y="8" width="105" height="24" rx="12" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="347" y="24" text-anchor="middle" font-weight="600">README.md</text>
+
+    <rect x="410" y="8" width="95" height="24" rx="12" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="457" y="24" text-anchor="middle">.gitignore</text>
+  </g>
+
+  <!-- RAMA 1: PuraSed.WebApi (Backend) -->
+  <g transform="translate(90, 75)">
+    <rect class="s-box" x="0" y="0" width="840" height="74" rx="10" filter="url(#stSh)"/>
+    <rect x="0" y="0" width="5" height="74" rx="2.5" fill="#0078D4"/>
+
+    <!-- Icono API / Servidor -->
+    <g transform="translate(20, 16)">
+      <rect x="2" y="5" width="22" height="7" rx="2" fill="none" stroke="#0078D4" stroke-width="1.8"/>
+      <rect x="2" y="15" width="22" height="7" rx="2" fill="none" stroke="#0078D4" stroke-width="1.8"/>
+      <circle cx="6" cy="8.5" r="1" fill="#0078D4"/>
+      <circle cx="6" cy="18.5" r="1" fill="#0078D4"/>
+    </g>
+
+    <text class="s-name" x="60" y="28">PuraSed.WebApi/</text>
+    <text class="s-desc" x="60" y="48">Servicios RESTful en ASP.NET Core (.NET 10) &#183; CORS y Swagger/OpenAPI v1 en /openapi/v1.json</text>
+
+    <!-- Sub-carpetas y puertos -->
+    <rect x="520" y="15" width="125" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="582" y="30" text-anchor="middle">Controllers/</text>
+
+    <rect x="655" y="15" width="170" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-chip" x="740" y="30" text-anchor="middle">HTTPS 7129 &#183; HTTP 5107</text>
+
+    <rect x="520" y="42" width="145" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="592" y="57" text-anchor="middle">launchSettings.json</text>
+
+    <rect x="675" y="42" width="150" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="750" y="57" text-anchor="middle">Program.cs &#183; Pipeline</text>
+  </g>
+
+  <!-- RAMA 2: PuraSed.Client (Frontend) -->
+  <g transform="translate(90, 165)">
+    <rect class="s-box" x="0" y="0" width="840" height="74" rx="10" filter="url(#stSh)"/>
+    <rect x="0" y="0" width="5" height="74" rx="2.5" fill="#512BD4"/>
+
+    <!-- Icono Blazor / Web -->
+    <g transform="translate(20, 16)">
+      <circle cx="13" cy="13" r="11" fill="none" stroke="#512BD4" stroke-width="1.8"/>
+      <path d="M7 13 L19 13 M13 7 L13 19" stroke="#512BD4" stroke-width="1.8"/>
+    </g>
+
+    <text class="s-name" x="60" y="28">PuraSed.Client/</text>
+    <text class="s-desc" x="60" y="48">Single Page Application en Blazor WebAssembly (.NET 10) &#183; Inyecci&#243;n de HttpClient</text>
+
+    <!-- Sub-carpetas y puertos -->
+    <rect x="520" y="15" width="95" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="567" y="30" text-anchor="middle">Layout/</text>
+
+    <rect x="625" y="15" width="95" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="672" y="30" text-anchor="middle">Pages/</text>
+
+    <rect x="730" y="15" width="95" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="777" y="30" text-anchor="middle">wwwroot/</text>
+
+    <rect x="520" y="42" width="145" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="592" y="57" text-anchor="middle">launchSettings.json</text>
+
+    <rect x="675" y="42" width="150" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-chip" x="750" y="57" text-anchor="middle">HTTPS 7020 &#183; HTTP 5068</text>
+  </g>
+
+  <!-- RAMA 3: assets/ (Recursos) -->
+  <g transform="translate(90, 255)">
+    <rect class="s-box" x="0" y="0" width="840" height="74" rx="10" filter="url(#stSh)"/>
+    <rect x="0" y="0" width="5" height="74" rx="2.5" fill="#E4524F"/>
+
+    <!-- Icono Dise&#241;o / SVG -->
+    <g transform="translate(20, 16)">
+      <rect x="3" y="3" width="20" height="20" rx="3" fill="none" stroke="#E4524F" stroke-width="1.8"/>
+      <circle cx="8" cy="8" r="2" fill="#E4524F"/>
+      <path d="M23 18 L16 11 L6 21" stroke="#E4524F" stroke-width="1.8" fill="none"/>
+    </g>
+
+    <text class="s-name" x="60" y="28">assets/</text>
+    <text class="s-desc" x="60" y="48">Artefactos vectoriales nativos, diagramas interactivos, banner con efervescencia e iconograf&#237;a</text>
+
+    <rect x="520" y="15" width="100" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="570" y="30" text-anchor="middle">banner.svg</text>
+
+    <rect x="630" y="15" width="95" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="677" y="30" text-anchor="middle">tags.svg</text>
+
+    <rect x="735" y="15" width="90" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="780" y="30" text-anchor="middle">team/</text>
+
+    <rect x="520" y="42" width="145" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="592" y="57" text-anchor="middle">architecture.svg</text>
+
+    <rect x="675" y="42" width="150" height="22" rx="11" fill="var(--badge-bg)" stroke="var(--card-border)"/>
+    <text class="s-desc" x="750" y="57" text-anchor="middle">casos-de-uso.svg</text>
+  </g>
+</svg>

@@ -1,197 +1,266 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%" role="img" aria-labelledby="ucTitle ucDesc">
-  <title id="ucTitle">Diagrama de Casos de Uso &#8212; Sistema PuraSed</title>
-  <desc id="ucDesc">Diagrama UML de casos de uso principales para Cliente, Mesero, Personal de Barra/Cocina, Asistente y Administraci&#243;n.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="100%" height="100%" role="img" aria-labelledby="ucTitle ucDesc">
+  <title id="ucTitle">Diagrama de Casos de Uso Animado &#8212; Sistema PuraSed</title>
+  <desc id="ucDesc">Diagrama interactivo de casos de uso con flujo animado entre actores y funciones operativas.</desc>
   <defs>
     <style>
       :root {
-        --canvas-bg: #F8FAFC;
-        --box-bg: #FFFFFF;
-        --box-border: #D0D7DE;
+        --canvas-bg: #FFFFFF;
+        --bound-bg: #F8FAFC;
+        --bound-border: #CBD5E1;
+        --actor-card: #FFFFFF;
+        --actor-border: #D0D7DE;
         --actor-ink: #1F3A4D;
-        --actor-sub: #5B7383;
-        --oval-fill: #F0F7FA;
-        --oval-border: #3D8FAE;
-        --oval-text: #1F3A4D;
-        --line-color: #5B7383;
-        --title-ink: #1F3A4D;
+        --actor-sub: #57606A;
+        --uc-fill: #FFFFFF;
+        --uc-border: #3D8FAE;
+        --uc-ink: #1F3A4D;
+        --flow-line: #0969DA;
+        --flow-wire: #E2E8F0;
+        --badge-blue: #0969DA;
+        --badge-amber: #D98C2B;
+        --badge-green: #2EA043;
+        --badge-coral: #E4524F;
       }
       @media (prefers-color-scheme: dark) {
         :root {
           --canvas-bg: #0D1117;
-          --box-bg: #161B22;
-          --box-border: #30363D;
+          --bound-bg: #161B22;
+          --bound-border: #30363D;
+          --actor-card: #1C2128;
+          --actor-border: #30363D;
           --actor-ink: #F0F6FC;
           --actor-sub: #8B949E;
-          --oval-fill: #1C2633;
-          --oval-border: #58A6FF;
-          --oval-text: #E6EDF3;
-          --line-color: #6E7681;
-          --title-ink: #F0F6FC;
+          --uc-fill: #1C2633;
+          --uc-border: #58A6FF;
+          --uc-ink: #E6EDF3;
+          --flow-line: #58A6FF;
+          --flow-wire: #21262D;
+          --badge-blue: #58A6FF;
+          --badge-amber: #F59E0B;
+          --badge-green: #3FB950;
+          --badge-coral: #F85149;
         }
       }
-      .bound { fill: var(--box-bg); stroke: var(--box-border); stroke-width: 1.5; stroke-dasharray: 6 4; }
-      .b-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1.5px; fill: var(--actor-sub); }
-      .act-name { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 13px; font-weight: 700; fill: var(--actor-ink); }
-      .act-role { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 10.5px; font-weight: 500; fill: var(--actor-sub); }
-      .uc-oval { fill: var(--oval-fill); stroke: var(--oval-border); stroke-width: 1.4; }
-      .uc-txt { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 11.5px; font-weight: 600; fill: var(--oval-text); text-anchor: middle; }
-      .uc-wire { stroke: var(--line-color); stroke-width: 1.2; stroke-opacity: 0.65; fill: none; }
-      .actor-icon { stroke: var(--actor-ink); stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+      .b-bound { fill: var(--bound-bg); stroke: var(--bound-border); stroke-width: 1.5; stroke-dasharray: 6 4; }
+      .b-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 13.5px; font-weight: 700; letter-spacing: 1.5px; fill: var(--actor-sub); }
+      .a-card  { fill: var(--actor-card); stroke: var(--actor-border); stroke-width: 1.2; }
+      .a-name  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 12.5px; font-weight: 700; fill: var(--actor-ink); text-anchor: middle; }
+      .a-sub   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 10.5px; font-weight: 500; fill: var(--actor-sub); text-anchor: middle; }
+      
+      .uc-oval { fill: var(--uc-fill); stroke: var(--uc-border); stroke-width: 1.4; }
+      .uc-txt  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 11.5px; font-weight: 600; fill: var(--uc-ink); text-anchor: middle; }
+
+      @keyframes flowWire {
+        from { stroke-dashoffset: 24; }
+        to   { stroke-dashoffset: 0; }
+      }
+
+      .flow-pulse {
+        stroke: var(--flow-line);
+        stroke-width: 1.8;
+        stroke-dasharray: 6 5;
+        animation: flowWire 1.5s linear infinite;
+        fill: none;
+      }
+
+      .wire-base {
+        stroke: var(--flow-wire);
+        stroke-width: 1.8;
+        fill: none;
+      }
+
+      .orbit { transform-origin: 32px 32px; animation: spin 24s linear infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      @media (prefers-reduced-motion: reduce) {
+        .flow-pulse, .orbit { animation: none; }
+      }
     </style>
+
+    <filter id="uSh" x="-4%" y="-6%" width="108%" height="116%">
+      <feDropShadow flood-color="rgba(0,0,0,0.06)" dx="0" dy="3" stdDeviation="4"/>
+    </filter>
   </defs>
 
-  <!-- L&#205;MITE DEL SISTEMA (System Boundary) -->
-  <rect class="bound" x="180" y="24" width="600" height="472" rx="16"/>
-  <text class="b-title" x="204" y="52">SISTEMA PURASED &#183; CASOS DE USO</text>
+  <!-- L&#205;MITE DEL SISTEMA -->
+  <rect class="b-bound" x="180" y="20" width="600" height="498" rx="16"/>
+  <text class="b-title" x="204" y="46">SISTEMA PURASED &#183; CASOS DE USO PRINCIPALES</text>
 
-  <!-- ACTORES IZQUIERDA -->
-  <!-- Actor 1: Cliente -->
-  <g transform="translate(70, 110)">
-    <circle class="actor-icon" cx="30" cy="18" r="10"/>
-    <line class="actor-icon" x1="30" y1="28" x2="30" y2="52"/>
-    <line class="actor-icon" x1="12" y1="36" x2="48" y2="36"/>
-    <line class="actor-icon" x1="30" y1="52" x2="16" y2="72"/>
-    <line class="actor-icon" x1="30" y1="52" x2="44" y2="72"/>
-    <text class="act-name" x="30" y="92" text-anchor="middle">Cliente</text>
-    <text class="act-role" x="30" y="106" text-anchor="middle">Mesa / QR</text>
+  <!-- L&#205;NEAS ANIMADAS (ACTORES -> CASOS DE USO) -->
+  <!-- Cliente a Casos -->
+  <path class="wire-base" d="M140 135 C180 135, 180 85, 230 85"/>
+  <path class="flow-pulse" d="M140 135 C180 135, 180 85, 230 85"/>
+
+  <path class="wire-base" d="M140 145 C180 145, 180 150, 230 150"/>
+  <path class="flow-pulse" d="M140 145 C180 145, 180 150, 230 150"/>
+
+  <path class="wire-base" d="M140 155 C180 155, 180 215, 230 215"/>
+  <path class="flow-pulse" d="M140 155 C180 155, 180 215, 230 215"/>
+
+  <path class="wire-base" d="M140 165 C180 165, 180 280, 230 280"/>
+  <path class="flow-pulse" d="M140 165 C180 165, 180 280, 230 280"/>
+
+  <path class="wire-base" d="M140 175 C180 175, 180 345, 230 345"/>
+  <path class="flow-pulse" d="M140 175 C180 175, 180 345, 230 345"/>
+
+  <path class="wire-base" d="M140 185 C180 185, 180 410, 230 410"/>
+  <path class="flow-pulse" d="M140 185 C180 185, 180 410, 230 410"/>
+
+  <!-- Mesero a Casos -->
+  <path class="wire-base" d="M140 375 C180 375, 180 150, 230 150"/>
+  <path class="flow-pulse" d="M140 375 C180 375, 180 150, 230 150"/>
+
+  <path class="wire-base" d="M140 385 C180 385, 180 215, 230 215"/>
+  <path class="flow-pulse" d="M140 385 C180 385, 180 215, 230 215"/>
+
+  <!-- Cocina / Barra a Casos -->
+  <path class="wire-base" d="M820 100 C780 100, 780 110, 730 110"/>
+  <path class="flow-pulse" d="M820 100 C780 100, 780 110, 730 110"/>
+
+  <path class="wire-base" d="M820 110 C780 110, 780 180, 730 180"/>
+  <path class="flow-pulse" d="M820 110 C780 110, 780 180, 730 180"/>
+
+  <!-- Asistente a Casos -->
+  <path class="wire-base" d="M820 250 C780 250, 780 250, 730 250"/>
+  <path class="flow-pulse" d="M820 250 C780 250, 780 250, 730 250"/>
+
+  <!-- Administrador a Casos -->
+  <path class="wire-base" d="M820 400 C780 400, 780 250, 730 250"/>
+  <path class="flow-pulse" d="M820 400 C780 400, 780 250, 730 250"/>
+
+  <path class="wire-base" d="M820 410 C780 410, 780 320, 730 320"/>
+  <path class="flow-pulse" d="M820 410 C780 410, 780 320, 730 320"/>
+
+  <path class="wire-base" d="M820 420 C780 420, 780 390, 730 390"/>
+  <path class="flow-pulse" d="M820 420 C780 420, 780 390, 730 390"/>
+
+  <!-- ACTORES IZQUIERDA (Badges enriquecidos con &#243;rbita animada) -->
+  <!-- Actor: Cliente -->
+  <g transform="translate(30, 95)">
+    <rect class="a-card" x="0" y="0" width="130" height="120" rx="12" filter="url(#uSh)"/>
+    <g transform="translate(33, 12)">
+      <circle class="orbit" cx="32" cy="32" r="28" fill="none" stroke="var(--badge-blue)" stroke-width="1.4" stroke-dasharray="2 6"/>
+      <circle cx="32" cy="32" r="23" fill="var(--badge-blue)" fill-opacity=".15"/>
+      <!-- Icono Celular / Usuario -->
+      <rect x="25" y="21" width="14" height="22" rx="3" fill="none" stroke="var(--badge-blue)" stroke-width="1.8"/>
+      <line x1="30" y1="39" x2="34" y2="39" stroke="var(--badge-blue)" stroke-width="1.8" stroke-linecap="round"/>
+    </g>
+    <text class="a-name" x="65" y="92">Cliente</text>
+    <text class="a-sub" x="65" y="108">Mesa &#183; QR M&#243;vil</text>
   </g>
 
-  <!-- Actor 2: Mesero -->
-  <g transform="translate(70, 310)">
-    <circle class="actor-icon" cx="30" cy="18" r="10"/>
-    <line class="actor-icon" x1="30" y1="28" x2="30" y2="52"/>
-    <line class="actor-icon" x1="12" y1="36" x2="48" y2="36"/>
-    <line class="actor-icon" x1="30" y1="52" x2="16" y2="72"/>
-    <line class="actor-icon" x1="30" y1="52" x2="44" y2="72"/>
-    <text class="act-name" x="30" y="92" text-anchor="middle">Mesero</text>
-    <text class="act-role" x="30" y="106" text-anchor="middle">Tablet m&#243;vil</text>
+  <!-- Actor: Mesero -->
+  <g transform="translate(30, 315)">
+    <rect class="a-card" x="0" y="0" width="130" height="120" rx="12" filter="url(#uSh)"/>
+    <g transform="translate(33, 12)">
+      <circle class="orbit" cx="32" cy="32" r="28" fill="none" stroke="var(--badge-amber)" stroke-width="1.4" stroke-dasharray="2 6"/>
+      <circle cx="32" cy="32" r="23" fill="var(--badge-amber)" fill-opacity=".15"/>
+      <!-- Icono Bandeja / Servicio -->
+      <path d="M20 34 h24 M24 34 a8 8 0 0 1 16 0" fill="none" stroke="var(--badge-amber)" stroke-width="1.8"/>
+      <circle cx="32" cy="24" r="2" fill="var(--badge-amber)"/>
+    </g>
+    <text class="a-name" x="65" y="92">Mesero</text>
+    <text class="a-sub" x="65" y="108">Tablet de Sal&#243;n</text>
   </g>
 
   <!-- ACTORES DERECHA -->
-  <!-- Actor 3: Cocina y Barra -->
-  <g transform="translate(830, 75)">
-    <circle class="actor-icon" cx="30" cy="18" r="10"/>
-    <line class="actor-icon" x1="30" y1="28" x2="30" y2="52"/>
-    <line class="actor-icon" x1="12" y1="36" x2="48" y2="36"/>
-    <line class="actor-icon" x1="30" y1="52" x2="16" y2="72"/>
-    <line class="actor-icon" x1="30" y1="52" x2="44" y2="72"/>
-    <text class="act-name" x="30" y="92" text-anchor="middle">Cocina / Barra</text>
-    <text class="act-role" x="30" y="106" text-anchor="middle">Pantalla de &#225;rea</text>
+  <!-- Actor: Cocina / Barra -->
+  <g transform="translate(800, 45)">
+    <rect class="a-card" x="0" y="0" width="130" height="115" rx="12" filter="url(#uSh)"/>
+    <g transform="translate(33, 10)">
+      <circle class="orbit" cx="32" cy="32" r="28" fill="none" stroke="var(--badge-coral)" stroke-width="1.4" stroke-dasharray="2 6"/>
+      <circle cx="32" cy="32" r="23" fill="var(--badge-coral)" fill-opacity=".15"/>
+      <!-- Icono Chef / Copa -->
+      <path d="M24 26 h16 l-3 12 h-10 Z" fill="none" stroke="var(--badge-coral)" stroke-width="1.8"/>
+      <line x1="32" y1="38" x2="32" y2="44" stroke="var(--badge-coral)" stroke-width="1.8"/>
+    </g>
+    <text class="a-name" x="65" y="88">Cocina / Barra</text>
+    <text class="a-sub" x="65" y="104">Despacho de &#193;rea</text>
   </g>
 
-  <!-- Actor 4: Asistente -->
-  <g transform="translate(830, 215)">
-    <circle class="actor-icon" cx="30" cy="18" r="10"/>
-    <line class="actor-icon" x1="30" y1="28" x2="30" y2="52"/>
-    <line class="actor-icon" x1="12" y1="36" x2="48" y2="36"/>
-    <line class="actor-icon" x1="30" y1="52" x2="16" y2="72"/>
-    <line class="actor-icon" x1="30" y1="52" x2="44" y2="72"/>
-    <text class="act-name" x="30" y="92" text-anchor="middle">Asistente</text>
-    <text class="act-role" x="30" y="106" text-anchor="middle">Reservas</text>
+  <!-- Actor: Asistente -->
+  <g transform="translate(800, 195)">
+    <rect class="a-card" x="0" y="0" width="130" height="115" rx="12" filter="url(#uSh)"/>
+    <g transform="translate(33, 10)">
+      <circle class="orbit" cx="32" cy="32" r="28" fill="none" stroke="var(--badge-green)" stroke-width="1.4" stroke-dasharray="2 6"/>
+      <circle cx="32" cy="32" r="23" fill="var(--badge-green)" fill-opacity=".15"/>
+      <!-- Icono Calendario / Agenda -->
+      <rect x="23" y="23" width="18" height="16" rx="2" fill="none" stroke="var(--badge-green)" stroke-width="1.8"/>
+      <line x1="28" y1="20" x2="28" y2="23" stroke="var(--badge-green)" stroke-width="1.8"/>
+      <line x1="36" y1="20" x2="36" y2="23" stroke="var(--badge-green)" stroke-width="1.8"/>
+    </g>
+    <text class="a-name" x="65" y="88">Asistente</text>
+    <text class="a-sub" x="65" y="104">Reservas y Agenda</text>
   </g>
 
-  <!-- Actor 5: Administrador / Superadmin -->
-  <g transform="translate(830, 355)">
-    <circle class="actor-icon" cx="30" cy="18" r="10"/>
-    <line class="actor-icon" x1="30" y1="28" x2="30" y2="52"/>
-    <line class="actor-icon" x1="12" y1="36" x2="48" y2="36"/>
-    <line class="actor-icon" x1="30" y1="52" x2="16" y2="72"/>
-    <line class="actor-icon" x1="30" y1="52" x2="44" y2="72"/>
-    <text class="act-name" x="30" y="92" text-anchor="middle">Administrador</text>
-    <text class="act-role" x="30" y="106" text-anchor="middle">Gesti&#243;n y Auditor&#237;a</text>
+  <!-- Actor: Administrador -->
+  <g transform="translate(800, 345)">
+    <rect class="a-card" x="0" y="0" width="130" height="115" rx="12" filter="url(#uSh)"/>
+    <g transform="translate(33, 10)">
+      <circle class="orbit" cx="32" cy="32" r="28" fill="none" stroke="var(--badge-blue)" stroke-width="1.4" stroke-dasharray="2 6"/>
+      <circle cx="32" cy="32" r="23" fill="var(--badge-blue)" fill-opacity=".15"/>
+      <!-- Icono Escudo / Seguridad -->
+      <path d="M32 20 L41 24 v6 c0 6 -4 10 -9 12 c-5 -2 -9 -6 -9 -12 v-6 Z" fill="none" stroke="var(--badge-blue)" stroke-width="1.8"/>
+    </g>
+    <text class="a-name" x="65" y="88">Administrador</text>
+    <text class="a-sub" x="65" y="104">Gesti&#243;n y Auditor&#237;a</text>
   </g>
 
-  <!-- CASOS DE USO (Columna 1: Front / Consumo) -->
-  <!-- UC1: Consultar Men&#250; por QR -->
-  <g transform="translate(230, 75)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Consultar Men&#250; por QR</text>
+  <!-- CASOS DE USO (COLUMNA IZQUIERDA: CLIENTE / SAL&#211;N) -->
+  <g transform="translate(230, 65)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Consultar Men&#250; por QR</text>
   </g>
 
-  <!-- UC2: Registrar Pedido de Mesa -->
-  <g transform="translate(230, 140)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Registrar Pedido de Mesa</text>
+  <g transform="translate(230, 130)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Registrar Pedido de Mesa</text>
   </g>
 
-  <!-- UC3: Seguimiento de Comanda -->
-  <g transform="translate(230, 205)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Seguimiento de Comanda</text>
+  <g transform="translate(230, 195)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Seguimiento de Comanda</text>
   </g>
 
-  <!-- UC4: Solicitar y Reservar Mesa -->
-  <g transform="translate(230, 270)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Reservar Mesa en L&#237;nea</text>
+  <g transform="translate(230, 260)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Reservar Mesa en L&#237;nea</text>
   </g>
 
-  <!-- UC5: Pagar Cuenta (Multi-pasarela) -->
-  <g transform="translate(230, 335)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Pagar Cuenta y Factura</text>
+  <g transform="translate(230, 325)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Pagar Cuenta y Facturaci&#243;n</text>
   </g>
 
-  <!-- UC6: Calificar Atenci&#243;n y Local -->
-  <g transform="translate(230, 400)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Calificar Atenci&#243;n y Local</text>
+  <g transform="translate(230, 390)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Calificar Atenci&#243;n y Servicio</text>
   </g>
 
-  <!-- CASOS DE USO (Columna 2: Operaci&#243;n / Back-office) -->
-  <!-- UC7: Despachar Comandas en Pantalla -->
-  <g transform="translate(520, 95)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Despachar Comandas</text>
+  <!-- CASOS DE USO (COLUMNA DERECHA: BACKOFFICE / DESPACHO) -->
+  <g transform="translate(510, 90)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Despachar Comandas</text>
   </g>
 
-  <!-- UC8: Descontar Inventario / Mermas -->
-  <g transform="translate(520, 165)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Control de Stock e Insumos</text>
+  <g transform="translate(510, 160)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Control de Stock e Insumos</text>
   </g>
 
-  <!-- UC9: Administrar Agenda de Reservas -->
-  <g transform="translate(520, 235)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Gestionar Reservas</text>
+  <g transform="translate(510, 230)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Gestionar Agenda de Reservas</text>
   </g>
 
-  <!-- UC10: Validar Pagos y Habilitar Cuentas -->
-  <g transform="translate(520, 305)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Habilitar Cobro / Arqueo</text>
+  <g transform="translate(510, 300)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Habilitar Cobro y Arqueo</text>
   </g>
 
-  <!-- UC11: Reportes y Auditor&#237;a por Jornada -->
-  <g transform="translate(520, 375)">
-    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
-    <text class="uc-txt" x="105" y="26">Reportes por Jornada y Bit&#225;cora</text>
+  <g transform="translate(510, 370)">
+    <rect class="uc-oval" x="0" y="0" width="220" height="40" rx="20" filter="url(#uSh)"/>
+    <text class="uc-txt" x="110" y="24">Reportes por Jornada y Bit&#225;cora</text>
   </g>
-
-  <!-- L&#205;NEAS DE ASOCIACI&#211;N (Actor a Caso de Uso) -->
-  <!-- Cliente (118, 140) -->
-  <line class="uc-wire" x1="120" y1="140" x2="230" y2="97"/>
-  <line class="uc-wire" x1="120" y1="145" x2="230" y2="162"/>
-  <line class="uc-wire" x1="120" y1="150" x2="230" y2="227"/>
-  <line class="uc-wire" x1="120" y1="155" x2="230" y2="292"/>
-  <line class="uc-wire" x1="120" y1="160" x2="230" y2="357"/>
-  <line class="uc-wire" x1="120" y1="165" x2="230" y2="422"/>
-
-  <!-- Mesero (118, 345) -->
-  <line class="uc-wire" x1="120" y1="345" x2="230" y2="162"/>
-  <line class="uc-wire" x1="120" y1="350" x2="230" y2="227"/>
-  <line class="uc-wire" x1="120" y1="355" x2="230" y2="357"/>
-
-  <!-- Cocina / Barra (840, 110) -->
-  <line class="uc-wire" x1="840" y1="110" x2="730" y2="117"/>
-  <line class="uc-wire" x1="840" y1="120" x2="730" y2="187"/>
-
-  <!-- Asistente (840, 250) -->
-  <line class="uc-wire" x1="840" y1="250" x2="730" y2="257"/>
-
-  <!-- Administrador (840, 390) -->
-  <line class="uc-wire" x1="840" y1="385" x2="730" y2="257"/>
-  <line class="uc-wire" x1="840" y1="390" x2="730" y2="327"/>
-  <line class="uc-wire" x1="840" y1="395" x2="730" y2="397"/>
 </svg>

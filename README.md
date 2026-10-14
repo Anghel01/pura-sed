@@ -18,24 +18,15 @@
 
 ---
 
-## Contenido
+## <img src="./assets/icons/contenido.svg" width="22" height="22" align="absmiddle" /> Contenido
 
-- [Sobre el Proyecto](#sobre-el-proyecto)
-- [Objetivo del Sistema](#objetivo-del-sistema)
-- [Arquitectura de Software](#arquitectura-de-software)
-- [Diagrama de Casos de Uso](#diagrama-de-casos-de-uso)
-- [Equipo Scrum y Roles](#equipo-scrum-y-roles)
-- [Backlog del Producto y Sprints](#backlog-del-producto-y-sprints)
-- [Estructura de la Solución](#estructura-de-la-solución)
-- [Guía de Ejecución Local](#guía-de-ejecución-local)
-- [Flujo de Trabajo en Git](#flujo-de-trabajo-en-git)
-- [Licencia y Uso Académico](#licencia-y-uso-académico)
+[Sobre el Proyecto](#sobre-el-proyecto) · [Objetivo del Sistema](#objetivo-del-sistema) · [Arquitectura](#arquitectura-de-software) · [Casos de Uso](#diagrama-de-casos-de-uso) · [Equipo Scrum](#equipo-scrum-y-roles) · [Backlog y Sprints](#backlog-del-producto-y-sprints) · [Estructura](#estructura-de-la-solución) · [Ejecución Local](#guía-de-ejecución-local) · [Flujo en Git](#flujo-de-trabajo-en-git) · [Licencia](#licencia-y-uso-académico)
 
 ---
 
-## Sobre el Proyecto
+## <img src="./assets/icons/proyecto.svg" width="22" height="22" align="absmiddle" /> Sobre el Proyecto
 
-**PuraSed** es una plataforma web reactiva que moderniza el flujo operativo completo de un bar nocturno y restaurante, eliminando las comandas físicas en papel, las demoras en el enrutamiento a cocina y barra, y los errores de cuadre al cierre de jornada.
+**PuraSed** es una plataforma web reactiva que moderniza el ciclo operativo completo de un bar nocturno y restaurante, eliminando las comandas físicas en papel, las demoras en el enrutamiento a cocina y barra, y los errores de cuadre al cierre de jornada.
 
 | Dimensión Operativa | Gestión Tradicional (Manual) | Solución Digital con PuraSed |
 | :--- | :--- | :--- |
@@ -46,7 +37,7 @@
 
 ---
 
-## Objetivo del Sistema
+## <img src="./assets/icons/modulos.svg" width="22" height="22" align="absmiddle" /> Objetivo del Sistema
 
 Diseñar e implementar una solución web desacoplada y de alta disponibilidad que permita:
 
@@ -58,9 +49,9 @@ Diseñar e implementar una solución web desacoplada y de alta disponibilidad qu
 
 ---
 
-## Arquitectura de Software
+## <img src="./assets/icons/arquitectura.svg" width="22" height="22" align="absmiddle" /> Arquitectura de Software
 
-La plataforma adopta una **arquitectura en capas desacoplada**, estructurada en dispositivos de usuario, cliente SPA en Blazor WebAssembly, núcleo de servicios REST en ASP.NET Core y persistencia en SQL Server, coordinados mediante hubs de SignalR para eventos en vivo:
+La plataforma adopta una **arquitectura en capas desacoplada** con telemetría en tiempo real, estructurada en dispositivos de usuario, cliente SPA en Blazor WebAssembly, servicios REST en ASP.NET Core y persistencia en SQL Server, coordinados mediante hubs de SignalR:
 
 <p align="center">
   <img src="./assets/architecture.svg" width="100%" alt="Diagrama de Arquitectura de PuraSed" />
@@ -68,9 +59,9 @@ La plataforma adopta una **arquitectura en capas desacoplada**, estructurada en 
 
 ---
 
-## Diagrama de Casos de Uso
+## <img src="./assets/icons/casos.svg" width="22" height="22" align="absmiddle" /> Diagrama de Casos de Uso
 
-Representación formal de las interacciones entre los actores del negocio (*Cliente*, *Mesero*, *Cocina/Bar*, *Asistente* y *Administrador*) y los casos de uso nucleares del sistema:
+Representación formal interactiva de los actores del negocio (*Cliente*, *Mesero*, *Cocina/Bar*, *Asistente* y *Administrador*) y sus flujos de interacción con el sistema:
 
 <p align="center">
   <img src="./assets/casos-de-uso.svg" width="100%" alt="Diagrama de Casos de Uso del Sistema PuraSed" />
@@ -78,7 +69,7 @@ Representación formal de las interacciones entre los actores del negocio (*Clie
 
 ---
 
-## Equipo Scrum y Roles
+## <img src="./assets/icons/equipo.svg" width="22" height="22" align="absmiddle" /> Equipo Scrum y Roles
 
 El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilidades distribuidas entre el docente asesor y los desarrolladores del equipo:
 
@@ -109,9 +100,9 @@ El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilida
 
 ---
 
-## Backlog del Producto y Sprints
+## <img src="./assets/icons/backlog.svg" width="22" height="22" align="absmiddle" /> Backlog del Producto y Sprints
 
-El ciclo de desarrollo está organizado en **sprints semanales** sincronizados en tiempo real con el tablero oficial de Atlassian Jira Software, donde se gestionan las **32 Historias de Usuario (HU-01 a HU-32)** y sus criterios de aceptación:
+El ciclo de desarrollo está organizado en **sprints semanales** sincronizados con el tablero oficial de Atlassian Jira Software, donde se gestionan las **32 Historias de Usuario (HU-01 a HU-32)** y sus criterios de aceptación:
 
 <p align="center">
   <a href="https://jannysgarrido21.atlassian.net/jira/software/projects/SCRUM/boards/1?filter=&groupBy=none">
@@ -131,41 +122,23 @@ El ciclo de desarrollo está organizado en **sprints semanales** sincronizados e
 
 ---
 
-## Estructura de la Solución
+## <img src="./assets/icons/estructura.svg" width="22" height="22" align="absmiddle" /> Estructura de la Solución
 
-El repositorio utiliza el formato de solución de .NET (`.slnx`), garantizando un desacoplamiento limpio entre la capa de presentación y los servicios backend:
+El repositorio utiliza el formato moderno de solución de .NET (`.slnx`), garantizando un desacoplamiento limpio entre la capa de presentación y los servicios backend:
 
-```text
-pura-sed/
-├── PuraSed.slnx                       # Archivo contenedor de la solución .NET
-├── README.md                          # Documentación del proyecto
-├── .gitignore                         # Exclusiones estándar de compilación
-│
-├── assets/                            # Recursos vectoriales y diagramas
-│   ├── banner.svg                     # Banner animado (burbujas y espuma)
-│   ├── tags.svg                       # Lienzo tecnológico con logos oficiales
-│   ├── architecture.svg               # Arquitectura en capas y ciclo SignalR
-│   ├── casos-de-uso.svg               # Diagrama UML de casos de uso
-│   ├── jira-board.svg                 # Banner interactivo para acceso a Jira
-│   └── team/                          # Tarjetas vectoriales del Scrum Team
-│
-├── PuraSed.WebApi/                    # Backend: ASP.NET Core Web API (.NET 10)
-│   ├── Controllers/                   # Controladores RESTful
-│   ├── Properties/                    # launchSettings.json (Perfiles HTTP 5107 / HTTPS 7129)
-│   ├── appsettings.json               # Configuración de servicios y conexión
-│   └── Program.cs                     # Inyección de dependencias, OpenAPI y pipeline HTTP
-│
-└── PuraSed.Client/                    # Frontend: Blazor WebAssembly (.NET 10)
-    ├── Layout/                        # Componentes de diseño (MainLayout, NavMenu)
-    ├── Pages/                         # Vistas Razor por rol de usuario
-    ├── Properties/                    # launchSettings.json (Perfiles HTTP 5068 / HTTPS 7020)
-    ├── wwwroot/                       # Archivos estáticos (CSS, scripts)
-    └── Program.cs                     # Arranque WebAssembly y cliente HTTP
-```
+<p align="center">
+  <img src="./assets/structure.svg" width="100%" alt="Estructura de la Solución PuraSed" />
+</p>
+
+| Proyecto / Directorio | Rol en la Arquitectura | Configuración y Endpoints |
+| :--- | :--- | :--- |
+| **`PuraSed.WebApi`** | Núcleo de servicios RESTful y WebSockets (SignalR) | `https://localhost:7129` · `http://localhost:5107` · OpenAPI en `/openapi/v1.json` |
+| **`PuraSed.Client`** | Single Page Application en Blazor WebAssembly | `https://localhost:7020` · `http://localhost:5068` · Inyección de `HttpClient` |
+| **`assets/`** | Recursos vectoriales dinámicos, diagramas y tarjetas | SVGs adaptativos a modo claro/oscuro y componentes animados |
 
 ---
 
-## Guía de Ejecución Local
+## <img src="./assets/icons/ejecucion.svg" width="22" height="22" align="absmiddle" /> Guía de Ejecución Local
 
 ### Prerrequisitos de Instalación
 
@@ -200,7 +173,7 @@ dotnet run --project PuraSed.Client --launch-profile https
 
 ---
 
-## Flujo de Trabajo en Git
+## <img src="./assets/icons/git.svg" width="22" height="22" align="absmiddle" /> Flujo de Trabajo en Git
 
 1. **Bifurcaciones (Forks)**: Los desarrolladores trabajan desde sus forks personales (`JannysG1`, `angelch1595-glitch`, `Anghel01`).
 2. **Estrategia de Ramas**:
@@ -211,7 +184,7 @@ dotnet run --project PuraSed.Client --launch-profile https
 
 ---
 
-## Licencia y Uso Académico
+## <img src="./assets/icons/licencia.svg" width="22" height="22" align="absmiddle" /> Licencia y Uso Académico
 
 Proyecto desarrollado con fines académicos en el marco de la asignatura **ITID803 · Diseño de Aplicaciones y Servicios para Internet (DASI)** de la Facultad de Ingeniería Eléctrica y Electrónica (FIEE) en la **Escuela Politécnica Nacional**.
 

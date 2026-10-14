@@ -1,254 +1,328 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="100%" height="100%" role="img" aria-labelledby="archTitle archDesc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="100%" height="100%" role="img" aria-labelledby="archTitle archDesc">
   <title id="archTitle">Arquitectura del Sistema PuraSed</title>
-  <desc id="archDesc">Arquitectura desacoplada en capas: Dispositivos, Frontend Blazor WASM, Backend ASP.NET Core Web API, Persistencia SQL Server y ciclo de vida de comandas en tiempo real.</desc>
+  <desc id="archDesc">Arquitectura desacoplada en capas con flujo animado en tiempo real: Dispositivos, Blazor WASM, ASP.NET Core API, SQL Server y pipeline SignalR.</desc>
   <defs>
     <style>
       :root {
         --canvas-bg: #FFFFFF;
-        --card-dev: #F4F3EF;
-        --card-dev-border: #DCD8D0;
-        --front-box: #EBF7F2;
-        --front-border: #9FDBC1;
+        --card-dev: #F6F8FA;
+        --card-dev-border: #D0D7DE;
+        --front-box: #F0FDF4;
+        --front-border: #86EFAC;
         --front-chip: #FFFFFF;
-        --back-box: #EEF0FA;
-        --back-border: #B6C0E8;
+        --front-chip-border: #BBF7D0;
+        --back-box: #F5F3FF;
+        --back-border: #DDD6FE;
         --back-chip: #FFFFFF;
-        --store-box: #E8F5F1;
-        --store-border: #A3D9C9;
-        --dash-box: #F8F9FA;
-        --dash-border: #BDC3C7;
+        --back-chip-border: #E0E7FF;
+        --store-box: #F0FDFA;
+        --store-border: #99F6E4;
+        --dash-box: #F8FAFC;
+        --dash-border: #CBD5E1;
         --text-ink: #1F3A4D;
-        --text-muted: #5B7383;
-        --arrow-color: #6C7A89;
-        --cat-trans: #EBEBE6;
-        --cat-oper: #EAE6F7;
-        --cat-oper-border: #C8BFF0;
-        --cat-biz: #E3F4ED;
-        --cat-biz-border: #A3DEC7;
+        --text-muted: #57606A;
+        --flow-line: #0969DA;
+        --flow-wire: #D0D7DE;
+        --signal-green: #2EA043;
+        --cat-trans: #F1F5F9;
+        --cat-oper: #EDE9FE;
+        --cat-oper-border: #DDD6FE;
+        --cat-biz: #DCFCE7;
+        --cat-biz-border: #BBF7D0;
+        --mesero-bg: #FEF3C7;
+        --mesero-border: #FDE68A;
+        --mesero-text: #92400E;
         --pipe-box: #FFFFFF;
         --pipe-border: #D0D7DE;
       }
       @media (prefers-color-scheme: dark) {
         :root {
           --canvas-bg: #0D1117;
-          --card-dev: #1C2128;
+          --card-dev: #161B22;
           --card-dev-border: #30363D;
-          --front-box: #12231E;
-          --front-border: #235A47;
+          --front-box: #0E241B;
+          --front-border: #1B5E3F;
           --front-chip: #161B22;
-          --back-box: #161B2E;
-          --back-border: #2D3766;
+          --front-chip-border: #235848;
+          --back-box: #1A1633;
+          --back-border: #433878;
           --back-chip: #161B22;
-          --store-box: #13241F;
-          --store-border: #235848;
+          --back-chip-border: #3B3363;
+          --store-box: #0D2420;
+          --store-border: #1D5347;
           --dash-box: #161B22;
           --dash-border: #30363D;
           --text-ink: #F0F6FC;
           --text-muted: #8B949E;
-          --arrow-color: #8B949E;
+          --flow-line: #58A6FF;
+          --flow-wire: #30363D;
+          --signal-green: #3FB950;
           --cat-trans: #21262D;
-          --cat-oper: #211B38;
-          --cat-oper-border: #4D3D82;
-          --cat-biz: #152A22;
-          --cat-biz-border: #276950;
+          --cat-oper: #261D47;
+          --cat-oper-border: #4F3C8F;
+          --cat-biz: #132E22;
+          --cat-biz-border: #23684B;
+          --mesero-bg: #382714;
+          --mesero-border: #6B491F;
+          --mesero-text: #FBBF24;
           --pipe-box: #161B22;
           --pipe-border: #30363D;
         }
       }
+
       .t-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 15px; font-weight: 700; fill: var(--text-ink); }
       .c-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 13px; font-weight: 700; fill: var(--text-ink); text-anchor: middle; }
       .c-sub   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 11px; font-weight: 400; fill: var(--text-muted); text-anchor: middle; }
-      .p-state { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 10.5px; font-weight: 600; fill: var(--text-muted); text-anchor: middle; }
-      .proto   { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; fill: var(--text-muted); letter-spacing: 1px; }
-      .wire    { stroke: var(--arrow-color); stroke-width: 1.5; fill: none; }
-      .wire-d  { stroke: var(--arrow-color); stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
-      .arrow   { fill: var(--arrow-color); }
+      .p-state { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 11px; font-weight: 700; fill: var(--text-muted); text-anchor: middle; }
+      .proto   { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; fill: var(--flow-line); letter-spacing: 1px; }
+
+      /* Animaci&#243;n de flujo de peticiones */
+      @keyframes flow {
+        from { stroke-dashoffset: 24; }
+        to   { stroke-dashoffset: 0; }
+      }
+
+      .flow-active {
+        stroke: var(--flow-line);
+        stroke-width: 2.2;
+        stroke-dasharray: 6 4;
+        animation: flow 1.3s linear infinite;
+      }
+
+      .flow-wire {
+        stroke: var(--flow-wire);
+        stroke-width: 2.2;
+      }
+
+      /* Pulso de telemetr&#237;a SignalR */
+      @keyframes pulse {
+        0%   { r: 4px; opacity: 1; }
+        50%  { r: 7px; opacity: 0.4; }
+        100% { r: 4px; opacity: 1; }
+      }
+
+      .live-dot {
+        fill: var(--signal-green);
+        animation: pulse 2s ease-in-out infinite;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .flow-active { animation: none; }
+        .live-dot { animation: none; }
+      }
     </style>
+
+    <filter id="boxSh" x="-3%" y="-5%" width="106%" height="112%">
+      <feDropShadow flood-color="rgba(31,58,77,0.06)" dx="0" dy="4" stdDeviation="5"/>
+    </filter>
   </defs>
 
   <!-- CAPA 1: DISPOSITIVOS DE USUARIO -->
   <g transform="translate(40, 20)">
     <!-- Cliente -->
-    <rect x="0" y="0" width="200" height="60" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)"/>
-    <text class="c-title" x="100" y="27">Cliente</text>
-    <text class="c-sub" x="100" y="44">Celular o QR en mesa</text>
+    <rect x="0" y="0" width="200" height="62" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)" filter="url(#boxSh)"/>
+    <text class="c-title" x="100" y="28">Cliente</text>
+    <text class="c-sub" x="100" y="46">Celular o QR en mesa</text>
 
     <!-- Mesero -->
-    <rect x="235" y="0" width="200" height="60" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)"/>
-    <text class="c-title" x="335" y="27">Mesero</text>
-    <text class="c-sub" x="335" y="44">Celular / Tablet</text>
+    <rect x="235" y="0" width="200" height="62" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)" filter="url(#boxSh)"/>
+    <text class="c-title" x="335" y="28">Mesero</text>
+    <text class="c-sub" x="335" y="46">Celular / Tablet</text>
 
     <!-- Cocina y Bar -->
-    <rect x="470" y="0" width="200" height="60" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)"/>
-    <text class="c-title" x="570" y="27">Cocina y Bar</text>
-    <text class="c-sub" x="570" y="44">Tablet o pantalla fija</text>
+    <rect x="470" y="0" width="200" height="62" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)" filter="url(#boxSh)"/>
+    <text class="c-title" x="570" y="28">Cocina y Bar</text>
+    <text class="c-sub" x="570" y="46">Tablet o pantalla fija</text>
 
     <!-- Administraci&#243;n -->
-    <rect x="705" y="0" width="215" height="60" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)"/>
-    <text class="c-title" x="812" y="27">Administraci&#243;n</text>
-    <text class="c-sub" x="812" y="44">PC o tablet gerencial</text>
+    <rect x="705" y="0" width="215" height="62" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)" filter="url(#boxSh)"/>
+    <text class="c-title" x="812" y="28">Administraci&#243;n</text>
+    <text class="c-sub" x="812" y="46">PC o tablet gerencial</text>
   </g>
 
-  <!-- CONEXI&#211;N DISPOSITIVOS -> FRONTEND -->
-  <line class="wire" x1="140" y1="80" x2="140" y2="105"/>
-  <line class="wire" x1="375" y1="80" x2="375" y2="105"/>
-  <line class="wire" x1="610" y1="80" x2="610" y2="105"/>
-  <line class="wire" x1="852" y1="80" x2="852" y2="105"/>
+  <!-- L&#205;NEAS DISPOSITIVOS -> FRONTEND -->
+  <line class="flow-wire" x1="140" y1="82" x2="140" y2="108"/>
+  <line class="flow-active" x1="140" y1="82" x2="140" y2="108"/>
+
+  <line class="flow-wire" x1="375" y1="82" x2="375" y2="108"/>
+  <line class="flow-active" x1="375" y1="82" x2="375" y2="108"/>
+
+  <line class="flow-wire" x1="610" y1="82" x2="610" y2="108"/>
+  <line class="flow-active" x1="610" y1="82" x2="610" y2="108"/>
+
+  <line class="flow-wire" x1="852" y1="82" x2="852" y2="108"/>
+  <line class="flow-active" x1="852" y1="82" x2="852" y2="108"/>
 
   <!-- CAPA 2: FRONTEND BLAZOR WEBASSEMBLY -->
-  <g transform="translate(40, 105)">
-    <rect x="0" y="0" width="920" height="100" rx="12" fill="var(--front-box)" stroke="var(--front-border)" stroke-width="1.4"/>
-    <text class="t-title" x="20" y="26">Frontend &#183; Blazor WebAssembly</text>
+  <g transform="translate(40, 108)">
+    <rect x="0" y="0" width="920" height="102" rx="12" fill="var(--front-box)" stroke="var(--front-border)" stroke-width="1.5" filter="url(#boxSh)"/>
+    <text class="t-title" x="20" y="26">Frontend &#183; Blazor WebAssembly (.NET 10 SPA)</text>
 
     <g transform="translate(20, 36)">
       <!-- Portal cliente -->
-      <rect x="0" y="0" width="205" height="50" rx="8" fill="var(--front-chip)" stroke="var(--front-border)"/>
-      <text class="c-title" x="102" y="23">Portal Cliente</text>
-      <text class="c-sub" x="102" y="38">Pide y paga</text>
+      <rect x="0" y="0" width="205" height="52" rx="8" fill="var(--front-chip)" stroke="var(--front-chip-border)"/>
+      <text class="c-title" x="102" y="24">Portal Cliente</text>
+      <text class="c-sub" x="102" y="40">Pide y paga</text>
 
       <!-- Portal mesero -->
-      <rect x="225" y="0" width="205" height="50" rx="8" fill="var(--front-chip)" stroke="var(--front-border)"/>
-      <text class="c-title" x="327" y="23">Portal Mesero</text>
-      <text class="c-sub" x="327" y="38">Entregas y comanda</text>
+      <rect x="225" y="0" width="205" height="52" rx="8" fill="var(--front-chip)" stroke="var(--front-chip-border)"/>
+      <text class="c-title" x="327" y="24">Portal Mesero</text>
+      <text class="c-sub" x="327" y="40">Entregas y comanda</text>
 
       <!-- Portal de &#225;rea -->
-      <rect x="450" y="0" width="205" height="50" rx="8" fill="var(--front-chip)" stroke="var(--front-border)"/>
-      <text class="c-title" x="552" y="23">Portal de &#193;rea</text>
-      <text class="c-sub" x="552" y="38">Cocina y bar</text>
+      <rect x="450" y="0" width="205" height="52" rx="8" fill="var(--front-chip)" stroke="var(--front-chip-border)"/>
+      <text class="c-title" x="552" y="24">Portal de &#193;rea</text>
+      <text class="c-sub" x="552" y="40">Cocina y bar</text>
 
       <!-- Portal admin -->
-      <rect x="675" y="0" width="205" height="50" rx="8" fill="var(--front-chip)" stroke="var(--front-border)"/>
-      <text class="c-title" x="777" y="23">Portal Admin</text>
-      <text class="c-sub" x="777" y="38">Gesti&#243;n y m&#233;tricas</text>
+      <rect x="675" y="0" width="205" height="52" rx="8" fill="var(--front-chip)" stroke="var(--front-chip-border)"/>
+      <text class="c-title" x="777" y="24">Portal Admin</text>
+      <text class="c-sub" x="777" y="40">Gesti&#243;n y m&#233;tricas</text>
     </g>
   </g>
 
-  <!-- ENLACE DE PROTOCOLOS (FRONTEND <-> BACKEND) -->
-  <g transform="translate(400, 212)">
-    <line class="wire" x1="100" y1="0" x2="100" y2="28"/>
-    <polygon class="arrow" points="96,6 100,0 104,6"/>
-    <polygon class="arrow" points="96,22 100,28 104,22"/>
-    <text class="proto" x="115" y="18">HTTPS &#183; JSON &#183; SignalR</text>
+  <!-- CONECTOR ANIMADO FRONTEND <-> BACKEND -->
+  <g transform="translate(380, 216)">
+    <line class="flow-wire" x1="120" y1="0" x2="120" y2="34"/>
+    <line class="flow-active" x1="120" y1="0" x2="120" y2="34"/>
+    <polygon points="116,6 120,0 124,6" fill="var(--flow-line)"/>
+    <polygon points="116,28 120,34 124,28" fill="var(--flow-line)"/>
+    
+    <circle class="live-dot" cx="138" cy="17" r="4.5"/>
+    <text class="proto" x="150" y="21">HTTPS &#183; JSON &#183; SignalR</text>
   </g>
 
   <!-- CAPA 3: BACKEND ASP.NET CORE WEB API -->
-  <g transform="translate(40, 246)">
-    <rect x="0" y="0" width="920" height="155" rx="12" fill="var(--back-box)" stroke="var(--back-border)" stroke-width="1.4"/>
-    <text class="t-title" x="20" y="26">Backend &#183; ASP.NET Core Web API (M&#243;dulos de Negocio &amp; SignalR)</text>
+  <g transform="translate(40, 256)">
+    <rect x="0" y="0" width="920" height="158" rx="12" fill="var(--back-box)" stroke="var(--back-border)" stroke-width="1.5" filter="url(#boxSh)"/>
+    <text class="t-title" x="20" y="26">Backend &#183; ASP.NET Core Web API (M&#243;dulos de Negocio &amp; SignalR Hubs)</text>
 
     <!-- Fila 1: Transversales -->
     <g transform="translate(20, 38)">
-      <rect x="0" y="0" width="205" height="48" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
-      <text class="c-title" x="102" y="21">Seguridad</text>
-      <text class="c-sub" x="102" y="36">Roles, Identity, JWT</text>
+      <rect x="0" y="0" width="205" height="50" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
+      <text class="c-title" x="102" y="22">Seguridad</text>
+      <text class="c-sub" x="102" y="38">Roles, Identity, JWT</text>
 
-      <rect x="225" y="0" width="205" height="48" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
-      <text class="c-title" x="327" y="21">Bit&#225;cora</text>
-      <text class="c-sub" x="327" y="36">Auditor&#237;a inmutable</text>
+      <rect x="225" y="0" width="205" height="50" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
+      <text class="c-title" x="327" y="22">Bit&#225;cora</text>
+      <text class="c-sub" x="327" y="38">Auditor&#237;a inmutable</text>
 
-      <rect x="450" y="0" width="205" height="48" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
-      <text class="c-title" x="552" y="21">Tiempo Real</text>
-      <text class="c-sub" x="552" y="36">SignalR Hubs</text>
+      <rect x="450" y="0" width="205" height="50" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
+      <text class="c-title" x="552" y="22">Tiempo Real</text>
+      <text class="c-sub" x="552" y="38">SignalR Hubs</text>
 
-      <rect x="675" y="0" width="205" height="48" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
-      <text class="c-title" x="777" y="21">Archivos</text>
-      <text class="c-sub" x="777" y="36">Comprobantes y PDF</text>
+      <rect x="675" y="0" width="205" height="50" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
+      <text class="c-title" x="777" y="22">Archivos</text>
+      <text class="c-sub" x="777" y="38">Comprobantes y PDF</text>
     </g>
 
     <!-- Fila 2: Operaci&#243;n & Negocio -->
-    <g transform="translate(20, 94)">
-      <rect x="0" y="0" width="205" height="48" rx="7" fill="var(--cat-oper)" stroke="var(--cat-oper-border)"/>
-      <text class="c-title" x="102" y="21">Men&#250; e Inventario</text>
-      <text class="c-sub" x="102" y="36">Stock por &#225;rea y combos</text>
+    <g transform="translate(20, 96)">
+      <rect x="0" y="0" width="205" height="50" rx="7" fill="var(--cat-oper)" stroke="var(--cat-oper-border)"/>
+      <text class="c-title" x="102" y="22">Men&#250; e Inventario</text>
+      <text class="c-sub" x="102" y="38">Stock por &#225;rea y combos</text>
 
-      <rect x="225" y="0" width="205" height="48" rx="7" fill="var(--cat-oper)" stroke="var(--cat-oper-border)"/>
-      <text class="c-title" x="327" y="21">Mesas y Comandas</text>
-      <text class="c-sub" x="327" y="36">Enrutamiento barra/cocina</text>
+      <rect x="225" y="0" width="205" height="50" rx="7" fill="var(--cat-oper)" stroke="var(--cat-oper-border)"/>
+      <text class="c-title" x="327" y="22">Mesas y Comandas</text>
+      <text class="c-sub" x="327" y="38">Enrutamiento barra/cocina</text>
 
-      <rect x="450" y="0" width="205" height="48" rx="7" fill="var(--cat-biz)" stroke="var(--cat-biz-border)"/>
-      <text class="c-title" x="552" y="21">Reservas y Pagos</text>
-      <text class="c-sub" x="552" y="36">Facturas y pasarela</text>
+      <rect x="450" y="0" width="205" height="50" rx="7" fill="var(--cat-biz)" stroke="var(--cat-biz-border)"/>
+      <text class="c-title" x="552" y="22">Reservas y Pagos</text>
+      <text class="c-sub" x="552" y="38">Facturas y pasarela</text>
 
-      <rect x="675" y="0" width="205" height="48" rx="7" fill="var(--cat-biz)" stroke="var(--cat-biz-border)"/>
-      <text class="c-title" x="777" y="21">Reportes y Satisfacci&#243;n</text>
-      <text class="c-sub" x="777" y="36">Cierre por jornada</text>
+      <rect x="675" y="0" width="205" height="50" rx="7" fill="var(--cat-biz)" stroke="var(--cat-biz-border)"/>
+      <text class="c-title" x="777" y="22">Reportes y Satisfacci&#243;n</text>
+      <text class="c-sub" x="777" y="38">Cierre por jornada</text>
     </g>
   </g>
 
-  <!-- ENLACES BACKEND -> PERSISTENCIA -->
-  <line class="wire" x1="185" y1="401" x2="185" y2="430"/>
-  <polygon class="arrow" points="181,407 185,401 189,407"/>
-  <polygon class="arrow" points="181,424 185,430 189,424"/>
+  <!-- L&#205;NEAS ANIMADAS BACKEND -> PERSISTENCIA -->
+  <line class="flow-wire" x1="185" y1="414" x2="185" y2="444"/>
+  <line class="flow-active" x1="185" y1="414" x2="185" y2="444"/>
+  <polygon points="181,420 185,414 189,420" fill="var(--flow-line)"/>
+  <polygon points="181,438 185,444 189,438" fill="var(--flow-line)"/>
 
-  <line class="wire" x1="500" y1="401" x2="500" y2="430"/>
-  <polygon class="arrow" points="496,407 500,401 504,407"/>
-  <polygon class="arrow" points="496,424 500,430 504,424"/>
+  <line class="flow-wire" x1="500" y1="414" x2="500" y2="444"/>
+  <line class="flow-active" x1="500" y1="414" x2="500" y2="444"/>
+  <polygon points="496,420 500,414 504,420" fill="var(--flow-line)"/>
+  <polygon points="496,438 500,444 504,438" fill="var(--flow-line)"/>
 
-  <line class="wire" x1="815" y1="401" x2="815" y2="430"/>
-  <polygon class="arrow" points="811,424 815,430 819,424"/>
+  <line class="flow-wire" x1="815" y1="414" x2="815" y2="444"/>
+  <line class="flow-active" x1="815" y1="414" x2="815" y2="444"/>
+  <polygon points="811,438 815,444 819,438" fill="var(--flow-line)"/>
 
   <!-- CAPA 4: PERSISTENCIA Y SERVICIOS EXTERNOS -->
-  <g transform="translate(40, 430)">
+  <g transform="translate(40, 444)">
     <!-- SQL Server -->
-    <rect x="0" y="0" width="290" height="64" rx="10" fill="var(--store-box)" stroke="var(--store-border)" stroke-width="1.3"/>
+    <rect x="0" y="0" width="290" height="66" rx="10" fill="var(--store-box)" stroke="var(--store-border)" stroke-width="1.4" filter="url(#boxSh)"/>
     <text class="c-title" x="145" y="28">Microsoft SQL Server</text>
-    <text class="c-sub" x="145" y="47">Entity Framework Core &#183; Transaccional</text>
+    <text class="c-sub" x="145" y="48">Entity Framework Core &#183; Transaccional</text>
 
     <!-- Almac&#233;n de Archivos -->
-    <rect x="315" y="0" width="290" height="64" rx="10" fill="var(--store-box)" stroke="var(--store-border)" stroke-width="1.3"/>
+    <rect x="315" y="0" width="290" height="66" rx="10" fill="var(--store-box)" stroke="var(--store-border)" stroke-width="1.4" filter="url(#boxSh)"/>
     <text class="c-title" x="460" y="28">Almac&#233;n de Archivos</text>
-    <text class="c-sub" x="460" y="47">Comprobantes de transferencia y fotos</text>
+    <text class="c-sub" x="460" y="48">Comprobantes de transferencia y fotos</text>
 
     <!-- Pasarela de Pago -->
-    <rect x="630" y="0" width="290" height="64" rx="10" fill="var(--dash-box)" stroke="var(--dash-border)" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <rect x="630" y="0" width="290" height="66" rx="10" fill="var(--dash-box)" stroke="var(--dash-border)" stroke-width="1.4" stroke-dasharray="5 4" filter="url(#boxSh)"/>
     <text class="c-title" x="775" y="28">Pasarela de Pago</text>
-    <text class="c-sub" x="775" y="47">Servicio externo (Tarjeta sin almacenar)</text>
+    <text class="c-sub" x="775" y="48">Servicio externo (Tarjeta sin almacenar)</text>
   </g>
 
-  <!-- CAPA 5: PIPELINE DEL ESTADO DEL PEDIDO (SIGNALR LIFECYCLE) -->
-  <g transform="translate(40, 525)">
-    <rect x="0" y="0" width="920" height="130" rx="12" fill="var(--canvas-bg)" stroke="var(--pipe-border)" stroke-width="1"/>
-    <text class="t-title" x="20" y="26">Ciclo de Vida del Pedido en Tiempo Real (SignalR)</text>
-
-    <!-- Paso 1 -->
-    <g transform="translate(20, 42)">
-      <rect x="0" y="0" width="180" height="52" rx="8" fill="var(--cat-biz)" stroke="var(--cat-biz-border)"/>
-      <text class="c-title" x="90" y="23">Cliente Pide</text>
-      <text class="c-sub" x="90" y="38">QR en su mesa</text>
-      <text class="p-state" x="90" y="68">Pendiente</text>
+  <!-- CAPA 5: CICLO DE VIDA DEL PEDIDO EN TIEMPO REAL (SIGNALR PIPELINE) -->
+  <g transform="translate(40, 538)">
+    <rect x="0" y="0" width="920" height="138" rx="12" fill="var(--canvas-bg)" stroke="var(--pipe-border)" stroke-width="1.2" filter="url(#boxSh)"/>
+    
+    <g transform="translate(20, 24)">
+      <circle class="live-dot" cx="6" cy="-4" r="4"/>
+      <text class="t-title" x="18" y="0">Ciclo de Vida del Pedido en Tiempo Real (SignalR Event Stream)</text>
     </g>
 
-    <line class="wire" x1="205" y1="68" x2="245" y2="68"/>
-    <polygon class="arrow" points="241,64 247,68 241,72"/>
-
-    <!-- Paso 2 -->
-    <g transform="translate(250, 42)">
-      <rect x="0" y="0" width="180" height="52" rx="8" fill="var(--cat-oper)" stroke="var(--cat-oper-border)"/>
-      <text class="c-title" x="90" y="23">Cocina y Bar</text>
-      <text class="c-sub" x="90" y="38">Marcan despacho</text>
-      <text class="p-state" x="90" y="68">En preparaci&#243;n</text>
+    <!-- Paso 1: Cliente Pide -->
+    <g transform="translate(20, 44)">
+      <rect x="0" y="0" width="180" height="56" rx="8" fill="var(--cat-biz)" stroke="var(--cat-biz-border)" stroke-width="1.3"/>
+      <text class="c-title" x="90" y="25">Cliente Pide</text>
+      <text class="c-sub" x="90" y="42">QR en su mesa</text>
+      <text class="p-state" x="90" y="74">Pendiente</text>
     </g>
 
-    <line class="wire" x1="435" y1="68" x2="475" y2="68"/>
-    <polygon class="arrow" points="471,64 477,68 471,72"/>
+    <!-- Conector 1 -> 2 -->
+    <line class="flow-wire" x1="205" y1="72" x2="245" y2="72"/>
+    <line class="flow-active" x1="205" y1="72" x2="245" y2="72"/>
+    <polygon points="241,68 247,72 241,76" fill="var(--flow-line)"/>
 
-    <!-- Paso 3 -->
-    <g transform="translate(480, 42)">
-      <rect x="0" y="0" width="180" height="52" rx="8" fill="#FDF3E7" stroke="#F0C38F"/>
-      <text class="c-title" x="90" y="23">Mesero</text>
-      <text class="c-sub" x="90" y="38">Lleva a la mesa</text>
-      <text class="p-state" x="90" y="68">Listo</text>
+    <!-- Paso 2: Cocina y Bar -->
+    <g transform="translate(250, 44)">
+      <rect x="0" y="0" width="180" height="56" rx="8" fill="var(--cat-oper)" stroke="var(--cat-oper-border)" stroke-width="1.3"/>
+      <text class="c-title" x="90" y="25">Cocina y Bar</text>
+      <text class="c-sub" x="90" y="42">Marcan despacho</text>
+      <text class="p-state" x="90" y="74">En preparaci&#243;n</text>
     </g>
 
-    <line class="wire" x1="665" y1="68" x2="705" y2="68"/>
-    <polygon class="arrow" points="701,64 707,68 701,72"/>
+    <!-- Conector 2 -> 3 -->
+    <line class="flow-wire" x1="435" y1="72" x2="475" y2="72"/>
+    <line class="flow-active" x1="435" y1="72" x2="475" y2="72"/>
+    <polygon points="471,68 477,72 471,76" fill="var(--flow-line)"/>
 
-    <!-- Paso 4 -->
-    <g transform="translate(710, 42)">
-      <rect x="0" y="0" width="190" height="52" rx="8" fill="var(--cat-biz)" stroke="var(--cat-biz-border)"/>
-      <text class="c-title" x="95" y="23">Cliente</text>
-      <text class="c-sub" x="95" y="38">Paga y opina</text>
-      <text class="p-state" x="95" y="68">Entregado / Pagado</text>
+    <!-- Paso 3: Mesero (ALTO CONTRASTE) -->
+    <g transform="translate(480, 44)">
+      <rect x="0" y="0" width="180" height="56" rx="8" fill="var(--mesero-bg)" stroke="var(--mesero-border)" stroke-width="1.3"/>
+      <text class="c-title" x="90" y="25" fill="var(--mesero-text)">Mesero</text>
+      <text class="c-sub" x="90" y="42" fill="var(--mesero-text)">Lleva a la mesa</text>
+      <text class="p-state" x="90" y="74">Listo</text>
+    </g>
+
+    <!-- Conector 3 -> 4 -->
+    <line class="flow-wire" x1="665" y1="72" x2="705" y2="72"/>
+    <line class="flow-active" x1="665" y1="72" x2="705" y2="72"/>
+    <polygon points="701,68 707,72 701,76" fill="var(--flow-line)"/>
+
+    <!-- Paso 4: Cliente Paga -->
+    <g transform="translate(710, 44)">
+      <rect x="0" y="0" width="190" height="56" rx="8" fill="var(--cat-biz)" stroke="var(--cat-biz-border)" stroke-width="1.3"/>
+      <text class="c-title" x="95" y="25">Cliente</text>
+      <text class="c-sub" x="95" y="42">Paga y opina</text>
+      <text class="p-state" x="95" y="74">Entregado / Pagado</text>
     </g>
   </g>
 </svg>
