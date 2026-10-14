@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 160" width="100%" height="100%" role="img" aria-labelledby="jiraTitle jiraDesc">
+  <title id="jiraTitle">Tablero Scrum en Atlassian Jira Software</title>
+  <desc id="jiraDesc">Gesti&#243;n &#225;gil del proyecto PuraSed en Atlassian Jira: Sprints continuos, planificaci&#243;n y ciclo de vida de historias de usuario.</desc>
+  <defs>
+    <style>
+      .j-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 19px; font-weight: 700; fill: #0F172A; }
+      .j-desc  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 400; fill: #475569; }
+      .j-tag   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #1E293B; }
+      .j-btn-t { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12.5px; font-weight: 700; fill: #FFFFFF; }
+      
+      @keyframes pulseBoard {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50%      { transform: scale(1.05); opacity: 0.9; }
+      }
+      .j-badge-live {
+        animation: pulseBoard 2.5s ease-in-out infinite;
+        transform-origin: center;
+      }
+    </style>
+    <filter id="jiraShadow" x="-2%" y="-6%" width="104%" height="120%">
+      <feDropShadow flood-color="#0052CC" flood-opacity="0.12" dx="0" dy="3" stdDeviation="6"/>
+    </filter>
+  </defs>
+
+  <!-- Tarjeta contenedor blanca pura -->
+  <rect x="10" y="10" width="940" height="140" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#jiraShadow)"/>
+  <rect x="10" y="10" width="8" height="140" fill="#0052CC" rx="4"/>
+
+  <!-- Logo Jira Oficial Vectorial -->
+  <g transform="translate(36, 35)">
+    <circle cx="45" cy="45" r="38" fill="#0052CC"/>
+    <path d="M45 18 L61 34 L45 50 L29 34 Z" fill="#2684FF"/>
+    <path d="M45 30 L57 42 L45 54 L33 42 Z" fill="#FFFFFF"/>
+    <path d="M45 42 L61 58 L45 74 L29 58 Z" fill="#0052CC" opacity="0.35"/>
+  </g>
+
+  <!-- Información del Tablero y Flujo de Trabajo -->
+  <g transform="translate(145, 34)">
+    <text class="j-title" x="0" y="22">Tablero Scrum del Proyecto &#183; Atlassian Jira Software</text>
+    <text class="j-desc" x="0" y="44">Planificaci&#243;n interactiva de historias de usuario, asignaci&#243;n por roles y seguimiento continuo del flujo de trabajo.</text>
+
+    <!-- Chips informativos dinámicos (sin fechas quemadas) -->
+    <g transform="translate(0, 58)">
+      <rect x="0" y="0" width="130" height="24" rx="12" fill="#E0F2FE" stroke="#BAE6FD" stroke-width="1"/>
+      <circle cx="12" cy="12" r="3.5" fill="#0284C7"/>
+      <text class="j-tag" x="22" y="16" fill="#0369A1">Jira Cloud Live</text>
+
+      <rect x="140" y="0" width="130" height="24" rx="12" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+      <circle cx="152" cy="12" r="3.5" fill="#16A34A"/>
+      <text class="j-tag" x="162" y="16" fill="#15803D">Scrum Framework</text>
+
+      <rect x="280" y="0" width="220" height="24" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+      <text class="j-tag" x="390" y="16" text-anchor="middle" fill="#475569">Backlog &#8594; In Progress &#8594; Done</text>
+    </g>
+  </g>
+
+  <!-- Botón de Enlace al Tablero en Vivo -->
+  <g transform="translate(730, 52)">
+    <rect width="195" height="46" rx="8" fill="#0052CC" />
+    <text class="j-btn-t" x="97" y="28" text-anchor="middle">Abrir Tablero en Jira &#8594;</text>
+  </g>
+</svg>

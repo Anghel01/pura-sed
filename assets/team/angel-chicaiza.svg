@@ -1,0 +1,62 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 560 230" width="560" height="230" role="img" aria-label="Angel Chicaiza, Equipo de desarrollo">
+  <defs>
+    <style>
+      :root {
+        --card: #FFFFFF;
+        --ink: #1F3A4D;
+        --muted: #5B7383;
+        --line: rgba(31,58,77,.10);
+        --frame: rgba(31,58,77,.12);
+        --ds: rgba(31,58,77,.14);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --card: #161B22;
+          --ink: #E6EDF3;
+          --muted: #8B9BA8;
+          --line: rgba(255,255,255,.08);
+          --frame: rgba(255,255,255,.10);
+          --ds: rgba(0,0,0,.55);
+        }
+      }
+      .card  { fill: var(--card); }
+      .hole  { fill: var(--card); }
+      .frame { fill: none; stroke: var(--frame); stroke-width: 1; }
+      .sep   { stroke: var(--line); stroke-width: 1; }
+      .name  { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; font-weight: 600; fill: var(--ink); }
+      .role  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11.5px; font-weight: 700; letter-spacing: 2px; fill: #3E9A4A; }
+      .txt   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 400; fill: var(--muted); }
+      .foot  { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 14px; font-weight: 600; fill: #3E9A4A; }
+      .mono  { font-family: Georgia, 'Times New Roman', serif; font-size: 38px; font-weight: 600; fill: #3E9A4A; }
+      .orbit { transform-origin: 104px 113px; animation: spin 32s linear infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { .orbit { animation: none; } }
+    </style>
+    <filter id="sh" x="-6%" y="-10%" width="112%" height="128%">
+      <feDropShadow flood-color="var(--ds)" dx="0" dy="8" stdDeviation="9"/>
+    </filter>
+    <clipPath id="cardClip"><rect x="10" y="8" width="540" height="210" rx="20"/></clipPath>
+    <clipPath id="avatarClip"><circle cx="104" cy="113" r="56"/></clipPath>
+  </defs>
+
+  <rect class="card" x="10" y="8" width="540" height="210" rx="20" filter="url(#sh)"/>
+  <g clip-path="url(#cardClip)">
+    <rect x="10" y="8" width="188" height="210" fill="#3E9A4A" fill-opacity=".09"/>
+    <rect x="10" y="8" width="5" height="210" fill="#3E9A4A"/>
+  </g>
+
+  <circle class="orbit" cx="104" cy="113" r="70" fill="none" stroke="#3E9A4A" stroke-width="1.6" stroke-dasharray="2 7" stroke-linecap="round"/>
+  <circle class="hole" cx="104" cy="113" r="61"/>
+  <image clip-path="url(#avatarClip)" xlink:href="data:image/jpeg;base64,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" x="48" y="57" width="112" height="112" preserveAspectRatio="xMidYMid slice"/>
+  <circle cx="104" cy="113" r="56" fill="none" stroke="#3E9A4A" stroke-width="3"/>
+
+  <rect x="214" y="32" width="135" height="28" rx="14" fill="#3E9A4A" fill-opacity=".12"/>
+  <text class="role" x="226" y="50.5">DESARROLLO</text>
+  <text class="name" x="214" y="98">Angel Chicaiza</text>
+  <text class="txt" x="214" y="130">Arquitectura de datos, l&#243;gica</text>
+  <text class="txt" x="214" y="154">de backend y base de datos</text>
+  <line class="sep" x1="214" y1="172" x2="526" y2="172"/>
+  <text class="foot" x="214" y="196">@angelch1595-glitch</text>
+
+  <rect class="frame" x="10.5" y="8.5" width="539" height="209" rx="19.5"/>
+</svg>

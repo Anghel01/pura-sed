@@ -1,0 +1,63 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 560 230" width="560" height="230" role="img" aria-label="Jose Naranjo, Product Owner">
+  <defs>
+    <style>
+      :root {
+        --card: #FFFFFF;
+        --ink: #1F3A4D;
+        --muted: #5B7383;
+        --line: rgba(31,58,77,.10);
+        --frame: rgba(31,58,77,.12);
+        --ds: rgba(31,58,77,.14);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --card: #161B22;
+          --ink: #E6EDF3;
+          --muted: #8B9BA8;
+          --line: rgba(255,255,255,.08);
+          --frame: rgba(255,255,255,.10);
+          --ds: rgba(0,0,0,.55);
+        }
+      }
+      .card  { fill: var(--card); }
+      .hole  { fill: var(--card); }
+      .frame { fill: none; stroke: var(--frame); stroke-width: 1; }
+      .sep   { stroke: var(--line); stroke-width: 1; }
+      .name  { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; font-weight: 600; fill: var(--ink); }
+      .role  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11.5px; font-weight: 700; letter-spacing: 2px; fill: #E4524F; }
+      .txt   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 400; fill: var(--muted); }
+      .foot  { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 14px; font-weight: 600; fill: #E4524F; }
+      .mono  { font-family: Georgia, 'Times New Roman', serif; font-size: 38px; font-weight: 600; fill: #E4524F; }
+      .orbit { transform-origin: 104px 113px; animation: spin 32s linear infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @media (prefers-reduced-motion: reduce) { .orbit { animation: none; } }
+    </style>
+    <filter id="sh" x="-6%" y="-10%" width="112%" height="128%">
+      <feDropShadow flood-color="var(--ds)" dx="0" dy="8" stdDeviation="9"/>
+    </filter>
+    <clipPath id="cardClip"><rect x="10" y="8" width="540" height="210" rx="20"/></clipPath>
+    <clipPath id="avatarClip"><circle cx="104" cy="113" r="56"/></clipPath>
+  </defs>
+
+  <rect class="card" x="10" y="8" width="540" height="210" rx="20" filter="url(#sh)"/>
+  <g clip-path="url(#cardClip)">
+    <rect x="10" y="8" width="188" height="210" fill="#E4524F" fill-opacity=".09"/>
+    <rect x="10" y="8" width="5" height="210" fill="#E4524F"/>
+  </g>
+
+  <circle class="orbit" cx="104" cy="113" r="70" fill="none" stroke="#E4524F" stroke-width="1.6" stroke-dasharray="2 7" stroke-linecap="round"/>
+  <circle class="hole" cx="104" cy="113" r="61"/>
+  <circle cx="104" cy="113" r="56" fill="#E4524F" fill-opacity=".15"/>
+  <text class="mono" x="104" y="126" text-anchor="middle">JN</text>
+  <circle cx="104" cy="113" r="56" fill="none" stroke="#E4524F" stroke-width="3"/>
+
+  <rect x="214" y="32" width="152" height="28" rx="14" fill="#E4524F" fill-opacity=".12"/>
+  <text class="role" x="226" y="50.5">PRODUCT OWNER</text>
+  <text class="name" x="214" y="98">Jose Naranjo</text>
+  <text class="txt" x="214" y="130">Requerimientos y aceptaci&#243;n</text>
+  <text class="txt" x="214" y="154">de entregables del cliente</text>
+  <line class="sep" x1="214" y1="172" x2="526" y2="172"/>
+  <text class="foot" x="214" y="196">FIEE &#183; EPN</text>
+
+  <rect class="frame" x="10.5" y="8.5" width="539" height="209" rx="19.5"/>
+</svg>

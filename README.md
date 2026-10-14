@@ -1,194 +1,240 @@
 <p align="center">
-  <img src="./assets/banner.jpg" width="100%" alt="PuraSed - Bar y Restaurante System" />
+  <img src="./assets/banner.svg" width="100%" alt="PuraSed — Bar y Restaurante System" />
 </p>
 
 <p align="center">
-  <a href="https://git.io/typing-svg">
-    <img src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&weight=600&size=18&pause=1000&color=0284C7&center=true&vCenter=true&width=650&height=35&lines=Gestion+de+Mesas+y+Comandas+en+Tiempo+Real;Despacho+Automatico+a+Cocina+y+Bar;Menu+Interactivo+con+Blazor+WebAssembly;Servicios+RESTful+con+ASP.NET+Core+Web+API;Analitica+de+Ventas+y+Cierre+por+Jornada" alt="Typing SVG" />
-  </a>
+  <b>Sistema Transaccional en Tiempo Real para Gestión Integral de Bares Nocturnos y Restaurantes</b><br/>
+  <i>Pedidos digitales por mesa con QR, enrutamiento desacoplado a cocina y barra, control de inventario y facturación por jornada.</i>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/.NET-10.0%20%7C%209.0-512BD4?style=for-the-badge&logo=dotnet&logoColor=white" />
-  <img src="https://img.shields.io/badge/Frontend-Blazor%20WASM-7928CA?style=for-the-badge&logo=blazor&logoColor=white" />
-  <img src="https://img.shields.io/badge/Backend-ASP.NET%20Web%20API-00B4D8?style=for-the-badge&logo=dotnet&logoColor=white" />
-  <img src="https://img.shields.io/badge/Database-SQL%20Server-CC292B?style=for-the-badge&logo=microsoftsqlserver&logoColor=white" />
-  <img src="https://img.shields.io/badge/Gestion-Jira%20Software-0052CC?style=for-the-badge&logo=jira&logoColor=white" />
+  <img src="./assets/tags.svg" width="100%" alt="Ecosistema Tecnológico: .NET 10, Blazor WebAssembly, ASP.NET Core Web API, SQL Server y Jira Software" />
 </p>
 
 <p align="center">
-  <b>Escuela Politécnica Nacional (EPN)</b> • Facultad de Ingeniería Eléctrica y Electrónica (FIEE)<br/>
-  <i>ITID803: Diseño de Aplicaciones y Servicios para Internet (DASI) • Semestre 2026</i>
+  <b>Escuela Politécnica Nacional (EPN)</b> · Facultad de Ingeniería Eléctrica y Electrónica (FIEE)<br/>
+  <sub>ITID803 · Diseño de Aplicaciones y Servicios para Internet (DASI) · Periodo Académico 2026</sub>
 </p>
 
 ---
 
-## 📌 1. Sobre el Proyecto
+## <img src="./assets/icons/equipo.svg" width="22" height="22" align="absmiddle" /> Equipo Scrum y Roles
 
-**Pura Sed** es una plataforma web moderna y responsiva orientada a la gestión integral de un bar nocturno. Digitaliza el ciclo completo de consumo: desde la consulta del menú y la comanda por mesa, hasta el despacho automático y el cierre de caja.
+El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilidades distribuidas entre el docente asesor y los desarrolladores del equipo:
 
 <table>
-<tr>
-<td width="50%">
-
-### ⚠️ Problemática Actual (Gestión Manual)
-* **Comandas en papel:** Pérdida de tiempo desplazándose a barra y cocina, provocando demoras y confusiones.
-* **Menú físico o estático:** No refleja productos agotados en tiempo real ni promociones por horario.
-* **Descontrol de existencias:** Barra y cocina no sincronizan mermas ni alertas de stock mínimo.
-* **Cobro manual:** Dificultad para liquidar cuentas divididas y validar transferencias bancarias.
-
-</td>
-<td width="50%">
-
-### 💡 Solución Implementada
-* **Atención por Mesa con QR:** Clientes acceden al catálogo interactivo desde su móvil sin registros obligatorios.
-* **Enrutamiento Automatizado:** Los tragos van a la barra y los platos a la cocina de forma inmediata.
-* **Inventario Descentralizado:** Stock por áreas con descuento automático por pedido y bloqueo visual de agotados.
-* **Pagos Flexibles:** Soporte para tarjeta (pasarela), transferencia y efectivo con facturación secuencial.
-
-</td>
-</tr>
-</table>
-
----
-
-## 💻 2. Tecnologías Utilizadas
-
-<p align="center">
-  <img src="https://skillicons.dev/icons?i=dotnet,cs,html,css,bootstrap,postman,git,github,vscode" />
-</p>
-
-| Área | Tecnología | Propósito en el Proyecto |
-| :--- | :--- | :--- |
-| **Plataforma Base** | `.NET SDK 10.0 / 9.0` | Ecosistema y motor de compilación unificado |
-| **Frontend** | `Blazor WebAssembly` | Aplicación SPA ejecutada con C# nativo en el navegador del cliente |
-| **Backend** | `ASP.NET Core Web API` | Microservicios RESTful desacoplados, middleware y políticas CORS |
-| **Documentación** | `Swagger / OpenAPI` | Catálogo interactivo y contrato de endpoints para pruebas |
-| **Base de Datos** | `Microsoft SQL Server` | Motor relacional transaccional para pedidos, inventario y auditoría |
-| **ORM** | `Entity Framework Core` | Mapeo objeto-relacional y control de migraciones de base de datos |
-| **Pruebas de API** | `Postman` | Verificación de respuestas JSON y códigos de estado HTTP |
-| **Control de Versiones**| `Git & GitHub` | Estrategia de ramas `main` / `develop` y flujo colaborativo con Forks |
-| **Gestión Ágil** | `Jira Software` | Tablero Scrum, backlog de historias de usuario y control de sprints |
-
----
-
-## 👥 3. Equipo de Trabajo (Scrum Team)
-
-<table align="center" width="100%">
   <tr>
-    <td align="center" width="25%">
-      <img src="https://ui-avatars.com/api/?name=Jose+Naranjo&background=ff0055&color=fff&size=96&rounded=true" width="80px"/><br/>
-      <b>Jose Naranjo</b><br/>
-      <code>Product Owner</code><br/>
-      <sub>Definición de requerimientos y aceptación de entregables</sub>
+    <td width="50%" align="center" valign="top">
+      <img src="./assets/team/jose-naranjo.svg" width="100%" alt="Jose Naranjo — Product Owner" />
     </td>
-    <td align="center" width="25%">
-      <img src="https://ui-avatars.com/api/?name=Jannys+Garrido&background=7928ca&color=fff&size=96&rounded=true" width="80px"/><br/>
-      <b>Jannys Garrido</b><br/>
-      <code>Scrum Master / Dev</code><br/>
-      <sub>Facilitación ágil, remoción de impedimentos y desarrollo</sub>
+    <td width="50%" align="center" valign="top">
+      <a href="https://github.com/JannysG1">
+        <img src="./assets/team/jannys-garrido.svg" width="100%" alt="Jannys Sherley Garrido Pazmiño — Scrum Master" />
+      </a>
     </td>
-    <td align="center" width="25%">
-      <img src="https://ui-avatars.com/api/?name=Angel+Chicaiza&background=00d9ff&color=000&size=96&rounded=true" width="80px"/><br/>
-      <b>Angel Chicaiza</b><br/>
-      <code>Development Member</code><br/>
-      <sub>Arquitectura de datos, lógica de backend y base de datos</sub>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <a href="https://github.com/angelch1595-glitch">
+        <img src="./assets/team/angel-chicaiza.svg" width="100%" alt="Angel Chicaiza — Equipo de Desarrollo" />
+      </a>
     </td>
-    <td align="center" width="25%">
-      <img src="https://ui-avatars.com/api/?name=Angelo+Conteron&background=00ff88&color=000&size=96&rounded=true" width="80px"/><br/>
-      <b>Angelo Conteron</b><br/>
-      <code>Development Member</code><br/>
-      <sub>Interfaces Blazor WASM, UX/UI y control de versiones Git</sub>
+    <td width="50%" align="center" valign="top">
+      <a href="https://github.com/Anghel01">
+        <img src="./assets/team/angelo-conteron.svg" width="100%" alt="Angelo Conterón — Equipo de Desarrollo" />
+      </a>
     </td>
   </tr>
 </table>
 
 ---
 
-## 📋 4. Backlog del Producto y Gestión Ágil
+## <img src="./assets/icons/contenido.svg" width="22" height="22" align="absmiddle" /> Tabla de Contenidos
 
-El desarrollo del proyecto se planifica y ejecuta mediante **Sprints semanales** bajo el marco Scrum. Las **32 Historias de Usuario (HU-01 a HU-32)**, sus criterios de aceptación y el flujo de tareas se administran activamente en el tablero oficial:
+| N° | Sección del Proyecto | Alcance y Contenido Técnico |
+| :---: | :--- | :--- |
+| `01` | [**Sobre el Proyecto y Objetivo del Sistema**](#sobre-el-proyecto-y-objetivo-del-sistema) | Problemática de bares nocturnos, propuesta de valor y alcances funcionales |
+| `02` | [**Arquitectura del Sistema**](#arquitectura-del-sistema) | Arquitectura en capas desacoplada, WebSockets y ciclo de vida de comandas |
+| `03` | [**Casos de Uso**](#casos-de-uso) | Diagrama UML formal interactivo, actores operativos y matriz funcional |
+| `04` | [**Estructura de la Solución .NET**](#estructura-de-la-solución-net) | Árbol estructurado de carpetas, responsabilidades de WebApi y Blazor Client |
+| `05` | [**Guía de Ejecución Local**](#guía-de-ejecución-local) | Requisitos previos (.NET 10, SQL Server), clonación, migraciones y arranque |
+| `06` | [**Estrategia de Ramas y Flujo en Git**](#estrategia-de-ramas-y-flujo-en-git) | Modelo GitFlow, convención de ramas `develop`/`feature` y commits semánticos |
+| `07` | [**Backlog, Planificación y Sprints**](#backlog-planificación-y-sprints) | Metodología Scrum, historias de usuario, estimación y tablero Jira Cloud |
+| `08` | [**Licencia y Uso Académico**](#licencia-y-uso-académico) | Régimen institucional Escuela Politécnica Nacional (EPN - FIEE) |
+
+---
+
+## <img src="./assets/icons/proyecto.svg" width="22" height="22" align="absmiddle" /> Sobre el Proyecto y Objetivo del Sistema
+
+**PuraSed** es una plataforma web reactiva que moderniza el ciclo operativo completo de un bar nocturno y restaurante, eliminando las comandas físicas en papel, las demoras en el enrutamiento a cocina y barra, y los errores de cuadre al cierre de jornada.
+
+| Dimensión Operativa | Gestión Tradicional (Manual) | Solución Digital con PuraSed |
+| :--- | :--- | :--- |
+| **Atención en Mesa** | Comandas físicas en papel; desplazamientos constantes y confusiones de mesa. | **Acceso QR sin fricción**: el cliente pide y consulta el estado de su orden desde su dispositivo móvil sin registro previo. |
+| **Catálogo y Menú** | Cartas físicas o imágenes estáticas en Canva que no avisan de productos agotados. | **Disponibilidad en tiempo real**: bloqueo automático de insumos agotados y promociones por franja horaria. |
+| **Despacho a Cocina y Bar** | Comandas divididas manualmente entre coctelería y cocina con extravíos frecuentes. | **Enrutamiento automático con SignalR**: derivación simultánea de bebidas a la barra y comidas a la cocina. |
+| **Cobro y Facturación** | Cuentas divididas a mano, validación tardía de transferencias y cuadres manuales. | **Pasarela integrada y arqueo**: cobro con tarjeta, verificación de transferencias y emisión secuencial de facturas. |
+
+### Objetivos del Sistema
+
+Diseñar e implementar una solución web desacoplada y de alta disponibilidad que permita:
+
+- **Catálogo Dinámico**: Administrar bebidas, alimentos, combos por horario y espectáculos con variantes e insumos configurables.
+- **Enrutamiento Reactivo**: Transmitir pedidos en tiempo real con actualización continua de estados (*Pendiente* $\rightarrow$ *En preparación* $\rightarrow$ *Listo* $\rightarrow$ *Entregado*).
+- **Inventario por Área**: Descontar existencias automáticamente por receta con alertas de stock mínimo para cocina y bar.
+- **Gestión de Reservas y Pagos**: Agendar mesas en línea, verificar comprobantes de pago digitales y consolidar la caja por jornada.
+- **Analítica de Negocio**: Evaluar la satisfacción del cliente y generar reportes financieros al cierre de turno.
+
+---
+
+## <img src="./assets/icons/arquitectura.svg" width="22" height="22" align="absmiddle" /> Arquitectura del Sistema
+
+La plataforma adopta una **arquitectura en capas desacoplada** con telemetría en tiempo real, estructurada en dispositivos de usuario, cliente SPA en Blazor WebAssembly, servicios REST en ASP.NET Core y persistencia en SQL Server, coordinados mediante hubs de SignalR:
 
 <p align="center">
-  <a href="https://jannysgarrido21.atlassian.net/jira/software/projects/SCRUM/boards/1?filter=&groupBy=none">
-    <img src="https://img.shields.io/badge/Jira_Software-Acceder_al_Tablero_Scrum_Oficial-0052CC?style=for-the-badge&logo=jira&logoColor=white" height="42px"/>
-  </a>
+  <img src="./assets/architecture.svg" width="100%" alt="Diagrama de Arquitectura de PuraSed" />
 </p>
 
 ---
 
-## 📂 5. Estructura de la Solución .NET
+## <img src="./assets/icons/casos.svg" width="22" height="22" align="absmiddle" /> Casos de Uso
+
+Representación formal interactiva de los actores del negocio (*Cliente*, *Mesero*, *Cocina/Bar*, *Asistente* y *Administrador*) y sus flujos de interacción con el sistema dentro del límite de la plataforma:
+
+<p align="center">
+  <img src="./assets/casos-de-uso.svg" width="100%" alt="Diagrama de Casos de Uso del Sistema PuraSed" />
+</p>
+
+---
+
+## <img src="./assets/icons/estructura.svg" width="22" height="22" align="absmiddle" /> Estructura de la Solución .NET
+
+El repositorio utiliza el formato unificado de solución moderna de .NET (`.slnx`), garantizando un desacoplamiento limpio entre la capa de presentación y los servicios backend:
+
+<p align="center">
+  <img src="./assets/structure.svg" width="100%" alt="Explorador de Estructura de la Solución" />
+</p>
 
 ```text
 pura-sed/
-├── PuraSed.slnx              # 📦 Solución contenedora (.NET XML format)
-├── README.md                 # 📄 Documentación visual del proyecto
-├── .gitignore                # 🛡️ Reglas de exclusión para Git (.NET)
+├── PuraSed.slnx            # Archivo contenedor de la solución .NET (formato moderno)
+├── README.md               # Documentación técnica interactiva del sistema
+├── .gitignore              # Exclusiones de compilación binaria (bin, obj)
 │
-├── assets/                   # 🎨 Recursos vectoriales del repositorio
-│   ├── banner.svg            # Banner principal de Pura Sed
-│   └── architecture.svg      # Diagrama de arquitectura panorámico
+├── assets/                 # Recursos vectoriales SVG, animaciones e identidad visual
+│   ├── banner.svg          # Hero animado con burbujas y espuma de cerveza
+│   ├── tags.svg            # Lienzo tecnológico con logos vectoriales oficiales
+│   ├── architecture.svg    # Arquitectura en capas y ciclo SignalR con flujo animado
+│   ├── casos-de-uso.svg    # Diagrama UML formal interactivo con actores y casos de uso
+│   ├── structure.svg       # Explorador visual de la solución y componentes
+│   ├── jira-board.svg      # Tarjeta interactiva de acceso al tablero Jira Software
+│   ├── team/               # Tarjetas vectoriales del Scrum Team
+│   └── icons/              # Iconografía vectorial cromática por sección
 │
-├── PuraSed.WebApi/           # ⚙️ [BACKEND] ASP.NET Core Web API
-│   ├── Controllers/          # Controladores REST (ej. CombosController)
-│   ├── Properties/           # Perfiles de ejecución (launchSettings.json)
-│   ├── appsettings.json      # Configuración y variables del servidor
-│   ├── Program.cs            # Inyección de dependencias, Middleware y CORS
-│   └── PuraSed.WebApi.csproj # Cédula del proyecto Backend y paquetes NuGet
+├── PuraSed.WebApi/         # Backend: ASP.NET Core Web API 10.0 (REST & SignalR)
+│   ├── Controllers/        # Controladores RESTful para mesas, pedidos, menú y caja
+│   ├── Properties/         # launchSettings.json (Perfiles HTTP 5107 / HTTPS 7129)
+│   ├── appsettings.json    # Cadenas de conexión a SQL Server y tokens JWT
+│   └── Program.cs          # Inyección de dependencias, hubs SignalR y OpenAPI Explorer
 │
-└── PuraSed.Client/           # 🎨 [FRONTEND] Blazor WebAssembly
-    ├── Layout/               # Estructuras visuales (MainLayout, NavMenu)
-    ├── Pages/                # Vistas Razor (Home, Counter, Weather, etc.)
-    ├── wwwroot/              # Archivos estáticos (Bootstrap, CSS, íconos)
-    ├── Program.cs            # Inicializador de Blazor WASM y HttpClient
-    └── PuraSed.Client.csproj # Cédula del proyecto Frontend
+└── PuraSed.Client/         # Frontend: Blazor WebAssembly 10.0 (Cliente Reactivo SPA)
+    ├── Layout/             # Estructura maestra de navegación (MainLayout, NavMenu)
+    ├── Pages/              # Vistas Razor reactivas por rol de usuario
+    ├── Properties/         # launchSettings.json (Perfiles HTTP 5068 / HTTPS 7020)
+    ├── wwwroot/            # Hojas de estilo CSS globales, iconos y runtime WebAssembly
+    └── Program.cs          # Inicializador WebAssembly, inyección de HttpClient y servicios
 ```
 
 ---
 
-## 🚀 6. Guía de Ejecución Local
+## <img src="./assets/icons/ejecucion.svg" width="22" height="22" align="absmiddle" /> Guía de Ejecución Local
 
-### Prerrequisitos
-* [.NET SDK 8, 9 o 10](https://dotnet.microsoft.com/download)
-* [Visual Studio 2022+](https://visualstudio.microsoft.com/) o [Visual Studio Code](https://code.visualstudio.com/)
-* [Git](https://git-scm.com/)
+### Prerrequisitos del Entorno
 
-### Paso a paso
+* [.NET 10.0 SDK](https://dotnet.microsoft.com/download/dotnet/10.0) instalado localmente.
+* [Microsoft SQL Server 2022](https://www.microsoft.com/sql-server/) o instancia local de LocalDB.
+* [Git](https://git-scm.com/) configurado en el sistema operativo.
 
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/Anghel01/pura-sed.git
-cd pura-sed
+### Pasos de Puesta en Marcha
 
-# 2. Cambiar a la rama de desarrollo
-git checkout develop
+1. **Clonar el repositorio y situarse en la rama de integración:**
+   ```bash
+   git clone https://github.com/angelch1595-glitch/pura-sed.git
+   cd pura-sed
+   git checkout develop
+   ```
 
-# 3. Restaurar dependencias de la solución
-dotnet restore
+2. **Restaurar paquetes y compilar la solución:**
+   ```bash
+   dotnet build PuraSed.slnx
+   ```
 
-# 4. Iniciar el Backend (Web API)
-cd PuraSed.WebApi
-dotnet run
-# -> Swagger interactivo en: https://localhost:7001/swagger
+3. **Ejecutar el Backend (ASP.NET Core Web API):**
+   ```bash
+   dotnet run --project PuraSed.WebApi --launch-profile https
+   ```
+   * *Swagger / OpenAPI UI:* `https://localhost:7129/openapi/v1.json`
+   * *Puerto HTTPS:* `7129` | *Puerto HTTP:* `5107`
 
-# 5. En otra terminal, iniciar el Frontend (Blazor WASM)
-cd PuraSed.Client
-dotnet run
-# -> Aplicación web cargando en: https://localhost:7100
-```
+4. **Ejecutar el Frontend (Blazor WebAssembly):**
+   En una terminal adicional, iniciar el cliente web:
+   ```bash
+   dotnet run --project PuraSed.Client --launch-profile https
+   ```
+   * *Aplicación Web:* `https://localhost:7020`
+   * *Puerto HTTPS:* `7020` | *Puerto HTTP:* `5068`
 
 ---
 
-## 🏛️ 7. Arquitectura del Sistema
+## <img src="./assets/icons/git.svg" width="22" height="22" align="absmiddle" /> Estrategia de Ramas y Flujo en Git
 
-El sistema implementa una **arquitectura desacoplada en 4 niveles** diseñada para alto rendimiento, responsividad en dispositivos táctiles e integridad transaccional:
+El proyecto sigue una adaptación rigurosa de **GitFlow**:
+
+```text
+main       ─────────────────────────────────────────── [Producción / Versiones estables]
+               \                                /
+develop     ────●──────●──────●──────●────────●─────── [Integración continua]
+                  \   /        \   /
+feature/*          ──●──────────●───────────────────── [Historias de usuario / Sprints]
+```
+
+### Políticas de Integración
+
+* **Rama `main`**: Contiene únicamente código estable, probado y listo para despliegue en producción.
+* **Rama `develop`**: Rama base de integración diaria donde convergen las características finalizadas.
+* **Ramas de funcionalidad (`feature/<id>-<descripcion>`)**: Ramas temporales creadas a partir de `develop` para el desarrollo de cada historia de usuario.
+* **Convención de Commits Semánticos**:
+  * `feat:` Nueva funcionalidad o capacidad implementada.
+  * `fix:` Corrección de errores o defectos detectados.
+  * `docs:` Actualización de documentación técnica o README.
+  * `style:` Ajustes de formato, maquetación o diseño visual.
+  * `refactor:` Reorganización de código sin alterar su comportamiento externo.
+
+---
+
+## <img src="./assets/icons/backlog.svg" width="22" height="22" align="absmiddle" /> Backlog, Planificación y Sprints
+
+El ciclo de desarrollo está organizado bajo el marco de trabajo **Scrum**, con planificación iterativa e historias de usuario gestionadas en el tablero oficial de Atlassian Jira Software:
 
 <p align="center">
-  <img src="./assets/architecture.svg" width="100%" alt="Diagrama de Arquitectura de Pura Sed" />
+  <a href="https://pura-sed.atlassian.net/jira/software/projects/DASIPS/boards/1">
+    <img src="./assets/jira-board.svg" width="100%" alt="Tablero Oficial Scrum en Jira" />
+  </a>
 </p>
+
+### Metodología de Trabajo y Gestión Ágil
+
+* **Historias de Usuario (HU)**: Cada funcionalidad del sistema se modela bajo el formato formal:
+  $$\text{Como } [\text{Rol de negocio}] \quad \text{quiero } [\text{Acción / Capacidad}] \quad \text{para } [\text{Beneficio esperado}]$$
+* **Criterios de Aceptación (Definition of Done)**: Cada requerimiento cuenta con condiciones de validación verificables antes de ser promovido al siguiente estado.
+* **Estimación por Story Points**: Planificación de esfuerzo basada en la serie de Fibonacci para medir la velocidad del equipo.
+* **Flujo de Estados en el Tablero Jira**:
+  $$\text{Backlog} \;\longrightarrow\; \text{Por Hacer (To Do)} \;\longrightarrow\; \text{En Progreso} \;\longrightarrow\; \text{Revisión de Código / QA} \;\longrightarrow\; \text{Listo (Done)}$$
 
 ---
 
-## 📄 8. Licencia y Uso Académico
+## <img src="./assets/icons/licencia.svg" width="22" height="22" align="absmiddle" /> Licencia y Uso Académico
 
-Este proyecto ha sido desarrollado exclusivamente con fines académicos como parte de la formación profesional en Ingeniería de Tecnologías de la Información en la **Escuela Politécnica Nacional**. Todos los derechos reservados al equipo de desarrollo y docentes tutores.
+Este proyecto ha sido desarrollado con fines estrictamente académicos para la asignatura **ITID803 · Diseño de Aplicaciones y Servicios para Internet (DASI)** en la **Escuela Politécnica Nacional (EPN)**, Facultad de Ingeniería Eléctrica y Electrónica (FIEE), correspondiente al periodo lectivo **2026**.
+
+Todos los derechos reservados al equipo de desarrollo y a la institución académica correspondiente.

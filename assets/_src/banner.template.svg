@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1640 {{SVG_H}}" width="1640" height="{{SVG_H}}" role="img" aria-labelledby="bt bd">
+  <title id="bt">PuraSed — Bar y Restaurante System</title>
+  <desc id="bd">Una botella de cerveza sirve un vaso que desborda espuma sobre una mesa coral con pistachos, sobre fondo celeste. A la derecha, el nombre PuraSed.</desc>
+  <defs>
+    <style>
+      .frame { fill: none; stroke: #1F3A4D; stroke-opacity: .12; stroke-width: 1; }
+      .ds    { flood-color: #1F3A4D; flood-opacity: .20; }
+      .bubble { fill: #FFF7E3; opacity: 0; animation-name: rise; animation-timing-function: ease-in; animation-iteration-count: infinite; }
+      @keyframes rise {
+        0%   { transform: translate(0, 0);        opacity: 0; }
+        15%  { opacity: .85; }
+        55%  { transform: translate(1.5px, -{{HALF_RISE}}px); }
+        85%  { opacity: .55; }
+        100% { transform: translate(-1px, -{{RISE}}px); opacity: 0; }
+      }
+      @media (prefers-color-scheme: dark) {
+        .frame { stroke: #FFFFFF; stroke-opacity: .10; }
+        .ds    { flood-color: #000000; flood-opacity: .55; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .bubble { animation: none; opacity: 0; }
+      }
+    </style>
+    <filter id="shadow" x="-4%" y="-8%" width="108%" height="128%">
+      <feDropShadow class="ds" dx="0" dy="10" stdDeviation="12"/>
+    </filter>
+    <clipPath id="round">
+      <rect x="{{X}}" y="{{Y}}" width="{{W}}" height="{{H}}" rx="22"/>
+    </clipPath>
+    <clipPath id="glass">
+      <rect x="{{GX}}" y="{{GY}}" width="{{GW}}" height="{{GH}}" rx="6"/>
+    </clipPath>
+  </defs>
+
+  <rect x="{{X}}" y="{{Y}}" width="{{W}}" height="{{H}}" rx="22" fill="#86BDD0" filter="url(#shadow)"/>
+
+  <g clip-path="url(#round)">
+    <image xlink:href="data:image/jpeg;base64,{{BANNER}}" x="{{X}}" y="{{Y}}" width="{{W}}" height="{{H}}" preserveAspectRatio="xMidYMid slice"/>
+    <g clip-path="url(#glass)">
+{{BUBBLES}}
+    </g>
+  </g>
+
+  <rect class="frame" x="{{FX}}" y="{{FY}}" width="{{FW}}" height="{{FH}}" rx="21.5"/>
+</svg>
