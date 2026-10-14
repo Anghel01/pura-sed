@@ -1,171 +1,254 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 290" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="100%" height="100%" role="img" aria-labelledby="archTitle archDesc">
+  <title id="archTitle">Arquitectura del Sistema PuraSed</title>
+  <desc id="archDesc">Arquitectura desacoplada en capas: Dispositivos, Frontend Blazor WASM, Backend ASP.NET Core Web API, Persistencia SQL Server y ciclo de vida de comandas en tiempo real.</desc>
   <defs>
-    <!-- Background Gradient -->
-    <linearGradient id="archBg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0a0c14"/>
-      <stop offset="50%" stop-color="#120e24"/>
-      <stop offset="100%" stop-color="#090b12"/>
-    </linearGradient>
-
-    <!-- Card Gradients -->
-    <linearGradient id="cardGrad1" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1e1333"/>
-      <stop offset="100%" stop-color="#120c22"/>
-    </linearGradient>
-
-    <linearGradient id="cardGrad2" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#141a38"/>
-      <stop offset="100%" stop-color="#0d1124"/>
-    </linearGradient>
-
-    <linearGradient id="cardGrad3" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#0f2638"/>
-      <stop offset="100%" stop-color="#0a1824"/>
-    </linearGradient>
-
-    <linearGradient id="cardGrad4" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#2a1818"/>
-      <stop offset="100%" stop-color="#180e0e"/>
-    </linearGradient>
-
-    <!-- Arrow Gradient -->
-    <linearGradient id="arrowGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ff0077"/>
-      <stop offset="100%" stop-color="#7928ca"/>
-    </linearGradient>
-    <linearGradient id="arrowGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#7928ca"/>
-      <stop offset="100%" stop-color="#00e5ff"/>
-    </linearGradient>
-    <linearGradient id="arrowGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#00e5ff"/>
-      <stop offset="100%" stop-color="#f59e0b"/>
-    </linearGradient>
+    <style>
+      :root {
+        --canvas-bg: #FFFFFF;
+        --card-dev: #F4F3EF;
+        --card-dev-border: #DCD8D0;
+        --front-box: #EBF7F2;
+        --front-border: #9FDBC1;
+        --front-chip: #FFFFFF;
+        --back-box: #EEF0FA;
+        --back-border: #B6C0E8;
+        --back-chip: #FFFFFF;
+        --store-box: #E8F5F1;
+        --store-border: #A3D9C9;
+        --dash-box: #F8F9FA;
+        --dash-border: #BDC3C7;
+        --text-ink: #1F3A4D;
+        --text-muted: #5B7383;
+        --arrow-color: #6C7A89;
+        --cat-trans: #EBEBE6;
+        --cat-oper: #EAE6F7;
+        --cat-oper-border: #C8BFF0;
+        --cat-biz: #E3F4ED;
+        --cat-biz-border: #A3DEC7;
+        --pipe-box: #FFFFFF;
+        --pipe-border: #D0D7DE;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --canvas-bg: #0D1117;
+          --card-dev: #1C2128;
+          --card-dev-border: #30363D;
+          --front-box: #12231E;
+          --front-border: #235A47;
+          --front-chip: #161B22;
+          --back-box: #161B2E;
+          --back-border: #2D3766;
+          --back-chip: #161B22;
+          --store-box: #13241F;
+          --store-border: #235848;
+          --dash-box: #161B22;
+          --dash-border: #30363D;
+          --text-ink: #F0F6FC;
+          --text-muted: #8B949E;
+          --arrow-color: #8B949E;
+          --cat-trans: #21262D;
+          --cat-oper: #211B38;
+          --cat-oper-border: #4D3D82;
+          --cat-biz: #152A22;
+          --cat-biz-border: #276950;
+          --pipe-box: #161B22;
+          --pipe-border: #30363D;
+        }
+      }
+      .t-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 15px; font-weight: 700; fill: var(--text-ink); }
+      .c-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 13px; font-weight: 700; fill: var(--text-ink); text-anchor: middle; }
+      .c-sub   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 11px; font-weight: 400; fill: var(--text-muted); text-anchor: middle; }
+      .p-state { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 10.5px; font-weight: 600; fill: var(--text-muted); text-anchor: middle; }
+      .proto   { font-family: ui-monospace, monospace; font-size: 11px; font-weight: 700; fill: var(--text-muted); letter-spacing: 1px; }
+      .wire    { stroke: var(--arrow-color); stroke-width: 1.5; fill: none; }
+      .wire-d  { stroke: var(--arrow-color); stroke-width: 1.5; stroke-dasharray: 4 3; fill: none; }
+      .arrow   { fill: var(--arrow-color); }
+    </style>
   </defs>
 
-  <!-- Container Box -->
-  <rect width="1100" height="290" rx="16" fill="url(#archBg)" stroke="#231d38" stroke-width="1.5"/>
+  <!-- CAPA 1: DISPOSITIVOS DE USUARIO -->
+  <g transform="translate(40, 20)">
+    <!-- Cliente -->
+    <rect x="0" y="0" width="200" height="60" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)"/>
+    <text class="c-title" x="100" y="27">Cliente</text>
+    <text class="c-sub" x="100" y="44">Celular o QR en mesa</text>
 
-  <!-- Subtle grid lines -->
-  <g stroke="#ffffff" stroke-width="0.5" opacity="0.03">
-    <line x1="0" y1="72" x2="1100" y2="72"/>
-    <line x1="0" y1="145" x2="1100" y2="145"/>
-    <line x1="0" y1="217" x2="1100" y2="217"/>
+    <!-- Mesero -->
+    <rect x="235" y="0" width="200" height="60" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)"/>
+    <text class="c-title" x="335" y="27">Mesero</text>
+    <text class="c-sub" x="335" y="44">Celular / Tablet</text>
+
+    <!-- Cocina y Bar -->
+    <rect x="470" y="0" width="200" height="60" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)"/>
+    <text class="c-title" x="570" y="27">Cocina y Bar</text>
+    <text class="c-sub" x="570" y="44">Tablet o pantalla fija</text>
+
+    <!-- Administraci&#243;n -->
+    <rect x="705" y="0" width="215" height="60" rx="10" fill="var(--card-dev)" stroke="var(--card-dev-border)"/>
+    <text class="c-title" x="812" y="27">Administraci&#243;n</text>
+    <text class="c-sub" x="812" y="44">PC o tablet gerencial</text>
   </g>
 
-  <!-- ==================== COLUMNA 1: DISPOSITIVOS CLIENTES ==================== -->
-  <g transform="translate(25, 25)">
-    <rect width="210" height="240" rx="12" fill="url(#cardGrad1)" stroke="#ff0077" stroke-width="1.5"/>
-    <rect x="0" y="0" width="210" height="36" rx="12" fill="#ff0077" fill-opacity="0.15"/>
-    <text x="105" y="24" fill="#ff77aa" font-family="sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1">1. DISPOSITIVOS</text>
+  <!-- CONEXI&#211;N DISPOSITIVOS -> FRONTEND -->
+  <line class="wire" x1="140" y1="80" x2="140" y2="105"/>
+  <line class="wire" x1="375" y1="80" x2="375" y2="105"/>
+  <line class="wire" x1="610" y1="80" x2="610" y2="105"/>
+  <line class="wire" x1="852" y1="80" x2="852" y2="105"/>
 
-    <!-- Items -->
-    <g transform="translate(15, 52)">
-      <!-- Item A -->
-      <rect x="0" y="0" width="180" height="36" rx="6" fill="#180e28" stroke="#3d2159" stroke-width="1"/>
-      <text x="12" y="22" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="600">📱 Mesas (Acceso QR)</text>
+  <!-- CAPA 2: FRONTEND BLAZOR WEBASSEMBLY -->
+  <g transform="translate(40, 105)">
+    <rect x="0" y="0" width="920" height="100" rx="12" fill="var(--front-box)" stroke="var(--front-border)" stroke-width="1.4"/>
+    <text class="t-title" x="20" y="26">Frontend &#183; Blazor WebAssembly</text>
 
-      <!-- Item B -->
-      <rect x="0" y="44" width="180" height="36" rx="6" fill="#180e28" stroke="#3d2159" stroke-width="1"/>
-      <text x="12" y="66" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="600">📲 Celular Meseros</text>
+    <g transform="translate(20, 36)">
+      <!-- Portal cliente -->
+      <rect x="0" y="0" width="205" height="50" rx="8" fill="var(--front-chip)" stroke="var(--front-border)"/>
+      <text class="c-title" x="102" y="23">Portal Cliente</text>
+      <text class="c-sub" x="102" y="38">Pide y paga</text>
 
-      <!-- Item C -->
-      <rect x="0" y="88" width="180" height="36" rx="6" fill="#180e28" stroke="#3d2159" stroke-width="1"/>
-      <text x="12" y="110" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="600">🖥️ Pantalla Barra / Cocina</text>
+      <!-- Portal mesero -->
+      <rect x="225" y="0" width="205" height="50" rx="8" fill="var(--front-chip)" stroke="var(--front-border)"/>
+      <text class="c-title" x="327" y="23">Portal Mesero</text>
+      <text class="c-sub" x="327" y="38">Entregas y comanda</text>
 
-      <!-- Item D -->
-      <rect x="0" y="132" width="180" height="36" rx="6" fill="#180e28" stroke="#3d2159" stroke-width="1"/>
-      <text x="12" y="154" fill="#ffffff" font-family="sans-serif" font-size="11" font-weight="600">💻 PC Administración</text>
+      <!-- Portal de &#225;rea -->
+      <rect x="450" y="0" width="205" height="50" rx="8" fill="var(--front-chip)" stroke="var(--front-border)"/>
+      <text class="c-title" x="552" y="23">Portal de &#193;rea</text>
+      <text class="c-sub" x="552" y="38">Cocina y bar</text>
+
+      <!-- Portal admin -->
+      <rect x="675" y="0" width="205" height="50" rx="8" fill="var(--front-chip)" stroke="var(--front-border)"/>
+      <text class="c-title" x="777" y="23">Portal Admin</text>
+      <text class="c-sub" x="777" y="38">Gesti&#243;n y m&#233;tricas</text>
     </g>
   </g>
 
-  <!-- ARROW 1 -> 2 -->
-  <g transform="translate(242, 130)">
-    <line x1="0" y1="0" x2="40" y2="0" stroke="url(#arrowGrad1)" stroke-width="3" stroke-dasharray="4 4"/>
-    <polygon points="48,0 38,-5 38,5" fill="#7928ca"/>
-    <rect x="-8" y="-22" width="64" height="16" rx="4" fill="#1f113a" stroke="#7928ca" stroke-width="0.8"/>
-    <text x="24" y="-10" fill="#c4b5fd" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle">SPA Web</text>
+  <!-- ENLACE DE PROTOCOLOS (FRONTEND <-> BACKEND) -->
+  <g transform="translate(400, 212)">
+    <line class="wire" x1="100" y1="0" x2="100" y2="28"/>
+    <polygon class="arrow" points="96,6 100,0 104,6"/>
+    <polygon class="arrow" points="96,22 100,28 104,22"/>
+    <text class="proto" x="115" y="18">HTTPS &#183; JSON &#183; SignalR</text>
   </g>
 
-  <!-- ==================== COLUMNA 2: FRONTEND BLAZOR ==================== -->
-  <g transform="translate(295, 25)">
-    <rect width="215" height="240" rx="12" fill="url(#cardGrad2)" stroke="#7928ca" stroke-width="1.5"/>
-    <rect x="0" y="0" width="215" height="36" rx="12" fill="#7928ca" fill-opacity="0.18"/>
-    <text x="107" y="24" fill="#d8b4fe" font-family="sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1">2. FRONTEND (WASM)</text>
+  <!-- CAPA 3: BACKEND ASP.NET CORE WEB API -->
+  <g transform="translate(40, 246)">
+    <rect x="0" y="0" width="920" height="155" rx="12" fill="var(--back-box)" stroke="var(--back-border)" stroke-width="1.4"/>
+    <text class="t-title" x="20" y="26">Backend &#183; ASP.NET Core Web API (M&#243;dulos de Negocio &amp; SignalR)</text>
 
-    <!-- Details -->
-    <g transform="translate(15, 52)">
-      <rect x="0" y="0" width="185" height="42" rx="6" fill="#181335" stroke="#3b2066" stroke-width="1"/>
-      <text x="12" y="20" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="700">PuraSed.Client</text>
-      <text x="12" y="34" fill="#a855f7" font-family="sans-serif" font-size="10">Blazor WebAssembly (.NET)</text>
+    <!-- Fila 1: Transversales -->
+    <g transform="translate(20, 38)">
+      <rect x="0" y="0" width="205" height="48" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
+      <text class="c-title" x="102" y="21">Seguridad</text>
+      <text class="c-sub" x="102" y="36">Roles, Identity, JWT</text>
 
-      <g transform="translate(5, 54)">
-        <text x="0" y="16" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Componentes Razor</text>
-        <text x="0" y="36" fill="#e2e8f0" font-family="sans-serif" font-size="11">• HttpClient asíncrono</text>
-        <text x="0" y="56" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Renderizado en Navegador</text>
-        <text x="0" y="76" fill="#e2e8f0" font-family="sans-serif" font-size="11">• CSS / Bootstrap responsivo</text>
-        <text x="0" y="96" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Gestión de Estado local</text>
-      </g>
+      <rect x="225" y="0" width="205" height="48" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
+      <text class="c-title" x="327" y="21">Bit&#225;cora</text>
+      <text class="c-sub" x="327" y="36">Auditor&#237;a inmutable</text>
+
+      <rect x="450" y="0" width="205" height="48" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
+      <text class="c-title" x="552" y="21">Tiempo Real</text>
+      <text class="c-sub" x="552" y="36">SignalR Hubs</text>
+
+      <rect x="675" y="0" width="205" height="48" rx="7" fill="var(--cat-trans)" stroke="var(--card-dev-border)"/>
+      <text class="c-title" x="777" y="21">Archivos</text>
+      <text class="c-sub" x="777" y="36">Comprobantes y PDF</text>
+    </g>
+
+    <!-- Fila 2: Operaci&#243;n & Negocio -->
+    <g transform="translate(20, 94)">
+      <rect x="0" y="0" width="205" height="48" rx="7" fill="var(--cat-oper)" stroke="var(--cat-oper-border)"/>
+      <text class="c-title" x="102" y="21">Men&#250; e Inventario</text>
+      <text class="c-sub" x="102" y="36">Stock por &#225;rea y combos</text>
+
+      <rect x="225" y="0" width="205" height="48" rx="7" fill="var(--cat-oper)" stroke="var(--cat-oper-border)"/>
+      <text class="c-title" x="327" y="21">Mesas y Comandas</text>
+      <text class="c-sub" x="327" y="36">Enrutamiento barra/cocina</text>
+
+      <rect x="450" y="0" width="205" height="48" rx="7" fill="var(--cat-biz)" stroke="var(--cat-biz-border)"/>
+      <text class="c-title" x="552" y="21">Reservas y Pagos</text>
+      <text class="c-sub" x="552" y="36">Facturas y pasarela</text>
+
+      <rect x="675" y="0" width="205" height="48" rx="7" fill="var(--cat-biz)" stroke="var(--cat-biz-border)"/>
+      <text class="c-title" x="777" y="21">Reportes y Satisfacci&#243;n</text>
+      <text class="c-sub" x="777" y="36">Cierre por jornada</text>
     </g>
   </g>
 
-  <!-- ARROW 2 -> 3 -->
-  <g transform="translate(517, 130)">
-    <line x1="0" y1="0" x2="44" y2="0" stroke="url(#arrowGrad2)" stroke-width="3" stroke-dasharray="4 4"/>
-    <polygon points="52,0 42,-5 42,5" fill="#00e5ff"/>
-    <rect x="-6" y="-22" width="64" height="16" rx="4" fill="#0d2438" stroke="#00e5ff" stroke-width="0.8"/>
-    <text x="26" y="-10" fill="#67e8f9" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle">HTTPS/JSON</text>
+  <!-- ENLACES BACKEND -> PERSISTENCIA -->
+  <line class="wire" x1="185" y1="401" x2="185" y2="430"/>
+  <polygon class="arrow" points="181,407 185,401 189,407"/>
+  <polygon class="arrow" points="181,424 185,430 189,424"/>
+
+  <line class="wire" x1="500" y1="401" x2="500" y2="430"/>
+  <polygon class="arrow" points="496,407 500,401 504,407"/>
+  <polygon class="arrow" points="496,424 500,430 504,424"/>
+
+  <line class="wire" x1="815" y1="401" x2="815" y2="430"/>
+  <polygon class="arrow" points="811,424 815,430 819,424"/>
+
+  <!-- CAPA 4: PERSISTENCIA Y SERVICIOS EXTERNOS -->
+  <g transform="translate(40, 430)">
+    <!-- SQL Server -->
+    <rect x="0" y="0" width="290" height="64" rx="10" fill="var(--store-box)" stroke="var(--store-border)" stroke-width="1.3"/>
+    <text class="c-title" x="145" y="28">Microsoft SQL Server</text>
+    <text class="c-sub" x="145" y="47">Entity Framework Core &#183; Transaccional</text>
+
+    <!-- Almac&#233;n de Archivos -->
+    <rect x="315" y="0" width="290" height="64" rx="10" fill="var(--store-box)" stroke="var(--store-border)" stroke-width="1.3"/>
+    <text class="c-title" x="460" y="28">Almac&#233;n de Archivos</text>
+    <text class="c-sub" x="460" y="47">Comprobantes de transferencia y fotos</text>
+
+    <!-- Pasarela de Pago -->
+    <rect x="630" y="0" width="290" height="64" rx="10" fill="var(--dash-box)" stroke="var(--dash-border)" stroke-width="1.3" stroke-dasharray="5 4"/>
+    <text class="c-title" x="775" y="28">Pasarela de Pago</text>
+    <text class="c-sub" x="775" y="47">Servicio externo (Tarjeta sin almacenar)</text>
   </g>
 
-  <!-- ==================== COLUMNA 3: BACKEND WEB API ==================== -->
-  <g transform="translate(575, 25)">
-    <rect width="225" height="240" rx="12" fill="url(#cardGrad3)" stroke="#00e5ff" stroke-width="1.5"/>
-    <rect x="0" y="0" width="225" height="36" rx="12" fill="#00e5ff" fill-opacity="0.15"/>
-    <text x="112" y="24" fill="#67e8f9" font-family="sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1">3. BACKEND (WEB API)</text>
+  <!-- CAPA 5: PIPELINE DEL ESTADO DEL PEDIDO (SIGNALR LIFECYCLE) -->
+  <g transform="translate(40, 525)">
+    <rect x="0" y="0" width="920" height="130" rx="12" fill="var(--canvas-bg)" stroke="var(--pipe-border)" stroke-width="1"/>
+    <text class="t-title" x="20" y="26">Ciclo de Vida del Pedido en Tiempo Real (SignalR)</text>
 
-    <!-- Details -->
-    <g transform="translate(15, 52)">
-      <rect x="0" y="0" width="195" height="42" rx="6" fill="#0a2233" stroke="#164e63" stroke-width="1"/>
-      <text x="12" y="20" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="700">PuraSed.WebApi</text>
-      <text x="12" y="34" fill="#06b6d4" font-family="sans-serif" font-size="10">ASP.NET Core REST Services</text>
-
-      <g transform="translate(5, 54)">
-        <text x="0" y="16" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Controladores REST</text>
-        <text x="0" y="36" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Documentación Swagger</text>
-        <text x="0" y="56" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Políticas de CORS</text>
-        <text x="0" y="76" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Lógica de Combos &amp; Stock</text>
-        <text x="0" y="96" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Cifrado de Credenciales</text>
-      </g>
+    <!-- Paso 1 -->
+    <g transform="translate(20, 42)">
+      <rect x="0" y="0" width="180" height="52" rx="8" fill="var(--cat-biz)" stroke="var(--cat-biz-border)"/>
+      <text class="c-title" x="90" y="23">Cliente Pide</text>
+      <text class="c-sub" x="90" y="38">QR en su mesa</text>
+      <text class="p-state" x="90" y="68">Pendiente</text>
     </g>
-  </g>
 
-  <!-- ARROW 3 -> 4 -->
-  <g transform="translate(807, 130)">
-    <line x1="0" y1="0" x2="42" y2="0" stroke="url(#arrowGrad3)" stroke-width="3" stroke-dasharray="4 4"/>
-    <polygon points="50,0 40,-5 40,5" fill="#f59e0b"/>
-    <rect x="-4" y="-22" width="58" height="16" rx="4" fill="#2d1d0c" stroke="#f59e0b" stroke-width="0.8"/>
-    <text x="25" y="-10" fill="#fde68a" font-family="sans-serif" font-size="9" font-weight="700" text-anchor="middle">EF Core</text>
-  </g>
+    <line class="wire" x1="205" y1="68" x2="245" y2="68"/>
+    <polygon class="arrow" points="241,64 247,68 241,72"/>
 
-  <!-- ==================== COLUMNA 4: BASE DE DATOS ==================== -->
-  <g transform="translate(865, 25)">
-    <rect width="210" height="240" rx="12" fill="url(#cardGrad4)" stroke="#f59e0b" stroke-width="1.5"/>
-    <rect x="0" y="0" width="210" height="36" rx="12" fill="#f59e0b" fill-opacity="0.15"/>
-    <text x="105" y="24" fill="#fde68a" font-family="sans-serif" font-size="12" font-weight="800" text-anchor="middle" letter-spacing="1">4. BASE DE DATOS</text>
+    <!-- Paso 2 -->
+    <g transform="translate(250, 42)">
+      <rect x="0" y="0" width="180" height="52" rx="8" fill="var(--cat-oper)" stroke="var(--cat-oper-border)"/>
+      <text class="c-title" x="90" y="23">Cocina y Bar</text>
+      <text class="c-sub" x="90" y="38">Marcan despacho</text>
+      <text class="p-state" x="90" y="68">En preparaci&#243;n</text>
+    </g>
 
-    <!-- Details -->
-    <g transform="translate(15, 52)">
-      <rect x="0" y="0" width="180" height="42" rx="6" fill="#291410" stroke="#78350f" stroke-width="1"/>
-      <text x="12" y="20" fill="#ffffff" font-family="sans-serif" font-size="12" font-weight="700">SQL Server</text>
-      <text x="12" y="34" fill="#f59e0b" font-family="sans-serif" font-size="10">Motor Relacional ACID</text>
+    <line class="wire" x1="435" y1="68" x2="475" y2="68"/>
+    <polygon class="arrow" points="471,64 477,68 471,72"/>
 
-      <g transform="translate(5, 54)">
-        <text x="0" y="16" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Catálogo &amp; Precios</text>
-        <text x="0" y="36" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Pedidos &amp; Mesas</text>
-        <text x="0" y="56" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Inventario por Áreas</text>
-        <text x="0" y="76" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Facturación &amp; Pagos</text>
-        <text x="0" y="96" fill="#e2e8f0" font-family="sans-serif" font-size="11">• Bitácora de Auditoría</text>
-      </g>
+    <!-- Paso 3 -->
+    <g transform="translate(480, 42)">
+      <rect x="0" y="0" width="180" height="52" rx="8" fill="#FDF3E7" stroke="#F0C38F"/>
+      <text class="c-title" x="90" y="23">Mesero</text>
+      <text class="c-sub" x="90" y="38">Lleva a la mesa</text>
+      <text class="p-state" x="90" y="68">Listo</text>
+    </g>
+
+    <line class="wire" x1="665" y1="68" x2="705" y2="68"/>
+    <polygon class="arrow" points="701,64 707,68 701,72"/>
+
+    <!-- Paso 4 -->
+    <g transform="translate(710, 42)">
+      <rect x="0" y="0" width="190" height="52" rx="8" fill="var(--cat-biz)" stroke="var(--cat-biz-border)"/>
+      <text class="c-title" x="95" y="23">Cliente</text>
+      <text class="c-sub" x="95" y="38">Paga y opina</text>
+      <text class="p-state" x="95" y="68">Entregado / Pagado</text>
     </g>
   </g>
 </svg>

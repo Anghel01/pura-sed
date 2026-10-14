@@ -1,0 +1,65 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 170" width="100%" height="100%" role="img" aria-labelledby="jiraTitle jiraDesc">
+  <title id="jiraTitle">Tablero Scrum en Atlassian Jira Software</title>
+  <desc id="jiraDesc">Gesti&#243;n &#225;gil del proyecto PuraSed: Sprints semanales, 32 Historias de Usuario priorizadas y seguimiento continuo.</desc>
+  <defs>
+    <style>
+      :root {
+        --j-bg: #FFFFFF;
+        --j-border: #D0D7DE;
+        --j-text: #1F3A4D;
+        --j-sub: #57606A;
+        --j-chip: #F0F4F8;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --j-bg: #161B22;
+          --j-border: #30363D;
+          --j-text: #F0F6FC;
+          --j-sub: #8B949E;
+          --j-chip: #21262D;
+        }
+      }
+      .j-box { fill: var(--j-bg); stroke: var(--j-border); stroke-width: 1.2; }
+      .j-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 20px; font-weight: 700; fill: var(--j-text); }
+      .j-desc { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 13px; font-weight: 400; fill: var(--j-sub); }
+      .j-badge { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 11px; font-weight: 700; fill: #FFFFFF; }
+      .j-btn-txt { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 12.5px; font-weight: 700; fill: #FFFFFF; }
+    </style>
+    <filter id="jSh" x="-3%" y="-6%" width="106%" height="120%">
+      <feDropShadow flood-color="rgba(0,82,204,0.15)" dx="0" dy="4" stdDeviation="6"/>
+    </filter>
+  </defs>
+
+  <rect class="j-box" x="10" y="10" width="940" height="150" rx="14" filter="url(#jSh)"/>
+  <rect x="10" y="10" width="8" height="150" fill="#0052CC" rx="4"/>
+
+  <!-- Logo Jira Grande -->
+  <g transform="translate(36, 42)">
+    <circle cx="42" cy="42" r="40" fill="#0052CC"/>
+    <path d="M42 16 L57 31 L42 46 L27 31 Z" fill="#2684FF"/>
+    <path d="M42 27 L53 38 L42 49 L31 38 Z" fill="#FFFFFF"/>
+    <path d="M42 38 L57 53 L42 68 L27 53 Z" fill="#0052CC" opacity="0.4"/>
+  </g>
+
+  <!-- Texto Informativo -->
+  <g transform="translate(140, 40)">
+    <text class="j-title" x="0" y="24">Tablero Oficial Scrum &#183; Atlassian Jira Software</text>
+    <text class="j-desc" x="0" y="48">Gesti&#243;n de 32 Historias de Usuario (HU-01 a HU-32), criterios de aceptaci&#243;n y ciclo de 16 semanas.</text>
+
+    <!-- Chips informativos -->
+    <rect x="0" y="64" width="130" height="24" rx="12" fill="#E4524F"/>
+    <text class="j-badge" x="65" y="80" text-anchor="middle">Sprint 1 &#183; En Curso</text>
+
+    <rect x="140" y="64" width="150" height="24" rx="12" fill="var(--j-chip)" stroke="var(--j-border)"/>
+    <text class="j-desc" x="215" y="80" text-anchor="middle" font-weight="600">32 Historias Activas</text>
+
+    <rect x="300" y="64" width="165" height="24" rx="12" fill="var(--j-chip)" stroke="var(--j-border)"/>
+    <text class="j-desc" x="382" y="80" text-anchor="middle" font-weight="600">8 M&#243;dulos Funcionales</text>
+  </g>
+
+  <!-- Bot&#243;n Acci&#243;n Visual -->
+  <g transform="translate(710, 60)">
+    <rect x="0" y="0" width="215" height="48" rx="24" fill="#0052CC"/>
+    <text class="j-btn-txt" x="107" y="29" text-anchor="middle">Abrir Tablero en Jira &#8594;</text>
+  </g>
+</svg>

@@ -54,10 +54,10 @@
   <rect x="214" y="32" width="152" height="28" rx="14" fill="#E4524F" fill-opacity=".12"/>
   <text class="role" x="226" y="50.5">PRODUCT OWNER</text>
   <text class="name" x="214" y="98">Jose Naranjo</text>
-  <text class="txt" x="214" y="130">Requerimientos y aceptaciÃ³n</text>
+  <text class="txt" x="214" y="130">Requerimientos y aceptaci&#243;n</text>
   <text class="txt" x="214" y="154">de entregables del cliente</text>
   <line class="sep" x1="214" y1="172" x2="526" y2="172"/>
-  <text class="foot" x="214" y="196">FIEE Â· EPN</text>
+  <text class="foot" x="214" y="196">FIEE &#183; EPN</text>
 
   <rect class="frame" x="10.5" y="8.5" width="539" height="209" rx="19.5"/>
 </svg>

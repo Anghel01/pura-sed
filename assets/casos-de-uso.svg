@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" width="100%" height="100%" role="img" aria-labelledby="ucTitle ucDesc">
+  <title id="ucTitle">Diagrama de Casos de Uso &#8212; Sistema PuraSed</title>
+  <desc id="ucDesc">Diagrama UML de casos de uso principales para Cliente, Mesero, Personal de Barra/Cocina, Asistente y Administraci&#243;n.</desc>
+  <defs>
+    <style>
+      :root {
+        --canvas-bg: #F8FAFC;
+        --box-bg: #FFFFFF;
+        --box-border: #D0D7DE;
+        --actor-ink: #1F3A4D;
+        --actor-sub: #5B7383;
+        --oval-fill: #F0F7FA;
+        --oval-border: #3D8FAE;
+        --oval-text: #1F3A4D;
+        --line-color: #5B7383;
+        --title-ink: #1F3A4D;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --canvas-bg: #0D1117;
+          --box-bg: #161B22;
+          --box-border: #30363D;
+          --actor-ink: #F0F6FC;
+          --actor-sub: #8B949E;
+          --oval-fill: #1C2633;
+          --oval-border: #58A6FF;
+          --oval-text: #E6EDF3;
+          --line-color: #6E7681;
+          --title-ink: #F0F6FC;
+        }
+      }
+      .bound { fill: var(--box-bg); stroke: var(--box-border); stroke-width: 1.5; stroke-dasharray: 6 4; }
+      .b-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 14px; font-weight: 700; letter-spacing: 1.5px; fill: var(--actor-sub); }
+      .act-name { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 13px; font-weight: 700; fill: var(--actor-ink); }
+      .act-role { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 10.5px; font-weight: 500; fill: var(--actor-sub); }
+      .uc-oval { fill: var(--oval-fill); stroke: var(--oval-border); stroke-width: 1.4; }
+      .uc-txt { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 11.5px; font-weight: 600; fill: var(--oval-text); text-anchor: middle; }
+      .uc-wire { stroke: var(--line-color); stroke-width: 1.2; stroke-opacity: 0.65; fill: none; }
+      .actor-icon { stroke: var(--actor-ink); stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    </style>
+  </defs>
+
+  <!-- L&#205;MITE DEL SISTEMA (System Boundary) -->
+  <rect class="bound" x="180" y="24" width="600" height="472" rx="16"/>
+  <text class="b-title" x="204" y="52">SISTEMA PURASED &#183; CASOS DE USO</text>
+
+  <!-- ACTORES IZQUIERDA -->
+  <!-- Actor 1: Cliente -->
+  <g transform="translate(70, 110)">
+    <circle class="actor-icon" cx="30" cy="18" r="10"/>
+    <line class="actor-icon" x1="30" y1="28" x2="30" y2="52"/>
+    <line class="actor-icon" x1="12" y1="36" x2="48" y2="36"/>
+    <line class="actor-icon" x1="30" y1="52" x2="16" y2="72"/>
+    <line class="actor-icon" x1="30" y1="52" x2="44" y2="72"/>
+    <text class="act-name" x="30" y="92" text-anchor="middle">Cliente</text>
+    <text class="act-role" x="30" y="106" text-anchor="middle">Mesa / QR</text>
+  </g>
+
+  <!-- Actor 2: Mesero -->
+  <g transform="translate(70, 310)">
+    <circle class="actor-icon" cx="30" cy="18" r="10"/>
+    <line class="actor-icon" x1="30" y1="28" x2="30" y2="52"/>
+    <line class="actor-icon" x1="12" y1="36" x2="48" y2="36"/>
+    <line class="actor-icon" x1="30" y1="52" x2="16" y2="72"/>
+    <line class="actor-icon" x1="30" y1="52" x2="44" y2="72"/>
+    <text class="act-name" x="30" y="92" text-anchor="middle">Mesero</text>
+    <text class="act-role" x="30" y="106" text-anchor="middle">Tablet m&#243;vil</text>
+  </g>
+
+  <!-- ACTORES DERECHA -->
+  <!-- Actor 3: Cocina y Barra -->
+  <g transform="translate(830, 75)">
+    <circle class="actor-icon" cx="30" cy="18" r="10"/>
+    <line class="actor-icon" x1="30" y1="28" x2="30" y2="52"/>
+    <line class="actor-icon" x1="12" y1="36" x2="48" y2="36"/>
+    <line class="actor-icon" x1="30" y1="52" x2="16" y2="72"/>
+    <line class="actor-icon" x1="30" y1="52" x2="44" y2="72"/>
+    <text class="act-name" x="30" y="92" text-anchor="middle">Cocina / Barra</text>
+    <text class="act-role" x="30" y="106" text-anchor="middle">Pantalla de &#225;rea</text>
+  </g>
+
+  <!-- Actor 4: Asistente -->
+  <g transform="translate(830, 215)">
+    <circle class="actor-icon" cx="30" cy="18" r="10"/>
+    <line class="actor-icon" x1="30" y1="28" x2="30" y2="52"/>
+    <line class="actor-icon" x1="12" y1="36" x2="48" y2="36"/>
+    <line class="actor-icon" x1="30" y1="52" x2="16" y2="72"/>
+    <line class="actor-icon" x1="30" y1="52" x2="44" y2="72"/>
+    <text class="act-name" x="30" y="92" text-anchor="middle">Asistente</text>
+    <text class="act-role" x="30" y="106" text-anchor="middle">Reservas</text>
+  </g>
+
+  <!-- Actor 5: Administrador / Superadmin -->
+  <g transform="translate(830, 355)">
+    <circle class="actor-icon" cx="30" cy="18" r="10"/>
+    <line class="actor-icon" x1="30" y1="28" x2="30" y2="52"/>
+    <line class="actor-icon" x1="12" y1="36" x2="48" y2="36"/>
+    <line class="actor-icon" x1="30" y1="52" x2="16" y2="72"/>
+    <line class="actor-icon" x1="30" y1="52" x2="44" y2="72"/>
+    <text class="act-name" x="30" y="92" text-anchor="middle">Administrador</text>
+    <text class="act-role" x="30" y="106" text-anchor="middle">Gesti&#243;n y Auditor&#237;a</text>
+  </g>
+
+  <!-- CASOS DE USO (Columna 1: Front / Consumo) -->
+  <!-- UC1: Consultar Men&#250; por QR -->
+  <g transform="translate(230, 75)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Consultar Men&#250; por QR</text>
+  </g>
+
+  <!-- UC2: Registrar Pedido de Mesa -->
+  <g transform="translate(230, 140)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Registrar Pedido de Mesa</text>
+  </g>
+
+  <!-- UC3: Seguimiento de Comanda -->
+  <g transform="translate(230, 205)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Seguimiento de Comanda</text>
+  </g>
+
+  <!-- UC4: Solicitar y Reservar Mesa -->
+  <g transform="translate(230, 270)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Reservar Mesa en L&#237;nea</text>
+  </g>
+
+  <!-- UC5: Pagar Cuenta (Multi-pasarela) -->
+  <g transform="translate(230, 335)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Pagar Cuenta y Factura</text>
+  </g>
+
+  <!-- UC6: Calificar Atenci&#243;n y Local -->
+  <g transform="translate(230, 400)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Calificar Atenci&#243;n y Local</text>
+  </g>
+
+  <!-- CASOS DE USO (Columna 2: Operaci&#243;n / Back-office) -->
+  <!-- UC7: Despachar Comandas en Pantalla -->
+  <g transform="translate(520, 95)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Despachar Comandas</text>
+  </g>
+
+  <!-- UC8: Descontar Inventario / Mermas -->
+  <g transform="translate(520, 165)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Control de Stock e Insumos</text>
+  </g>
+
+  <!-- UC9: Administrar Agenda de Reservas -->
+  <g transform="translate(520, 235)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Gestionar Reservas</text>
+  </g>
+
+  <!-- UC10: Validar Pagos y Habilitar Cuentas -->
+  <g transform="translate(520, 305)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Habilitar Cobro / Arqueo</text>
+  </g>
+
+  <!-- UC11: Reportes y Auditor&#237;a por Jornada -->
+  <g transform="translate(520, 375)">
+    <ellipse class="uc-oval" cx="105" cy="22" rx="95" ry="20"/>
+    <text class="uc-txt" x="105" y="26">Reportes por Jornada y Bit&#225;cora</text>
+  </g>
+
+  <!-- L&#205;NEAS DE ASOCIACI&#211;N (Actor a Caso de Uso) -->
+  <!-- Cliente (118, 140) -->
+  <line class="uc-wire" x1="120" y1="140" x2="230" y2="97"/>
+  <line class="uc-wire" x1="120" y1="145" x2="230" y2="162"/>
+  <line class="uc-wire" x1="120" y1="150" x2="230" y2="227"/>
+  <line class="uc-wire" x1="120" y1="155" x2="230" y2="292"/>
+  <line class="uc-wire" x1="120" y1="160" x2="230" y2="357"/>
+  <line class="uc-wire" x1="120" y1="165" x2="230" y2="422"/>
+
+  <!-- Mesero (118, 345) -->
+  <line class="uc-wire" x1="120" y1="345" x2="230" y2="162"/>
+  <line class="uc-wire" x1="120" y1="350" x2="230" y2="227"/>
+  <line class="uc-wire" x1="120" y1="355" x2="230" y2="357"/>
+
+  <!-- Cocina / Barra (840, 110) -->
+  <line class="uc-wire" x1="840" y1="110" x2="730" y2="117"/>
+  <line class="uc-wire" x1="840" y1="120" x2="730" y2="187"/>
+
+  <!-- Asistente (840, 250) -->
+  <line class="uc-wire" x1="840" y1="250" x2="730" y2="257"/>
+
+  <!-- Administrador (840, 390) -->
+  <line class="uc-wire" x1="840" y1="385" x2="730" y2="257"/>
+  <line class="uc-wire" x1="840" y1="390" x2="730" y2="327"/>
+  <line class="uc-wire" x1="840" y1="395" x2="730" y2="397"/>
+</svg>

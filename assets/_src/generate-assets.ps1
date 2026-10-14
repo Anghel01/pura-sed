@@ -1,4 +1,4 @@
-# Script integral de generación de componentes vectoriales PuraSed
+# Script integral de generación de componentes vectoriales PuraSed (100% Clean Entities & High Fidelity)
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 
@@ -9,14 +9,14 @@ if (-not (Test-Path $teamDir)) {
     New-Item -ItemType Directory -Path $teamDir | Out-Null
 }
 
-Write-Host "Directorio raíz del repositorio: $repoRoot"
+Write-Host "Generando recursos vectoriales de alta fidelidad..."
 
 # ==========================================
-# 1. GENERACIÓN DE assets/banner.svg
+# 1. GENERACIÓN DE assets/banner.svg (Efervescencia y Espuma Mejorada)
 # ==========================================
 $bannerJpg = Join-Path $assetsDir "banner.jpg"
 if (Test-Path $bannerJpg) {
-    Write-Host "Generando assets/banner.svg desde banner.jpg..."
+    Write-Host "Generando assets/banner.svg con efervescencia reforzada..."
     $origBmp = [System.Drawing.Bitmap]::FromFile($bannerJpg)
     $targetW = 1600
     $targetH = 397
@@ -41,31 +41,51 @@ if (Test-Path $bannerJpg) {
 
     $bannerSvg = @"
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1640 420" width="1640" height="420" role="img" aria-labelledby="bannerTitle bannerDesc">
-  <title id="bannerTitle">PuraSed — Bar y Restaurante System</title>
+  <title id="bannerTitle">PuraSed &#8212; Bar y Restaurante System</title>
   <desc id="bannerDesc">Plataforma digital para bar nocturno y restaurante: pedidos por mesa, comanda a barra y cocina, y control de jornada.</desc>
   <defs>
     <style>
       .frame { fill: none; stroke: #1F3A4D; stroke-opacity: .12; stroke-width: 1.5; }
       .ds    { flood-color: #1F3A4D; flood-opacity: .25; }
+      
+      /* Efervescencia de burbujas en el cuerpo de la cerveza */
       .bubble {
         fill: #FFF9E6;
         opacity: 0;
         animation-name: rise;
-        animation-duration: 3.2s;
+        animation-duration: 3.4s;
         animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
         animation-iteration-count: infinite;
       }
-      .b1 { animation-delay: 0.0s; }
-      .b2 { animation-delay: 0.8s; }
-      .b3 { animation-delay: 1.6s; }
-      .b4 { animation-delay: 2.4s; }
+      .b1 { animation-delay: 0.0s; animation-duration: 2.8s; }
+      .b2 { animation-delay: 0.6s; animation-duration: 3.3s; }
+      .b3 { animation-delay: 1.2s; animation-duration: 2.9s; }
+      .b4 { animation-delay: 1.8s; animation-duration: 3.5s; }
+      .b5 { animation-delay: 2.4s; animation-duration: 3.1s; }
+      .b6 { animation-delay: 3.0s; animation-duration: 2.7s; }
+
+      /* Destellos de espuma en la corona desbordante */
+      .fizz {
+        fill: #FFFFFF;
+        opacity: 0.2;
+        animation: fizzle 2s ease-in-out infinite alternate;
+      }
+      .fz1 { animation-delay: 0.2s; }
+      .fz2 { animation-delay: 0.7s; }
+      .fz3 { animation-delay: 1.3s; }
 
       @keyframes rise {
         0%   { transform: translate(0, 0); opacity: 0; }
         15%  { opacity: 0.85; }
-        55%  { transform: translate(1.8px, -55px); opacity: 0.70; }
+        55%  { transform: translate(2px, -65px); opacity: 0.70; }
         85%  { opacity: 0.45; }
-        100% { transform: translate(-1.2px, -115px); opacity: 0; }
+        100% { transform: translate(-1.5px, -135px); opacity: 0; }
+      }
+
+      @keyframes fizzle {
+        0%   { opacity: 0.25; transform: scale(0.9); }
+        50%  { opacity: 0.85; transform: scale(1.2); }
+        100% { opacity: 0.40; transform: scale(1.0); }
       }
 
       @media (prefers-color-scheme: dark) {
@@ -73,7 +93,7 @@ if (Test-Path $bannerJpg) {
         .ds    { flood-color: #000000; flood-opacity: .60; }
       }
       @media (prefers-reduced-motion: reduce) {
-        .bubble { animation: none; opacity: 0; }
+        .bubble, .fizz { animation: none; opacity: 0.4; }
       }
     </style>
 
@@ -86,7 +106,7 @@ if (Test-Path $bannerJpg) {
     </clipPath>
 
     <clipPath id="glassArea">
-      <rect x="270" y="130" width="150" height="190" rx="10"/>
+      <rect x="260" y="125" width="165" height="205" rx="10"/>
     </clipPath>
 
     <linearGradient id="seamGradient" x1="0" y1="0" x2="0" y2="1">
@@ -105,15 +125,36 @@ if (Test-Path $bannerJpg) {
   <g clip-path="url(#round)">
     <image xlink:href="data:image/jpeg;base64,$b64" x="20" y="12" width="1600" height="397" preserveAspectRatio="xMidYMid slice"/>
     <rect x="1305" y="12" width="22" height="295" fill="url(#seamGradient)" filter="url(#seamBlur)" opacity="0.85"/>
+
+    <!-- Efervescencia densa en el vaso de cerveza -->
     <g clip-path="url(#glassArea)">
-      <circle class="bubble b1" cx="310" cy="295" r="3.2"/>
-      <circle class="bubble b2" cx="340" cy="305" r="2.4"/>
-      <circle class="bubble b3" cx="365" cy="290" r="3.6"/>
-      <circle class="bubble b4" cx="385" cy="310" r="2.8"/>
-      <circle class="bubble b1" cx="325" cy="315" r="2.0"/>
-      <circle class="bubble b2" cx="355" cy="285" r="3.0"/>
-      <circle class="bubble b3" cx="375" cy="318" r="2.5"/>
-      <circle class="bubble b4" cx="395" cy="298" r="3.4"/>
+      <!-- Columna 1 -->
+      <circle class="bubble b1" cx="295" cy="305" r="3.2"/>
+      <circle class="bubble b3" cx="305" cy="315" r="2.0"/>
+      <circle class="bubble b5" cx="300" cy="285" r="2.8"/>
+      <!-- Columna 2 -->
+      <circle class="bubble b2" cx="325" cy="318" r="2.4"/>
+      <circle class="bubble b4" cx="335" cy="295" r="3.6"/>
+      <circle class="bubble b6" cx="330" cy="325" r="1.8"/>
+      <circle class="bubble b1" cx="342" cy="275" r="3.0"/>
+      <!-- Columna 3 -->
+      <circle class="bubble b3" cx="355" cy="310" r="4.0"/>
+      <circle class="bubble b5" cx="365" cy="288" r="2.2"/>
+      <circle class="bubble b2" cx="372" cy="320" r="3.4"/>
+      <circle class="bubble b4" cx="360" cy="300" r="1.6"/>
+      <!-- Columna 4 -->
+      <circle class="bubble b6" cx="385" cy="312" r="3.0"/>
+      <circle class="bubble b1" cx="395" cy="282" r="2.5"/>
+      <circle class="bubble b3" cx="390" cy="325" r="3.5"/>
+      <circle class="bubble b5" cx="405" cy="295" r="2.0"/>
+
+      <!-- Destellos de efervescencia en la espuma superior -->
+      <circle class="fizz fz1" cx="325" cy="155" r="2.5"/>
+      <circle class="fizz fz2" cx="345" cy="148" r="3.2"/>
+      <circle class="fizz fz3" cx="370" cy="152" r="2.8"/>
+      <circle class="fizz fz1" cx="390" cy="160" r="3.0"/>
+      <circle class="fizz fz2" cx="310" cy="165" r="2.2"/>
+      <circle class="fizz fz3" cx="355" cy="162" r="2.6"/>
     </g>
   </g>
 
@@ -122,192 +163,88 @@ if (Test-Path $bannerJpg) {
 "@
     $outBanner = Join-Path $assetsDir "banner.svg"
     [System.IO.File]::WriteAllText($outBanner, $bannerSvg, [System.Text.Encoding]::UTF8)
-    Write-Host "Banner SVG generado en $outBanner"
+    Write-Host "Banner SVG con espuma y efervescencia generado en $outBanner"
 }
 
 # ==========================================
-# 2. GENERACIÓN DE assets/tags.svg (Lienzo 1200px)
+# 2. GENERACIÓN DE assets/jira-board.svg (Banner visual para Sección Jira)
 # ==========================================
-Write-Host "Generando assets/tags.svg (Lienzo arquitectónico simétrico de 1200px)..."
-
-$tagsSvg = @"
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 230" width="1200" height="230" role="img" aria-labelledby="tagsTitle tagsDesc">
-  <title id="tagsTitle">PuraSed Tech Canvas — Arquitectura y Tecnologías</title>
-  <desc id="tagsDesc">Ecosistema técnico integrado: Cliente Blazor WASM en .NET 10, Backend ASP.NET Core Web API, Base de datos SQL Server con EF Core, y gestión Scrum en Jira Software.</desc>
+Write-Host "Generando assets/jira-board.svg para el tablero Scrum..."
+$jiraBanner = @"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 170" width="100%" height="100%" role="img" aria-labelledby="jiraTitle jiraDesc">
+  <title id="jiraTitle">Tablero Scrum en Atlassian Jira Software</title>
+  <desc id="jiraDesc">Gesti&#243;n &#225;gil del proyecto PuraSed: Sprints semanales, 32 Historias de Usuario priorizadas y seguimiento continuo.</desc>
   <defs>
     <style>
       :root {
-        --canvas-bg: #F8FAFC;
-        --card-bg: #FFFFFF;
-        --card-border: rgba(31, 58, 77, 0.12);
-        --title-color: #1F3A4D;
-        --sub-color: #5B7383;
-        --tag-bg: rgba(31, 58, 77, 0.05);
-        --tag-border: rgba(31, 58, 77, 0.10);
-        --tag-text: #2C4A5E;
-        --flow-line: #3D8FAE;
-        --flow-wire: rgba(61, 143, 174, 0.28);
-        --pill-bg: rgba(31, 58, 77, 0.06);
-        --pill-text: #415A6C;
-        --card-shadow: rgba(31, 58, 77, 0.08);
+        --j-bg: #FFFFFF;
+        --j-border: #D0D7DE;
+        --j-text: #1F3A4D;
+        --j-sub: #57606A;
+        --j-chip: #F0F4F8;
       }
-
       @media (prefers-color-scheme: dark) {
         :root {
-          --canvas-bg: #0D1117;
-          --card-bg: #161B22;
-          --card-border: rgba(255, 255, 255, 0.10);
-          --title-color: #F0F6FC;
-          --sub-color: #8B949E;
-          --tag-bg: rgba(255, 255, 255, 0.05);
-          --tag-border: rgba(255, 255, 255, 0.08);
-          --tag-text: #C9D1D9;
-          --flow-line: #58A6FF;
-          --flow-wire: rgba(88, 166, 255, 0.25);
-          --pill-bg: rgba(255, 255, 255, 0.08);
-          --pill-text: #8B949E;
-          --card-shadow: rgba(0, 0, 0, 0.45);
+          --j-bg: #161B22;
+          --j-border: #30363D;
+          --j-text: #F0F6FC;
+          --j-sub: #8B949E;
+          --j-chip: #21262D;
         }
       }
-
-      .card { fill: var(--card-bg); stroke: var(--card-border); stroke-width: 1; }
-      .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: var(--title-color); }
-      .sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13.5px; font-weight: 500; fill: var(--sub-color); }
-      .pill-lbl { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; fill: var(--pill-text); }
-      .tag-lbl { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: var(--tag-text); }
-      .proto-lbl { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; fill: var(--sub-color); }
-
-      @keyframes flowData {
-        from { stroke-dashoffset: 24; }
-        to   { stroke-dashoffset: 0; }
-      }
-
-      .flow-active {
-        stroke: var(--flow-line);
-        stroke-width: 2.2;
-        stroke-dasharray: 6 5;
-        animation: flowData 1.4s linear infinite;
-      }
-
-      .flow-sync {
-        stroke: var(--flow-line);
-        stroke-width: 1.8;
-        stroke-dasharray: 4 4;
-        opacity: 0.75;
-        animation: flowData 2.2s linear infinite;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .flow-active, .flow-sync { animation: none; }
-      }
+      .j-box { fill: var(--j-bg); stroke: var(--j-border); stroke-width: 1.2; }
+      .j-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 20px; font-weight: 700; fill: var(--j-text); }
+      .j-desc { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 13px; font-weight: 400; fill: var(--j-sub); }
+      .j-badge { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 11px; font-weight: 700; fill: #FFFFFF; }
+      .j-btn-txt { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif; font-size: 12.5px; font-weight: 700; fill: #FFFFFF; }
     </style>
-
-    <filter id="cardSh" x="-4%" y="-6%" width="108%" height="116%">
-      <feDropShadow flood-color="var(--card-shadow)" dx="0" dy="5" stdDeviation="6"/>
+    <filter id="jSh" x="-3%" y="-6%" width="106%" height="120%">
+      <feDropShadow flood-color="rgba(0,82,204,0.15)" dx="0" dy="4" stdDeviation="6"/>
     </filter>
   </defs>
 
-  <!-- LÍNEAS CONECTORAS INTER-BLOQUES (FLUJO DE DATOS) -->
-  <!-- Conector 1 -> 2 (Cliente a Servidor) -->
-  <line x1="288" y1="115" x2="320" y2="115" stroke="var(--flow-wire)" stroke-width="2.2"/>
-  <line class="flow-active" x1="288" y1="115" x2="320" y2="115"/>
-  <polygon points="318,111 325,115 318,119" fill="var(--flow-line)"/>
-  <text class="proto-lbl" x="304" y="104" text-anchor="middle">HTTPS</text>
+  <rect class="j-box" x="10" y="10" width="940" height="150" rx="14" filter="url(#jSh)"/>
+  <rect x="10" y="10" width="8" height="150" fill="#0052CC" rx="4"/>
 
-  <!-- Conector 2 -> 3 (Servidor a Datos) -->
-  <line x1="584" y1="115" x2="616" y2="115" stroke="var(--flow-wire)" stroke-width="2.2"/>
-  <line class="flow-active" x1="584" y1="115" x2="616" y2="115"/>
-  <polygon points="614,111 621,115 614,119" fill="var(--flow-line)"/>
-  <text class="proto-lbl" x="600" y="104" text-anchor="middle">TDS</text>
-
-  <!-- Conector 3 -> 4 (Datos a Gestión Agile) -->
-  <line x1="880" y1="115" x2="912" y2="115" stroke="var(--flow-wire)" stroke-width="1.8"/>
-  <line class="flow-sync" x1="880" y1="115" x2="912" y2="115"/>
-  <circle cx="896" cy="115" r="3.2" fill="var(--flow-line)"/>
-  <text class="proto-lbl" x="896" y="104" text-anchor="middle">SYNC</text>
-
-  <!-- BLOQUE 1: CLIENTE (SPA) -->
-  <g transform="translate(24, 20)">
-    <rect class="card" x="0" y="0" width="264" height="190" rx="14" filter="url(#cardSh)"/>
-    <rect x="0" y="0" width="264" height="4" rx="2" fill="#E4524F"/>
-    
-    <rect x="18" y="18" width="112" height="22" rx="11" fill="var(--pill-bg)"/>
-    <text class="pill-lbl" x="74" y="33" text-anchor="middle">CLIENTE · SPA</text>
-    
-    <text class="title" x="18" y="74">.NET 10.0</text>
-    <text class="sub" x="18" y="98">Blazor WebAssembly</text>
-    
-    <rect x="18" y="116" width="138" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
-    <text class="tag-lbl" x="87" y="132" text-anchor="middle">C# Nativo (WASM)</text>
-    
-    <rect x="18" y="148" width="162" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
-    <text class="tag-lbl" x="99" y="164" text-anchor="middle">Vistas por Rol (Mobile QR)</text>
+  <!-- Logo Jira Grande -->
+  <g transform="translate(36, 42)">
+    <circle cx="42" cy="42" r="40" fill="#0052CC"/>
+    <path d="M42 16 L57 31 L42 46 L27 31 Z" fill="#2684FF"/>
+    <path d="M42 27 L53 38 L42 49 L31 38 Z" fill="#FFFFFF"/>
+    <path d="M42 38 L57 53 L42 68 L27 53 Z" fill="#0052CC" opacity="0.4"/>
   </g>
 
-  <!-- BLOQUE 2: SERVIDOR (API) -->
-  <g transform="translate(320, 20)">
-    <rect class="card" x="0" y="0" width="264" height="190" rx="14" filter="url(#cardSh)"/>
-    <rect x="0" y="0" width="264" height="4" rx="2" fill="#512BD4"/>
-    
-    <rect x="18" y="18" width="126" height="22" rx="11" fill="var(--pill-bg)"/>
-    <text class="pill-lbl" x="81" y="33" text-anchor="middle">SERVIDOR · API</text>
-    
-    <text class="title" x="18" y="74">ASP.NET Core</text>
-    <text class="sub" x="18" y="98">Web API &amp; SignalR</text>
-    
-    <rect x="18" y="116" width="152" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
-    <text class="tag-lbl" x="94" y="132" text-anchor="middle">RESTful &amp; OpenAPI v1</text>
-    
-    <rect x="18" y="148" width="166" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
-    <text class="tag-lbl" x="101" y="164" text-anchor="middle">Comandas en Tiempo Real</text>
+  <!-- Texto Informativo -->
+  <g transform="translate(140, 40)">
+    <text class="j-title" x="0" y="24">Tablero Oficial Scrum &#183; Atlassian Jira Software</text>
+    <text class="j-desc" x="0" y="48">Gesti&#243;n de 32 Historias de Usuario (HU-01 a HU-32), criterios de aceptaci&#243;n y ciclo de 16 semanas.</text>
+
+    <!-- Chips informativos -->
+    <rect x="0" y="64" width="130" height="24" rx="12" fill="#E4524F"/>
+    <text class="j-badge" x="65" y="80" text-anchor="middle">Sprint 1 &#183; En Curso</text>
+
+    <rect x="140" y="64" width="150" height="24" rx="12" fill="var(--j-chip)" stroke="var(--j-border)"/>
+    <text class="j-desc" x="215" y="80" text-anchor="middle" font-weight="600">32 Historias Activas</text>
+
+    <rect x="300" y="64" width="165" height="24" rx="12" fill="var(--j-chip)" stroke="var(--j-border)"/>
+    <text class="j-desc" x="382" y="80" text-anchor="middle" font-weight="600">8 M&#243;dulos Funcionales</text>
   </g>
 
-  <!-- BLOQUE 3: DATOS (PERSISTENCIA) -->
-  <g transform="translate(616, 20)">
-    <rect class="card" x="0" y="0" width="264" height="190" rx="14" filter="url(#cardSh)"/>
-    <rect x="0" y="0" width="264" height="4" rx="2" fill="#0078D4"/>
-    
-    <rect x="18" y="18" width="154" height="22" rx="11" fill="var(--pill-bg)"/>
-    <text class="pill-lbl" x="95" y="33" text-anchor="middle">DATOS · PERSISTENCIA</text>
-    
-    <text class="title" x="18" y="74">SQL Server</text>
-    <text class="sub" x="18" y="98">Entity Framework Core</text>
-    
-    <rect x="18" y="116" width="156" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
-    <text class="tag-lbl" x="96" y="132" text-anchor="middle">Code-First Migrations</text>
-    
-    <rect x="18" y="148" width="150" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
-    <text class="tag-lbl" x="93" y="164" text-anchor="middle">Inventario &amp; Facturación</text>
-  </g>
-
-  <!-- BLOQUE 4: GESTIÓN (AGILE) -->
-  <g transform="translate(912, 20)">
-    <rect class="card" x="0" y="0" width="264" height="190" rx="14" filter="url(#cardSh)"/>
-    <rect x="0" y="0" width="264" height="4" rx="2" fill="#0052CC"/>
-    
-    <rect x="18" y="18" width="128" height="22" rx="11" fill="var(--pill-bg)"/>
-    <text class="pill-lbl" x="82" y="33" text-anchor="middle">GESTIÓN · AGILE</text>
-    
-    <text class="title" x="18" y="74">Jira Software</text>
-    <text class="sub" x="18" y="98">Atlassian Scrum Board</text>
-    
-    <rect x="18" y="116" width="160" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
-    <text class="tag-lbl" x="98" y="132" text-anchor="middle">32 Historias de Usuario</text>
-    
-    <rect x="18" y="148" width="144" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
-    <text class="tag-lbl" x="90" y="164" text-anchor="middle">Sprints Semanales</text>
+  <!-- Bot&#243;n Acci&#243;n Visual -->
+  <g transform="translate(710, 60)">
+    <rect x="0" y="0" width="215" height="48" rx="24" fill="#0052CC"/>
+    <text class="j-btn-txt" x="107" y="29" text-anchor="middle">Abrir Tablero en Jira &#8594;</text>
   </g>
 </svg>
 "@
-
-$outTags = Join-Path $assetsDir "tags.svg"
-[System.IO.File]::WriteAllText($outTags, $tagsSvg, [System.Text.Encoding]::UTF8)
-Write-Host "Tags SVG generado en $outTags"
+$outJira = Join-Path $assetsDir "jira-board.svg"
+[System.IO.File]::WriteAllText($outJira, $jiraBanner, [System.Text.Encoding]::UTF8)
+Write-Host "Jira Board SVG generado en $outJira"
 
 # ==========================================
-# 3. GENERACIÓN DE TARJETAS VECTORIALES DEL EQUIPO (assets/team/)
+# 3. GENERACIÓN DE TARJETAS VECTORIALES DEL EQUIPO (Clean Entities)
 # ==========================================
-Write-Host "Generando tarjetas vectoriales simétricas del Scrum Team..."
+Write-Host "Regenerando tarjetas vectoriales del equipo con caracteres codificados seguros..."
 
 function Get-AvatarBase64($url) {
     try {
@@ -344,10 +281,9 @@ $teamMembers = @(
         RoleText = "Product Owner"
         Accent = "#E4524F"
         ChipW = 152
-        Line1 = "Requerimientos y aceptación"
+        Line1 = "Requerimientos y aceptaci&#243;n"
         Line2 = "de entregables del cliente"
-        Github = ""
-        Foot = "FIEE · EPN"
+        Foot = "FIEE &#183; EPN"
         Initials = "JN"
         AvatarUrl = $null
     },
@@ -358,9 +294,8 @@ $teamMembers = @(
         RoleText = "Scrum Master y desarrollo"
         Accent = "#D98C2B"
         ChipW = 148
-        Line1 = "Facilitación ágil, remoción de"
+        Line1 = "Facilitaci&#243;n &#225;gil, remoci&#243;n de"
         Line2 = "impedimentos y desarrollo"
-        Github = "JannysG1"
         Foot = "@JannysG1"
         Initials = "JG"
         AvatarUrl = "https://avatars.githubusercontent.com/u/200006982?v=4"
@@ -372,23 +307,21 @@ $teamMembers = @(
         RoleText = "Equipo de desarrollo"
         Accent = "#3E9A4A"
         ChipW = 135
-        Line1 = "Arquitectura de datos, lógica"
+        Line1 = "Arquitectura de datos, l&#243;gica"
         Line2 = "de backend y base de datos"
-        Github = "angelch1595-glitch"
         Foot = "@angelch1595-glitch"
         Initials = "AC"
         AvatarUrl = "https://avatars.githubusercontent.com/u/274108894?v=4"
     },
     @{
         File = "angelo-conteron"
-        Name = "Angelo Conterón"
+        Name = "Angelo Conter&#243;n"
         Role = "DESARROLLO"
         RoleText = "Equipo de desarrollo"
         Accent = "#3D8FAE"
         ChipW = 135
         Line1 = "Interfaces Blazor WASM, UX/UI"
         Line2 = "y control de versiones"
-        Github = "Anghel01"
         Foot = "@Anghel01"
         Initials = "AC"
         AvatarUrl = "https://avatars.githubusercontent.com/u/195244904?v=4"
@@ -491,7 +424,7 @@ $avatarBlock
 
     $cardPath = Join-Path $teamDir "$($m.File).svg"
     [System.IO.File]::WriteAllText($cardPath, $cardSvg, [System.Text.Encoding]::UTF8)
-    Write-Host "Tarjeta generada para $($m.Name) en $cardPath"
+    Write-Host "Tarjeta limpia generada para $($m.Name) en $cardPath"
 }
 
-Write-Host "Todos los componentes vectoriales han sido generados con éxito."
+Write-Host "Generación completada exitosamente."
