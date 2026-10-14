@@ -20,7 +20,7 @@
 
 ## <img src="./assets/icons/contenido.svg" width="22" height="22" align="absmiddle" /> Contenido
 
-[Sobre el Proyecto](#sobre-el-proyecto) · [Objetivo del Sistema](#objetivo-del-sistema) · [Arquitectura](#arquitectura-de-software) · [Casos de Uso](#diagrama-de-casos-de-uso) · [Equipo Scrum](#equipo-scrum-y-roles) · [Backlog y Sprints](#backlog-del-producto-y-sprints) · [Estructura](#estructura-de-la-solución) · [Ejecución Local](#guía-de-ejecución-local) · [Flujo en Git](#flujo-de-trabajo-en-git) · [Licencia](#licencia-y-uso-académico)
+[Sobre el Proyecto](#sobre-el-proyecto) · [Equipo Scrum](#equipo-scrum-y-roles) · [Objetivo del Sistema](#objetivo-del-sistema) · [Arquitectura](#arquitectura-de-software) · [Casos de Uso](#diagrama-de-casos-de-uso) · [Backlog y Sprints](#backlog-del-producto-y-sprints) · [Estructura](#estructura-de-la-solución) · [Ejecución Local](#guía-de-ejecución-local) · [Flujo en Git](#flujo-de-trabajo-en-git) · [Licencia](#licencia-y-uso-académico)
 
 ---
 
@@ -34,6 +34,37 @@
 | **Catálogo y Menú** | Cartas físicas o imágenes estáticas en Canva que no avisan de productos agotados. | **Disponibilidad en tiempo real**: bloqueo automático de insumos agotados y promociones por franja horaria. |
 | **Despacho a Cocina y Bar** | Comandas divididas manualmente entre coctelería y cocina con extravíos frecuentes. | **Enrutamiento automático con SignalR**: derivación simultánea de bebidas a la barra y comidas a la cocina. |
 | **Cobro y Facturación** | Cuentas divididas a mano, validación tardía de transferencias y cuadres manuales. | **Pasarela integrada y arqueo**: cobro con tarjeta, verificación de transferencias y emisión secuencial de facturas. |
+
+---
+
+## <img src="./assets/icons/equipo.svg" width="22" height="22" align="absmiddle" /> Equipo Scrum y Roles
+
+El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilidades distribuidas entre el docente asesor y los desarrolladores del equipo:
+
+<table>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <img src="./assets/team/jose-naranjo.svg" width="100%" alt="Jose Naranjo — Product Owner" />
+    </td>
+    <td width="50%" align="center" valign="top">
+      <a href="https://github.com/JannysG1">
+        <img src="./assets/team/jannys-garrido.svg" width="100%" alt="Jannys Sherley Garrido Pazmiño — Scrum Master" />
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center" valign="top">
+      <a href="https://github.com/angelch1595-glitch">
+        <img src="./assets/team/angel-chicaiza.svg" width="100%" alt="Angel Chicaiza — Equipo de Desarrollo" />
+      </a>
+    </td>
+    <td width="50%" align="center" valign="top">
+      <a href="https://github.com/Anghel01">
+        <img src="./assets/team/angelo-conteron.svg" width="100%" alt="Angelo Conterón — Equipo de Desarrollo" />
+      </a>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -66,37 +97,6 @@ Representación formal interactiva de los actores del negocio (*Cliente*, *Meser
 <p align="center">
   <img src="./assets/casos-de-uso.svg" width="100%" alt="Diagrama de Casos de Uso del Sistema PuraSed" />
 </p>
-
----
-
-## <img src="./assets/icons/equipo.svg" width="22" height="22" align="absmiddle" /> Equipo Scrum y Roles
-
-El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilidades distribuidas entre el docente asesor y los desarrolladores del equipo:
-
-<table>
-  <tr>
-    <td width="50%" align="center" valign="top">
-      <img src="./assets/team/jose-naranjo.svg" width="100%" alt="Jose Naranjo — Product Owner" />
-    </td>
-    <td width="50%" align="center" valign="top">
-      <a href="https://github.com/JannysG1">
-        <img src="./assets/team/jannys-garrido.svg" width="100%" alt="Jannys Sherley Garrido Pazmiño — Scrum Master" />
-      </a>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" align="center" valign="top">
-      <a href="https://github.com/angelch1595-glitch">
-        <img src="./assets/team/angel-chicaiza.svg" width="100%" alt="Angel Chicaiza — Equipo de Desarrollo" />
-      </a>
-    </td>
-    <td width="50%" align="center" valign="top">
-      <a href="https://github.com/Anghel01">
-        <img src="./assets/team/angelo-conteron.svg" width="100%" alt="Angelo Conterón — Equipo de Desarrollo" />
-      </a>
-    </td>
-  </tr>
-</table>
 
 ---
 
