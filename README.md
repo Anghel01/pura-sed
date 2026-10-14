@@ -217,7 +217,7 @@ feature/*          ──●──────────●──────�
 El ciclo de desarrollo está organizado bajo el marco de trabajo **Scrum**, con planificación iterativa e historias de usuario gestionadas en el tablero oficial de Atlassian Jira Software:
 
 <p align="center">
-  <a href="https://pura-sed.atlassian.net/jira/software/projects/DASIPS/boards/1">
+  <a href="https://jannysgarrido21.atlassian.net/jira/software/projects/SCRUM/boards/1">
     <img src="./assets/jira-board.svg" width="100%" alt="Tablero Oficial Scrum en Jira" />
   </a>
 </p>
