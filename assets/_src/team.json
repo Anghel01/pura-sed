@@ -1,0 +1,50 @@
+[
+  {
+    "file": "jose-naranjo",
+    "name": "Jose Naranjo",
+    "role": "PRODUCT OWNER",
+    "roleText": "Product Owner",
+    "accent": "#E4524F",
+    "line1": "Requerimientos y aceptación",
+    "line2": "de entregables",
+    "github": "",
+    "foot": "FIEE · EPN",
+    "initials": "JN"
+  },
+  {
+    "file": "jannys-garrido",
+    "name": "Jannys Garrido",
+    "role": "SCRUM MASTER",
+    "roleText": "Scrum Master y desarrollo",
+    "accent": "#D98C2B",
+    "line1": "Facilitación ágil, remoción de",
+    "line2": "impedimentos y desarrollo",
+    "github": "JannysG1",
+    "foot": "@JannysG1",
+    "initials": "JG"
+  },
+  {
+    "file": "angel-chicaiza",
+    "name": "Angel Chicaiza",
+    "role": "DESARROLLO",
+    "roleText": "Equipo de desarrollo",
+    "accent": "#3E9A4A",
+    "line1": "Arquitectura de datos, lógica",
+    "line2": "de backend y base de datos",
+    "github": "angelch1595-glitch",
+    "foot": "@angelch1595-glitch",
+    "initials": "AC"
+  },
+  {
+    "file": "angelo-conteron",
+    "name": "Angelo Conterón",
+    "role": "DESARROLLO",
+    "roleText": "Equipo de desarrollo",
+    "accent": "#3D8FAE",
+    "line1": "Interfaces Blazor WASM, UX/UI",
+    "line2": "y control de versiones",
+    "github": "Anghel01",
+    "foot": "@Anghel01",
+    "initials": "AC"
+  }
+]

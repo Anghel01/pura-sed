@@ -1,0 +1,167 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 230" width="1200" height="230" role="img" aria-labelledby="tagsTitle tagsDesc">
+  <title id="tagsTitle">PuraSed Tech Canvas â€” Arquitectura y TecnologÃ­as</title>
+  <desc id="tagsDesc">Ecosistema tÃ©cnico integrado: Cliente Blazor WASM en .NET 10, Backend ASP.NET Core Web API, Base de datos SQL Server con EF Core, y gestiÃ³n Scrum en Jira Software.</desc>
+  <defs>
+    <style>
+      :root {
+        --canvas-bg: #F8FAFC;
+        --card-bg: #FFFFFF;
+        --card-border: rgba(31, 58, 77, 0.12);
+        --title-color: #1F3A4D;
+        --sub-color: #5B7383;
+        --tag-bg: rgba(31, 58, 77, 0.05);
+        --tag-border: rgba(31, 58, 77, 0.10);
+        --tag-text: #2C4A5E;
+        --flow-line: #3D8FAE;
+        --flow-wire: rgba(61, 143, 174, 0.28);
+        --pill-bg: rgba(31, 58, 77, 0.06);
+        --pill-text: #415A6C;
+        --card-shadow: rgba(31, 58, 77, 0.08);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --canvas-bg: #0D1117;
+          --card-bg: #161B22;
+          --card-border: rgba(255, 255, 255, 0.10);
+          --title-color: #F0F6FC;
+          --sub-color: #8B949E;
+          --tag-bg: rgba(255, 255, 255, 0.05);
+          --tag-border: rgba(255, 255, 255, 0.08);
+          --tag-text: #C9D1D9;
+          --flow-line: #58A6FF;
+          --flow-wire: rgba(88, 166, 255, 0.25);
+          --pill-bg: rgba(255, 255, 255, 0.08);
+          --pill-text: #8B949E;
+          --card-shadow: rgba(0, 0, 0, 0.45);
+        }
+      }
+
+      .card { fill: var(--card-bg); stroke: var(--card-border); stroke-width: 1; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 22px; font-weight: 700; fill: var(--title-color); }
+      .sub { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 13.5px; font-weight: 500; fill: var(--sub-color); }
+      .pill-lbl { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 1.5px; fill: var(--pill-text); }
+      .tag-lbl { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; fill: var(--tag-text); }
+      .proto-lbl { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; fill: var(--sub-color); }
+
+      @keyframes flowData {
+        from { stroke-dashoffset: 24; }
+        to   { stroke-dashoffset: 0; }
+      }
+
+      .flow-active {
+        stroke: var(--flow-line);
+        stroke-width: 2.2;
+        stroke-dasharray: 6 5;
+        animation: flowData 1.4s linear infinite;
+      }
+
+      .flow-sync {
+        stroke: var(--flow-line);
+        stroke-width: 1.8;
+        stroke-dasharray: 4 4;
+        opacity: 0.75;
+        animation: flowData 2.2s linear infinite;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .flow-active, .flow-sync { animation: none; }
+      }
+    </style>
+
+    <filter id="cardSh" x="-4%" y="-6%" width="108%" height="116%">
+      <feDropShadow flood-color="var(--card-shadow)" dx="0" dy="5" stdDeviation="6"/>
+    </filter>
+  </defs>
+
+  <!-- LÃNEAS CONECTORAS INTER-BLOQUES (FLUJO DE DATOS) -->
+  <!-- Conector 1 -> 2 (Cliente a Servidor) -->
+  <line x1="288" y1="115" x2="320" y2="115" stroke="var(--flow-wire)" stroke-width="2.2"/>
+  <line class="flow-active" x1="288" y1="115" x2="320" y2="115"/>
+  <polygon points="318,111 325,115 318,119" fill="var(--flow-line)"/>
+  <text class="proto-lbl" x="304" y="104" text-anchor="middle">HTTPS</text>
+
+  <!-- Conector 2 -> 3 (Servidor a Datos) -->
+  <line x1="584" y1="115" x2="616" y2="115" stroke="var(--flow-wire)" stroke-width="2.2"/>
+  <line class="flow-active" x1="584" y1="115" x2="616" y2="115"/>
+  <polygon points="614,111 621,115 614,119" fill="var(--flow-line)"/>
+  <text class="proto-lbl" x="600" y="104" text-anchor="middle">TDS</text>
+
+  <!-- Conector 3 -> 4 (Datos a GestiÃ³n Agile) -->
+  <line x1="880" y1="115" x2="912" y2="115" stroke="var(--flow-wire)" stroke-width="1.8"/>
+  <line class="flow-sync" x1="880" y1="115" x2="912" y2="115"/>
+  <circle cx="896" cy="115" r="3.2" fill="var(--flow-line)"/>
+  <text class="proto-lbl" x="896" y="104" text-anchor="middle">SYNC</text>
+
+  <!-- BLOQUE 1: CLIENTE (SPA) -->
+  <g transform="translate(24, 20)">
+    <rect class="card" x="0" y="0" width="264" height="190" rx="14" filter="url(#cardSh)"/>
+    <rect x="0" y="0" width="264" height="4" rx="2" fill="#E4524F"/>
+    
+    <rect x="18" y="18" width="112" height="22" rx="11" fill="var(--pill-bg)"/>
+    <text class="pill-lbl" x="74" y="33" text-anchor="middle">CLIENTE Â· SPA</text>
+    
+    <text class="title" x="18" y="74">.NET 10.0</text>
+    <text class="sub" x="18" y="98">Blazor WebAssembly</text>
+    
+    <rect x="18" y="116" width="138" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
+    <text class="tag-lbl" x="87" y="132" text-anchor="middle">C# Nativo (WASM)</text>
+    
+    <rect x="18" y="148" width="162" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
+    <text class="tag-lbl" x="99" y="164" text-anchor="middle">Vistas por Rol (Mobile QR)</text>
+  </g>
+
+  <!-- BLOQUE 2: SERVIDOR (API) -->
+  <g transform="translate(320, 20)">
+    <rect class="card" x="0" y="0" width="264" height="190" rx="14" filter="url(#cardSh)"/>
+    <rect x="0" y="0" width="264" height="4" rx="2" fill="#512BD4"/>
+    
+    <rect x="18" y="18" width="126" height="22" rx="11" fill="var(--pill-bg)"/>
+    <text class="pill-lbl" x="81" y="33" text-anchor="middle">SERVIDOR Â· API</text>
+    
+    <text class="title" x="18" y="74">ASP.NET Core</text>
+    <text class="sub" x="18" y="98">Web API &amp; SignalR</text>
+    
+    <rect x="18" y="116" width="152" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
+    <text class="tag-lbl" x="94" y="132" text-anchor="middle">RESTful &amp; OpenAPI v1</text>
+    
+    <rect x="18" y="148" width="166" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
+    <text class="tag-lbl" x="101" y="164" text-anchor="middle">Comandas en Tiempo Real</text>
+  </g>
+
+  <!-- BLOQUE 3: DATOS (PERSISTENCIA) -->
+  <g transform="translate(616, 20)">
+    <rect class="card" x="0" y="0" width="264" height="190" rx="14" filter="url(#cardSh)"/>
+    <rect x="0" y="0" width="264" height="4" rx="2" fill="#0078D4"/>
+    
+    <rect x="18" y="18" width="154" height="22" rx="11" fill="var(--pill-bg)"/>
+    <text class="pill-lbl" x="95" y="33" text-anchor="middle">DATOS Â· PERSISTENCIA</text>
+    
+    <text class="title" x="18" y="74">SQL Server</text>
+    <text class="sub" x="18" y="98">Entity Framework Core</text>
+    
+    <rect x="18" y="116" width="156" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
+    <text class="tag-lbl" x="96" y="132" text-anchor="middle">Code-First Migrations</text>
+    
+    <rect x="18" y="148" width="150" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
+    <text class="tag-lbl" x="93" y="164" text-anchor="middle">Inventario &amp; FacturaciÃ³n</text>
+  </g>
+
+  <!-- BLOQUE 4: GESTIÃ“N (AGILE) -->
+  <g transform="translate(912, 20)">
+    <rect class="card" x="0" y="0" width="264" height="190" rx="14" filter="url(#cardSh)"/>
+    <rect x="0" y="0" width="264" height="4" rx="2" fill="#0052CC"/>
+    
+    <rect x="18" y="18" width="128" height="22" rx="11" fill="var(--pill-bg)"/>
+    <text class="pill-lbl" x="82" y="33" text-anchor="middle">GESTIÃ“N Â· AGILE</text>
+    
+    <text class="title" x="18" y="74">Jira Software</text>
+    <text class="sub" x="18" y="98">Atlassian Scrum Board</text>
+    
+    <rect x="18" y="116" width="160" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
+    <text class="tag-lbl" x="98" y="132" text-anchor="middle">32 Historias de Usuario</text>
+    
+    <rect x="18" y="148" width="144" height="24" rx="12" fill="var(--tag-bg)" stroke="var(--tag-border)" stroke-width="1"/>
+    <text class="tag-lbl" x="90" y="164" text-anchor="middle">Sprints Semanales</text>
+  </g>
+</svg>
