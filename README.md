@@ -4,7 +4,7 @@
 
 <p align="center">
   <b>Sistema Transaccional en Tiempo Real para Gestión Integral de Bares Nocturnos y Restaurantes</b><br/>
-  <i>Pedidos digitales por mesa con QR, enrutamiento desacoplado a cocina y barra, control de inventario y facturación por jornada.</i>
+  <i>Pedidos digitales por mesa, enrutamiento desacoplado a cocina y barra, control de inventario y facturación por jornada.</i>
 </p>
 
 <p align="center">
@@ -70,8 +70,8 @@ El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilida
 
 | Dimensión Operativa | Gestión Tradicional (Manual) | Solución Digital con PuraSed |
 | :--- | :--- | :--- |
-| **Atención en Mesa** | Comandas físicas en papel; desplazamientos constantes y confusiones de mesa. | **Acceso QR sin fricción**: el cliente pide y consulta el estado de su orden desde su dispositivo móvil sin registro previo. |
-| **Catálogo y Menú** | Cartas físicas o imágenes estáticas en Canva que no avisan de productos agotados. | **Disponibilidad en tiempo real**: bloqueo automático de insumos agotados y promociones por franja horaria. |
+| **Atención en Mesa** | Comandas físicas en papel; desplazamientos constantes y confusiones de mesa. | **Acceso sin fricción**: el cliente pide y consulta el estado de su orden desde su dispositivo disponible en mesa sin registro previo. |
+| **Catálogo y Menú** | Cartas físicas o imágenes estáticas en Canva que no avisan de productos agotados. | **Disponibilidad **: bloqueo automático de insumos agotados y promociones por franja horaria. |
 | **Despacho a Cocina y Bar** | Comandas divididas manualmente entre coctelería y cocina con extravíos frecuentes. | **Enrutamiento automático con SignalR**: derivación simultánea de bebidas a la barra y comidas a la cocina. |
 | **Cobro y Facturación** | Cuentas divididas a mano, validación tardía de transferencias y cuadres manuales. | **Pasarela integrada y arqueo**: cobro con tarjeta, verificación de transferencias y emisión secuencial de facturas. |
 
@@ -229,7 +229,7 @@ El ciclo de desarrollo está organizado bajo el marco de trabajo **Scrum**, con 
 * **Criterios de Aceptación (Definition of Done)**: Cada requerimiento cuenta con condiciones de validación verificables antes de ser promovido al siguiente estado.
 * **Estimación por Story Points**: Planificación de esfuerzo basada en la serie de Fibonacci para medir la velocidad del equipo.
 * **Flujo de Estados en el Tablero Jira**:
-  $$\text{Backlog} \;\longrightarrow\; \text{Por Hacer (To Do)} \;\longrightarrow\; \text{En Progreso} \;\longrightarrow\; \text{Revisión de Código / QA} \;\longrightarrow\; \text{Listo (Done)}$$
+  $$\text{Backlog} \;\longrightarrow\; \text{Por Hacer (To Do)} \;\longrightarrow\; \text{En Progreso} \;\longrightarrow\; \text{Revisión/ QA} \;\longrightarrow\; \text{Listo (Done)}$$
 
 ---
 
