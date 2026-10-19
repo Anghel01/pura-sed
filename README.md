@@ -36,7 +36,7 @@ El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilida
   <tr>
     <td width="50%" align="center" valign="top">
       <a href="https://github.com/angelch1595-glitch">
-        <img src="./assets/team/angel-chicaiza.svg?v=2" width="100%" alt="Angel Chicaiza — Equipo de Desarrollo" />
+        <img src="./assets/team/angel-chicaiza.svg?v=3" width="100%" alt="Angel Chicaiza — Equipo de Desarrollo" />
       </a>
     </td>
     <td width="50%" align="center" valign="top">
