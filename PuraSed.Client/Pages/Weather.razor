@@ -1,25 +1,31 @@
 ﻿@page "/weather"
+@using System.Net.Http.Json
 @inject HttpClient Http
 
-<PageTitle>Weather</PageTitle>
+<PageTitle>Prueba de conexión API</PageTitle>
 
-<h1>Weather</h1>
+<h1>Prueba de conexión con PuraSed.WebApi</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
-
-@if (forecasts == null)
+@if (!string.IsNullOrEmpty(error))
 {
-    <p><em>Loading...</em></p>
+    <p class="text-danger">@error</p>
+}
+else if (forecasts == null)
+{
+    <p><em>Conectando con el backend...</em></p>
 }
 else
 {
+    <p class="text-success">
+        ¡Conexión correcta! Datos recibidos desde el backend.
+    </p>
+
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th aria-label="Temperature in Celsius">Temp. (C)</th>
-                <th aria-label="Temperature in Fahrenheit">Temp. (F)</th>
-                <th>Summary</th>
+                <th>Fecha</th>
+                <th>Temperatura (°C)</th>
+                <th>Resumen</th>
             </tr>
         </thead>
         <tbody>
@@ -28,7 +34,6 @@ else
                 <tr>
                     <td>@forecast.Date.ToShortDateString()</td>
                     <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
                     <td>@forecast.Summary</td>
                 </tr>
             }
@@ -38,20 +43,25 @@ else
 
 @code {
     private WeatherForecast[]? forecasts;
+    private string? error;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        try
+        {
+            forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>(
+                "WeatherForecast");
+        }
+        catch (Exception ex)
+        {
+            error = $"No se pudo conectar con el backend: {ex.Message}";
+        }
     }
 
     public class WeatherForecast
     {
         public DateOnly Date { get; set; }
-
         public int TemperatureC { get; set; }
-
         public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }

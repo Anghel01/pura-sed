@@ -120,6 +120,8 @@ pura-sed/
 ├── PuraSed.slnx            # Archivo contenedor de la solución .NET (formato moderno)
 ├── README.md               # Documentación técnica interactiva del sistema
 ├── .gitignore              # Exclusiones de compilación binaria (bin, obj)
+├── Entregables/            # Documentos que han surgido durante las diferentes practicas
+│   └── Diagramas de casos de uso/      #Diagramas generados en el primer entregable
 │
 ├── assets/                 # Recursos vectoriales SVG, animaciones e identidad visual
 │   ├── banner.svg          # Hero animado con burbujas y espuma de cerveza
