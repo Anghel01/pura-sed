@@ -107,20 +107,6 @@ Representación formal interactiva de los actores del negocio (*Cliente*, *Meser
 
 ---
 
-## Modelo de Base de Datos – Diagrama Entidad-Relación
-
-El sistema Pura Sed cuenta con un modelo de base de datos relacional diseñado en SQL Server, conformado por **23 entidades** que permiten administrar los usuarios, productos, pedidos, reservas, inventario, pagos, facturación y espectáculos.
-
-El diagrama entidad-relación muestra las tablas que conforman la base de datos, sus atributos, claves primarias (PK), claves foráneas (FK) y las relaciones existentes entre ellas. Para representar las cardinalidades se utiliza la notación de pata de gallo (*Crow's Foot*), que permite identificar las relaciones obligatorias y opcionales entre las entidades.
-
-<p align="center">
-  <img src="./assets/PuraSed_Diagrama_ER.svg" width="100%" alt="Diagrama Entidad-Relación de Pura Sed" />
-</p>
-
-El modelo permite relacionar los pedidos con las sesiones de mesa, registrar automáticamente los movimientos de inventario y gestionar las cuentas de los clientes. También contempla el cobro de entradas por persona cuando existen espectáculos, sin que este cargo sea obligatorio para todas las cuentas.
-
----
-
 ## <img src="./assets/icons/estructura.svg" width="22" height="22" align="absmiddle" /> Estructura de la Solución .NET
 
 El repositorio utiliza el formato unificado de solución moderna de .NET (`.slnx`), garantizando un desacoplamiento limpio entre la capa de presentación y los servicios backend:
@@ -134,17 +120,8 @@ pura-sed/
 ├── PuraSed.slnx            # Archivo contenedor de la solución .NET (formato moderno)
 ├── README.md               # Documentación técnica interactiva del sistema
 ├── .gitignore              # Exclusiones de compilación binaria (bin, obj)
-├── Entregables/                         # Documentación y diagramas del proyecto
-│   ├── Diagrama Entidad-Relacion/        # Entregables del modelo de base de datos
-│   │   ├── Listado de entidades y atributos  # Documento DIS-01
-│   │   └── PuraSed_Diagrama_ER.png       # Diagrama entidad-relación (DIS-02)
-│   │
-│   └── Diagramas Casos de uso/          # Diagramas del primer entregable
-│       ├── Arquitectura del sistema.png
-│       ├── Pagos y Facturación.png
-│       ├── Pedido.png
-│       ├── Reportes y estadisticas.png
-│       └── Reserva Mesas.png
+├── Entregables/            # Documentos que han surgido durante las diferentes practicas
+│   └── Diagramas de casos de uso/      #Diagramas generados en el primer entregable
 │
 ├── assets/                 # Recursos vectoriales SVG, animaciones e identidad visual
 │   ├── banner.svg          # Hero animado con burbujas y espuma de cerveza
