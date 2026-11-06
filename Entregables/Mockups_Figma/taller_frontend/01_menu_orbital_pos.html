@@ -238,7 +238,7 @@
         line-height: 1.5;
         color: #C2CBC5;
         font-style: italic;
-        letter-spacing: 0.4px;
+        letter-spacing: normal;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
     }
 
@@ -279,7 +279,7 @@
     .loader-text {
         font-family: var(--font-display);
         font-size: 2.4rem;
-        letter-spacing: 2px;
+        letter-spacing: 1px;
         color: var(--chalk-white);
         margin-bottom: 0.6rem;
     }
@@ -288,7 +288,7 @@
         font-size: 0.95rem;
         font-weight: 600;
         color: var(--amber-gold);
-        letter-spacing: 0.5px;
+        letter-spacing: normal;
         margin-bottom: 1.8rem;
     }
 
@@ -664,7 +664,7 @@
         line-height: 1;
         font-family: serif;
         font-weight: 700;
-        transform: rotate(-12deg);
+        transform: rotate(-15deg);
         display: inline-block;
     }
 
@@ -849,26 +849,43 @@
     .btn-collapse-back {
       background: #121614;
       color: #F5EADB;
-      border: 1px solid rgba(245, 234, 219, 0.3);
+      border: 1.5px solid rgba(245, 234, 219, 0.28);
       font-family: var(--font-display, 'Bebas Neue', sans-serif);
-      font-size: 1rem;
-      font-weight: 400;
-      letter-spacing: 1.5px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 2px;
       height: 36px;
-      padding: 0 16px;
+      padding: 0 18px;
       border-radius: 3px;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+      box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.35);
+      transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+      user-select: none;
     }
 
     .btn-collapse-back:hover {
       background: #E59F38;
       color: #121614;
       border-color: #E59F38;
+      transform: translateY(-1px);
+    }
+
+    .btn-collapse-back:hover .btn-back-arrow {
+      transform: translateX(-3px);
+    }
+
+    .btn-back-arrow {
+      font-size: 1.25rem;
+      line-height: 1;
+      display: inline-block;
+      transition: transform 0.2s ease;
+    }
+
+    .btn-back-text {
+      line-height: 1;
     }
 
     .expanded-nav-tabs {
@@ -901,10 +918,19 @@
     }
 
     .expanded-tab-btn.active {
-      background: #E59F38;
-      color: #121614;
       font-weight: 700;
     }
+    .expanded-tab-btn#tab0.active { background: #E59F38; color: #121614; }
+    .expanded-tab-btn#tab1.active { background: #C0392B; color: #FFF8ED; }
+    .expanded-tab-btn#tab2.active { background: #2D6A4F; color: #FFF8ED; }
+    .expanded-tab-btn#tab3.active { background: #2A527A; color: #FFF8ED; }
+    .expanded-tab-btn#tab4.active { background: #F8AD00; color: #121614; }
+
+    .expanded-tab-btn#tab0:hover:not(.active) { background: rgba(229, 159, 56, 0.18); color: #FFF8ED; }
+    .expanded-tab-btn#tab1:hover:not(.active) { background: rgba(192, 57, 43, 0.18); color: #FFF8ED; }
+    .expanded-tab-btn#tab2:hover:not(.active) { background: rgba(45, 106, 79, 0.18); color: #FFF8ED; }
+    .expanded-tab-btn#tab3:hover:not(.active) { background: rgba(42, 82, 122, 0.18); color: #FFF8ED; }
+    .expanded-tab-btn#tab4:hover:not(.active) { background: rgba(248, 173, 0, 0.18); color: #FFF8ED; }
 
     /* CONTENEDOR PRINCIPAL: ALBERGA EL DIBUJO A LA IZQUIERDA, CENTRO Y DERECHA */
     .expanded-main-content {
@@ -912,7 +938,7 @@
       width: 100%;
       position: relative;
       overflow: hidden;
-      margin-bottom: 56px; /* Despeje exacto para el dock inferior */
+      margin-bottom: 0; /* Sin dock inferior, lienzo 100% despejado */
       z-index: 10;
     }
 
@@ -920,9 +946,9 @@
     .expanded-center-zone {
       position: absolute;
       left: 50%;
-      top: 52%;
+      top: 50%;
       transform: translate(-50%, -50%);
-      width: clamp(480px, 48vw, 760px);
+      width: clamp(520px, 52vw, 880px);
       height: 82vh;
       display: flex;
       flex-direction: column;
@@ -932,10 +958,10 @@
       pointer-events: none;
     }
 
-    /* CABECERA DE SECCIÓN PERSONALIZADA (Captura 184701.png) */
+    /* CABECERA DE SECCIÓN PERSONALIZADA (Con margen de seguridad perfecto bajo el navbar) */
     .expanded-hero-header {
       position: absolute;
-      top: 0px;
+      top: clamp(45px, 6vh, 65px);
       left: 0;
       right: 0;
       display: flex;
@@ -943,7 +969,8 @@
       align-items: center;
       justify-content: center;
       text-align: center;
-      z-index: 25;
+      z-index: 8; /* CAPA POSTERIOR: el producto flotante se antepone sutilmente */
+      pointer-events: none;
       animation: expTitleIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) 0.1s both;
     }
 
@@ -961,12 +988,13 @@
       position: relative;
       text-align: center;
       font-family: var(--font-display, 'Bebas Neue', sans-serif);
-      font-size: clamp(2.6rem, 4.2vw, 4.5rem);
+      font-size: clamp(2.6rem, 4.4vw, 4.8rem);
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
       margin: 0;
-      line-height: 0.92;
+      line-height: 0.95;
+      white-space: nowrap; /* Título estrictamente en una sola línea en la ventana de sección */
     }
 
     @keyframes expTitleIn {
@@ -974,7 +1002,7 @@
       100% { transform: translateY(0); opacity: 1; }
     }
 
-    /* CONTENEDOR DEL PRODUCTO HÉROE EN LA MITAD (GRAN FORMATO) */
+    /* CONTENEDOR DEL PRODUCTO HÉROE EN LA MITAD (CAPA FRONTAL QUE TAPA AL TÍTULO) */
     .hero-large-viewport {
       position: relative;
       display: flex;
@@ -983,7 +1011,8 @@
       justify-content: center;
       width: 100%;
       height: 100%;
-      margin-top: 3.5vh;
+      margin-top: clamp(75px, 10vh, 110px);
+      z-index: 18; /* CAPA FRONTAL: roza el borde inferior del título al flotar */
       animation: expHeroIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) 0.15s both;
     }
 
@@ -992,20 +1021,27 @@
       100% { transform: scale(1) translateY(0); opacity: 1; }
     }
 
+    .hero-float-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: heroFloatLarge 4s ease-in-out infinite alternate;
+      z-index: 20;
+    }
+
     .hero-large-img {
-      max-height: clamp(380px, 56vh, 550px);
-      max-width: clamp(440px, 46vw, 680px);
+      max-height: clamp(390px, 57vh, 580px);
+      max-width: clamp(430px, 46vw, 680px);
       width: auto;
       height: auto;
       object-fit: contain;
       filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.85));
-      animation: heroFloatLarge 4s ease-in-out infinite alternate;
-      transition: transform 0.35s ease;
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease;
     }
 
     @keyframes heroFloatLarge {
       0% { transform: translateY(0); }
-      100% { transform: translateY(-12px); }
+      100% { transform: translateY(-16px); }
     }
 
     .hero-large-shadow {
@@ -1017,6 +1053,7 @@
       margin-top: -14px;
       pointer-events: none;
       animation: shadowPulseLarge 4s ease-in-out infinite alternate;
+      transition: transform 0.35s ease;
     }
 
     @keyframes shadowPulseLarge {
@@ -1045,26 +1082,86 @@
       100% { transform: translateY(-50%) translateX(0) rotate(2deg); opacity: 1; }
     }
 
-    /* TARJETA DE TICKET MEDIANO BLANCO */
+    /* ==========================================================================
+       TICKET ARTESANAL BLANCO / MARFIL CON CORTE SERRADO
+       Directivas de Angelo: Inspiración 095231, bordes arrancados 095417/095426
+       ========================================================================== */
+    .paper-ticket-container {
+      position: absolute;
+      right: 3.5vw;
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(340px, 27vw, 410px);
+      height: clamp(510px, 68vh, 630px);
+      display: flex;
+      align-items: stretch;
+      z-index: 30;
+      animation: expTicketSlideRight 0.55s cubic-bezier(0.25, 1, 0.5, 1) 0.1s both;
+      filter: drop-shadow(0 20px 45px rgba(0, 0, 0, 0.55));
+    }
+
+    @keyframes expTicketSlideRight {
+      0% { transform: translateY(-50%) translateX(60px) rotate(5deg); opacity: 0; }
+      100% { transform: translateY(-50%) translateX(0) rotate(2deg); opacity: 1; }
+    }
+
+    /* TARJETA DE TICKET ARTESANAL (PAPEL MARFIL CON CORTE GUIA DE RECIBO) */
     .paper-ticket-card {
       width: 100%;
       height: 100%;
-      background: #FAF7F2;
+      background: #FAF7EC; /* Tono marfil artesanal cálido original de referencia 095231 */
       color: #241D17;
-      border: 1px solid #E0D7C8;
-      border-radius: 4px;
-      padding: 16px 16px 14px 16px;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.15);
+      border-left: 1px solid #E2DCCF;
+      border-right: 1px solid #E2DCCF;
+      border-radius: 0;
+      padding: 0;
       transform: rotate(2deg);
       transform-origin: top right;
       display: flex;
       flex-direction: column;
       overflow: hidden;
       transition: transform 0.25s ease;
+      position: relative;
     }
 
     .paper-ticket-card:hover {
       transform: rotate(1deg);
+    }
+
+    /* DIENTES ONDULADOS SERRADOS (ARRANCADO TÉRMICO DE TICKET 095417/095426) */
+    .ticket-scallop-top {
+      height: 7px;
+      background-image: radial-gradient(circle at 5px 0px, transparent 4px, #FAF7EC 4.5px);
+      background-size: 10px 7px;
+      background-repeat: repeat-x;
+      flex-shrink: 0;
+      z-index: 2;
+    }
+
+    .ticket-card-content {
+      flex: 1;
+      min-height: 0;
+      height: calc(100% - 14px);
+      display: flex;
+      flex-direction: column;
+      padding: 12px 14px 6px 14px;
+      overflow: hidden;
+    }
+    #ticketListView {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .ticket-scallop-bottom {
+      height: 7px;
+      background-image: radial-gradient(circle at 5px 7px, transparent 4px, #FAF7EC 4.5px);
+      background-size: 10px 7px;
+      background-repeat: repeat-x;
+      flex-shrink: 0;
+      z-index: 2;
     }
 
     .ticket-header-line {
@@ -1072,8 +1169,8 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 2px dashed #D5CDC0;
-      padding-bottom: 10px;
-      margin-bottom: 10px;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
       flex-shrink: 0;
     }
 
@@ -1101,11 +1198,12 @@
     /* BARRA DE DESPLAZAMIENTO FLUIDA EN EL CUADRO BLANCO */
     .ticket-items-list {
       flex: 1;
-      overflow-y: scroll;
+      min-height: 0;
+      overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      padding-right: 6px;
+      padding: 4px 6px 14px 4px; /* Buffer de seguridad para scroll fluido sobre el stub */
     }
 
     .ticket-items-list::-webkit-scrollbar {
@@ -1129,9 +1227,9 @@
 
     /* FILA DE CADA OPCIÓN DENTRO DEL TICKET */
     .ticket-item-row {
-      background: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.85);
       border: 1px solid #EAE3D5;
-      border-radius: 3px;
+      border-radius: 4px;
       padding: 9px 11px;
       display: flex;
       align-items: center;
@@ -1145,14 +1243,14 @@
     .ticket-item-row:hover {
       background: #FFFFFF;
       border-color: #E59F38;
-      transform: translateX(-2px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
     }
 
     .ticket-item-row.active {
       background: #FDF3DF;
       border-color: #E59F38;
-      box-shadow: 0 2px 10px rgba(229, 159, 56, 0.25);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     }
 
     .ticket-item-info {
@@ -1163,34 +1261,43 @@
       min-width: 0;
     }
 
+    .ticket-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
     .ticket-item-name {
       font-family: var(--font-display, 'Bebas Neue', sans-serif);
       font-size: 1.15rem;
       font-weight: 700;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.2px;
       color: #1E1712;
       margin: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    }
+
+    .ticket-ordered-tag {
+      background: #E59F38;
+      color: #121614;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.85rem;
+      padding: 1px 6px;
+      border-radius: 3px;
+      font-weight: 700;
     }
 
     .ticket-item-desc {
-      font-size: 0.75rem;
-      line-height: 1.25;
-      color: #6E645A;
+      font-size: 0.74rem;
+      color: #6B6258;
+      line-height: 1.3;
       margin: 0;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
     }
 
     .ticket-item-action {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 5px;
+      gap: 4px;
       flex-shrink: 0;
     }
 
@@ -1199,19 +1306,19 @@
       font-size: 1.25rem;
       font-weight: 700;
       color: #1E1712;
-      letter-spacing: 0.5px;
+      line-height: 1;
     }
 
     .btn-ticket-add {
-      background: #121614;
-      color: #F5EADB;
-      border: 1px solid #121614;
+      background: #1E1712;
+      color: #FFFFFF;
+      border: none;
       font-family: var(--font-display, 'Bebas Neue', sans-serif);
-      font-size: 0.88rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      padding: 4px 10px;
-      border-radius: 2px;
+      font-size: 0.95rem;
+      letter-spacing: 0.8px;
+      font-weight: 700;
+      padding: 4px 9px;
+      border-radius: 4px;
       cursor: pointer;
       transition: all 0.15s ease;
       white-space: nowrap;
@@ -1220,8 +1327,158 @@
     .btn-ticket-add:hover {
       background: #E59F38;
       color: #121614;
-      border-color: #E59F38;
       transform: translateY(-1px);
+    }
+
+
+    /* EXTENSIÓN INFERIOR DE TICKET (COMANDADO EN MESA + BOTÓN VER COMANDA 094902) */
+    .ticket-footer-extension {
+      background: #FAF7EC;
+      border-top: 2px dashed #C8C0B0;
+      padding: 10px 10px 4px 10px;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .ticket-extension-left {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ticket-ext-label {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.8rem;
+      letter-spacing: 1.2px;
+      color: #8C7E72;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    .ticket-ext-total {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.85rem;
+      letter-spacing: 0.5px;
+      color: #8A3C28;
+      line-height: 1;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .ticket-ext-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #2D5A27;
+      margin-top: 2px;
+    }
+
+    .ticket-btn-open-drawer {
+      background: #E59F38;
+      color: #121614;
+      border: 1px solid #D49020;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.15rem;
+      letter-spacing: 1.1px;
+      padding: 9px 14px;
+      border-radius: 6px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(229, 159, 56, 0.35);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    
+    .ticket-ext-total.has-items {
+      color: #9E3F27;
+      transform: scale(1.02);
+    }
+    .ticket-btn-open-drawer.has-items {
+      background: #E59F38;
+      box-shadow: 0 4px 14px rgba(229, 159, 56, 0.45);
+    }
+
+    .ticket-btn-open-drawer:hover {
+      background: #121614;
+      color: #FAF7F2;
+      border-color: #E59F38;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(18, 22, 20, 0.45);
+    }
+
+    .ticket-btn-open-drawer:hover .ticket-btn-arrow {
+      transform: translateX(4px);
+      color: #E59F38;
+    }
+
+    .ticket-btn-open-drawer .ticket-btn-arrow {
+      display: inline-block;
+      transition: transform 0.2s ease, color 0.2s ease;
+      font-size: 1.1rem;
+    }
+
+    .ticket-items-list {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 4px 6px 14px 4px; /* Buffer de seguridad para scroll fluido sobre el stub */
+    }
+
+    .btn-qty-step:hover {
+      background: #E59F38;
+      color: #121614;
+      transform: scale(1.08);
+    }
+
+    .btn-qty-minus:hover {
+      background: #BA3C2A;
+      color: #FFFFFF;
+      transform: scale(1.08);
+    }
+
+    .ticket-qty-badge {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #E59F38;
+      min-width: 20px;
+      text-align: center;
+      padding: 0 4px;
+      user-select: none;
+    }
+
+    .btn-dock-clear {
+      background: rgba(186, 60, 42, 0.18);
+      color: #FFAAA0;
+      border: 1px solid rgba(186, 60, 42, 0.65);
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.82rem;
+      letter-spacing: 1px;
+      padding: 2px 9px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1.2;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .btn-dock-clear:hover {
+      background: #BA3C2A;
+      color: #FFFFFF;
+      border-color: #BA3C2A;
     }
 
     /* PIE INFERIOR: BARRA DE COMANDA (CERO COLISIÓN) */
@@ -1485,9 +1742,9 @@
     .col-pidanomas .col-title { color: #1F0802 !important; text-shadow: none !important; }
     .col-lleve .col-title { color: #0E170C !important; text-shadow: none !important; }
     .col-merch .col-title { color: #070E14 !important; text-shadow: none !important; }
-    .col-identidad .col-title { color: #F8AD00 !important; text-shadow: 0 4px 20px rgba(0,0,0,0.8) !important; }
+    .col-identidad .col-title { color: #F8AD00 !important; text-shadow: 0 2px 14px rgba(248, 173, 0, 0.45) !important; }
 
-    /* DIBUJOS ANCESTRALES SERIGRAFICOS */
+    /* DIBUJOS ANCESTRALES SERIGRAFICOS ORIGINALES RECUPERADOS */
     .col-bg-drawing {
       position: absolute !important;
       top: 50% !important;
@@ -1509,14 +1766,73 @@
       filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.6)) brightness(1.2) !important;
     }
 
-    /* DESPLAZAMIENTO DE OBJETOS HEROES 3 A 4 CM ABAJO PARA REVELAR LOS DIBUJOS */
+    /* MOTIVOS LINOGRÁFICOS COMPLEMENTARIOS QUE ACOMPAÑAN AL FONDO */
+    .col-bg-motif {
+      position: absolute !important;
+      object-fit: contain !important;
+      pointer-events: none !important;
+      z-index: 2 !important;
+      filter: brightness(0) !important;
+      opacity: 0.18 !important;
+      transition: opacity 0.3s ease, transform 0.3s ease !important;
+    }
+    .col-chicha .col-bg-motif {
+      bottom: 8% !important;
+      right: 4% !important;
+      width: 30% !important;
+      max-height: 24vh !important;
+    }
+    .col-pidanomas .col-bg-motif {
+      bottom: 7% !important;
+      left: 5% !important;
+      width: 30% !important;
+      max-height: 23vh !important;
+    }
+    .col-lleve .col-bg-motif {
+      bottom: 7% !important;
+      right: 5% !important;
+      width: 32% !important;
+      max-height: 22vh !important;
+    }
+    .col-merch .col-bg-motif {
+      bottom: 5% !important;
+      left: 4% !important;
+      width: 27% !important;
+      max-height: 33vh !important;
+    }
+    .col-identidad .col-bg-motif {
+      bottom: 7% !important;
+      right: 5% !important;
+      width: 28% !important;
+      max-height: 23vh !important;
+      filter: none !important;
+      opacity: 0.32 !important;
+      mix-blend-mode: screen !important;
+    }
+
+    /* EN VISTA EXPANDIDA: MOTIVO LINOGRÁFICO COMPLEMENTARIO */
+    .expanded-bg-motif {
+      position: absolute;
+      right: clamp(1vw, 2.5vw, 3.5vw);
+      bottom: clamp(14px, 3vh, 35px);
+      max-height: clamp(170px, 26vh, 250px);
+      width: auto;
+      object-fit: contain;
+      pointer-events: none;
+      z-index: 3;
+      opacity: 0.16;
+      filter: brightness(0);
+      transition: opacity 0.4s ease;
+    }
+
+    /* RECUPERACIÓN DE TAMAÑOS GRANDES ORIGINALES DE PRODUCTOS (-10% BALANCEADO PARA NO SUPERAR BORDES) */
     .col-hero-center {
       position: absolute !important;
-      top: calc(48% + clamp(100px, 11vh, 135px)) !important;
+      top: calc(48% + clamp(55px, 6.5vh, 75px)) !important;
       left: 50% !important;
       transform: translate(-50%, -50%) !important;
       width: 100% !important;
-      height: 44vh !important;
+      height: 50vh !important;
       display: flex !important;
       flex-direction: column !important;
       align-items: center !important;
@@ -1525,12 +1841,58 @@
       pointer-events: none !important;
     }
 
-    /* BOTELLA MUCHA CHICHA: GIRADA 45 GRADOS ANTIHORARIO */
+    .floating-object-wrap {
+      width: 100% !important;
+      height: 100% !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    /* TAMAÑOS GRANDES EQUILIBRADOS DENTRO DE LOS BORDES */
+    .floating-img {
+      max-height: 88% !important;
+      max-width: 82% !important;
+      object-fit: contain !important;
+      filter: drop-shadow(0 20px 32px rgba(0, 0, 0, 0.85)) !important;
+    }
+
+    /* BOTELLA MUCHA CHICHA: GIRADA -45°, PROTAGÓNICA SIN TOCAR BORDES (-10%) */
     .floating-img.bottle-img {
-      max-height: 82% !important;
-      max-width: 74% !important;
-      transform: rotate(-45deg) !important;
-      filter: drop-shadow(16px 20px 30px rgba(0, 0, 0, 0.85)) !important;
+      max-height: 88% !important;
+      max-width: 80% !important;
+      transform: rotate(-45deg) scale(1.15) !important;
+      filter: drop-shadow(16px 22px 32px rgba(0, 0, 0, 0.88)) !important;
+    }
+
+    /* CAZUELA DE LOCRITO: PROTAGÓNICA PERO ESTRICTAMENTE CONTENIDA EN LA COLUMNA (-10%) */
+    .col-pidanomas .floating-img {
+      max-width: 84% !important;
+      max-height: 86% !important;
+      transform: scale(1.08) !important;
+      filter: drop-shadow(0 22px 34px rgba(0, 0, 0, 0.88)) !important;
+    }
+
+    /* CARNE AL VACÍO: CONTENIDA SIN MONTARSE EN COLUMNAS ADYACENTES (-10%) */
+    .col-lleve .floating-img {
+      max-width: 82% !important;
+      max-height: 86% !important;
+      transform: scale(1.06) !important;
+      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.85)) !important;
+    }
+
+    /* CAMISETA SI HAY SI HAY */
+    .col-merch .floating-img {
+      max-width: 80% !important;
+      max-height: 85% !important;
+      transform: scale(1.06) !important;
+    }
+
+    /* MÁSCARA DIABLO HUMA */
+    .col-identidad .floating-img {
+      max-width: 78% !important;
+      max-height: 85% !important;
+      transform: scale(1.06) !important;
     }
 
     /* PUNTOS INDICADORES CENTRALES EN LA BASE (Captura 184301.png) */
@@ -1613,6 +1975,1884 @@
       .view-hidden {
       display: none !important;
     }
+
+    /* ==========================================================================
+       MODAL UI-03: FICHA DETALLE DE PRODUCTO & PERSONALIZACIÓN (INTEGRADA)
+       Directivas oficiales: Impeccable + Design-Taste (Sin halos de IA, WCAG AA)
+       ========================================================================== */
+    .customizer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 12, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    
+    /* OVERLAY Y DIÁLOGO DE CONFIRMACIÓN DE COMANDA */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 12, 0.82);
+      backdrop-filter: blur(8px);
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .modal-overlay.open {
+      display: flex !important;
+      opacity: 1 !important;
+    }
+    .confirm-dialog {
+      animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .customizer-backdrop.open {
+      display: flex;
+      opacity: 1;
+    }
+
+
+    .customizer-modal {
+      position: relative;
+      z-index: 1010;
+      width: 100%;
+      max-width: 980px;
+      background: #181E1A;
+      border: 1.5px solid rgba(245, 234, 219, 0.14);
+      border-radius: 14px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+      display: grid;
+      grid-template-columns: 40% 60%;
+      overflow: hidden;
+      animation: modalSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes modalSlideUp {
+      from { opacity: 0; transform: scale(0.97) translateY(14px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-stage-col {
+      background: radial-gradient(circle at 50% 45%, #252D28 0%, #1A201C 65%, #131715 100%);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      border-right: 1px solid rgba(245, 234, 219, 0.12);
+      overflow: hidden;
+    }
+
+    .stage-header-badge {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 5;
+    }
+
+    .tag-category-pill {
+      background: rgba(229, 159, 56, 0.16);
+      border: 1px solid rgba(229, 159, 56, 0.4);
+      color: #E59F38;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    .tag-mesa-pill {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.95rem;
+      letter-spacing: 1.5px;
+      color: #D1C7BA;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stage-hero-wrap {
+      position: relative;
+      width: 100%;
+      height: 270px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 5;
+      margin: 8px 0;
+    }
+
+    .stage-hero-img {
+      max-width: 88%;
+      max-height: 250px;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.6));
+      animation: floatSmooth 4.2s ease-in-out infinite;
+      transition: transform 0.4s ease;
+    }
+
+    .stage-hero-img.bottle-tilt {
+      transform: rotate(-32deg) scale(1.04);
+    }
+
+    @keyframes floatSmooth {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .stage-badges-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      z-index: 5;
+      width: 100%;
+    }
+
+    .artisan-badge {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(245, 234, 219, 0.12);
+      color: #D1C7BA;
+      font-size: 0.72rem;
+      padding: 3px 9px;
+      border-radius: 6px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .artisan-badge.stock-green {
+      color: #72C07B;
+      border-color: rgba(114, 192, 123, 0.35);
+      background: rgba(114, 192, 123, 0.1);
+    }
+    .artisan-badge.stock-green::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: #72C07B;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* COLUMNA DERECHA: CONFIGURADOR */
+    .modal-config-col {
+      background: #181E1A;
+      padding: 28px 28px 22px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-y: auto;
+      max-height: 85vh;
+    }
+
+    .btn-close-modal {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 32px;
+      height: 32px;
+      background: #222924;
+      border: 1px solid rgba(245, 234, 219, 0.14);
+      color: #D1C7BA;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      line-height: 1;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
+    }
+
+    .btn-close-modal:hover {
+      background: #E59F38;
+      color: #121614;
+      border-color: #E59F38;
+      transform: scale(1.05);
+    }
+
+    .product-header-block {
+      margin-bottom: 16px;
+      padding-right: 36px;
+    }
+
+    .modal-product-title {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 2.2rem;
+      letter-spacing: 1.5px;
+      line-height: 1;
+      color: #F7EFE4;
+      margin-bottom: 6px;
+    }
+
+    .modal-product-desc {
+      font-size: 0.86rem;
+      color: #D1C7BA;
+      line-height: 1.45;
+      margin-bottom: 10px;
+    }
+
+    .product-price-strip {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .price-main-val {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 2.1rem;
+      letter-spacing: 1.5px;
+      color: #F8AD00;
+      line-height: 1;
+    }
+
+    .price-main-note {
+      font-size: 0.75rem;
+      color: #AFA79A;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .divider-groove {
+      height: 1px;
+      background: rgba(245, 234, 219, 0.12);
+      margin: 12px 0 16px;
+    }
+
+    .config-section {
+      margin-bottom: 16px;
+    }
+
+    .section-title-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .config-section-title {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+      color: #F7EFE4;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+     text-transform: uppercase; letter-spacing: 1.2px; }
+    .config-section-title::before {
+      content: '';
+      width: 3px;
+      height: 12px;
+      background: #E59F38;
+      border-radius: 2px;
+      display: inline-block;
+    }
+
+    .badge-required {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #F8AD00;
+      background: rgba(248, 173, 0, 0.12);
+      border: 1px solid rgba(248, 173, 0, 0.3);
+      padding: 2px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .badge-optional {
+      font-size: 0.78rem;
+      color: #AFA79A;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .variants-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .variant-pill {
+      background: #222924;
+      border: 1px solid rgba(245, 234, 219, 0.12);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      user-select: none;
+    }
+
+    .variant-pill:hover {
+      border-color: rgba(229, 159, 56, 0.45);
+      background: rgba(229, 159, 56, 0.06);
+    }
+
+    .variant-pill.selected {
+      background: rgba(229, 159, 56, 0.14);
+      border-color: #E59F38;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    .variant-pill-name {
+      font-size: 0.86rem;
+      font-weight: 700;
+      color: #F7EFE4;
+    }
+
+    .variant-pill-extra {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #AFA79A;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .variant-pill.selected .variant-pill-extra {
+      color: #F8AD00;
+    }
+
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 7px;
+    }
+
+    .ingredient-chip {
+      background: #222924;
+      border: 1px solid rgba(245, 234, 219, 0.12);
+      border-radius: 6px;
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.18s ease;
+    }
+
+    .ingredient-chip:hover {
+      border-color: rgba(245, 234, 219, 0.25);
+    }
+
+    .ingredient-chip.included {
+      border-color: rgba(114, 192, 123, 0.4);
+      background: rgba(114, 192, 123, 0.08);
+    }
+
+    .ingredient-chip.excluded {
+      border-color: rgba(217, 83, 79, 0.3);
+      background: rgba(217, 83, 79, 0.06);
+      opacity: 0.7;
+    }
+
+    .ingredient-chip-name {
+      font-size: 0.8rem;
+      color: #F7EFE4;
+      font-weight: 500;
+    }
+
+    .ingredient-chip.excluded .ingredient-chip-name {
+      text-decoration: line-through;
+      color: #AFA79A;
+    }
+
+    .ingredient-chip-icon {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #72C07B;
+    }
+
+    .ingredient-chip.excluded .ingredient-chip-icon {
+      color: #E06C68;
+    }
+
+    .notes-textarea {
+      width: 100%;
+      background: #222924;
+      border: 1px solid rgba(245, 234, 219, 0.14);
+      border-radius: 8px;
+      padding: 8px 12px;
+      color: #F7EFE4;
+      font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+      font-size: 0.84rem;
+      resize: vertical;
+      min-height: 50px;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .notes-textarea:focus {
+      border-color: #E59F38;
+      outline: 1px solid #E59F38; outline-offset: 0;
+    }
+
+    .notes-textarea::placeholder {
+      color: #AFA79A;
+      opacity: 1;
+    }
+
+    /* FOOTER MODAL */
+    .modal-action-footer {
+      margin-top: auto;
+      padding-top: 14px;
+      border-top: 1px solid rgba(245, 234, 219, 0.12);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .modal-stepper {
+      display: flex;
+      align-items: center;
+      background: #222924;
+      border: 1px solid rgba(245, 234, 219, 0.14);
+      border-radius: 8px;
+      height: 46px;
+      overflow: hidden;
+    }
+
+    .modal-stepper-btn {
+      width: 36px;
+      height: 100%;
+      background: transparent;
+      border: none;
+      color: #F7EFE4;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .modal-stepper-btn:hover {
+      background: #E59F38;
+      color: #121614;
+    }
+
+    .modal-stepper-val {
+      width: 36px;
+      text-align: center;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #F7EFE4;
+      font-variant-numeric: tabular-nums;
+      user-select: none;
+    }
+
+    .btn-modal-add {
+      flex: 1;
+      height: 46px;
+      background: #E59F38;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      color: #121614;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 18px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-modal-add:hover {
+      background: #F8AD00;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-modal-add-total {
+      font-size: 1.35rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 860px) {
+      .customizer-modal {
+        grid-template-columns: 1fr;
+        max-height: 90vh;
+      }
+      .modal-stage-col {
+        padding: 20px;
+        height: 200px;
+      }
+      .stage-hero-wrap {
+        height: 140px;
+      }
+      .stage-hero-img {
+        max-height: 130px;
+      }
+    }
+
+  
+    /* ==========================================================================
+       ESTILOS MINI-RESUMEN DESPLEGABLE DE COMANDA (POPUP EN CABECERA)
+       DISEÑO OFICIAL: FICHA TICKET PAPEL BLANCO ARTESANAL (#FFFFFF)
+       ========================================================================== */
+    .header-comanda-anchor {
+      position: relative;
+      display: inline-block;
+    }
+
+    .header-comanda-dropdown { display: none !important; /* Reemplazado por barra lateral UI-04 */
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: 420px;
+      max-width: 92vw;
+      background: #141916;
+      border: 1px solid #2B3530;
+      border-radius: 12px;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.3);
+      z-index: 3000;
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+      animation: dropdownFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      color: #FAF7F2;
+    }
+
+    .header-comanda-dropdown.is-open {
+      display: flex;
+    }
+
+    @keyframes dropdownFadeIn {
+      from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .dropdown-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 18px;
+      background: #141916;
+      border-bottom: 1px dashed rgba(229, 159, 56, 0.25);
+    }
+
+    .dropdown-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .dropdown-title-text {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.35rem;
+      letter-spacing: 1.2px;
+      color: #E59F38;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .dropdown-count-pill {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.88rem;
+      letter-spacing: 0.8px;
+      color: #E59F38;
+      background: rgba(229, 159, 56, 0.08);
+      border: 1px solid rgba(229, 159, 56, 0.45);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      display: inline-block;
+      line-height: 1.2;
+    }
+
+    .dropdown-close-btn {
+      background: #1A211D;
+      border: 1px solid #2B3530;
+      color: #FAF7F2;
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: all 0.15s ease;
+    }
+    .dropdown-close-btn:hover {
+      background: #252D28;
+      color: #E59F38;
+      border-color: #E59F38;
+    }
+
+    .dropdown-items-list {
+      max-height: 320px;
+      overflow-y: auto;
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: #141916;
+    }
+    .dropdown-items-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    .dropdown-items-list::-webkit-scrollbar-thumb {
+      background: #2B3530;
+      border-radius: 4px;
+    }
+
+    .dropdown-item-row {
+      display: flex;
+      align-items: center;
+      padding: 10px 14px;
+      background: #19201C;
+      border: 1px solid #28332D;
+      border-left: 3px solid #E59F38;
+      border-radius: 8px;
+      gap: 14px;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+    }
+
+    .dropdown-item-row:hover {
+      background: #1E2622;
+      border-color: rgba(229, 159, 56, 0.4);
+    }
+
+    /* MINIATURA FOTOGRÁFICA 3D DEL PLATO */
+    .dropdown-item-thumb-box {
+      width: 52px;
+      height: 52px;
+      border-radius: 8px;
+      background: #121614;
+      border: 1px solid #28332D;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+      padding: 3px;
+    }
+
+    .dropdown-item-thumb-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.4));
+      transition: transform 0.2s ease;
+    }
+
+    .dropdown-item-row:hover .dropdown-item-thumb-img {
+      transform: scale(1.08);
+    }
+
+    .dropdown-item-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .dropdown-item-header-line {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .dropdown-item-qty-tag {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.25rem;
+      color: #E59F38;
+      font-weight: 700;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .dropdown-item-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #FFF8ED;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+
+    .dropdown-item-details-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+      margin-top: 1px;
+    }
+
+    /* VARIANTE LIMPIA: TEXTO MUTED CREMA */
+    .dropdown-item-variant-pill {
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: #AFA79A;
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .dropdown-item-excluded-text {
+      font-size: 0.72rem;
+      color: #E74C3C;
+      text-decoration: line-through;
+      background: rgba(192, 57, 43, 0.12);
+      border: 1px solid rgba(192, 57, 43, 0.35);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .dropdown-item-note-text {
+      font-size: 0.72rem;
+      color: #9E9382;
+      font-style: italic;
+    }
+
+    .dropdown-item-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .dropdown-item-price {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.4rem;
+      color: #F8AD00;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .dropdown-btn-del {
+      background: rgba(192, 57, 43, 0.12);
+      border: 1px solid rgba(192, 57, 43, 0.45);
+      color: #E74C3C;
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    .dropdown-btn-del:hover {
+      background: rgba(192, 57, 43, 0.25);
+      border-color: #E74C3C;
+      color: #FF6B6B;
+    }
+
+    .dropdown-empty-text {
+      text-align: center;
+      padding: 24px 14px;
+      color: #AFA79A;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+
+    .dropdown-footer {
+      padding: 14px 18px;
+      background: #141916;
+      border-top: 1px dashed rgba(229, 159, 56, 0.25);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .dropdown-subtotal-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .dropdown-subtotal-label {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #FAF7F2;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .dropdown-subtotal-value {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.65rem;
+      color: #F8AD00;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .dropdown-btn-checkout {
+      background: #E59F38;
+      color: #121614;
+      border: 1px solid #D49020;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.25rem;
+      letter-spacing: 1.2px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 100%;
+      box-shadow: 0 4px 14px rgba(229, 159, 56, 0.35);
+    }
+
+    .dropdown-btn-checkout .btn-checkout-arrow {
+      display: inline-block;
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.22s ease;
+    }
+
+    /* HOVER: Elevación dinámica + transición a Basalto Negro (#121614) con borde y flecha dorada (#E59F38) */
+    .dropdown-btn-checkout:hover {
+      background: #121614;
+      color: #FAF7F2;
+      border-color: #E59F38;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(18, 22, 20, 0.55), 0 0 0 1px rgba(229, 159, 56, 0.5);
+    }
+
+    .dropdown-btn-checkout:hover .btn-checkout-arrow {
+      transform: translateX(5px);
+      color: #E59F38;
+    }
+
+    /* ACTIVE / CLICK: Micro-hundimiento táctil (haptic feel) */
+    .dropdown-btn-checkout:active {
+      transform: translateY(1px) scale(0.98);
+      background: #0A0D0B;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    /* BADGE DE CANTIDAD EN PLATO (ALINEADO Y DISCRETO) */
+    .ticket-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ticket-ordered-tag {
+      background: #E59F38;
+      color: #121614;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 1px 7px;
+      border-radius: 4px;
+      line-height: 1.2;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.25);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+
+    /* ==========================================================================
+       PERSONALIZACIÓN INTEGRADA EN EL TICKET DE PAPEL BLANCO ARTESANAL (UI-03)
+       ========================================================================== */
+    .ticket-customizer-panel {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+      animation: ticketPanelFadeIn 0.18s ease-out;
+    }
+
+    @keyframes ticketPanelFadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ticket-custom-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px dashed #D5CDC0;
+      padding-bottom: 8px;
+      margin-bottom: 8px;
+      flex-shrink: 0;
+    }
+
+    .btn-ticket-nav-back {
+      background: transparent;
+      border: 1px solid #1E1712;
+      color: #1E1712;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.95rem;
+      letter-spacing: 1px;
+      padding: 2px 10px;
+      border-radius: 2px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s ease;
+    }
+    .btn-ticket-nav-back:hover {
+      background: #1E1712;
+      color: #FAF7F2;
+    }
+
+    .ticket-custom-scroll-body {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ticket-custom-scroll-body::-webkit-scrollbar {
+      width: 5px;
+    }
+    .ticket-custom-scroll-body::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.04);
+      border-radius: 4px;
+    }
+    .ticket-custom-scroll-body::-webkit-scrollbar-thumb {
+      background: #D5CDC0;
+      border-radius: 4px;
+    }
+
+    .ticket-custom-dish-header {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .ticket-custom-name {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.45rem;
+      letter-spacing: 0.8px;
+      color: #1E1712;
+      margin: 0;
+      line-height: 1.05;
+    }
+
+    .ticket-custom-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ticket-custom-price {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.35rem;
+      color: #E59F38;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ticket-custom-badge {
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #9E4429;
+      background: rgba(158, 68, 41, 0.1);
+      border: 1px solid rgba(158, 68, 41, 0.25);
+      padding: 1px 7px;
+      border-radius: 3px;
+    }
+
+    .ticket-custom-desc {
+      font-size: 0.76rem;
+      line-height: 1.3;
+      color: #5C5248;
+      margin: 2px 0 0 0;
+    }
+
+    .ticket-dashed-sep {
+      border-bottom: 1.5px dashed #D5CDC0;
+      margin: 4px 0;
+    }
+
+    .ticket-config-section {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .ticket-config-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.0rem;
+      letter-spacing: 0.8px;
+      color: #1E1712;
+      text-transform: uppercase;
+    }
+
+    .ticket-config-req {
+      font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+      font-size: 0.70rem;
+      font-weight: 700;
+      color: #E59F38;
+      text-transform: uppercase;
+    }
+
+    .ticket-config-hint {
+      font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+      font-size: 0.70rem;
+      color: #8C8276;
+    }
+
+    /* Píldoras de variantes en el ticket de papel */
+    .ticket-variants-pills {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .ticket-variant-pill {
+      background: #FFFFFF;
+      border: 1.5px solid #D5CDC0;
+      border-radius: 4px;
+      padding: 6px 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .ticket-variant-pill:hover {
+      border-color: #E59F38;
+      background: #FFFDF8;
+    }
+    .ticket-variant-pill.selected {
+      border-color: #E59F38;
+      background: #FFF9EE;
+      box-shadow: 0 1px 4px rgba(229, 159, 56, 0.2);
+    }
+    .ticket-variant-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1E1712;
+    }
+    .ticket-variant-extra {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.95rem;
+      color: #E59F38;
+      font-weight: 700;
+    }
+
+    /* Chips de ingredientes en el ticket de papel */
+    .ticket-ingredients-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .ticket-ing-chip {
+      background: #FFFFFF;
+      border: 1px solid #D5CDC0;
+      border-radius: 3px;
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #1E1712;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .ticket-ing-chip:hover {
+      border-color: #E59F38;
+    }
+    .ticket-ing-chip.excluded {
+      background: #F5ECE8;
+      border-color: #BA3C2A;
+      color: #BA3C2A;
+      text-decoration: line-through;
+    }
+    .ticket-ing-icon {
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Input de notas sobre papel */
+    .ticket-notes-input {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1px dashed #D5CDC0;
+      border-radius: 3px;
+      padding: 7px 10px;
+      font-size: 0.78rem;
+      font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+      color: #1E1712;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .ticket-notes-input:focus {
+      border-color: #E59F38;
+      background: #FFFDF8;
+    }
+
+    /* Barra inferior del ticket */
+    .ticket-custom-footer-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 2px dashed #D5CDC0;
+      margin-top: 6px;
+      flex-shrink: 0;
+    }
+
+    .ticket-stepper-control {
+      display: inline-flex;
+      align-items: center;
+      background: #121614;
+      border-radius: 3px;
+      padding: 3px 6px;
+      gap: 5px;
+    }
+    .btn-ticket-step {
+      background: transparent;
+      border: none;
+      color: #FAF7F2;
+      font-size: 1.0rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0 4px;
+      line-height: 1;
+    }
+    .btn-ticket-step:hover {
+      color: #E59F38;
+    }
+    .ticket-step-qty {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #E59F38;
+      min-width: 18px;
+      text-align: center;
+      user-select: none;
+    }
+
+    .btn-ticket-add-confirm {
+      flex: 1;
+      background: #121614;
+      color: #FAF7F2;
+      border: 1px solid #121614;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+      padding: 7px 12px;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.18s ease;
+    }
+    .btn-ticket-add-confirm:hover {
+      background: #E59F38;
+      color: #121614;
+      border-color: #E59F38;
+      transform: translateY(-1px);
+    }
+    .btn-ticket-add-price {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #E59F38;
+    }
+    .btn-ticket-add-confirm:hover .btn-ticket-add-price {
+      color: #121614;
+    }
+
+
+    /* ==========================================================================
+       BARRA LATERAL DERECHA DE COMANDA (OFF-CANVAS SLIDE-OVER DRAWER)
+       Inspirado en las referencias oficiales (Pinterest Tablet UI / Sereno Moreno)
+       ========================================================================== */
+    .comanda-drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      backdrop-filter: blur(4px);
+      z-index: 3800;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .comanda-drawer-backdrop.is-open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .comanda-slide-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: clamp(380px, 32vw, 470px);
+      max-width: 94vw;
+      background: #FAF7F2;
+      color: #1E1712;
+      border-left: 1.5px solid #D9D0C1;
+      box-shadow: -14px 0 40px rgba(0, 0, 0, 0.55);
+      z-index: 3900;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      font-family: var(--font-body, 'Plus Jakarta Sans', sans-serif);
+    }
+    .comanda-slide-drawer.is-open {
+      transform: translateX(0);
+    }
+
+    /* Cabecera del Drawer */
+    .drawer-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      background: #FFFFFF;
+      border-bottom: 1.5px dashed #D9D0C1;
+      flex-shrink: 0;
+    }
+
+    .drawer-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drawer-title {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.45rem;
+      letter-spacing: 1px;
+      color: #1E1712;
+      margin: 0;
+      line-height: 1;
+    }
+
+    .drawer-stamp-badge {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.92rem;
+      color: #C0392B;
+      background: rgba(192, 57, 43, 0.08);
+      border: 1.5px solid rgba(192, 57, 43, 0.65);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      transform: rotate(-2deg);
+      display: inline-block;
+      line-height: 1.2;
+    }
+
+    .drawer-header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .drawer-count-badge {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.9rem;
+      letter-spacing: 0.8px;
+      color: #D47720;
+      background: rgba(212, 119, 32, 0.1);
+      border: 1px solid rgba(212, 119, 32, 0.4);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    .drawer-close-btn {
+      background: #F4EFEB;
+      border: 1px solid #D9D0C1;
+      color: #6B7280;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: all 0.15s ease;
+    }
+    .drawer-close-btn:hover {
+      background: #EAE4DA;
+      color: #1E1712;
+      border-color: #AFA79A;
+    }
+
+    /* Banner de enrutamiento */
+    .drawer-routing-banner {
+      background: #F4EFEB;
+      border-bottom: 1px solid #EAE4DA;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      flex-shrink: 0;
+    }
+
+    .drawer-routing-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #594D42;
+    }
+
+    .drawer-routing-pills {
+      display: flex;
+      gap: 8px;
+    }
+
+    .drawer-station-pill {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .drawer-station-pill.cocina {
+      background: rgba(158, 68, 41, 0.12);
+      color: #9E4429;
+      border: 1px solid rgba(158, 68, 41, 0.35);
+    }
+
+    .drawer-station-pill.bar {
+      background: rgba(56, 132, 140, 0.12);
+      color: #2E727A;
+      border: 1px solid rgba(56, 132, 140, 0.35);
+    }
+
+    /* Lista scrollable de ítems */
+    .drawer-items-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      background: #FAF7F2;
+    }
+    .drawer-items-list::-webkit-scrollbar {
+      width: 4px;
+    }
+    .drawer-items-list::-webkit-scrollbar-thumb {
+      background: #D9D0C1;
+      border-radius: 4px;
+    }
+
+    /* FILAS DE PRODUCTO EN COMANDA: LIMPIO, MODERNO Y HUMANO (INSPIRACIÓN 094219, 094245) */
+    .drawer-item-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 4px;
+      border-bottom: 1px dashed #E2D9CC;
+      transition: background 0.15s ease;
+    }
+    .drawer-item-row:last-child {
+      border-bottom: none;
+    }
+    .drawer-item-row:hover {
+      background: rgba(255, 255, 255, 0.4);
+    }
+
+    .drawer-item-thumb {
+      width: 58px;
+      height: 58px;
+      border-radius: 12px;
+      background: #F2EDE4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      padding: 3px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .drawer-item-thumb img {
+      max-width: 92%;
+      max-height: 92%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.16));
+    }
+
+    .drawer-item-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .drawer-item-name {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: #1E1712;
+      line-height: 1.25;
+      margin: 0;
+    }
+
+    .drawer-item-variant {
+      font-size: 0.8rem;
+      color: #7A7067;
+      font-weight: 500;
+    }
+
+    .drawer-item-custom-tag {
+      display: inline-block;
+      align-self: flex-start;
+      background: #FDF3E7;
+      color: #BA3C2A;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(186, 60, 42, 0.18);
+      margin-top: 2px;
+    }
+
+    .drawer-item-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .drawer-item-price {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.4rem;
+      color: #8A3C28;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    /* STEPPER EN CÁPSULA PROFESIONAL (ESTILO 094245) */
+    .drawer-stepper-pill {
+      display: inline-flex;
+      align-items: center;
+      background: #FFFFFF;
+      border: 1px solid #D9D2C5;
+      border-radius: 20px;
+      padding: 2px 4px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .stepper-btn {
+      background: transparent;
+      border: none;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1E1712;
+      cursor: pointer;
+      border-radius: 50%;
+      transition: all 0.15s ease;
+    }
+    .stepper-btn:hover {
+      background: #F4EFE6;
+    }
+    .stepper-btn.trash {
+      color: #BA3C2A;
+      font-size: 0.85rem;
+    }
+    .stepper-btn.trash:hover {
+      background: rgba(186, 60, 42, 0.12);
+    }
+
+    .stepper-val {
+      font-size: 0.88rem;
+      font-weight: 700;
+      min-width: 20px;
+      text-align: center;
+      color: #1E1712;
+      user-select: none;
+    }
+
+    .drawer-item-thumb {
+      width: 52px;
+      height: 52px;
+      border-radius: 6px;
+      background: #FAF8F5;
+      border: 1px solid #EAE4DA;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+      padding: 2px;
+    }
+
+    .drawer-item-thumb img {
+      max-width: 95%;
+      max-height: 95%;
+      object-fit: contain;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.18));
+    }
+
+    .drawer-item-info {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .drawer-item-title-row {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+
+    .drawer-item-qty-tag {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.15rem;
+      color: #D47720;
+      font-weight: 700;
+      flex-shrink: 0;
+      line-height: 1;
+    }
+
+    .drawer-item-name {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #1E1712;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1.2;
+    }
+
+    .drawer-item-variant {
+      font-size: 0.78rem;
+      color: #6B7280;
+    }
+
+    .drawer-item-customs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 1px;
+    }
+
+    .drawer-custom-tag {
+      font-size: 0.7rem;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .drawer-custom-tag.included {
+      background: rgba(61, 90, 67, 0.1);
+      color: #2D6A4F;
+      border: 1px solid rgba(61, 90, 67, 0.25);
+    }
+    .drawer-custom-tag.excluded {
+      background: rgba(192, 57, 43, 0.08);
+      color: #C0392B;
+      text-decoration: line-through;
+      border: 1px solid rgba(192, 57, 43, 0.25);
+    }
+
+    .drawer-item-note {
+      font-size: 0.72rem;
+      font-style: italic;
+      color: #D47720;
+    }
+
+    .drawer-item-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .drawer-item-price {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.35rem;
+      color: #1E1712;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+    }
+
+    .drawer-stepper {
+      display: flex;
+      align-items: center;
+      background: #F4EFEB;
+      border: 1px solid #D9D0C1;
+      border-radius: 4px;
+      overflow: hidden;
+      height: 26px;
+    }
+
+    .drawer-step-btn {
+      width: 24px;
+      height: 24px;
+      background: transparent;
+      border: none;
+      color: #1E1712;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .drawer-step-btn:hover {
+      background: #E59F38;
+      color: #121614;
+    }
+
+    .drawer-step-val {
+      width: 22px;
+      text-align: center;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1E1712;
+      user-select: none;
+    }
+
+    .drawer-btn-del {
+      background: rgba(192, 57, 43, 0.08);
+      border: 1px solid rgba(192, 57, 43, 0.35);
+      color: #C0392B;
+      cursor: pointer;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      transition: all 0.15s ease;
+    }
+    .drawer-btn-del:hover {
+      background: rgba(192, 57, 43, 0.2);
+      color: #A93226;
+    }
+
+    .drawer-empty-state {
+      text-align: center;
+      padding: 40px 16px;
+      color: #8C827A;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Observaciones generales */
+    .drawer-notes-wrap {
+      background: #FFFFFF;
+      border-top: 1px solid #EAE4DA;
+      border-bottom: 1.5px dashed #D9D0C1;
+      padding: 12px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .drawer-notes-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: #594D42;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .drawer-notes-hint {
+      font-size: 0.7rem;
+      color: #9E9382;
+      font-weight: 500;
+    }
+
+    .drawer-notes-input {
+      background: #FAF8F5;
+      border: 1px solid #EAE4DA;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.82rem;
+      font-family: inherit;
+      color: #1E1712;
+      outline: none;
+      transition: border-color 0.15s ease;
+    }
+    .drawer-notes-input:focus {
+      border-color: #E59F38;
+      background: #FFFFFF;
+    }
+
+    /* Pie financiero del Drawer */
+    .drawer-footer {
+      background: #FFFFFF;
+      padding: 14px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+      box-shadow: 0 -4px 14px rgba(0, 0, 0, 0.05);
+    }
+
+    .drawer-bill-breakdown {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .drawer-bill-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.82rem;
+      color: #6B7280;
+    }
+
+    .drawer-bill-row.discount-row {
+      color: #2D6A4F;
+      font-weight: 600;
+    }
+
+    .drawer-discount-tag {
+      background: rgba(45, 106, 79, 0.1);
+      border: 1px solid rgba(45, 106, 79, 0.3);
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
+    .drawer-bill-divider {
+      height: 1px;
+      background: #EAE4DA;
+      margin: 2px 0;
+    }
+
+    .drawer-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .drawer-total-label {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.25rem;
+      letter-spacing: 0.8px;
+      color: #1E1712;
+      font-weight: 700;
+    }
+
+    .drawer-total-amount {
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.85rem;
+      color: #D47720;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .drawer-btn-submit {
+      background: #E59F38;
+      color: #121614;
+      border: 1px solid #D49020;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 1.25rem;
+      letter-spacing: 1.2px;
+      padding: 12px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      width: 100%;
+      box-shadow: 0 4px 14px rgba(229, 159, 56, 0.35);
+    }
+    .drawer-btn-submit:hover {
+      background: #121614;
+      color: #FAF7F2;
+      border-color: #E59F38;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(18, 22, 20, 0.45);
+    }
+
+    .drawer-btn-continue {
+      background: transparent;
+      border: 1px solid #D9D0C1;
+      border-radius: 6px;
+      padding: 8px;
+      color: #6B7280;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      width: 100%;
+    }
+    .drawer-btn-continue:hover {
+      background: #F4EFEB;
+      color: #1E1712;
+      border-color: #AFA79A;
+    }
+
   </style>
 </head>
 <body>
@@ -1628,9 +3868,9 @@
        ========================================================= -->
   <div class="chalk-illustrations-bg" aria-hidden="true">
     <!-- Solo 3 ilustraciones perimetrales sin sobreposicion (Captura 201903.png) -->
-    <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-16.png" class="chalk-draw draw-welcome-left" alt="Diablo Huma ancestral" />
-    <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-20.png" class="chalk-draw draw-welcome-center" alt="Catador de chicha" />
-    <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-17.png" class="chalk-draw draw-welcome-right" alt="Danzante tradicional" />
+    <img src="catalogo_imagenes/drawings/recurso-16.png" class="chalk-draw draw-welcome-left" alt="Diablo Huma ancestral" />
+    <img src="catalogo_imagenes/drawings/recurso-20.png" class="chalk-draw draw-welcome-center" alt="Catador de chicha" />
+    <img src="catalogo_imagenes/drawings/recurso-17.png" class="chalk-draw draw-welcome-right" alt="Danzante tradicional" />
   </div>
 
   <div class="chalkboard-grid-overlay" aria-hidden="true"></div>
@@ -1638,7 +3878,7 @@
 
       <!-- CABECERA: LOGO OFICIAL SVG Y MESA 04 CON ESTILO DE CARTEL -->
       <header class="welcome-top-brand">
-        <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/logosm.svg" class="welcome-official-logo" alt="Sereno Moreno Bar & Mercado" />
+        <img src="catalogo_imagenes/drawings/logosm.svg" class="welcome-official-logo" alt="Sereno Moreno Bar & Mercado" />
         <div class="welcome-mesa-stamp">
           <span class="mesa-flourish" aria-hidden="true">&mdash;</span>
           <span class="mesa-title-text">MESA 04</span>
@@ -1675,7 +3915,7 @@
        ========================================================= -->
   <div class="loader-overlay view-hidden" id="viewLoader" role="status" aria-live="polite">
     <div class="loader-face-box">
-      <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/diablo-huma-emblem.png" class="loader-face-img" alt="Emblema sagrado del Diablo Huma" />
+      <img src="catalogo_imagenes/drawings/diablo-huma-emblem.png" class="loader-face-img" alt="Emblema sagrado del Diablo Huma" />
     </div>
     <div class="loader-text">SERENO MORENO</div>
     <div class="loader-subtext" id="loaderMsg">Destapando fermentos ancestrales...</div>
@@ -1699,10 +3939,11 @@
             <h2 class="col-title">MUCHA<br>CHICHA</h2>
           </header>
 
-          <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-16.png" class="col-bg-drawing draw-chicha" alt="" />
+          <img src="catalogo_imagenes/drawings/recurso-16.png" class="col-bg-drawing draw-chicha" alt="Diablo Huma ancestral de fermentos" />
+          <img src="catalogo_imagenes/drawings/draw0.webp" class="col-bg-motif motif-chicha" alt="Motivo linográfico de botella" />
           <div class="col-hero-center">
             <div class="floating-object-wrap">
-              <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/fermentos/botella_roja_float.png" class="floating-img bottle-img" alt="Botella de vidrio esmerilado Mucha Chicha" />
+              <img src="catalogo_imagenes/fermentos/botella_roja_float.png" class="floating-img bottle-img" alt="Botella de vidrio esmerilado Mucha Chicha" />
             </div>
             <div class="floor-soft-shadow"></div>
           </div>
@@ -1723,10 +3964,11 @@
             <h2 class="col-title">PIDA<br>NO MÁS</h2>
           </header>
 
-          <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-20.png" class="col-bg-drawing draw-pida" alt="" />
+          <img src="catalogo_imagenes/drawings/recurso-20.png" class="col-bg-drawing draw-pida" alt="Catador tradicional de chicha" />
+          <img src="catalogo_imagenes/drawings/draw1.webp" class="col-bg-motif motif-pida" alt="Motivo linográfico de gallina de fogón" />
           <div class="col-hero-center">
             <div class="floating-object-wrap">
-              <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png" class="floating-img" alt="Cazuela de Locrito de Papa" />
+              <img src="catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png" class="floating-img" alt="Cazuela de Locrito de Papa" />
             </div>
             <div class="floor-soft-shadow"></div>
           </div>
@@ -1747,11 +3989,12 @@
             <h2 class="col-title">LLEVE<br>LLEVE</h2>
           </header>
 
-          <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-17.png" class="col-bg-drawing draw-lleve" alt="" />
+          <img src="catalogo_imagenes/drawings/recurso-17.png" class="col-bg-drawing draw-lleve" alt="Danzante tradicional andino" />
+          <img src="catalogo_imagenes/drawings/draw3.webp" class="col-bg-motif motif-lleve" alt="Motivo linográfico de chanchito andino" />
 
           <div class="col-hero-center">
             <div class="floating-object-wrap">
-              <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/lleve_lleve/costilla_precocida_float.png" class="floating-img" alt="Costilla de cerdo empacada al vacío" />
+              <img src="catalogo_imagenes/lleve_lleve/costilla_precocida_float.png" class="floating-img" alt="Costilla de cerdo empacada al vacío" />
             </div>
             <div class="floor-soft-shadow"></div>
           </div>
@@ -1772,11 +4015,12 @@
             <h2 class="col-title">SI HAY<br>SI HAY</h2>
           </header>
 
-          <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-18.png" class="col-bg-drawing draw-merch" alt="" />
+          <img src="catalogo_imagenes/drawings/recurso-18.png" class="col-bg-drawing draw-merch" alt="Diablo Huma tradicional andino" />
+          <img src="catalogo_imagenes/drawings/draw2.webp" class="col-bg-motif motif-merch" alt="Motivo linográfico de mata de maíz andino" />
 
           <div class="col-hero-center">
             <div class="floating-object-wrap">
-              <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/si_hay_si_hay/camiseta_verde_float.png" class="floating-img" alt="Camiseta Verde 'Si Hay'" />
+              <img src="catalogo_imagenes/si_hay_si_hay/camiseta_verde_float.png" class="floating-img" alt="Camiseta Verde 'Si Hay'" />
             </div>
             <div class="floor-soft-shadow"></div>
           </div>
@@ -1790,26 +4034,26 @@
           </footer>
         </article>
 
-        <!-- COLUMNA 4: IDENTIDAD -->
-        <article class="pillar-col col-identidad" id="col4" onclick="colClicked(4)" role="button" tabindex="0" aria-label="Sección Oro Ancestral e Identidad">
+        <!-- COLUMNA 4: AGENDA CULTURAL & EN VIVO -->
+        <article class="pillar-col col-identidad" id="col4" onclick="colClicked(4)" role="button" tabindex="0" aria-label="Sección Agenda Cultural">
           <header class="col-header">
-            <span class="col-category-tag">CULTURA &amp; ORIGEN</span>
-            <h2 class="col-title">ORO<br>ANCESTRAL</h2>
+            <span class="col-category-tag">CULTURA &amp; EN VIVO</span>
+            <h2 class="col-title">AGENDA<br>CULTURAL</h2>
           </header>
 
-          <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/diablo-huma-emblem.png" class="col-bg-drawing draw-identidad" alt="" />
+          <img src="catalogo_imagenes/drawings/recurso-19.png" class="col-bg-drawing draw-identidad" alt="Bailarín festivo tradicional andino" />
+          <img src="catalogo_imagenes/drawings/draw4.png" class="col-bg-motif motif-identidad" alt="Motivo linográfico de música en vivo (Charango y Sikus)" />
 
           <div class="col-hero-center">
             <div class="floating-object-wrap">
-              <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/mascara_diablo_huma_float.png" class="floating-img" alt="Máscara sagrada del Diablo Huma" />
+              <img src="catalogo_imagenes/drawings/guardarraya_poster.png" class="floating-img poster-img" alt="Póster Guardarraya en Vivo - Sereno Moreno Quito" />
             </div>
             <div class="floor-soft-shadow"></div>
           </div>
 
           <footer class="col-footer">
-            <button class="btn-reveal-pill" onclick="expandPillar(4, event)" aria-label="Explorar sección Oro Ancestral"><span>EXPLORAR SECCIÓN</span></button>
+            <button class="btn-reveal-pill" onclick="expandPillar(4, event)" aria-label="Explorar sección Agenda Cultural"><span>EXPLORAR SECCIÓN</span></button>
             <span class="col-brand-bottom">SERENO MORENO</span>
-            
           </footer>
         </article>
 
@@ -1822,11 +4066,11 @@
     <!-- Ficha artesanal de Mesa & Comanda (Captura 170723.png) -->
     <div class="floating-table-badge" role="region" aria-label="Información de mesa y comanda">
       <div class="table-badge-brand" onclick="returnToWelcome()" style="cursor: pointer;" title="Volver al inicio / Mesa 04">
-        <span class="badge-moon-glyph" aria-hidden="true">&#9789;</span>
+        <span class="badge-moon-glyph" aria-hidden="true">&#9790;</span>
         <span class="badge-table-num">MESA 04</span>
       </div>
       <div class="badge-craft-sep" aria-hidden="true"></div>
-      <div class="badge-comanda-trigger" onclick="expandPillar(currentColIdx)" role="button" tabindex="0" aria-label="Ver comanda">
+      <div class="badge-comanda-trigger" onclick="toggleComandaDrawer(event)" role="button" tabindex="0" aria-label="Abrir barra lateral de comanda" title="Abrir comanda de mesa">
         <span class="comanda-txt">COMANDA</span>
         <span class="comanda-counter-badge" id="bubbleComandaCount">0</span>
       </div>
@@ -1838,7 +4082,7 @@
       <button class="col-dot-wrap" id="dotWrap1" onclick="goToColumn(1)" aria-label="Ir a Pida No Más"><span class="col-dot"></span></button>
       <button class="col-dot-wrap" id="dotWrap2" onclick="goToColumn(2)" aria-label="Ir a Lleve Lleve"><span class="col-dot"></span></button>
       <button class="col-dot-wrap" id="dotWrap3" onclick="goToColumn(3)" aria-label="Ir a Si Hay Si Hay"><span class="col-dot"></span></button>
-      <button class="col-dot-wrap" id="dotWrap4" onclick="goToColumn(4)" aria-label="Ir a Oro Ancestral"><span class="col-dot"></span></button>
+      <button class="col-dot-wrap" id="dotWrap4" onclick="goToColumn(4)" aria-label="Ir a Agenda Cultural"><span class="col-dot"></span></button>
     </div>
   </main>
 
@@ -1848,12 +4092,14 @@
   <div class="expanded-stage view-hidden" id="viewExpanded" role="dialog" aria-modal="true" aria-label="Detalle de sección expandida">
     
     <!-- Ilustración serigráfica de fondo: a la izquierda, completamente visible -->
-    <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-20.png" class="expanded-bg-drawing" id="expandedBgDrawing" alt="" aria-hidden="true" />
+    <img src="catalogo_imagenes/drawings/recurso-20.png" class="expanded-bg-drawing" id="expandedBgDrawing" alt="Dibujo ancestral principal" aria-hidden="true" />
+    <img src="catalogo_imagenes/drawings/draw1.webp" class="expanded-bg-motif" id="expandedBgMotif" alt="Motivo linográfico complementario" aria-hidden="true" />
 
     <!-- Cabecera compacta de la vista expandida -->
     <header class="expanded-header">
-      <button class="btn-collapse-back" onclick="collapseBackToColumns()" aria-label="Volver al menú de tres columnas">
-        &larr; VOLVER AL MENÚ
+      <button class="btn-collapse-back" onclick="collapseBackToColumns()" aria-label="Volver al menú de columnas" title="Volver al menú">
+        <span class="btn-back-arrow" aria-hidden="true">&larr;</span>
+        <span class="btn-back-text">MENÚ</span>
       </button>
 
       <!-- Selector directo de categorías -->
@@ -1862,19 +4108,44 @@
         <button class="expanded-tab-btn" id="tab1" onclick="switchExpandedCategory(1)">PIDA NO MÁS</button>
         <button class="expanded-tab-btn" id="tab2" onclick="switchExpandedCategory(2)">LLEVE LLEVE</button>
         <button class="expanded-tab-btn" id="tab3" onclick="switchExpandedCategory(3)">SI HAY SI HAY</button>
-        <button class="expanded-tab-btn" id="tab4" onclick="switchExpandedCategory(4)">IDENTIDAD</button>
+        <button class="expanded-tab-btn" id="tab4" onclick="switchExpandedCategory(4)">CULTURA</button>
       </nav>
 
-      <!-- Ficha artesanal de Mesa & Comanda -->
-      <div class="floating-table-badge" style="position: static; margin: 0; box-shadow: none;" role="region" aria-label="Información de mesa y comanda">
-        <div class="table-badge-brand" onclick="returnToWelcome()" style="cursor: pointer;" title="Volver al inicio / Mesa 04">
-          <span class="badge-moon-glyph" aria-hidden="true">&#9789;</span>
-          <span class="badge-table-num">MESA 04</span>
+      <!-- Ficha artesanal de Mesa & Comanda con Popover desplegable -->
+      <div class="header-comanda-anchor">
+        <div class="floating-table-badge" style="position: static; margin: 0; box-shadow: none;" role="region" aria-label="Información de mesa y comanda">
+          <div class="table-badge-brand" onclick="returnToWelcome()" style="cursor: pointer;" title="Volver al inicio / Mesa 04">
+            <span class="badge-moon-glyph" aria-hidden="true">&#9790;</span>
+            <span class="badge-table-num">MESA 04</span>
+          </div>
+          <div class="badge-craft-sep" aria-hidden="true"></div>
+          <div class="badge-comanda-trigger" id="expandedComandaTrigger" style="cursor: default;" aria-label="Contador de comanda" title="Total de productos en comanda">
+            <span class="comanda-txt">COMANDA</span>
+            <span class="comanda-counter-badge" id="expandedHeaderCounter">0</span>
+          </div>
         </div>
-        <div class="badge-craft-sep" aria-hidden="true"></div>
-        <div class="badge-comanda-trigger" style="cursor: default;" aria-label="Comanda actual">
-          <span class="comanda-txt">COMANDA</span>
-          <span class="comanda-counter-badge" id="expandedHeaderCounter">0</span>
+
+        <!-- Desplegable Mini-Resumen de Comanda -->
+        <div class="header-comanda-dropdown" id="headerComandaDropdown" onclick="event.stopPropagation()">
+          <div class="dropdown-header">
+            <div class="dropdown-title">
+              <span class="dropdown-title-text">MESA 04 &bull; COMANDA</span>
+              <span class="dropdown-count-pill" id="dropdownCountBadge">0 ÍTEMS</span>
+            </div>
+            <button type="button" class="dropdown-close-btn" onclick="toggleComandaDropdown(event)" title="Cerrar">&times;</button>
+          </div>
+          <div class="dropdown-items-list" id="dropdownItemsList">
+            <div class="dropdown-empty-text">No has añadido productos aún. Toca "+ COMANDA" en cualquier plato para agregar.</div>
+          </div>
+          <div class="dropdown-footer" id="dropdownFooter" style="display: none;">
+            <div class="dropdown-subtotal-row">
+              <span class="dropdown-subtotal-label">TOTAL ESTIMADO:</span>
+              <span class="dropdown-subtotal-value" id="dropdownSubtotalVal">$0.00</span>
+            </div>
+            <button type="button" class="dropdown-btn-checkout" onclick="toggleComandaDrawer(event)">
+              <span>VER COMANDA COMPLETA</span> <span class="btn-checkout-arrow">&rarr;</span>
+            </button>
+          </div>
         </div>
       </div>
     </header>
@@ -1885,63 +4156,145 @@
       <!-- ZONA CENTRAL: TÍTULO EN LA MITAD + PRODUCTO HÉROE EN LA MITAD (GRAN FORMATO) -->
       <main class="expanded-center-zone">
         
-        <!-- CABECERA DE SECCIÓN CON TAG Y TÍTULO PERSONALIZADOS (Captura 184701.png) -->
+        <!-- CABECERA DE SECCIÓN CON TAG Y TÍTULO EN UNA SOLA LÍNEA (DETRÁS DEL PRODUCTO) -->
         <header class="expanded-hero-header">
           <span class="expanded-category-tag" id="expandedHeroTag">FERMENTOS VIVOS</span>
-          <h1 class="expanded-hero-title" id="expandedHeroTitle">MUCHA<br>CHICHA</h1>
+          <h1 class="expanded-hero-title" id="expandedHeroTitle">MUCHA CHICHA</h1>
         </header>
 
-        <!-- CONTENEDOR DEL PRODUCTO HÉROE EN LA MITAD -->
+        <!-- CONTENEDOR DEL PRODUCTO HÉROE EN LA MITAD (DELANTE DEL TÍTULO) -->
         <div class="hero-large-viewport">
-          <img src="../../../PuraSed.Client/wwwroot/catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png" class="hero-large-img" id="heroLargeImg" alt="Producto de la sección" onerror="this.onerror=null; this.src='../../../PuraSed.Client/wwwroot/catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png';" />
-          <div class="hero-large-shadow"></div>
+          <div class="hero-float-wrapper" id="heroFloatWrapper">
+            <img src="catalogo_imagenes/fermentos/botella_roja_float.png" class="hero-large-img" id="heroLargeImg" style="transform: rotate(-45deg) scale(1.36);" alt="Producto de la sección" onerror="this.onerror=null; this.src='catalogo_imagenes/fermentos/botella_roja_float.png';" />
+          </div>
+          <div class="hero-large-shadow" id="heroLargeShadow"></div>
         </div>
 
       </main>
 
       <!-- DERECHA: TICKET BLANCO MEDIANO CON BARRA DE DESPLAZAMIENTO -->
       <aside class="paper-ticket-container">
-        <div class="paper-ticket-card" id="paperTicketCard">
-          
-          <!-- Cabecera del ticket con sello de mesa -->
-          <div class="ticket-header-line">
-            <span class="ticket-title" id="ticketSectionTitle">PLATOS DE FOGÓN</span>
-            <span class="ticket-stamp">MESA 04</span>
-          </div>
+          <div class="paper-ticket-card" id="paperTicketCard">
+            <!-- Diente serrado superior (estilo 095426) -->
+            <div class="ticket-scallop-top"></div>
+            
+            <div class="ticket-card-content">
+              <!-- 1. VISTA DE LISTA DE PLATOS (CARTA) -->
+              <div id="ticketListView" style="display: flex; flex-direction: column; height: 100%;">
+                <div class="ticket-header-line">
+                  <span class="ticket-title" id="ticketSectionTitle">PLATOS DE FOGÓN</span>
+                  <span class="ticket-stamp">MESA 04</span>
+                </div>
+                <div class="ticket-items-list" id="ticketItemsList" role="list">
+                  <!-- Inyectado dinámicamente -->
+                </div>
 
-          <!-- Lista de opciones del menú con botón de compra dentro del ticket (con scrollbar) -->
-          <div class="ticket-items-list" id="ticketItemsList" role="list">
-            <!-- Inyectado dinámicamente -->
-          </div>
+                <!-- EXTENSIÓN INFERIOR DE TICKET (COMANDADO EN MESA + BOTÓN VER COMANDA 094902) -->
+                <div class="ticket-footer-extension" id="ticketFooterExtension">
+                  <div class="ticket-extension-left">
+                    <span class="ticket-ext-label">TOTAL COMANDA</span>
+                    <span class="ticket-ext-total" id="ticketExtTotal">$0.00</span>
+                    <span class="ticket-ext-badge" id="ticketExtCount">0 PRODUCTOS</span>
+                  </div>
+                  <button type="button" class="ticket-btn-open-drawer" onclick="toggleComandaDrawer(event)" aria-label="Abrir comanda de mesa" id="ticketBtnOpenDrawer">
+                    <span>VER COMANDA</span>
+                    <span class="ticket-btn-arrow">&rarr;</span>
+                  </button>
+                </div>
+              </div>
 
-        </div>
-      </aside>
+              <!-- 2. VISTA DE PERSONALIZACIÓN INTEGRADA EN EL TICKET DE PAPEL (UI-03) -->
+              <div class="ticket-customizer-panel" id="ticketCustomizerPanel" style="display: none;">
+              <div class="ticket-custom-header">
+                <button type="button" class="btn-ticket-nav-back" onclick="closeTicketCustomizer()" title="Volver a la lista de platos">
+                  &larr; CARTA
+                </button>
+                <span class="ticket-stamp">MESA 04</span>
+              </div>
+
+              <div class="ticket-custom-scroll-body">
+                <div class="ticket-custom-dish-header">
+                  <h3 class="ticket-custom-name" id="ticketCustomName">ALITAS A LA LEÑA</h3>
+                  <div class="ticket-custom-meta">
+                    <span class="ticket-custom-price" id="ticketCustomPrice">$8.50</span>
+                    <span class="ticket-custom-badge" id="ticketCustomCraft">🔥 Brasas & Leña</span>
+                  </div>
+                  <p class="ticket-custom-desc" id="ticketCustomDesc">Alitas glaseadas en reducción de chicha y panela, con papas rústicas y salsas artesanas.</p>
+                </div>
+
+                <div class="ticket-dashed-sep"></div>
+
+                <!-- Presentación / Porción -->
+                <div class="ticket-config-section">
+                  <div class="ticket-config-title">
+                    <span>Presentación / Porción</span>
+                    <span class="ticket-config-req">Obligatorio</span>
+                  </div>
+                  <div class="ticket-variants-pills" id="ticketVariantsContainer">
+                    <!-- Inyectado dinámicamente -->
+                  </div>
+                </div>
+
+                <div class="ticket-dashed-sep"></div>
+
+                <!-- Personalización de Ingredientes -->
+                <div class="ticket-config-section">
+                  <div class="ticket-config-title">
+                    <span>Ingredientes & Salsas</span>
+                    <span class="ticket-config-hint">Toca para incluir o quitar</span>
+                  </div>
+                  <div class="ticket-ingredients-grid" id="ticketIngredientsContainer">
+                    <!-- Inyectado dinámicamente -->
+                  </div>
+                </div>
+
+                <div class="ticket-dashed-sep"></div>
+
+                <!-- Notas para cocina -->
+                <div class="ticket-config-section">
+                  <div class="ticket-config-title">
+                    <span>Notas para Cocina / Barra</span>
+                    <span class="ticket-config-hint">Opcional</span>
+                  </div>
+                  <input type="text" class="ticket-notes-input" id="ticketKitchenNotesInput" placeholder="Ej: salsa aparte, bien caliente o indicaciones..." />
+                </div>
+              </div>
+
+              <!-- Pie de ticket con stepper y botón de confirmación -->
+              <div class="ticket-custom-footer-bar">
+                <div class="ticket-stepper-control">
+                  <button type="button" class="btn-ticket-step" onclick="adjustTicketCustomQty(-1)">&minus;</button>
+                  <span class="ticket-step-qty" id="ticketCustomQtyNum">1</span>
+                  <button type="button" class="btn-ticket-step" onclick="adjustTicketCustomQty(1)">+</button>
+                </div>
+                <button type="button" class="btn-ticket-add-confirm" onclick="submitTicketCustomOrder()" id="btnTicketAddConfirm">
+                  <span>AÑADIR A LA COMANDA</span>
+                  <span class="btn-ticket-add-price" id="ticketSubmitTotalPrice">$8.50</span>
+                </button>
+              </div>
+
+            
+            </div>
+              
+            </div>
+
+            <!-- Diente serrado inferior (estilo 095417) -->
+            <div class="ticket-scallop-bottom"></div>
+          </div>
+        </aside>
 
     </div>
 
     <!-- Pie inferior: Barra de comanda (completamente despejada, separada por margen) -->
-    <footer class="expanded-footer-dock">
-      <div class="dock-left-summary">
-        <span class="dock-mesa-label">COMANDA MESA 04</span>
-        <span class="dock-items-detail" id="footerItemsSummary">Sin productos añadidos</span>
-      </div>
-      <div class="dock-right-action">
-        <div class="dock-total-wrapper">
-          <span class="dock-total-label">TOTAL:</span>
-          <span class="dock-total-amount" id="footerOrderTotal">$0.00</span>
-        </div>
-        <button class="btn-dispatch-order" onclick="dispatchComandaToKitchen()" aria-label="Despachar comanda a cocina y barra">
-          MANDAR A COCINA / BARRA &rarr;
-        </button>
-      </div>
-    </footer>
+    <!-- Dock inferior eliminado: reemplazado por extensión artesanal en el ticket blanco -->
 
   </div>
 
   <!-- =========================================================
        LÓGICA JAVASCRIPT DE INTERACCIÓN Y NAVEGACIÓN
        ========================================================= -->
-    <script>
+  
+  <script>
     const viewWelcome = document.getElementById('viewWelcome');
     const viewLoader = document.getElementById('viewLoader');
     const viewColumns = document.getElementById('viewColumns');
@@ -1959,15 +4312,18 @@
         bgGradient: "radial-gradient(circle at 65% 50%, #E8923E 0%, #D47E2F 55%, #BA6920 100%)",
         drawingBlend: "multiply",
         drawingOpacity: "0.25",
-        bgDrawing: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-16.png",
-        heroImg: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/fermentos/botella_roja_float.png",
+        bgDrawing: "catalogo_imagenes/drawings/recurso-16.png",
+        bgMotif: "catalogo_imagenes/drawings/draw0.webp",
+        heroImg: "catalogo_imagenes/fermentos/botella_roja_float.png",
         ticketTitle: "CARTA DE FERMENTOS",
         items: [
-          { name: "Mucha Chicha Maíz (Roja / Morado)", desc: "Bebida de maíz morado fermentada. 6.0% Vol. Alc. 330 ml.", price: 4.00, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/fermentos/botella_roja_float.png" },
-          { name: "Mucha Chicha Maíz (Amarilla / Clásica)", desc: "Bebida de maíz clásico fermentada. 4.5% v/v. 330 ml.", price: 4.00, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/fermentos/botella_amarilla_float.png" },
-          { name: "Mucha Chicha Morocho (Lata 500ml)", desc: "Fermento de maíz morocho con notas cítricas. 4.5% v/v. 500 ml.", price: 5.50, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/fermentos/lata_morocho_float.png" },
-          { name: "Mucha Chicha Maíz Morado (Lata 500ml)", desc: "Fermento artesanal de maíz morado. 6.0% v/v. 500 ml.", price: 5.50, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/fermentos/lata_morado_float.png" },
-          { name: "Mucha Chicha Yuca (Lata 500ml)", desc: "Fermento amazónico de yuca viva. 7.0% v/v. 500 ml.", price: 5.50, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/fermentos/lata_yuca_float.png" }
+          { name: "Mucha Chicha Maíz (Roja / Morado)", desc: "Bebida de maíz morado fermentada. 6.0% Vol. Alc. 330 ml.", price: 4.00, img: "catalogo_imagenes/fermentos/botella_roja_float.png" },
+          { name: "Mucha Chicha Maíz (Amarilla / Clásica)", desc: "Bebida de maíz clásico fermentada. 4.5% v/v. 330 ml.", price: 4.00, img: "catalogo_imagenes/fermentos/botella_amarilla_float.png" },
+          { name: "Mucha Chicha Morocho (Lata 500ml)", desc: "Fermento de maíz morocho con notas cítricas. 4.5% v/v. 500 ml.", price: 5.50, img: "catalogo_imagenes/fermentos/lata_morocho_float.png" },
+          { name: "Mucha Chicha Maíz Morado (Lata 500ml)", desc: "Fermento artesanal de maíz morado. 6.0% v/v. 500 ml.", price: 5.50, img: "catalogo_imagenes/fermentos/lata_morado_float.png" },
+          { name: "Mucha Chicha Yuca (Lata 500ml)", desc: "Fermento amazónico de yuca viva. 7.0% v/v. 500 ml.", price: 5.50, img: "catalogo_imagenes/fermentos/lata_yuca_float.png" },
+          { name: "Cántaro Mucha Chicha Maíz (1 Litro)", desc: "Fermentación tradicional de maíz andino en botellón de vidrio ámbar. 6.0% Alc. 1000 ml.", price: 9.50, img: "catalogo_imagenes/fermentos/cantaro_maiz_float.png" },
+          { name: "Cántaro Mucha Chicha Yuca (1 Litro)", desc: "Fermento amazónico ancestral de yuca viva en botellón de vidrio ámbar. 6.0% Alc. 1000 ml.", price: 9.50, img: "catalogo_imagenes/fermentos/cantaro_yuca_float.png" }
         ]
       },
       {
@@ -1981,15 +4337,19 @@
         bgGradient: "radial-gradient(circle at 65% 50%, #B85335 0%, #9E4429 55%, #853720 100%)",
         drawingBlend: "multiply",
         drawingOpacity: "0.25",
-        bgDrawing: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-20.png",
-        heroImg: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png",
+        bgDrawing: "catalogo_imagenes/drawings/recurso-20.png",
+        bgMotif: "catalogo_imagenes/drawings/draw1.webp",
+        heroImg: "catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png",
         ticketTitle: "PLATOS DE FOGÓN",
         items: [
-          { name: "Locrito de Papa", desc: "Locro cremoso de papa chola con queso de hoja y aguacate.", price: 5.50, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png" },
-          { name: "Hongos Portobello", desc: "Portobellos andinos salteados al ajillo con chicha y panela.", price: 8.50, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/pida_no_mas/hongos_portobello_float.png" },
-          { name: "Ceviche de Coco", desc: "Leche de coco biche fresca con palmito, choclo y chifles.", price: 5.50, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/pida_no_mas/ceviche_de_coco_float.png" },
-          { name: "Choclo Papa con Queso", desc: "Choclo tierno desgranado con papas chauchas y salsa criolla.", price: 4.75, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/pida_no_mas/choclopapaconqueso_float.png" },
-          { name: "Maduro con Queso", desc: "Maduro asado en fogón con queso tierno de hacienda.", price: 3.50, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/pida_no_mas/maduroconqueso_float.png" }
+          { name: "Locrito de Papa", desc: "Locro cremoso de papa chola con queso tierno de hoja, aguacate y tostado.", price: 5.50, img: "catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png" },
+          { name: "Alitas a la Leña", desc: "Alitas glaseadas en reducción de chicha y panela, con papas rústicas y salsas artesanas.", price: 8.50, img: "catalogo_imagenes/pida_no_mas/alitas_caseras_8.5_float.png" },
+          { name: "Papas con Mapahuira", desc: "Papas gruesas doradas a la paila bañadas en abundante mapahuira crocante y cebolla salteada.", price: 4.75, img: "catalogo_imagenes/pida_no_mas/papas_con_mapahuira_4.75_float.png" },
+          { name: "Choclo Papa con Queso", desc: "Choclo tierno desgranado con papas chauchas cocidas, salsa criolla y pernil desmechado.", price: 4.75, img: "catalogo_imagenes/pida_no_mas/choclo_con_papa_4.75_float.png" },
+          { name: "Ensalada Chulpi Tostado", desc: "Mix fresco de hojas, tomate cherry, cebolla, chulpi tostado crocante y maduro frito.", price: 4.75, img: "catalogo_imagenes/pida_no_mas/ensalada_chulpi_tostado_4.75_float.png" },
+          { name: "Hongos Portobello", desc: "Portobellos andinos salteados al ajillo con reducción de chicha y panela.", price: 8.50, img: "catalogo_imagenes/pida_no_mas/hongos_portobello_float.png" },
+          { name: "Ceviche de Coco", desc: "Leche de coco biche fresca con palmito, maíz tierno y chifles crocantes.", price: 5.50, img: "catalogo_imagenes/pida_no_mas/ceviche_de_coco_float.png" },
+          { name: "Maduro con Queso", desc: "Maduro asado lentamente en fogón con queso tierno de hacienda derretido.", price: 4.75, img: "catalogo_imagenes/pida_no_mas/maduroconqueso_float.png" }
         ]
       },
       {
@@ -2003,14 +4363,17 @@
         bgGradient: "radial-gradient(circle at 65% 50%, #637761 0%, #546652 55%, #425240 100%)",
         drawingBlend: "multiply",
         drawingOpacity: "0.22",
-        bgDrawing: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-17.png",
-        heroImg: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/lleve_lleve/costilla_precocida_float.png",
+        bgDrawing: "catalogo_imagenes/drawings/recurso-17.png",
+        bgMotif: "catalogo_imagenes/drawings/draw3.webp",
+        heroImg: "catalogo_imagenes/lleve_lleve/costilla_precocida_float.png",
         ticketTitle: "CORTES AL VACÍO",
         items: [
-          { name: "Costilla Precocida", desc: "Costilla de cerdo sellada al vacío, lista para dorar en paila.", price: 12.00, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/lleve_lleve/costilla_precocida_float.png" },
-          { name: "Codillo Glaseado", desc: "Codillo tierno ahumado con panela y especias de la serranía.", price: 11.50, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/lleve_lleve/codillo_precocido_float.png" },
-          { name: "Muchines de Yuca (Pack)", desc: "Empaque de 6 unidades congeladas para freír en casa.", price: 6.50, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/lleve_lleve/muchines_yuca_float.png" },
-          { name: "Queso de Hoja Artesanal", desc: "Queso de pasta hilada envuelto en hoja de achira.", price: 3.75, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/lleve_lleve/queso_hoja_float.png" }
+          { name: "Costilla Precocida", desc: "Costilla de cerdo precocida sellada al vacío, lista para dorar a la paila o parrilla.", price: 12.00, img: "catalogo_imagenes/lleve_lleve/costilla_precocida_float.png" },
+          { name: "Carne Suave", desc: "Corte tierno de cerdo marinado con ajo de monte, comino y panela al vacío.", price: 11.50, img: "catalogo_imagenes/lleve_lleve/carne_suave_float.png" },
+          { name: "Mote Sucio", desc: "Mote andino sazonado con el fondo de fritada y mapahuira, empacado al vacío.", price: 6.50, img: "catalogo_imagenes/lleve_lleve/mote_sucio_float.png" },
+          { name: "Mapahuira", desc: "Pura manteca con zurrapa de fritada concentrada para darle alma a tus platos.", price: 5.00, img: "catalogo_imagenes/lleve_lleve/mapahuira_float.png" },
+          { name: "Chicharrón", desc: "Trozos de cerdo crocante dorado en paila de bronce, empacado al vacío para regenerar.", price: 7.50, img: "catalogo_imagenes/lleve_lleve/chicharron_float.png" },
+          { name: "Fritada Precocida", desc: "Fritada serrana tradicional precocida con especias andinas, lista para dorar en casa.", price: 11.00, img: "catalogo_imagenes/lleve_lleve/fritada_precocida_float.png" }
         ]
       },
       {
@@ -2021,42 +4384,75 @@
         tagColor: "#13222D",
         titleColor: "#070E14",
         titleShadow: "none",
-        bgGradient: "radial-gradient(circle at 65% 50%, #2E4553 0%, #243743 55%, #1A2832 100%)",
+        bgGradient: "radial-gradient(circle at 65% 50%, #405A6E 0%, #344B5C 55%, #273A48 100%)",
         drawingBlend: "multiply",
         drawingOpacity: "0.22",
-        bgDrawing: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/recurso-18.png",
-        heroImg: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/si_hay_si_hay/camiseta_verde_float.png",
-        ticketTitle: "COLECCIÓN SERENO",
+        bgDrawing: "catalogo_imagenes/drawings/recurso-18.png",
+        bgMotif: "catalogo_imagenes/drawings/draw2.webp",
+        heroImg: "catalogo_imagenes/si_hay_si_hay/camiseta_verde_float.png",
+        ticketTitle: "INDUMENTARIA SERENO",
         items: [
-          { name: "Camiseta Verde 'Si Hay'", desc: "Algodón orgánico peinado con serigrafía tradicional a mano.", price: 20.00, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/si_hay_si_hay/camiseta_verde_float.png" },
-          { name: "Gorra Trucker Sereno", desc: "Gorra estructurada con parche bordado de la luna creciente.", price: 15.00, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/si_hay_si_hay/gorra_sereno_float.png" },
-          { name: "Tote Bag Linografía", desc: "Bolso de lona gruesa con grabado botánico de maíz y chicha.", price: 12.00, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/si_hay_si_hay/totebag_linografia_float.png" },
-          { name: "Vaso Cervecero Artesanal", desc: "Cristal templado serigrafiado 'Ni Tan Joven Ni Tan Viejo'.", price: 8.00, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/si_hay_si_hay/vaso_artesanal_float.png" }
+          { name: "Camiseta Blanca y Verde", desc: "Disponible en Blanco y Verde. 100% algodón orgánico con bordado frontal Sereno Moreno.", price: 18.00, img: "catalogo_imagenes/si_hay_si_hay/camiseta_verde_float.png" },
+          { name: "Buzo Blanco y Verde", desc: "Disponible en Blanco y Verde. Tejido pesado de algodón, corte unisex y cuello acanalado.", price: 20.00, img: "catalogo_imagenes/si_hay_si_hay/buzo_verde_float.png" },
+          { name: "Camiseta Estampada Blanca y Verde", desc: "Disponible en Blanco y Verde. Serigrafía artesanal a mano 'Ni Tan Joven Ni Tan Viejo'.", price: 18.00, img: "catalogo_imagenes/si_hay_si_hay/camiseta_estampado_float.png" },
+          { name: "Hoodie Blanco y Verde", desc: "Disponible en Blanco y Verde. Capucha doble capa con cordón de algodón y bolsillo canguro.", price: 25.00, img: "catalogo_imagenes/si_hay_si_hay/hoodie_verde_float.png" },
+          { name: "Buzo Estampado Edición Sereno", desc: "Disponible en Blanco y Verde. Gráfica serigráfica tradicional con la luna menguante y el fogón.", price: 20.00, img: "catalogo_imagenes/si_hay_si_hay/buzo_estampado_float.png" },
+          { name: "Hoodie Buzo Estampado", desc: "Disponible en Blanco y Verde. Edición especial con arte xilográfico completo en espalda y pecho.", price: 25.00, img: "catalogo_imagenes/si_hay_si_hay/hoodie_estampado_float.png" }
         ]
       },
       {
         id: 4,
-        title: "ORO ANCESTRAL",
-        titleFormatted: "ORO<br>ANCESTRAL",
-        tag: "CULTURA & ORIGEN",
+        title: "AGENDA CULTURAL",
+        titleFormatted: "AGENDA<br>CULTURAL",
+        tag: "CULTURA & EN VIVO",
         tagColor: "#F8AD00",
         titleColor: "#F8AD00",
-        titleShadow: "0 4px 20px rgba(0, 0, 0, 0.8)",
-        bgGradient: "radial-gradient(circle at 65% 50%, #2A312D 0%, #1F2421 55%, #141715 100%)",
+        titleShadow: "0 2px 18px rgba(248, 173, 0, 0.65)",
+        bgGradient: "radial-gradient(circle at 65% 50%, #242B27 0%, #1A1F1C 55%, #111413 100%)",
         drawingBlend: "screen",
-        drawingOpacity: "0.35",
-        bgDrawing: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/diablo-huma-emblem.png",
-        heroImg: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/mascara_diablo_huma_float.png",
-        ticketTitle: "MANIFIESTO & IDENTIDAD",
+        drawingOpacity: "0.38",
+        bgDrawing: "catalogo_imagenes/drawings/recurso-19.png",
+        bgMotif: "catalogo_imagenes/drawings/draw4.png",
+        heroImg: "catalogo_imagenes/drawings/guardarraya_poster.png",
+        ticketTitle: "CARTELERA CULTURAL",
         items: [
-          { name: "El Oro Ancestral (Maíz)", desc: "Tributo a las variedades nativas andinas que dan vida a nuestras fermentaciones.", price: 0.00, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/mascara_diablo_huma_float.png" },
-          { name: "Filosofía del Fuego", desc: "Cocción lenta en pailas de bronce conservando técnicas culinarias precolombinas.", price: 0.00, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/mascara_diablo_huma_float.png" },
-          { name: "Espíritu Sereno Moreno", desc: "Ni tan joven ni tan viejo: punto exacto entre tradición viva y alquimia contemporánea.", price: 0.00, img: "../../../PuraSed.Client/wwwroot/catalogo_imagenes/drawings/mascara_diablo_huma_float.png" }
+          { 
+            name: "Guardarraya — Acústico en la Paila", 
+            desc: "Sábado 28 Noviembre · 20h30. Sesión íntima y visceral de la banda insignia de Quito entre pailas y fogones. Charangos, bombo legüero y clásicos como Chuchaqui, 1537, Lero Lero y Tiburón.", 
+            price: 15.00, 
+            img: "catalogo_imagenes/drawings/guardarraya_poster.png" 
+          },
+          { 
+            name: "Máquina Camaleón — Pop Psicodélico", 
+            desc: "Viernes 04 Diciembre · 21h00. Felipe Lizarzaburu en formato electro-acústico íntimo. Bajos funk, sintetizadores andinos, poesía cósmica y los himnos El Chango del Pasto y Motora.", 
+            price: 12.00, 
+            img: "catalogo_imagenes/drawings/maquina_camaleon_poster.png" 
+          },
+          { 
+            name: "Mugre Sur & Alex Alvear — Noche Urbana", 
+            desc: "Viernes 11 Diciembre · 20h00. Encuentro de hip-hop callejero con arreglos de pasillo y bajo andino. Rimas del centro histórico de Quito y guitarras criollas.", 
+            price: 10.00, 
+            img: "catalogo_imagenes/drawings/mugre_sur_poster.png" 
+          },
+          { 
+            name: "Sal y Mileto (Homenaje) — Rock Libre", 
+            desc: "Sábado 19 Diciembre · 21h30. Guitarras acústicas crudas, vientos andinos y lírica rebelde en homenaje al rock libre ecuatoriano.", 
+            price: 12.00, 
+            img: "catalogo_imagenes/drawings/sal_y_mileto_poster.png" 
+          },
+          { 
+            name: "Noche de Vinilos & Cata de Fermentos", 
+            desc: "Todos los Jueves · 19h00. Joyas en vinilo de chicha psicodélica y cumbia andina con cata guiada por maestros fermentadores de Sereno Moreno.", 
+            price: 8.50, 
+            img: "catalogo_imagenes/drawings/ni_tan_joven_poster.png" 
+          }
         ]
       }
     ];
 
     let currentColIdx = 0;
+    // currentSelectedItemIdx initialized at top
+    // orderItems initialized at top
     const totalCols = pillarData.length;
     const columnsTrack = document.getElementById('columnsTrack');
 
@@ -2093,6 +4489,479 @@
         updateColumnsTransform();
       }
     }
+
+    /* =========================================================================
+    /* ==========================================================================
+       LÓGICA DE PERSONALIZACIÓN INTEGRADA EN EL TICKET DE PAPEL BLANCO (UI-03)
+       ========================================================================== */
+    let currentCustomizerItem = null;
+    let ticketCustomVariants = [];
+    let ticketCustomIngredients = [];
+    let ticketCustomQty = 1;
+
+    
+    const DISH_CUSTOMIZATIONS = {
+      // --- PIDA NO MÁS (COCINA DE FOGÓN) ---
+      "Locrito de Papa": {
+        craftBadge: "🍲 Paila de Bronce Tradicional",
+        variants: [
+          { name: "Cazuela Personal", extra: 0.00, selected: true },
+          { name: "Cazuela Pailón", extra: 2.50, selected: false }
+        ],
+        ingredients: [
+          { name: "Queso tierno de hoja", included: true },
+          { name: "Aguacate criollo", included: true },
+          { name: "Maíz tostado crocante", included: true },
+          { name: "Ají de chochos aparte", included: true }
+        ]
+      },
+      "Alitas a la Leña": {
+        craftBadge: "🔥 Brasas & Leña de Guayacán",
+        variants: [
+          { name: "Porción 6 Alitas", extra: 0.00, selected: true },
+          { name: "Porción 12 Alitas", extra: 5.50, selected: false },
+          { name: "Porción 18 Alitas Familiar", extra: 10.00, selected: false }
+        ],
+        ingredients: [
+          { name: "Glaseado chicha & panela", included: true },
+          { name: "Papas rústicas doradas", included: true },
+          { name: "Salsa tártara artesanal", included: true },
+          { name: "Ají ahumado de la casa", included: true }
+        ]
+      },
+      "Papas con Mapahuira": {
+        craftBadge: "🍲 Paila Andina a la Leña",
+        variants: [
+          { name: "Porción Personal", extra: 0.00, selected: true },
+          { name: "Porción Pailón Compartir", extra: 3.25, selected: false }
+        ],
+        ingredients: [
+          { name: "Mapahuira crocante dorada", included: true },
+          { name: "Queso tierno de hoja", included: true },
+          { name: "Cebollita perla fina", included: true },
+          { name: "Ají criollo aparte", included: true }
+        ]
+      },
+      "Choclo Papa con Queso": {
+        craftBadge: "🌽 Cosecha de la Sierra",
+        variants: [
+          { name: "Porción Tradicional", extra: 0.00, selected: true },
+          { name: "Porción Extra Queso de Hoja", extra: 2.00, selected: false }
+        ],
+        ingredients: [
+          { name: "Choclo tierno desgranado", included: true },
+          { name: "Papas chauchas a la leña", included: true },
+          { name: "Queso tierno de hoja", included: true },
+          { name: "Salsa criolla de tomate", included: true }
+        ]
+      },
+      "Ensalada Chulpi Tostado": {
+        craftBadge: "🥗 Huerto Andino Fresco",
+        variants: [
+          { name: "Porción Personal", extra: 0.00, selected: true },
+          { name: "Porción para Compartir", extra: 2.50, selected: false }
+        ],
+        ingredients: [
+          { name: "Mix de verdes andinos", included: true },
+          { name: "Maíz chulpi tostado crocante", included: true },
+          { name: "Queso fresco en cubos", included: true },
+          { name: "Vinagreta de maracuyá viva", included: true }
+        ]
+      },
+      "Hongos Portobello": {
+        craftBadge: "🍄 Brasas de Carbón Vegetal",
+        variants: [
+          { name: "Porción 2 Portobellos", extra: 0.00, selected: true },
+          { name: "Porción 4 Portobellos", extra: 6.50, selected: false }
+        ],
+        ingredients: [
+          { name: "Mantequilla de hierbas andinas", included: true },
+          { name: "Queso tierno gratinado", included: true },
+          { name: "Papas rústicas doradas", included: true },
+          { name: "Chimichurri de la casa", included: true }
+        ]
+      },
+      "Ceviche de Coco": {
+        craftBadge: "🥥 Receta de la Costa Andina",
+        variants: [
+          { name: "Copa Personal", extra: 0.00, selected: true },
+          { name: "Copa Doble", extra: 3.50, selected: false }
+        ],
+        ingredients: [
+          { name: "Leche de coco fresca", included: true },
+          { name: "Cebollita morada encurtida", included: true },
+          { name: "Cilantro fresco", included: true },
+          { name: "Chifles crocantes incluidos", included: true }
+        ]
+      },
+      "Maduro con Queso": {
+        craftBadge: "🍌 Brasa Tradicional de Carbón",
+        variants: [
+          { name: "1 Maduro Grande", extra: 0.00, selected: true },
+          { name: "2 Maduros a la Brasa", extra: 3.75, selected: false }
+        ],
+        ingredients: [
+          { name: "Queso tierno abundante", included: true },
+          { name: "Sal prieta manabita", included: true },
+          { name: "Miel de panela especiada", included: true }
+        ]
+      },
+
+      // --- FERMENTOS VIVOS (MUCHA CHICHA) ---
+      "Mucha Chicha Maíz (Roja / Morado)": {
+        craftBadge: "🍺 Fermentación Ancestral en Roble",
+        variants: [
+          { name: "Botella 330ml", extra: 0.00, selected: true },
+          { name: "Con Vaso Cervecero Escarchado", extra: 0.50, selected: false }
+        ],
+        ingredients: [
+          { name: "Servida bien fría de bodega", included: true },
+          { name: "Destapada en mesa", included: true },
+          { name: "Rodaja de naranja agria", included: false }
+        ]
+      },
+      "Mucha Chicha Maíz (Amarilla / Clásica)": {
+        craftBadge: "🍺 Fermentación Tradicional 4.5% v/v",
+        variants: [
+          { name: "Botella 330ml", extra: 0.00, selected: true },
+          { name: "Con Vaso Cervecero Frío", extra: 0.50, selected: false }
+        ],
+        ingredients: [
+          { name: "Servida bien fría", included: true },
+          { name: "Destapada en mesa", included: true },
+          { name: "Hielo artesanal", included: false }
+        ]
+      },
+      "Cántaro Mucha Chicha Maíz (1 Litro)": {
+        craftBadge: "🏺 Cántaro de Vidrio Ámbar de Litro",
+        variants: [
+          { name: "Cántaro 1 Litro", extra: 0.00, selected: true },
+          { name: "Con 4 Vasos de Barro Tradicionales", extra: 1.50, selected: false }
+        ],
+        ingredients: [
+          { name: "Fría de bodega", included: true },
+          { name: "Para compartir en mesa", included: true },
+          { name: "Naranja agria y especias", included: true }
+        ]
+      },
+      "Cántaro Mucha Chicha Yuca (1 Litro)": {
+        craftBadge: "🏺 Fermento Amazónico en Cántaro",
+        variants: [
+          { name: "Cántaro 1 Litro", extra: 0.00, selected: true },
+          { name: "Con 4 Vasos de Barro Tradicionales", extra: 1.50, selected: false }
+        ],
+        ingredients: [
+          { name: "Fría de bodega", included: true },
+          { name: "Para compartir en mesa", included: true },
+          { name: "Notas cítricas vivas", included: true }
+        ]
+      },
+
+      // --- LLEVE LLEVE (MERCADO & DESPENSA) ---
+      "Costilla Precocida Ahumada": {
+        craftBadge: "🥩 Ahumado al Vacío Hermético",
+        variants: [
+          { name: "Empaque 500g", extra: 0.00, selected: true },
+          { name: "Empaque 1kg Familiar", extra: 9.50, selected: false }
+        ],
+        ingredients: [
+          { name: "Glaseado de chicha incluido", included: true },
+          { name: "Instrucciones de regeneración", included: true },
+          { name: "Sal en grano andina", included: true }
+        ]
+      },
+
+      // --- SI HAY SI HAY (INDUMENTARIA & MERCH) ---
+      "Camiseta Sereno Moreno": {
+        craftBadge: "👕 Algodón Orgánico 240g",
+        variants: [
+          { name: "Talla M (Recomendada)", extra: 0.00, selected: true },
+          { name: "Talla L", extra: 0.00, selected: false },
+          { name: "Talla XL", extra: 1.50, selected: false }
+        ],
+        ingredients: [
+          { name: "Color Verde Sereno", included: true },
+          { name: "Color Negro Basalto", included: false },
+          { name: "Empaque serigráfico de regalo", included: true }
+        ]
+      },
+
+      // --- AGENDA CULTURAL (EN VIVO & TABERNA SERENO MORENO) ---
+      "Guardarraya": {
+        craftBadge: "🎸 Banda Ícono de Quito · En Vivo",
+        variants: [
+          { name: "Preventa General + Vaso Conmemorativo", extra: 0.00, selected: true },
+          { name: "Mesa VIP Fogón (Incluye Botella Mucha Chicha)", extra: 15.00, selected: false }
+        ],
+        ingredients: [
+          { name: "Acceso Preferencial Patio de Pailas", included: true },
+          { name: "Cata de Fermentos Pre-Show (20h00)", included: true },
+          { name: "Poster Oficial Serigrafiado Firmado", included: false, extra: 5.00 }
+        ]
+      },
+      "Máquina Camaleón": {
+        craftBadge: "🦎 Pop Andino Psicodélico · En Vivo",
+        variants: [
+          { name: "Preventa General + Shot Destilado", extra: 0.00, selected: true },
+          { name: "Mesa Terraza Acústica (4 personas)", extra: 20.00, selected: false }
+        ],
+        ingredients: [
+          { name: "Acceso Taberna Subterránea", included: true },
+          { name: "Shot Destilado de Paila de Bienvenida", included: true },
+          { name: "Sticker Pack Camaleón Sereno", included: false, extra: 3.00 }
+        ]
+      },
+      "Mugre Sur": {
+        craftBadge: "🎤 Hip-Hop Quiteño & Pasillo Fusión",
+        variants: [
+          { name: "Entrada General + Chopp Chicha", extra: 0.00, selected: true },
+          { name: "Acceso Backstage & Charla con Artistas", extra: 10.00, selected: false }
+        ],
+        ingredients: [
+          { name: "Vaso de Mucha Chicha Morado 330ml", included: true },
+          { name: "Acceso Salón de Fermentos", included: true }
+        ]
+      },
+      "Sal y Mileto": {
+        craftBadge: "⚡ Rock Libre Ecuatoriano · Tributo",
+        variants: [
+          { name: "Boleto Escenario Central", extra: 0.00, selected: true },
+          { name: "Mesa 4 Personas + Piqueo de Fogón", extra: 18.00, selected: false }
+        ],
+        ingredients: [
+          { name: "Acceso Preferencial", included: true },
+          { name: "Fanzine Conmemorativo Sal y Mileto", included: true }
+        ]
+      },
+      "Noche de Vinilos": {
+        craftBadge: "📻 Joyas en Vinilo 45 RPM",
+        variants: [
+          { name: "Pase Degustación 4 Fermentos", extra: 0.00, selected: true }
+        ],
+        ingredients: [
+          { name: "Cata Guiada con Maestro Fermentador", included: true },
+          { name: "Porción de Tostado Chulpi Crocante", included: true }
+        ]
+      }
+    };
+
+    function openProductCustomizer(colIdx, itemIdx, event) {
+      if (event) event.stopPropagation();
+
+      const col = pillarData[colIdx];
+      if (!col || !col.items || !col.items[itemIdx]) return;
+      const item = col.items[itemIdx];
+
+      if (!item.price || item.price <= 0) return; // Si es entrada libre
+
+      // Seleccionar visualmente el plato y actualizar la foto grande 3D en el centro
+      selectTicketItem(itemIdx);
+
+      currentCustomizerItem = { ...item, colIdx, itemIdx, colCategory: col.tag || col.title };
+      ticketCustomQty = 1;
+
+      // 1. Mostrar panel de personalización y ocultar lista de platos en el ticket
+      const listView = document.getElementById('ticketListView');
+      const customPanel = document.getElementById('ticketCustomizerPanel');
+      if (listView) listView.style.display = 'none';
+      if (customPanel) customPanel.style.display = 'flex';
+
+      // 2. Asignar datos del plato a los elementos del ticket
+      const nameEl = document.getElementById('ticketCustomName');
+      const descEl = document.getElementById('ticketCustomDesc');
+      const priceEl = document.getElementById('ticketCustomPrice');
+      const craftEl = document.getElementById('ticketCustomCraft');
+      const qtyNumEl = document.getElementById('ticketCustomQtyNum');
+      const notesEl = document.getElementById('ticketKitchenNotesInput');
+
+      if (nameEl) nameEl.textContent = item.name.toUpperCase();
+      if (descEl) descEl.textContent = item.desc;
+      if (priceEl) priceEl.textContent = '$' + item.price.toFixed(2);
+      if (qtyNumEl) qtyNumEl.textContent = '1';
+      if (notesEl) notesEl.value = '';
+
+      // 3. Cargar opciones gastronómicas de Sereno Moreno
+      const dishSpec = DISH_CUSTOMIZATIONS[item.name] || DISH_CUSTOMIZATIONS[Object.keys(DISH_CUSTOMIZATIONS).find(k => item.name.includes(k))];
+      if (dishSpec) {
+        ticketCustomVariants = JSON.parse(JSON.stringify(dishSpec.variants));
+        ticketCustomIngredients = JSON.parse(JSON.stringify(dishSpec.ingredients));
+        if (craftEl && dishSpec.craftBadge) craftEl.textContent = dishSpec.craftBadge;
+      } else if (colIdx === 0) {
+        ticketCustomVariants = [
+          { name: "Botella 330ml / Lata 500ml", extra: 0.00, selected: true },
+          { name: "Con Vaso Cervecero Frío", extra: 0.50, selected: false }
+        ];
+        ticketCustomIngredients = [
+          { name: "Servida bien fría de bodega", included: true },
+          { name: "Destapada en mesa", included: true }
+        ];
+        if (craftEl) craftEl.textContent = "🍺 Fermento Vivo";
+      } else {
+        ticketCustomVariants = [
+          { name: "Porción Estándar", extra: 0.00, selected: true }
+        ];
+        ticketCustomIngredients = [
+          { name: "Receta tradicional de la casa", included: true }
+        ];
+        if (craftEl) craftEl.textContent = "✨ Especialidad Sereno Moreno";
+      }
+
+      renderTicketCustomVariants();
+      renderTicketCustomIngredients();
+      updateTicketCustomPrice();
+    }
+
+    function closeTicketCustomizer() {
+      const listView = document.getElementById('ticketListView');
+      const customPanel = document.getElementById('ticketCustomizerPanel');
+      if (listView) listView.style.display = 'flex';
+      if (customPanel) customPanel.style.display = 'none';
+      currentCustomizerItem = null;
+    }
+
+    function renderTicketCustomVariants() {
+      const container = document.getElementById('ticketVariantsContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      ticketCustomVariants.forEach((v, idx) => {
+        const pill = document.createElement('div');
+        pill.className = 'ticket-variant-pill ' + (v.selected ? 'selected' : '');
+        pill.onclick = () => selectTicketCustomVariant(idx);
+        pill.innerHTML = `
+          <span class="ticket-variant-name">${v.selected ? '● ' : '○ '} ${v.name}</span>
+          <span class="ticket-variant-extra">${v.extra > 0 ? '+$' + v.extra.toFixed(2) : 'Incluido'}</span>
+        `;
+        container.appendChild(pill);
+      });
+    }
+
+    function selectTicketCustomVariant(idx) {
+      ticketCustomVariants.forEach((v, i) => v.selected = (i === idx));
+      renderTicketCustomVariants();
+      updateTicketCustomPrice();
+    }
+
+    function renderTicketCustomIngredients() {
+      const container = document.getElementById('ticketIngredientsContainer');
+      if (!container) return;
+      container.innerHTML = '';
+
+      ticketCustomIngredients.forEach((ing, idx) => {
+        const chip = document.createElement('div');
+        chip.className = 'ticket-ing-chip ' + (ing.included ? 'included' : 'excluded');
+        chip.onclick = () => toggleTicketCustomIngredient(idx);
+        chip.innerHTML = `
+          <span class="ticket-ing-icon">${ing.included ? '✓' : '✕'}</span>
+          <span>${ing.name}</span>
+        `;
+        container.appendChild(chip);
+      });
+    }
+
+    function toggleTicketCustomIngredient(idx) {
+      if (ticketCustomIngredients[idx]) {
+        ticketCustomIngredients[idx].included = !ticketCustomIngredients[idx].included;
+        renderTicketCustomIngredients();
+      }
+    }
+
+    function adjustTicketCustomQty(delta) {
+      ticketCustomQty = Math.max(1, ticketCustomQty + delta);
+      const qtyEl = document.getElementById('ticketCustomQtyNum');
+      if (qtyEl) qtyEl.textContent = ticketCustomQty;
+      updateTicketCustomPrice();
+    }
+
+    function getTicketCustomUnitPrice() {
+      if (!currentCustomizerItem) return 0;
+      const base = currentCustomizerItem.price || 0;
+      const selected = ticketCustomVariants.find(v => v.selected);
+      const extra = selected ? selected.extra : 0;
+      return base + extra;
+    }
+
+    function updateTicketCustomPrice() {
+      const unit = getTicketCustomUnitPrice();
+      const total = unit * ticketCustomQty;
+      const priceEl = document.getElementById('ticketSubmitTotalPrice');
+      if (priceEl) priceEl.textContent = '$' + total.toFixed(2);
+    }
+
+    
+    function showQuickFeedbackToast(text) {
+      let toast = document.getElementById('quickFeedbackToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'quickFeedbackToast';
+        toast.style.cssText = 'position: fixed; bottom: 74px; right: 24px; background: #181E1A; border: 1px solid #E59F38; color: #F7EFE4; font-size: 0.85rem; font-weight: 600; padding: 10px 18px; border-radius: 6px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6); z-index: 2000; display: flex; align-items: center; gap: 10px; opacity: 0; transform: translateY(10px); transition: all 0.25s ease;';
+        document.body.appendChild(toast);
+      }
+      toast.innerHTML = '<span>' + text + '</span> <a href="javascript:void(0)" onclick="dispatchComandaToKitchen()" style="color: #F8AD00; text-decoration: underline; margin-left: 6px; font-weight: 700;">Ver Comanda &rarr;</a>';
+      toast.style.display = 'flex';
+      setTimeout(() => { toast.style.opacity = '1'; toast.style.transform = 'translateY(0)'; }, 10);
+      setTimeout(() => { toast.style.opacity = '0'; toast.style.transform = 'translateY(10px)'; setTimeout(() => { toast.style.display = 'none'; }, 300); }, 3500);
+    }
+
+    function submitTicketCustomOrder() {
+      if (!currentCustomizerItem) return;
+
+      const unitPrice = getTicketCustomUnitPrice();
+      const selectedVariant = ticketCustomVariants.find(v => v.selected) || ticketCustomVariants[0];
+      const excluded = ticketCustomIngredients.filter(i => !i.included).map(i => i.name);
+      const notesEl = document.getElementById('ticketKitchenNotesInput');
+      const note = notesEl ? notesEl.value.trim() : '';
+
+      // Clave descriptiva única para que cada personalización se preserve por separado
+      let orderKey = currentCustomizerItem.name;
+      if (selectedVariant && selectedVariant.extra > 0) {
+        orderKey += ` (${selectedVariant.name})`;
+      }
+      if (excluded.length > 0) {
+        orderKey += ` [Sin: ${excluded.join(', ')}]`;
+      }
+      if (note) {
+        orderKey += ` {${note}}`;
+      }
+
+      if (!orderItems[orderKey]) {
+        orderItems[orderKey] = {
+          name: currentCustomizerItem.name,
+          displayName: orderKey,
+          price: unitPrice,
+          qty: ticketCustomQty,
+          variant: selectedVariant ? selectedVariant.name : '',
+          excluded: excluded,
+          note: note,
+          colCategory: currentCustomizerItem.colCategory,
+          img: currentCustomizerItem.img || getDishThumbnail(currentCustomizerItem.name)
+        };
+      } else {
+        orderItems[orderKey].qty += ticketCustomQty;
+      }
+
+      const addedName = currentCustomizerItem.name;
+      const addedQty = ticketCustomQty;
+
+      updateOrderUI();
+      renderTicketItems();
+      closeTicketCustomizer();
+
+      showQuickFeedbackToast(`✔ ${addedQty}x ${addedName} añadido a la comanda`);
+    }
+
+    // Compatibilidad para apertura externa y tests
+    window.openProductCustomizer = openProductCustomizer;
+    window.closeTicketCustomizer = closeTicketCustomizer;
+    window.adjustTicketCustomQty = adjustTicketCustomQty;
+    window.selectTicketCustomVariant = selectTicketCustomVariant;
+    window.toggleTicketCustomIngredient = toggleTicketCustomIngredient;
+    window.submitTicketCustomOrder = submitTicketCustomOrder;
+
+    window.dispatchComandaToKitchen = dispatchComandaToKitchen;
+
+
+    
 
     function returnToWelcome() {
       if (viewExpanded) {
@@ -2157,6 +5026,202 @@
 
     let currentSelectedItemIdx = 0;
 
+    // Estado reactivo de la comanda con soporte de adición, reducción y descarte
+    let orderItems = {};
+
+    function getOrderTotalCount() {
+      return Object.values(orderItems).reduce((sum, item) => sum + item.qty, 0);
+    }
+
+    function getOrderTotalAmount() {
+      return Object.values(orderItems).reduce((sum, item) => sum + (item.price * item.qty), 0);
+    }
+
+    function addItemToOrder(name, price, event) {
+      if (event) event.stopPropagation();
+      const matchingKey = Object.keys(orderItems).reverse().find(k => orderItems[k].name === name || k === name);
+      if (matchingKey && orderItems[matchingKey]) {
+        orderItems[matchingKey].qty += 1;
+      } else {
+        orderItems[name] = { name, price, qty: 1, displayName: name };
+      }
+      updateOrderUI();
+      renderTicketItems();
+    }
+
+    function decreaseItemInOrder(name, event) {
+      if (event) event.stopPropagation();
+      const matchingKey = Object.keys(orderItems).reverse().find(k => orderItems[k].name === name || k === name);
+      if (matchingKey && orderItems[matchingKey]) {
+        orderItems[matchingKey].qty -= 1;
+        if (orderItems[matchingKey].qty <= 0) {
+          delete orderItems[matchingKey];
+        }
+      }
+      updateOrderUI();
+      renderTicketItems();
+    }
+
+    function clearEntireOrder(event) {
+      if (event) event.stopPropagation();
+      const totalCount = getOrderTotalCount();
+      if (totalCount === 0) return;
+      if (confirm(`¿Deseas descartar los ${totalCount} productos de la comanda de la Mesa 04?`)) {
+        orderItems = {};
+        updateOrderUI();
+      }
+    }
+
+    function updateOrderUI() {
+      renderComandaDropdown();
+      const totalCount = getOrderTotalCount();
+      const totalAmount = getOrderTotalAmount();
+
+      // 1. Contadores en burbujas flotante y cabecera
+      // Sincronizar extensión artesanal del ticket blanco (Live Order Stub)
+      const extTotal = document.getElementById('ticketExtTotal');
+      if (extTotal) extTotal.innerText = '$' + totalAmount.toFixed(2);
+      const extCount = document.getElementById('ticketExtCount');
+      if (extCount) extCount.innerText = totalCount + (totalCount === 1 ? ' PRODUCTO' : ' PRODUCTOS');
+      const extBtn = document.getElementById('ticketBtnOpenDrawer');
+      if (extBtn) {
+        if (totalCount > 0) {
+          extBtn.innerHTML = '<span>VER COMANDA (' + totalCount + ')</span> <span class="ticket-btn-arrow">&rarr;</span>';
+          extBtn.classList.add('has-items');
+        } else {
+          extBtn.innerHTML = '<span>VER COMANDA</span> <span class="ticket-btn-arrow">&rarr;</span>';
+          extBtn.classList.remove('has-items');
+        }
+      }
+      if (countEl) countEl.innerText = `${totalCount} ${totalCount === 1 ? 'ÍTEM' : 'ÍTEMS'}`;
+      const expHeadCount = document.getElementById('expandedHeaderCounter');
+      if (expHeadCount) expHeadCount.innerText = `${totalCount}`;
+
+      // 2. Monto total en dock
+      const totalEl = document.getElementById('footerOrderTotal');
+      if (totalEl) totalEl.innerText = '$' + totalAmount.toFixed(2);
+
+      // 3. Botón de descarte inmediato por error
+      const btnClear = document.getElementById('btnDockClear');
+      if (btnClear) {
+        btnClear.style.display = totalCount > 0 ? 'inline-flex' : 'none';
+      }
+
+      // 4. Resumen descriptivo en el pie
+      const summaryEl = document.getElementById('footerItemsSummary');
+      if (summaryEl) {
+        const keys = Object.keys(orderItems);
+        if (keys.length === 0) {
+          summaryEl.innerText = 'Sin productos añadidos';
+        } else {
+          const parts = keys.map(k => `${k} (x${orderItems[k].qty})`);
+          if (parts.length === 1) {
+            summaryEl.innerText = parts[0];
+          } else {
+            const last = parts[parts.length - 1];
+            summaryEl.innerText = `${last} (+${totalCount - orderItems[keys[keys.length - 1]].qty} más)`;
+          }
+        }
+      }
+
+      // 5. Refrescar los botones en el ticket blanco
+      renderTicketItems();
+    }
+
+    function updateHeroProduct(item) {
+      const heroLargeImg = document.getElementById('heroLargeImg');
+      const heroLargeShadow = document.getElementById('heroLargeShadow');
+      if (!heroLargeImg || !item) return;
+
+      heroLargeImg.src = item.img;
+      heroLargeImg.alt = item.name;
+
+      // Inclinación protagónica: En Mucha Chicha botellas y latas giradas 45° antihorario (-45deg) y gran tamaño
+      if (currentColIdx === 0 && item.img && item.img.includes('botella')) {
+        heroLargeImg.style.transform = 'rotate(-45deg) scale(1.36)';
+        if (heroLargeShadow) heroLargeShadow.style.transform = 'scale(1.22)';
+      } else if (currentColIdx === 0 && item.img && item.img.includes('lata')) {
+        // Latas en Mucha Chicha giradas 45° antihorario y tamaño aumentado
+        heroLargeImg.style.transform = 'rotate(-45deg) scale(1.32)';
+        if (heroLargeShadow) heroLargeShadow.style.transform = 'scale(1.18)';
+      } else if (currentColIdx === 0 && item.img && item.img.includes('cantaro')) {
+        // Cántaros (botellones de 1 litro) en Mucha Chicha
+        heroLargeImg.style.transform = 'rotate(-25deg) scale(1.28)';
+        if (heroLargeShadow) heroLargeShadow.style.transform = 'scale(1.15)';
+      } else if (currentColIdx === 0) {
+        heroLargeImg.style.transform = 'rotate(-45deg) scale(1.32)';
+        if (heroLargeShadow) heroLargeShadow.style.transform = 'scale(1.18)';
+      } else if (currentColIdx === 1) {
+        // Cazuelas de Pida No Más (Locro, Alitas, Papas con mapahuira, Choclo, etc.)
+        heroLargeImg.style.transform = 'rotate(0deg) scale(1.12)';
+        if (heroLargeShadow) heroLargeShadow.style.transform = 'scale(1.05)';
+      } else if (currentColIdx === 2) {
+        // Cortes al vacío de Lleve Lleve
+        heroLargeImg.style.transform = 'rotate(0deg) scale(1.10)';
+        if (heroLargeShadow) heroLargeShadow.style.transform = 'scale(1.02)';
+      } else if (currentColIdx === 3) {
+        // Indumentaria Si Hay Si Hay
+        heroLargeImg.style.transform = 'rotate(0deg) scale(1.12)';
+        if (heroLargeShadow) heroLargeShadow.style.transform = 'scale(1.04)';
+      } else if (currentColIdx === 4) {
+        // En Agenda Cultural: Posters verticales de concierto (Guardarraya, Máquina Camaleón) rectos con marco y sombra escénica
+        heroLargeImg.style.transform = 'rotate(0deg) scale(1.08)';
+        heroLargeImg.style.borderRadius = '6px';
+        heroLargeImg.style.boxShadow = '0 12px 35px rgba(0, 0, 0, 0.7)';
+        if (heroLargeShadow) heroLargeShadow.style.transform = 'scale(0.95)';
+      } else {
+        heroLargeImg.style.transform = 'rotate(0deg) scale(1.10)';
+        if (heroLargeShadow) heroLargeShadow.style.transform = 'scale(1.0)';
+      }
+    }
+
+        function renderTicketItems() {
+      const data = pillarData[currentColIdx];
+      if (!data) return;
+      const ticketList = document.getElementById('ticketItemsList');
+      if (!ticketList) return;
+      ticketList.innerHTML = '';
+
+      data.items.forEach((item, itemIdx) => {
+        const row = document.createElement('div');
+        row.className = `ticket-item-row ${itemIdx === currentSelectedItemIdx ? 'active' : ''}`;
+        row.role = 'listitem';
+        // Al tocar la fila: solo selecciona el plato para verlo en grande en el centro (NO abre la modal)
+        row.onclick = () => selectTicketItem(itemIdx);
+
+        // Sumar cantidades de todas las variantes de este plato en la comanda
+        const orderedQty = Object.values(orderItems)
+          .filter(o => o.name === item.name || o.displayName === item.name)
+          .reduce((sum, o) => sum + o.qty, 0);
+
+        const priceDisplay = item.price > 0 ? ('$' + item.price.toFixed(2)) : 'ENTRADA LIBRE';
+
+        // Badge sutil y alineado si ya tiene unidades pedidas de este plato
+        const qtyBadgeHtml = orderedQty > 0 ? `<span class="ticket-ordered-tag" title="${orderedQty} en comanda">×${orderedQty}</span>` : '';
+
+        // EL BOTÓN '+ COMANDA' SIEMPRE APARECE (NUNCA CAMBIA NI DESALINEA LA TARJETA)
+        let actionBtnHtml = '';
+        if (item.price > 0) {
+          actionBtnHtml = `<button type="button" class="btn-ticket-add" onclick="openProductCustomizer(${currentColIdx}, ${itemIdx}, event)" title="Añadir a la comanda">+ Comanda</button>`;
+        }
+
+        row.innerHTML = `
+          <div class="ticket-item-info">
+            <div class="ticket-title-wrap">
+              <h4 class="ticket-item-name">${item.name}</h4>
+              ${qtyBadgeHtml}
+            </div>
+            <p class="ticket-item-desc">${item.desc}</p>
+          </div>
+          <div class="ticket-item-action">
+            <span class="ticket-item-price">${priceDisplay}</span>
+            ${actionBtnHtml}
+          </div>
+        `;
+        ticketList.appendChild(row);
+      });
+    }
+
     function renderExpandedStage() {
       const data = pillarData[currentColIdx];
       if (!data) return;
@@ -2167,8 +5232,12 @@
       if (bgDrawEl && data.bgDrawing) {
         bgDrawEl.src = data.bgDrawing;
       }
+      const bgMotifEl = document.getElementById('expandedBgMotif');
+      if (bgMotifEl && data.bgMotif) {
+        bgMotifEl.src = data.bgMotif;
+      }
 
-      // 2. Título y Tag con color y formato de la sección (Captura 184701.png)
+      // 2. Título y Tag: TÍTULO EN UNA SOLA LÍNEA (Captura 184701.png)
       const tagEl = document.getElementById('expandedHeroTag');
       if (tagEl) {
         tagEl.innerText = data.tag;
@@ -2176,22 +5245,32 @@
       }
       const titleEl = document.getElementById('expandedHeroTitle');
       if (titleEl) {
-        titleEl.innerHTML = data.titleFormatted || data.title;
+        titleEl.innerText = data.title; // SIEMPRE en una sola línea en la ventana de sección
         titleEl.style.color = data.titleColor || '#241002';
         titleEl.style.textShadow = data.titleShadow || 'none';
       }
 
       if (bgDrawEl) {
         if (currentColIdx === 4) {
-          // Oro Ancestral (fondo oscuro): dibujo de tiza blanca
-          bgDrawEl.style.filter = 'none';
+          // Agenda Cultural (fondo oscuro): dibujo de tiza blanca
+          bgDrawEl.style.filter = 'drop-shadow(0 0 2px rgba(255, 255, 255, 0.6)) brightness(1.2)';
           bgDrawEl.style.opacity = '0.35';
           bgDrawEl.style.mixBlendMode = 'screen';
+          if (bgMotifEl) {
+            bgMotifEl.style.filter = 'drop-shadow(0 0 2px rgba(255, 255, 255, 0.5))';
+            bgMotifEl.style.opacity = '0.30';
+            bgMotifEl.style.mixBlendMode = 'screen';
+          }
         } else {
           // Columnas con color andino (Chicha, Pida, Lleve, Merch): serigrafía de tinta oscura artesanal
           bgDrawEl.style.filter = 'brightness(0)';
           bgDrawEl.style.opacity = '0.22';
           bgDrawEl.style.mixBlendMode = 'normal';
+          if (bgMotifEl) {
+            bgMotifEl.style.filter = 'brightness(0)';
+            bgMotifEl.style.opacity = '0.16';
+            bgMotifEl.style.mixBlendMode = 'normal';
+          }
         }
       }
 
@@ -2204,36 +5283,12 @@
       // 4. Título del ticket
       document.getElementById('ticketSectionTitle').innerText = data.ticketTitle;
 
-      // 5. Inyectar las opciones del menú DENTRO del ticket blanco
-      const ticketList = document.getElementById('ticketItemsList');
-      ticketList.innerHTML = '';
+      // 5. Inyectar las opciones del menú DENTRO del ticket blanco con botones de control
+      renderTicketItems();
 
-      data.items.forEach((item, itemIdx) => {
-        const row = document.createElement('div');
-        row.className = `ticket-item-row ${itemIdx === currentSelectedItemIdx ? 'active' : ''}`;
-        row.role = 'listitem';
-        row.onclick = () => selectTicketItem(itemIdx);
-
-        row.innerHTML = `
-          <div class="ticket-item-info">
-            <h4 class="ticket-item-name">${item.name}</h4>
-            <p class="ticket-item-desc">${item.desc}</p>
-          </div>
-          <div class="ticket-item-action">
-            <span class="ticket-item-price">${item.price > 0 ? `$${item.price.toFixed(2)}` : 'ORIGEN'}</span>
-            ${item.price > 0 ? `<button type="button" class="btn-ticket-add" onclick="addItemToOrder('${item.name}', ${item.price}, event)">+ Comanda</button>` : ''}
-          </div>
-        `;
-        ticketList.appendChild(row);
-      });
-
-      // 6. Actualizar el producto grande en la zona derecha
+      // 6. Actualizar el producto grande en la zona central con inclinación y tamaño idóneos
       const activeItem = data.items[currentSelectedItemIdx] || data.items[0];
-      const heroLargeImg = document.getElementById('heroLargeImg');
-      if (heroLargeImg && activeItem && activeItem.img) {
-        heroLargeImg.src = activeItem.img;
-        heroLargeImg.alt = activeItem.name;
-      }
+      updateHeroProduct(activeItem);
     }
 
     function selectTicketItem(itemIdx) {
@@ -2247,11 +5302,7 @@
       });
 
       const activeItem = data.items[itemIdx];
-      const heroLargeImg = document.getElementById('heroLargeImg');
-      if (heroLargeImg && activeItem && activeItem.img) {
-        heroLargeImg.src = activeItem.img;
-        heroLargeImg.alt = activeItem.name;
-      }
+      updateHeroProduct(activeItem);
     }
 
     function expandPillar(idx, event) {
@@ -2262,9 +5313,7 @@
 
       viewExpanded.classList.remove('view-hidden');
       viewExpanded.classList.remove('is-collapsing');
-      requestAnimationFrame(() => {
-        viewExpanded.classList.add('is-active');
-      });
+      viewExpanded.classList.add('is-active');
     }
 
     function collapseBackToColumns() {
@@ -2283,37 +5332,8 @@
       renderExpandedStage();
     }
 
-    let orderList = [];
-    let orderTotalAmount = 0.0;
-
-    function addItemToOrder(name, price, event) {
-      if (event) event.stopPropagation();
-      orderList.push({ name, price });
-      orderTotalAmount += price;
-
-      const countEl = document.getElementById('bubbleComandaCount');
-      if (countEl) countEl.innerText = `${orderList.length}`;
-      const expHeadCount = document.getElementById('expandedHeaderCounter');
-      if (expHeadCount) expHeadCount.innerText = `${orderList.length}`;
-
-      document.getElementById('footerOrderTotal').innerText = `$${orderTotalAmount.toFixed(2)}`;
-      const summary = orderList.length === 1 
-        ? `${orderList[0].name}` 
-        : `${orderList[orderList.length - 1].name} (+${orderList.length - 1} más)`;
-      document.getElementById('footerItemsSummary').innerText = summary;
-    }
-
     function dispatchComandaToKitchen() {
-      if (orderList.length === 0) {
-        alert("Agrega al menos un producto a la comanda antes de mandar a cocina o barra.");
-        return;
-      }
-      alert(`Comanda enviada a Cocina y Barra (PuraSed Hub):\nTotal: $${orderTotalAmount.toFixed(2)} (${orderList.length} productos).\nMesa 04 • Estado: Creado.`);
-      orderList = [];
-      orderTotalAmount = 0.0;
-      document.getElementById('bubbleComandaCount').innerText = "0";
-      document.getElementById('footerOrderTotal').innerText = "$0.00";
-      document.getElementById('footerItemsSummary').innerText = "Sin productos añadidos";
+      openComandaDrawer();
     }
 
     updateColumnsTransform();
@@ -2331,11 +5351,45 @@
       }
       updateColumnsTransform();
     } else if (urlParams.get('view') === 'expanded' || hash.startsWith('#expanded') || hash.startsWith('#col')) {
-      let col = parseInt(urlParams.get('col') || '1');
-      if (hash.startsWith('#col')) col = parseInt(hash.replace('#col', '')) || 1;
+      const welcome = document.getElementById('viewWelcome');
+      const columns = document.getElementById('viewColumns');
+      if (welcome) welcome.classList.add('view-hidden');
+      if (columns) columns.classList.add('view-hidden');
+      let col = parseInt(urlParams.get('col') || '0');
+      if (hash.startsWith('#col')) col = parseInt(hash.replace('#col', '')) || 0;
       const item = parseInt(urlParams.get('item') || '0');
       expandPillar(col);
       if (item > 0 && typeof selectTicketItem === 'function') selectTicketItem(item);
+      if (urlParams.get('modal') === 'customizer' || urlParams.get('modal') === 'ui03') {
+        openProductCustomizer(col, item);
+      }
+      if (urlParams.get('drawer') === 'comanda' || urlParams.get('drawer') === 'open') {
+        openComandaDrawer();
+      }
+      if (urlParams.get('modal') === 'confirm') {
+        setTimeout(() => {
+          openComandaDrawer();
+          setTimeout(() => { openDrawerConfirmModal(); }, 200);
+        }, 300);
+      }
+      if (urlParams.get('modal') === 'success') {
+        setTimeout(() => {
+          openComandaDrawer();
+          setTimeout(() => {
+            openDrawerConfirmModal();
+            setTimeout(() => { executeDrawerOrderConfirmation(); }, 150);
+          }, 200);
+        }, 300);
+      }
+      if (urlParams.get('dropdown') === '1' || urlParams.get('dropdown') === 'open') {
+        setTimeout(() => { toggleComandaDropdown(); }, 150);
+      }
+      if (urlParams.get('test_order') === '1') {
+        const firstItem = pillarData[col].items[0];
+        if (firstItem && firstItem.price > 0) {
+          addItemToOrder(firstItem.name, firstItem.price);
+        }
+      }
     } else {
       // VISTA POR DEFECTO: Iniciar en la pantalla de bienvenida oficial (Mesa 04)
       const welcome = document.getElementById('viewWelcome');
@@ -2344,6 +5398,449 @@
       if (columns) columns.classList.add('view-hidden');
     }
 
+  
+
+  /* ==========================================================================
+     LÓGICA DEL MINI-RESUMEN DESPLEGABLE EN CABECERA (COMANDA)
+     ========================================================================== */
+    function getDishThumbnail(name) {
+      if (!name) return 'catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png';
+      const clean = name.toLowerCase();
+      if (clean.includes('locro') || clean.includes('locrito')) return 'catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png';
+      if (clean.includes('alita')) return 'catalogo_imagenes/pida_no_mas/alitas_caseras_8.5_float.png';
+      if (clean.includes('mapahuira')) return 'catalogo_imagenes/pida_no_mas/papas_con_mapahuira_4.75_float.png';
+      if (clean.includes('choclo')) return 'catalogo_imagenes/pida_no_mas/choclo_con_papa_4.75_float.png';
+      if (clean.includes('ensalada') || clean.includes('chulpi')) return 'catalogo_imagenes/pida_no_mas/ensalada_chulpi_tostado_4.75_float.png';
+      if (clean.includes('ceviche')) return 'catalogo_imagenes/pida_no_mas/ceviche_de_coco_5.50_float.png';
+      if (clean.includes('maduro')) return 'catalogo_imagenes/pida_no_mas/maduro_con_queso_4.75_float.png';
+      if (clean.includes('hongo') || clean.includes('portobello')) return 'catalogo_imagenes/pida_no_mas/hongos_portobello_8.50_float.png';
+      if (clean.includes('costilla')) return 'catalogo_imagenes/lleve_lleve/costilla_precocida_float.png';
+      if (clean.includes('carne suave')) return 'catalogo_imagenes/lleve_lleve/carne_suave_float.png';
+      if (clean.includes('mote sucio')) return 'catalogo_imagenes/lleve_lleve/mote_sucio_float.png';
+      if (clean.includes('chicharrón') || clean.includes('chicharron')) return 'catalogo_imagenes/lleve_lleve/chicharron_float.png';
+      if (clean.includes('morado') || clean.includes('roja')) return 'catalogo_imagenes/fermentos/botella_roja_float.png';
+      if (clean.includes('amarilla') || clean.includes('clásica') || clean.includes('clasica')) return 'catalogo_imagenes/fermentos/botella_amarilla_float.png';
+      if (clean.includes('morocho')) return 'catalogo_imagenes/fermentos/lata_morocho_float.png';
+      if (clean.includes('yuca')) return 'catalogo_imagenes/fermentos/lata_yuca_float.png';
+      if (clean.includes('camiseta')) return 'catalogo_imagenes/si_hay_si_hay/camiseta_verde_float.png';
+      if (clean.includes('buzo')) return 'catalogo_imagenes/si_hay_si_hay/buzo_verde_float.png';
+      if (clean.includes('hoodie')) return 'catalogo_imagenes/si_hay_si_hay/hoodie_verde_float.png';
+      if (clean.includes('totebag')) return 'catalogo_imagenes/si_hay_si_hay/totebag_linografia_float.png';
+      if (clean.includes('vaso')) return 'catalogo_imagenes/si_hay_si_hay/vaso_artesanal_float.png';
+      if (typeof pillarData !== 'undefined') {
+        for (const pillar of pillarData) {
+          const found = pillar.items?.find(it => it.name.toLowerCase() === clean || clean.includes(it.name.toLowerCase()));
+          if (found && found.img) return found.img;
+        }
+      }
+      return 'catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png';
+    }
+
+    function renderComandaDropdown() {
+      const listEl = document.getElementById('dropdownItemsList');
+      const countEl = document.getElementById('dropdownCountBadge');
+      const subtotalEl = document.getElementById('dropdownSubtotalVal');
+      const footerEl = document.getElementById('dropdownFooter');
+      if (!listEl) return;
+
+      const keys = Object.keys(orderItems);
+      const totalCount = getOrderTotalCount();
+      const totalAmount = getOrderTotalAmount();
+
+      if (countEl) countEl.innerText = `${totalCount}`;
+      if (subtotalEl) subtotalEl.innerText = '$' + totalAmount.toFixed(2);
+
+      if (keys.length === 0) {
+        listEl.innerHTML = '<div class="dropdown-empty-text">No has añadido productos aún.<br>Toca <strong>"+ COMANDA"</strong> en los platos que desees.</div>';
+        if (footerEl) footerEl.style.display = 'none';
+        return;
+      }
+
+      if (footerEl) footerEl.style.display = 'flex';
+      listEl.innerHTML = '';
+
+      keys.forEach((key) => {
+        const item = orderItems[key];
+        const row = document.createElement('div');
+        row.className = 'dropdown-item-row';
+
+        const thumbImg = item.img || getDishThumbnail(item.name);
+        const safeKey = key.replace(/'/g, "\\'");
+
+        const variantPill = item.variant ? `<span class="dropdown-item-variant-pill">${item.variant}</span>` : '';
+        const excludedPills = (item.excluded && item.excluded.length > 0) ? `<span class="dropdown-item-excluded-text">Sin: ${item.excluded.join(', ')}</span>` : '';
+        const noteText = item.note ? `<span class="dropdown-item-note-text">Nota: ${item.note}</span>` : '';
+
+        row.innerHTML = `
+          <div class="dropdown-item-thumb-box">
+            <img src="${thumbImg}" class="dropdown-item-thumb-img" alt="${item.name}" onerror="this.src='catalogo_imagenes/drawings/logosm.svg'" />
+          </div>
+          <div class="dropdown-item-info">
+            <div class="dropdown-item-header-line">
+              <span class="dropdown-item-qty-tag">${item.qty}X</span>
+              <span class="dropdown-item-name">${item.name}</span>
+            </div>
+            <div class="dropdown-item-details-row">
+              ${variantPill}
+              ${excludedPills}
+              ${noteText}
+            </div>
+          </div>
+          <div class="dropdown-item-actions">
+            <span class="dropdown-item-price">$${(item.price * item.qty).toFixed(2)}</span>
+            <button type="button" class="dropdown-btn-del" onclick="deleteOrderItem('${safeKey}', event)" title="Eliminar este plato de la comanda">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: -1px; margin-right: 3px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              <span>Eliminar</span>
+            </button>
+          </div>
+        `;
+        listEl.appendChild(row);
+      });
+    }
+
+    function toggleComandaDropdown(event) {
+      if (event) event.stopPropagation();
+      openComandaDrawer();
+    }
+
+    function deleteOrderItem(key, event) {
+      if (event) event.stopPropagation();
+      if (orderItems[key]) {
+        delete orderItems[key];
+        updateOrderUI();
+        renderTicketItems();
+        renderComandaDropdown();
+      }
+    }
+
+    // Cerrar dropdown si se hace clic fuera
+    window.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('headerComandaDropdown');
+      if (dropdown && dropdown.classList.contains('is-open')) {
+        if (!e.target.closest('.header-comanda-anchor') && !e.target.closest('.header-comanda-dropdown')) {
+          dropdown.classList.remove('is-open');
+        }
+      }
+    });
+
+    // Expose to window
+    window.toggleComandaDropdown = toggleComandaDropdown;
+    window.renderComandaDropdown = renderComandaDropdown;
+    window.deleteOrderItem = deleteOrderItem;
+
+    /* ==========================================================================
+       LÓGICA REACTIVA DE LA BARRA LATERAL DE COMANDA (OFF-CANVAS DRAWER)
+       ========================================================================== */
+    function toggleComandaDrawer(event) {
+      if (event) event.stopPropagation();
+      const drawer = document.getElementById('comandaSlideDrawer');
+      if (drawer && drawer.classList.contains('is-open')) {
+        closeComandaDrawer();
+      } else {
+        openComandaDrawer();
+      }
+    }
+
+    function openComandaDrawer() {
+      const drawer = document.getElementById('comandaSlideDrawer');
+      const backdrop = document.getElementById('comandaDrawerBackdrop');
+      if (!drawer) return;
+      renderDrawerComanda();
+      drawer.classList.add('is-open');
+      if (backdrop) backdrop.classList.add('is-open');
+    }
+
+    function closeComandaDrawer() {
+      const drawer = document.getElementById('comandaSlideDrawer');
+      const backdrop = document.getElementById('comandaDrawerBackdrop');
+      if (drawer) drawer.classList.remove('is-open');
+      if (backdrop) backdrop.classList.remove('is-open');
+    }
+
+    function renderDrawerComanda() {
+      const listEl = document.getElementById('drawerItemsList');
+      const countEl = document.getElementById('drawerCountBadge');
+      const subtotalEl = document.getElementById('drawerValSubtotal');
+      const discountEl = document.getElementById('drawerValDiscount');
+      const serviceEl = document.getElementById('drawerValService');
+      const ivaEl = document.getElementById('drawerValIva');
+      const totalEl = document.getElementById('drawerValTotal');
+      const cocinaEl = document.getElementById('drawerCountCocina');
+      const barEl = document.getElementById('drawerCountBar');
+      if (!listEl) return;
+
+      const keys = Object.keys(orderItems);
+      const totalCount = getOrderTotalCount();
+      const rawSubtotal = getOrderTotalAmount();
+
+      if (countEl) countEl.innerText = totalCount + (totalCount === 1 ? ' ÍTEM' : ' ÍTEMS');
+
+      if (keys.length === 0) {
+        listEl.innerHTML = '<div class="drawer-empty-state"><span style="font-weight: 700; color: #594D42;">No has añadido productos aún.</span><span style="font-size: 0.8rem;">Toca <strong>"+ COMANDA"</strong> en los platos que desees disfrutar.</span></div>';
+        if (subtotalEl) subtotalEl.innerText = '$0.00';
+        if (discountEl) discountEl.innerText = '-$0.00';
+        if (serviceEl) serviceEl.innerText = '$0.00';
+        if (ivaEl) ivaEl.innerText = '$0.00';
+        if (totalEl) totalEl.innerText = '$0.00';
+        if (cocinaEl) cocinaEl.innerText = '0';
+        if (barEl) barEl.innerText = '0';
+        return;
+      }
+
+      let countCocina = 0;
+      let countBar = 0;
+
+      listEl.innerHTML = '';
+      keys.forEach((key) => {
+        const item = orderItems[key];
+        const thumbImg = item.img || getDishThumbnail(item.name);
+        const safeKey = key.replace(/'/g, "\\'");
+        const isBar = (item.colCategory || item.name || '').toLowerCase().includes('fermento') || 
+                      (item.colCategory || item.name || '').toLowerCase().includes('chicha') || 
+                      (item.colCategory || item.name || '').toLowerCase().includes('bebida') ||
+                      (item.colCategory || item.name || '').toLowerCase().includes('botella');
+        
+        if (isBar) countBar += item.qty;
+        else countCocina += item.qty;
+
+        const variantLine = item.variant ? '<div class="drawer-item-variant">' + item.variant + '</div>' : '';
+        const customsHtml = (item.excluded && item.excluded.length > 0) ? 
+          '<div class="drawer-item-customs"><span class="drawer-custom-tag excluded">Sin: ' + item.excluded.join(', ') + '</span></div>' : '';
+        const noteHtml = item.note ? '<div class="drawer-item-note">Nota: ' + item.note + '</div>' : '';
+
+        const row = document.createElement('div');
+        row.className = 'drawer-item-row';
+        const stepperLeftBtn = item.qty === 1
+          ? '<button type="button" class="stepper-btn trash" onclick="deleteOrderItem(\'' + safeKey + '\', event)" title="Quitar plato"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>'
+          : '<button type="button" class="stepper-btn" onclick="adjustOrderItemQty(\'' + safeKey + '\', -1)" title="Restar">－</button>';
+
+        row.innerHTML = 
+          '<div class="drawer-item-thumb">' +
+            '<img src="' + thumbImg + '" alt="' + item.name + '" onerror="this.src=\'catalogo_imagenes/drawings/logosm.svg\'" />' +
+          '</div>' +
+          '<div class="drawer-item-info">' +
+            '<div class="drawer-item-name">' + item.name + '</div>' +
+            variantLine +
+            customsHtml +
+            noteHtml +
+          '</div>' +
+          '<div class="drawer-item-actions">' +
+            '<span class="drawer-item-price">$' + (item.price * item.qty).toFixed(2) + '</span>' +
+            '<div class="drawer-stepper-pill">' +
+              stepperLeftBtn +
+              '<span class="stepper-val">' + item.qty + '</span>' +
+              '<button type="button" class="stepper-btn" onclick="adjustOrderItemQty(\'' + safeKey + '\', 1)" title="Sumar">＋</button>' +
+            '</div>' +
+          '</div>';
+        listEl.appendChild(row);
+      });
+
+      // Cálculos oficiales (Ecuador: IVA 15%, Servicio 10%, Happy hour -10%)
+      const discountVal = rawSubtotal * 0.10;
+      const netSubtotal = rawSubtotal - discountVal;
+      const serviceVal = netSubtotal * 0.10;
+      const ivaVal = netSubtotal * 0.15;
+      const grandTotal = netSubtotal + serviceVal + ivaVal;
+
+      if (subtotalEl) subtotalEl.innerText = '$' + rawSubtotal.toFixed(2);
+      if (discountEl) discountEl.innerText = '-$' + discountVal.toFixed(2);
+      if (serviceEl) serviceEl.innerText = '$' + serviceVal.toFixed(2);
+      if (ivaEl) ivaEl.innerText = '$' + ivaVal.toFixed(2);
+      if (totalEl) totalEl.innerText = '$' + grandTotal.toFixed(2);
+
+      if (cocinaEl) cocinaEl.innerText = countCocina;
+      if (barEl) barEl.innerText = countBar;
+
+      // Actualizar modal si está abierto
+      const modalCount = document.getElementById('modalDrawerCount');
+      const modalTotal = document.getElementById('modalDrawerTotal');
+      if (modalCount) modalCount.innerText = totalCount + (totalCount === 1 ? ' producto' : ' productos');
+      if (modalTotal) modalTotal.innerText = '$' + grandTotal.toFixed(2);
+    }
+
+    function adjustOrderItemQty(key, delta) {
+      if (!orderItems[key]) return;
+      orderItems[key].qty += delta;
+      if (orderItems[key].qty <= 0) {
+        delete orderItems[key];
+      }
+      updateOrderUI();
+      renderDrawerComanda();
+    }
+
+    function openDrawerConfirmModal() {
+      const totalCount = getOrderTotalCount();
+      if (totalCount === 0) {
+        alert('Añade al menos un producto a la comanda antes de enviar.');
+        return;
+      }
+      const countEl = document.getElementById('modalDrawerCount');
+      if (countEl) countEl.innerText = `${totalCount} ${totalCount === 1 ? 'producto' : 'productos'}`;
+      const totalAmount = getOrderTotalAmount();
+      const happyHourDiscount = totalAmount * 0.10;
+      const subtotalNeto = totalAmount - happyHourDiscount;
+      const serviceMesa = totalAmount * 0.10;
+      const iva = subtotalNeto * 0.15;
+      const grandTotal = subtotalNeto + serviceMesa + iva;
+      const totalEl = document.getElementById('modalDrawerTotal');
+      if (totalEl) totalEl.innerText = '$' + grandTotal.toFixed(2);
+
+      document.getElementById('drawerPreConfirm').style.display = 'block';
+      document.getElementById('drawerSuccessState').style.display = 'none';
+      document.getElementById('drawerConfirmModal').classList.add('open');
+    }
+
+    function closeDrawerConfirmModal() {
+      document.getElementById('drawerConfirmModal').classList.remove('open');
+    }
+
+    function executeDrawerOrderConfirmation() {
+      document.getElementById('drawerPreConfirm').style.display = 'none';
+      document.getElementById('drawerSuccessState').style.display = 'flex';
+      orderItems = {};
+      updateOrderUI();
+    }
+
+    // Exponer al scope global
+    window.openComandaDrawer = openComandaDrawer;
+    window.toggleComandaDrawer = toggleComandaDrawer;
+    window.closeComandaDrawer = closeComandaDrawer;
+    window.adjustOrderItemQty = adjustOrderItemQty;
+    window.openDrawerConfirmModal = openDrawerConfirmModal;
+    window.closeDrawerConfirmModal = closeDrawerConfirmModal;
+    window.executeDrawerOrderConfirmation = executeDrawerOrderConfirmation;
   </script>
+
+  <!-- BACKDROP Y BARRA LATERAL DERECHA DE COMANDA (OFF-CANVAS SLIDE DRAWER) -->
+  <div class="comanda-drawer-backdrop" id="comandaDrawerBackdrop" onclick="closeComandaDrawer()"></div>
+  
+  <aside class="comanda-slide-drawer" id="comandaSlideDrawer" role="region" aria-label="Resumen de Comanda de Mesa">
+    
+    <!-- 1. Cabecera -->
+    <div class="drawer-header">
+      <div class="drawer-header-left">
+        <h2 class="drawer-title">COMANDA DE MESA</h2>
+        <span class="drawer-stamp-badge">MESA 04</span>
+      </div>
+      <div class="drawer-header-right">
+        <span class="drawer-count-badge" id="drawerCountBadge">0 ÍTEMS</span>
+        <button type="button" class="drawer-close-btn" onclick="closeComandaDrawer()" title="Cerrar comanda" aria-label="Cerrar comanda">&times;</button>
+      </div>
+    </div>
+
+    <!-- 2. Banner de enrutamiento transparente -->
+    <div class="drawer-routing-banner">
+      <div class="drawer-routing-info">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 16px; height: 16px; stroke: #D47720; flex-shrink: 0;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <span><strong>Enrutamiento:</strong> Despacho sincronizado</span>
+      </div>
+      <div class="drawer-routing-pills">
+        <span class="drawer-station-pill cocina">Cocina: <span id="drawerCountCocina">0</span></span>
+        <span class="drawer-station-pill bar">Barra: <span id="drawerCountBar">0</span></span>
+      </div>
+    </div>
+
+    <!-- 3. Lista dinámica de productos añadidos -->
+    <div class="drawer-items-list" id="drawerItemsList">
+      <div class="drawer-empty-state">
+        <span>No has añadido productos aún.</span>
+        <span style="font-size: 0.78rem;">Toca "+ COMANDA" en los platos que desees disfrutar.</span>
+      </div>
+    </div>
+
+    <!-- 4. Observaciones para cocina -->
+    <div class="drawer-notes-wrap">
+      <div class="drawer-notes-label">
+        <span>OBSERVACIONES PARA COCINA / SERVICIO</span>
+        <span class="drawer-notes-hint">Opcional</span>
+      </div>
+      <input type="text" class="drawer-notes-input" id="drawerNotesInput" placeholder="Ej: sin picante, ají aparte, cubiertos..." />
+    </div>
+
+    <!-- 5. Pie financiero y confirmación -->
+    <div class="drawer-footer">
+      <div class="drawer-bill-breakdown">
+        <div class="drawer-bill-row">
+          <span>Consumo Alimentos &amp; Bebidas</span>
+          <span id="drawerValSubtotal">$0.00</span>
+        </div>
+        <div class="drawer-bill-row discount-row" id="drawerRowDiscount">
+          <span>Descuento Happy Hour <span class="drawer-discount-tag">-10%</span></span>
+          <span id="drawerValDiscount">-$0.00</span>
+        </div>
+        <div class="drawer-bill-row">
+          <span>Servicio de Mesa (10%)</span>
+          <span id="drawerValService">$0.00</span>
+        </div>
+        <div class="drawer-bill-row">
+          <span>I.V.A. Ecuador (15%)</span>
+          <span id="drawerValIva">$0.00</span>
+        </div>
+        <div class="drawer-bill-divider"></div>
+        <div class="drawer-total-row">
+          <span class="drawer-total-label">TOTAL:</span>
+          <span class="drawer-total-amount" id="drawerValTotal">$0.00</span>
+        </div>
+      </div>
+
+      <button type="button" class="drawer-btn-submit" onclick="openDrawerConfirmModal()" id="drawerBtnSubmit">
+        <span>ENVIAR A COCINA Y BARRA &rarr;</span>
+      </button>
+
+      <button type="button" class="drawer-btn-continue" onclick="closeComandaDrawer()">
+        + Seguir Agregando Productos
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- DIÁLOGO DE CONFIRMACIÓN DIRECTO EN EL CATÁLOGO -->
+  <div class="modal-overlay" id="drawerConfirmModal" style="z-index: 5000;">
+    <div class="confirm-dialog" style="background: #181E1A; border: 1.5px solid #E59F38; border-radius: 14px; max-width: 480px; width: 100%; padding: 28px 24px; box-shadow: 0 25px 60px rgba(0,0,0,0.85); color: #FFF8ED;">
+      
+      <div id="drawerPreConfirm">
+        <div style="background: rgba(229,159,56,0.15); border: 1.5px solid #E59F38; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
+          <svg viewBox="0 0 24 24" style="width: 28px; height: 28px; stroke: #E59F38; fill: none; stroke-width: 2;"><path d="M12 2a5 5 0 0 1 5 5v2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2V7a5 5 0 0 1 5-5z"></path></svg>
+        </div>
+        <div style="text-align: center; margin-bottom: 14px;">
+          <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 1.2px; color: #FFF8ED; line-height: 1; margin-bottom: 6px;">¿CONFIRMAR Y ENVIAR COMANDA?</h3>
+          <p style="font-size: 0.85rem; color: #D1C7BA;">Tu pedido será transferido de inmediato a las pantallas KDS de cocina y barra.</p>
+        </div>
+        <div style="background: #121614; border: 1px solid rgba(245,234,219,0.12); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;"><span style="color: #AFA79A;">Ubicación:</span><strong>Mesa 04 (Salón Principal)</strong></div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;"><span style="color: #AFA79A;">Total Productos:</span><strong id="modalDrawerCount">0 productos</strong></div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;"><span style="color: #AFA79A;">Estaciones:</span><span>Cocina de Fogón y Barra</span></div>
+          <div style="display: flex; justify-content: space-between; font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: #F8AD00; border-top: 1px dashed rgba(245,234,219,0.15); padding-top: 8px;"><span>TOTAL A FACTURAR:</span><span id="modalDrawerTotal">$0.00</span></div>
+        </div>
+        <div style="background: rgba(158, 68, 41, 0.22); border: 1px solid rgba(158, 68, 41, 0.45); border-radius: 6px; padding: 10px 14px; font-size: 0.8rem; color: #FF9D80; margin-bottom: 16px;">
+          <strong>Aviso de preparación:</strong> Una vez enviada, los insumos se reservan en inventario y comienza la elaboración al instante.
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button type="button" onclick="executeDrawerOrderConfirmation()" style="background: #E59F38; color: #121614; border: 1px solid #D49020; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 1.2px; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
+            SÍ, ENVIAR COMANDA AHORA &rarr;
+          </button>
+          <button type="button" onclick="closeDrawerConfirmModal()" style="background: transparent; border: 1px solid rgba(245,234,219,0.2); color: #D1C7BA; padding: 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer;">
+            Revisar o Cambiar Algo
+          </button>
+        </div>
+      </div>
+
+      <div id="drawerSuccessState" style="display: none; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 10px 0;">
+        <div style="width: 64px; height: 64px; background: rgba(74,222,128,0.16); border: 2px solid #4ADE80; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; stroke: #4ADE80; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.1rem; letter-spacing: 1.5px; color: #FFF8ED; line-height: 1;">¡COMANDA ENVIADA!</h3>
+        <p style="font-size: 0.88rem; color: #D1C7BA; max-width: 340px;">Cocina y barra ya tienen tu pedido en pantalla KDS. Relájate mientras preparamos tu orden.</p>
+        <div style="background: #121614; border: 1.5px dashed #E59F38; border-radius: 6px; padding: 8px 18px; font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 2px; color: #F8AD00;">
+          ORDEN #284 • MESA 04
+        </div>
+        <button type="button" onclick="closeComandaDrawer(); closeDrawerConfirmModal();" style="width: 100%; background: #E59F38; color: #121614; border: 1px solid #D49020; font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 1.2px; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; margin-top: 6px;">
+          CONTINUAR EN EL MENÚ &rarr;
+        </button>
+      </div>
+
+    </div>
+  </div>
+
 </body>
 </html>

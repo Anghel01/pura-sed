@@ -1,0 +1,2086 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-04: Resumen de Comanda & Confirmación de Pedido — PuraSed / Sereno Moreno</title>
+  
+  <!-- Tipografías Oficiales del Sistema de Diseño Sereno Moreno -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       SISTEMA DE DISEÑO OFICIAL: SERENO MORENO / PURASED
+       Paleta de Autor: Basalto Negro, Ámbar Sereno, Oro Ancestral, Crema Linograbado
+       ========================================================================== */
+    :root {
+      --bg-dark: #101412;
+      --bg-card: #161C18;
+      --bg-card-inner: #1D2420;
+      --bg-card-hover: #222B25;
+      --border-subtle: rgba(245, 234, 219, 0.12);
+      --border-amber: rgba(229, 159, 56, 0.35);
+      --border-focus: #E59F38;
+      
+      --amber-sereno: #E59F38;
+      --gold-accent: #F8AD00;
+      
+      --text-cream: #FFF8ED;
+      --text-muted: #D1C7BA;
+      --text-dim: #9E9382;
+      
+      --terracotta: #9E4429;
+      --terracotta-soft: rgba(158, 68, 41, 0.22);
+      --terracotta-border: rgba(158, 68, 41, 0.45);
+      --bar-blue: #38848C;
+      --bar-soft: rgba(56, 132, 140, 0.22);
+      --bar-border: rgba(56, 132, 140, 0.45);
+      
+      --danger: #FF7B77;
+      --danger-soft: rgba(255, 123, 119, 0.12);
+      --danger-border: rgba(255, 123, 119, 0.35);
+      
+      --success: #4ADE80;
+      --success-soft: rgba(74, 222, 128, 0.14);
+      --success-border: rgba(74, 222, 128, 0.35);
+
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-cream);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
+      padding: 24px 16px 100px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Fondo ambiental auténtico: Viñeta cálida y grabados linográficos perimetrales */
+    .ambient-bg {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at 50% 12%, #1E1714 0%, #131715 48%, #0C0F0E 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .chalkboard-grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(245, 234, 219, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .bg-watermark-left {
+      position: fixed;
+      left: -24px;
+      bottom: -10px;
+      height: 70vh;
+      opacity: 0.16;
+      z-index: 2;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
+    }
+
+    .bg-watermark-right {
+      position: fixed;
+      right: -24px;
+      top: 5%;
+      height: 55vh;
+      opacity: 0.14;
+      z-index: 2;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 0 20px rgba(0,0,0,0.8));
+    }
+
+    /* BARRA SUPERIOR DE ESCENARIOS (Demostración de Estados) */
+    .demo-bar {
+      position: relative;
+      z-index: 30;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(18, 24, 20, 0.94);
+      border: 1px solid var(--border-amber);
+      border-radius: 30px;
+      padding: 6px 18px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
+    }
+
+    .demo-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: var(--amber-sereno);
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .demo-tag svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--amber-sereno);
+    }
+
+    .demo-btn {
+      background: transparent;
+      border: 1px solid rgba(245, 234, 219, 0.14);
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .demo-btn:hover {
+      color: var(--text-cream);
+      border-color: var(--amber-sereno);
+      background: rgba(229, 159, 56, 0.08);
+    }
+
+    .demo-btn.active {
+      background: var(--amber-sereno);
+      color: #121614;
+      font-weight: 700;
+      border-color: var(--amber-sereno);
+      box-shadow: 0 2px 10px rgba(229, 159, 56, 0.4);
+    }
+
+    /* CONTENEDOR PRINCIPAL DE LA INTERFAZ */
+    .comanda-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1140px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      animation: fadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ENCABEZADO DE LA COMANDA */
+    .comanda-header {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 18px 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .btn-back-menu {
+      background: var(--bg-card-inner);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-cream);
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .btn-back-menu:hover {
+      background: var(--amber-sereno);
+      color: #121614;
+      border-color: var(--amber-sereno);
+      transform: translateX(-3px);
+      box-shadow: 0 4px 14px rgba(229, 159, 56, 0.4);
+    }
+
+    .header-titles h1 {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      letter-spacing: 1.5px;
+      line-height: 1;
+      color: var(--text-cream);
+    }
+
+    .header-titles .meta-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+
+    .meta-sub span.live-pulse {
+      width: 8px;
+      height: 8px;
+      background: var(--amber-sereno);
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 8px var(--amber-sereno);
+      animation: pulseAnim 2s infinite;
+    }
+
+    @keyframes pulseAnim {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 159, 56, 0.7); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 6px rgba(229, 159, 56, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 159, 56, 0); }
+    }
+
+    .meta-sub span.dot {
+      width: 4px;
+      height: 4px;
+      background: var(--text-dim);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .table-badge {
+      background: rgba(229, 159, 56, 0.1);
+      border: 1.5px solid var(--border-amber);
+      padding: 6px 16px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: inset 0 0 12px rgba(229, 159, 56, 0.08);
+    }
+
+    .table-badge .mesa-label {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      line-height: 1;
+    }
+
+    .table-badge .mesa-title {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      letter-spacing: 1.2px;
+      color: var(--amber-sereno);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+
+    /* GRID DE DOS COLUMNAS */
+    .comanda-grid {
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    /* COLUMNA IZQUIERDA: LISTA DE PRODUCTOS */
+    .items-column {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Banner de enrutamiento transparente (HU-14) */
+    .dispatch-notice-banner {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--amber-sereno);
+      border-radius: 10px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      color: var(--text-cream);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+    }
+
+    .dispatch-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+    }
+
+    .dispatch-info-icon {
+      width: 20px;
+      height: 20px;
+      stroke: var(--amber-sereno);
+      flex-shrink: 0;
+    }
+
+    .dispatch-stations-pills {
+      display: flex;
+      gap: 10px;
+    }
+
+    .station-pill {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.8px;
+      padding: 4px 14px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .station-pill svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    .station-pill.cocina {
+      background: var(--terracotta-soft);
+      color: #FF9D80;
+      border: 1px solid var(--terracotta-border);
+    }
+
+    .station-pill.bar {
+      background: var(--bar-soft);
+      color: #7DE8F5;
+      border: 1px solid var(--bar-border);
+    }
+
+    /* TARJETA DE CADA ÍTEM EN COMANDA */
+    .comanda-item-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--amber-sereno);
+      border-radius: 10px;
+      padding: 16px 20px;
+      display: grid;
+      grid-template-columns: 84px 1fr auto;
+      gap: 18px;
+      align-items: center;
+      position: relative;
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .comanda-item-card:hover {
+      border-color: var(--border-amber);
+      border-left-color: var(--gold-accent);
+      background: var(--bg-card-inner);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
+    }
+
+    /* Mini pedestal fotográfico para la miniatura 3D */
+    .item-stage {
+      width: 84px;
+      height: 84px;
+      background: var(--bg-dark);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+      padding: 4px;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .item-stage img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.55));
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .comanda-item-card:hover .item-stage img {
+      transform: scale(1.08);
+    }
+
+    .item-stage img.bottle-tilt {
+      transform: rotate(-15deg) scale(0.96);
+    }
+    .comanda-item-card:hover .item-stage img.bottle-tilt {
+      transform: rotate(-15deg) scale(1.05);
+    }
+
+    /* Detalles del producto y personalización */
+    .item-content {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .item-top-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .item-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      letter-spacing: 0.8px;
+      line-height: 1.1;
+      color: var(--text-cream);
+    }
+
+    .item-badge-area {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .item-badge-area.cocina {
+      background: var(--terracotta-soft);
+      color: #FF9D80;
+      border: 1px solid var(--terracotta-border);
+    }
+
+    .item-badge-area.bar {
+      background: var(--bar-soft);
+      color: #7DE8F5;
+      border: 1px solid var(--bar-border);
+    }
+
+    .item-badge-area.mercado {
+      background: rgba(61, 90, 67, 0.25);
+      color: #8CE3A0;
+      border: 1px solid rgba(61, 90, 67, 0.4);
+    }
+
+    /* Variante limpia en tipografía muted */
+    .item-variant-line {
+      font-size: 0.84rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .item-customizations {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 2px;
+    }
+
+    .custom-chip {
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .custom-chip.included {
+      color: var(--success);
+      background: var(--success-soft);
+      border: 1px solid var(--success-border);
+    }
+
+    .custom-chip.excluded {
+      color: var(--danger);
+      text-decoration: line-through;
+      background: var(--danger-soft);
+      border: 1px solid var(--danger-border);
+    }
+
+    .item-kitchen-note {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: var(--amber-sereno);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .item-kitchen-note svg {
+      width: 12px;
+      height: 12px;
+      stroke: var(--amber-sereno);
+      flex-shrink: 0;
+    }
+
+    /* Columna derecha del ítem: Precios, Stepper y Botón Eliminar */
+    .item-actions-col {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 12px;
+      min-width: 140px;
+    }
+
+    .item-price-block {
+      text-align: right;
+    }
+
+    .item-subtotal {
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      letter-spacing: 0.8px;
+      color: var(--gold-accent);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .item-unit-calc {
+      font-size: 0.76rem;
+      color: var(--text-dim);
+      font-variant-numeric: tabular-nums;
+      margin-top: 2px;
+    }
+
+    .item-controls-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Stepper táctil (44px target touch area accesible) */
+    .stepper {
+      display: flex;
+      align-items: center;
+      background: var(--bg-card-inner);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      overflow: hidden;
+      height: 34px;
+    }
+
+    .stepper-btn {
+      width: 34px;
+      height: 34px;
+      background: transparent;
+      border: none;
+      color: var(--text-cream);
+      font-size: 1.15rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-weight: 700;
+    }
+
+    .stepper-btn:hover {
+      background: var(--amber-sereno);
+      color: #121614;
+    }
+
+    .stepper-value {
+      width: 32px;
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-cream);
+      user-select: none;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .btn-delete-item {
+      background: transparent;
+      border: 1px solid var(--danger-border);
+      color: var(--danger);
+      width: 34px;
+      height: 34px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-delete-item svg {
+      width: 15px;
+      height: 15px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .btn-delete-item:hover {
+      background: var(--danger-soft);
+      border-color: var(--danger);
+      transform: scale(1.05);
+      color: #FF5252;
+    }
+
+    /* OBSERVACIONES GENERALES DE LA MESA */
+    .table-notes-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 18px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+    }
+
+    .table-notes-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .table-notes-title {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.8px;
+      color: var(--text-cream);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .table-notes-title svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--amber-sereno);
+    }
+
+    .table-notes-hint {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .table-notes-input {
+      background: var(--bg-card-inner);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 12px 16px;
+      color: var(--text-cream);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      resize: vertical;
+      min-height: 68px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .table-notes-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .table-notes-input:focus {
+      border-color: var(--amber-sereno);
+      box-shadow: 0 0 0 2px rgba(229, 159, 56, 0.25);
+    }
+
+    /* ESTADO VACÍO (EMPTY STATE) */
+    .empty-comanda-state {
+      background: var(--bg-card);
+      border: 1.5px dashed var(--border-subtle);
+      border-radius: 12px;
+      padding: 70px 30px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+    }
+
+    .empty-emblem {
+      width: 90px;
+      height: 90px;
+      opacity: 0.45;
+      margin-bottom: 4px;
+    }
+
+    .empty-title {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: 1.5px;
+      color: var(--text-cream);
+    }
+
+    .empty-desc {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      max-width: 440px;
+      line-height: 1.55;
+    }
+
+    .btn-explore-menu {
+      background: var(--amber-sereno);
+      color: #121614;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: 1.5px;
+      padding: 12px 26px;
+      border-radius: 6px;
+      border: 1px solid #D49020;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 10px;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 4px 14px rgba(229, 159, 56, 0.35);
+    }
+
+    .btn-explore-menu:hover {
+      background: var(--gold-accent);
+      transform: translateY(-2px);
+    }
+
+    /* COLUMNA DERECHA: RESUMEN FINANCIERO Y CONFIRMACIÓN */
+    .summary-column {
+      position: sticky;
+      top: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55);
+      position: relative;
+    }
+
+    .summary-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 14px;
+    }
+
+    .summary-header h2 {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      letter-spacing: 1.2px;
+      color: var(--text-cream);
+    }
+
+    .items-count-badge {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.8px;
+      color: var(--gold-accent);
+      background: rgba(248, 173, 0, 0.12);
+      border: 1px solid rgba(248, 173, 0, 0.35);
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+
+    /* Filas del desglose de precios */
+    .bill-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .bill-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.92rem;
+      color: var(--text-muted);
+    }
+
+    .bill-row.discount-row {
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    .bill-row.discount-row .discount-pill {
+      background: var(--success-soft);
+      border: 1px solid var(--success-border);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-left: 6px;
+    }
+
+    .bill-divider {
+      height: 1px;
+      background: var(--border-subtle);
+      margin: 4px 0;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-top: 6px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .total-label {
+      font-family: var(--font-display);
+      font-size: 1.65rem;
+      letter-spacing: 1.5px;
+      color: var(--text-cream);
+    }
+
+    .total-amount {
+      font-family: var(--font-display);
+      font-size: 2.7rem;
+      letter-spacing: 1.5px;
+      color: var(--gold-accent);
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    /* BOTÓN PRINCIPAL CTA: ESTILO OFICIAL HOMOLOGADO */
+    .btn-submit-comanda {
+      width: 100%;
+      background: var(--amber-sereno);
+      border: 1px solid #D49020;
+      border-radius: 8px;
+      padding: 14px 20px;
+      color: #121614;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 14px rgba(229, 159, 56, 0.35);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-submit-comanda .btn-arrow {
+      display: inline-block;
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), color 0.22s ease;
+    }
+
+    .btn-submit-comanda:hover {
+      background: #0E110F;
+      color: var(--text-cream);
+      border-color: var(--amber-sereno);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(229, 159, 56, 0.5);
+    }
+
+    .btn-submit-comanda:hover .btn-arrow {
+      transform: translateX(6px);
+      color: var(--amber-sereno);
+    }
+
+    .btn-submit-comanda:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .submit-caption {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-align: center;
+      line-height: 1.45;
+    }
+
+    .btn-secondary-add {
+      background: var(--bg-card-inner);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 11px;
+      color: var(--text-cream);
+      font-family: var(--font-body);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+
+    .btn-secondary-add:hover {
+      border-color: var(--amber-sereno);
+      color: #FFF8ED;
+      background: #252F28;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    /* Tarjeta de tiempo estimado */
+    .prep-estimate-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+    }
+
+    .prep-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--amber-sereno);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .prep-text strong {
+      color: var(--gold-accent);
+      font-weight: 700;
+    }
+
+    /* TOAST DE NOTIFICACIÓN (Deshacer eliminación) */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #1B231F;
+      border: 1px solid var(--border-amber);
+      border-radius: 30px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: var(--text-cream);
+      font-size: 0.88rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      z-index: 5000;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .toast-container.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .toast-undo-btn {
+      background: var(--amber-sereno);
+      color: #121614;
+      border: none;
+      border-radius: 16px;
+      padding: 4px 12px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .toast-undo-btn:hover {
+      background: var(--gold-accent);
+    }
+
+    /* MODAL DE CONFIRMACIÓN FINAL (HU-13) */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 14, 12, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.open {
+      display: flex;
+      opacity: 1;
+    }
+
+    .confirm-dialog {
+      background: var(--bg-card);
+      border: 1.5px solid var(--border-amber);
+      border-radius: 14px;
+      max-width: 500px;
+      width: 100%;
+      padding: 32px 28px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      transform: scale(0.95);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      color: var(--text-cream);
+    }
+
+    .modal-overlay.open .confirm-dialog {
+      transform: scale(1);
+    }
+
+    .dialog-icon-wrap {
+      width: 60px;
+      height: 60px;
+      background: rgba(229, 159, 56, 0.12);
+      border: 1.5px solid var(--amber-sereno);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .dialog-icon-wrap svg {
+      width: 30px;
+      height: 30px;
+      stroke: var(--amber-sereno);
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .dialog-header {
+      text-align: center;
+    }
+
+    .dialog-header h3 {
+      font-family: var(--font-display);
+      font-size: 2.1rem;
+      letter-spacing: 1.5px;
+      color: var(--text-cream);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .dialog-header p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    .dialog-summary-box {
+      background: var(--bg-card-inner);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .dialog-item-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.88rem;
+      color: var(--text-cream);
+    }
+
+    .dialog-item-line .item-name {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .dialog-total-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 10px;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 1px;
+      color: var(--gold-accent);
+    }
+
+    .dialog-warning {
+      background: var(--terracotta-soft);
+      border: 1px solid var(--terracotta-border);
+      border-radius: 6px;
+      padding: 11px 15px;
+      font-size: 0.82rem;
+      color: #FF9D80;
+      line-height: 1.4;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .dialog-warning svg {
+      width: 18px;
+      height: 18px;
+      stroke: #FF9D80;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .dialog-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .btn-dialog-confirm {
+      background: var(--amber-sereno);
+      border: 1px solid #D49020;
+      border-radius: 6px;
+      padding: 13px;
+      color: #121614;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(229, 159, 56, 0.35);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-dialog-confirm:hover {
+      background: var(--gold-accent);
+      transform: translateY(-1px);
+    }
+
+    .btn-dialog-cancel {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 11px;
+      color: var(--text-muted);
+      font-family: var(--font-body);
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-dialog-cancel:hover {
+      color: var(--text-cream);
+      border-color: rgba(245, 234, 219, 0.35);
+      background: rgba(245, 234, 219, 0.05);
+    }
+
+    /* ESTADO DE ÉXITO EN EL MODAL */
+    .success-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 18px;
+      padding: 10px 0;
+    }
+
+    .success-check-icon {
+      width: 68px;
+      height: 68px;
+      background: rgba(74, 222, 128, 0.16);
+      border: 2px solid var(--success);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: popIn 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .success-check-icon svg {
+      width: 36px;
+      height: 36px;
+      stroke: var(--success);
+      fill: none;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @keyframes popIn {
+      0% { transform: scale(0.3); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .success-title {
+      font-family: var(--font-display);
+      font-size: 2.3rem;
+      letter-spacing: 1.5px;
+      color: var(--text-cream);
+      line-height: 1;
+    }
+
+    .success-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      max-width: 410px;
+      line-height: 1.5;
+    }
+
+    .ticket-number-badge {
+      background: var(--bg-card-inner);
+      border: 1.5px dashed var(--amber-sereno);
+      border-radius: 6px;
+      padding: 10px 22px;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 2px;
+      color: var(--gold-accent);
+    }
+
+    .btn-go-timeline {
+      width: 100%;
+      background: var(--amber-sereno);
+      border: 1px solid #D49020;
+      border-radius: 6px;
+      padding: 14px;
+      color: #121614;
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 1.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(229, 159, 56, 0.35);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      margin-top: 6px;
+    }
+
+    .btn-go-timeline:hover {
+      background: var(--gold-accent);
+      transform: translateY(-1px);
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 960px) {
+      .comanda-grid {
+        grid-template-columns: 1fr;
+      }
+      .summary-column {
+        position: static;
+      }
+      .header-titles h1 {
+        font-size: 1.9rem;
+      }
+      .comanda-item-card {
+        grid-template-columns: 74px 1fr;
+      }
+      .item-actions-col {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--border-subtle);
+        padding-top: 12px;
+        margin-top: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fondo Ambiental Sereno Moreno con Grabados Linográficos Oficiales -->
+  <div class="ambient-bg"></div>
+  <div class="chalkboard-grid-overlay" aria-hidden="true"></div>
+  <img src="catalogo_imagenes/drawings/recurso-18.png" class="bg-watermark-left" alt="" aria-hidden="true">
+  <img src="catalogo_imagenes/drawings/recurso-20.png" class="bg-watermark-right" alt="" aria-hidden="true">
+
+  <!-- BARRA DE ESCENARIOS (Demostración de Estados en Prototipo) -->
+  <div class="demo-bar" role="toolbar" aria-label="Escenarios de prueba">
+    <div class="demo-tag">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+      ESCENARIO:
+    </div>
+    <button class="demo-btn active" onclick="loadDemoScenario('standard')">Comanda Típica (3 Ítems)</button>
+    <button class="demo-btn" onclick="loadDemoScenario('abundante')">Comanda Familiar (5 Ítems)</button>
+    <button class="demo-btn" onclick="loadDemoScenario('empty')">Comanda Vacía (Empty State)</button>
+  </div>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="comanda-container">
+
+    <!-- ENCABEZADO OFICIAL DE LA COMANDA -->
+    <header class="comanda-header">
+      <div class="header-left">
+        <a href="test-orbital.html?view=expanded" class="btn-back-menu" onclick="if(window.history.length > 1){ window.history.back(); return false; }" title="Volver al Menú" aria-label="Volver al Menú">
+          &larr;
+        </a>
+        <div class="header-titles">
+          <h1>COMANDA DE MESA</h1>
+          <div class="meta-sub">
+            <span class="live-pulse" aria-hidden="true"></span>
+            <span>Sesión Activa</span>
+            <span class="dot"></span>
+            <span>Ticket #284</span>
+            <span class="dot"></span>
+            <span id="headerItemCount">3 productos</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="table-badge" role="region" aria-label="Mesa">
+          <span class="mesa-label">UBICACIÓN</span>
+          <span class="mesa-title">MESA 04</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- GRID DE CONTENIDO PRINCIPAL -->
+    <div class="comanda-grid" id="mainGrid">
+
+      <!-- COLUMNA IZQUIERDA: ITEMS EN LA COMANDA -->
+      <section class="items-column" id="itemsColumn" role="region" aria-label="Platos en la comanda">
+
+        <!-- Banner de Transparencia de Despacho (HU-14) -->
+        <div class="dispatch-notice-banner" id="dispatchBanner">
+          <div class="dispatch-info">
+            <svg class="dispatch-info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+            <div>
+              <strong>Enrutamiento Inteligente:</strong> Despacho sincronizado por estaciones operativas.
+            </div>
+          </div>
+          <div class="dispatch-stations-pills">
+            <span class="station-pill cocina">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+              Cocina: <span id="countCocina">2</span>
+            </span>
+            <span class="station-pill bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+              Barra: <span id="countBar">1</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- LISTA DINÁMICA DE ITEMS -->
+        <div id="itemsListContainer" style="display: flex; flex-direction: column; gap: 14px;">
+          <!-- Se inyectan dinámicamente mediante renderComanda() -->
+        </div>
+
+        <!-- OBSERVACIONES GENERALES DE LA MESA -->
+        <div class="table-notes-card" id="tableNotesCard">
+          <div class="table-notes-header">
+            <span class="table-notes-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+              OBSERVACIONES GENERALES PARA EL DESPACHO
+            </span>
+            <span class="table-notes-hint">Opcional</span>
+          </div>
+          <textarea 
+            class="table-notes-input" 
+            placeholder="Ejemplo: Por favor traer servilletas adicionales, somos alérgicos al maní o preferencia de servicio..."
+            id="tableNotesInput"
+            aria-label="Observaciones generales para el despacho"
+          ></textarea>
+        </div>
+
+      </section>
+
+      <!-- COLUMNA DERECHA: RESUMEN FINANCIERO Y CONFIRMACIÓN -->
+      <aside class="summary-column" id="summaryColumn" role="region" aria-label="Resumen de cuenta">
+
+        <div class="summary-card">
+          <div class="summary-header">
+            <h2>RESUMEN DE CUENTA</h2>
+            <span class="items-count-badge" id="badgeTotalItems">3 Ítems</span>
+          </div>
+
+          <div class="bill-rows">
+            <div class="bill-row">
+              <span>Consumo Alimentos &amp; Bebidas</span>
+              <span id="valSubtotalRaw">$23.50</span>
+            </div>
+
+            <div class="bill-row discount-row" id="rowPromoDiscount">
+              <span>Descuento Happy Hour <span class="discount-pill">-10%</span></span>
+              <span id="valDiscount">-$2.35</span>
+            </div>
+
+            <div class="bill-row">
+              <span>Subtotal Neto</span>
+              <span id="valNetSubtotal" class="row-val">$21.15</span>
+            </div>
+
+            <div class="bill-row">
+              <span>Servicio de Mesa (10%)</span>
+              <span id="valService">$2.12</span>
+            </div>
+
+            <div class="bill-row">
+              <span>I.V.A. Ecuador (15%)</span>
+              <span id="valIva">$3.17</span>
+            </div>
+
+            <div class="bill-divider"></div>
+
+            <div class="total-row">
+              <span class="total-label">TOTAL:</span>
+              <span class="total-amount" id="valTotal">$26.44</span>
+            </div>
+          </div>
+
+          <!-- Botón CTA Principal -->
+          <button class="btn-submit-comanda" onclick="openConfirmDialog()" id="btnSubmitComanda">
+            <span>ENVIAR A COCINA Y BARRA</span>
+            <span class="btn-arrow">&rarr;</span>
+          </button>
+
+          <p class="submit-caption">
+            Al confirmar, la comanda se transfiere de inmediato a las pantallas KDS de cocina y barra.
+          </p>
+
+          <a href="test-orbital.html?view=expanded" class="btn-secondary-add" onclick="if(window.history.length > 1){ window.history.back(); return false; }">
+            <span>+</span> Seguir Agregando Productos
+          </a>
+        </div>
+
+        <!-- Tarjeta de Tiempo Estimado -->
+        <div class="prep-estimate-card">
+          <div class="prep-icon">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <div class="prep-text">
+            Tiempo estimado de despacho: <strong>12 a 18 minutos</strong> tras confirmación.
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+
+    <!-- ESTADO VACÍO (EMPTY STATE) -->
+    <div class="empty-comanda-state" id="emptyState" style="display: none;">
+      <img src="catalogo_imagenes/drawings/recurso-20.png" class="empty-emblem" alt="Emblema Vacío">
+      <h2 class="empty-title">TU COMANDA ESTÁ VACÍA</h2>
+      <p class="empty-desc">
+        Aún no has agregado fermentos vivos, platos de fogón o productos al vacío. Explora nuestra carta artesanal y añade lo que desees disfrutar.
+      </p>
+      <a href="test-orbital.html?view=expanded" class="btn-explore-menu">
+        EXPLORAR LA CARTA SERENO MORENO &rarr;
+      </a>
+    </div>
+
+  </div>
+
+  <!-- TOAST DE NOTIFICACIÓN DE ELIMINACIÓN Y DESHACER -->
+  <div class="toast-container" id="undoToast" role="alert">
+    <span id="toastMsg">Plato eliminado de la comanda</span>
+    <button class="toast-undo-btn" onclick="undoLastDelete()">DESHACER</button>
+  </div>
+
+  <!-- MODAL DE CONFIRMACIÓN FINAL (HU-13) -->
+  <div class="modal-overlay" id="confirmModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="confirm-dialog">
+      
+      <!-- ESTADO PRE-CONFIRMACIÓN -->
+      <div id="preConfirmState">
+        <div class="dialog-icon-wrap">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a5 5 0 0 1 5 5v2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2V7a5 5 0 0 1 5-5z"></path>
+          </svg>
+        </div>
+        
+        <div class="dialog-header">
+          <h3 id="modalTitle">¿CONFIRMAR Y ENVIAR COMANDA?</h3>
+          <p>
+            Tu pedido será transferido de inmediato para su preparación en caliente y servicio de barra.
+          </p>
+        </div>
+
+        <div class="dialog-summary-box">
+          <div class="dialog-item-line">
+            <span class="item-name">Ubicación del Pedido:</span>
+            <strong>Mesa 04 (Salón Principal)</strong>
+          </div>
+          <div class="dialog-item-line">
+            <span class="item-name">Cantidad de Productos:</span>
+            <strong id="modalSummaryCount">3 ítems</strong>
+          </div>
+          <div class="dialog-item-line">
+            <span class="item-name">Destinos de Despacho:</span>
+            <span>Cocina de Fogón y Barra</span>
+          </div>
+          <div class="dialog-total-line">
+            <span>TOTAL A FACTURAR:</span>
+            <span id="modalSummaryTotal">$26.44</span>
+          </div>
+        </div>
+
+        <div class="dialog-warning">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          <div>
+            <strong>Aviso de preparación:</strong> Una vez enviada, los insumos y fermentos se reservan en inventario y el equipo comenzará la elaboración al instante.
+          </div>
+        </div>
+
+        <div class="dialog-actions">
+          <button class="btn-dialog-confirm" onclick="executeOrderConfirmation()">
+            <span>SÍ, ENVIAR COMANDA AHORA &rarr;</span>
+          </button>
+          <button class="btn-dialog-cancel" onclick="closeConfirmDialog()">
+            Revisar o Cambiar Algo
+          </button>
+        </div>
+      </div>
+
+      <!-- ESTADO ÉXITO: PEDIDO ENVIADO -->
+      <div class="success-state" id="successState">
+        <div class="success-check-icon">
+          <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        </div>
+        
+        <div class="dialog-header">
+          <h3 class="success-title">¡COMANDA ENVIADA!</h3>
+          <p class="success-desc">
+            La cocina y el bar han recibido tu pedido. Ya puedes relajarte mientras lo preparamos con maestría artesanal.
+          </p>
+        </div>
+
+        <div class="ticket-number-badge">
+          ORDEN #284 • MESA 04
+        </div>
+
+        <button class="btn-go-timeline" onclick="window.location.href='test-orbital.html?view=expanded'">
+          <span>IR AL SEGUIMIENTO EN VIVO (UI-05) &rarr;</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LÓGICA JAVASCRIPT REACTIVA -->
+  <script>
+    // Datos de muestra predefinidos para la comanda
+    const SCENARIOS = {
+      standard: [
+        {
+          id: 'item-1',
+          name: 'Locrito de Papa Tradicional',
+          category: 'Cocina de Fogón',
+          station: 'cocina',
+          badgeText: 'Cocina de Fogón',
+          variant: 'Cazuela Pailón',
+          variantExtra: 2.50,
+          unitBasePrice: 5.50,
+          qty: 1,
+          customs: [
+            { text: 'Queso tierno de hoja', type: 'included' },
+            { text: 'Aguacate criollo', type: 'included' },
+            { text: 'Sin Tostado', type: 'excluded' }
+          ],
+          note: 'Bien caliente y ají de chochos aparte',
+          img: 'catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png',
+          isTilt: false
+        },
+        {
+          id: 'item-2',
+          name: 'Mucha Chicha Botella Roja',
+          category: 'Fermentos Vivos',
+          station: 'bar',
+          badgeText: 'Barra de Fermentos',
+          variant: 'Botella Artesanal 330ml',
+          variantExtra: 0.00,
+          unitBasePrice: 4.50,
+          qty: 1,
+          customs: [
+            { text: 'Fría de barril', type: 'included' },
+            { text: 'Con vaso cervecero', type: 'included' }
+          ],
+          note: 'Destapada al servir',
+          img: 'catalogo_imagenes/fermentos/botella_roja_float.png',
+          isTilt: true
+        },
+        {
+          id: 'item-3',
+          name: 'Costilla Precocida Ahumada',
+          category: 'Mercado al Vacío',
+          station: 'cocina',
+          badgeText: 'Mercado al Vacío',
+          variant: 'Porción 500g',
+          variantExtra: 0.00,
+          unitBasePrice: 6.50,
+          qty: 1,
+          customs: [
+            { text: 'Salsa BBQ artesanal', type: 'included' }
+          ],
+          note: 'Para calentar y consumir en mesa',
+          img: 'catalogo_imagenes/lleve_lleve/costilla_precocida_float.png',
+          isTilt: false
+        }
+      ],
+      abundante: [
+        {
+          id: 'item-1',
+          name: 'Locrito de Papa Tradicional',
+          category: 'Cocina de Fogón',
+          station: 'cocina',
+          badgeText: 'Cocina de Fogón',
+          variant: 'Cazuela Pailón',
+          variantExtra: 2.50,
+          unitBasePrice: 5.50,
+          qty: 2,
+          customs: [
+            { text: 'Con queso tierno', type: 'included' },
+            { text: 'Aguacate criollo', type: 'included' }
+          ],
+          note: 'Uno sin cilantro',
+          img: 'catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png',
+          isTilt: false
+        },
+        {
+          id: 'item-2',
+          name: 'Mucha Chicha Botella Roja',
+          category: 'Fermentos Vivos',
+          station: 'bar',
+          badgeText: 'Barra de Fermentos',
+          variant: 'Botella Artesanal 330ml',
+          variantExtra: 0.00,
+          unitBasePrice: 4.50,
+          qty: 3,
+          customs: [
+            { text: 'Con vaso frío', type: 'included' }
+          ],
+          note: '',
+          img: 'catalogo_imagenes/fermentos/botella_roja_float.png',
+          isTilt: true
+        },
+        {
+          id: 'item-3',
+          name: 'Costilla Precocida Ahumada',
+          category: 'Mercado al Vacío',
+          station: 'cocina',
+          badgeText: 'Mercado al Vacío',
+          variant: 'Porción 500g',
+          variantExtra: 0.00,
+          unitBasePrice: 6.50,
+          qty: 1,
+          customs: [],
+          note: '',
+          img: 'catalogo_imagenes/lleve_lleve/costilla_precocida_float.png',
+          isTilt: false
+        },
+        {
+          id: 'item-4',
+          name: 'Alitas de la Casa Glaseadas',
+          category: 'Cocina de Fogón',
+          station: 'cocina',
+          badgeText: 'Cocina de Fogón',
+          variant: 'Porción 12 unidades',
+          variantExtra: 0.00,
+          unitBasePrice: 8.50,
+          qty: 1,
+          customs: [
+            { text: 'Salsa picante aparte', type: 'included' }
+          ],
+          note: 'Bien doradas',
+          img: 'catalogo_imagenes/pida_no_mas/alitas_caseras_8.5_float.png',
+          isTilt: false
+        },
+        {
+          id: 'item-5',
+          name: "Camiseta Sereno 'Si Hay'",
+          category: 'Arte & Indumentaria',
+          station: 'bar',
+          badgeText: 'Arte & Indumentaria',
+          variant: 'Talla M • Verde Bosque',
+          variantExtra: 0.00,
+          unitBasePrice: 18.00,
+          qty: 1,
+          customs: [
+            { text: 'Empaque serigráfico', type: 'included' }
+          ],
+          note: 'Para regalo',
+          img: 'catalogo_imagenes/si_hay_si_hay/camiseta_verde_float.png',
+          isTilt: false
+        }
+      ],
+      empty: []
+    };
+
+    let currentItems = JSON.parse(JSON.stringify(SCENARIOS.standard));
+    let lastDeletedItem = null;
+    let lastDeletedIndex = -1;
+    let toastTimeout = null;
+
+    // Cargar escenario desde la barra de botones
+    function loadDemoScenario(scenarioKey, btnElement) {
+      document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('active'));
+      const target = btnElement || (typeof event !== 'undefined' && event ? (event.currentTarget || (event.target && event.target.closest('.demo-btn'))) : null);
+      if (target) {
+        target.classList.add('active');
+      } else {
+        const fallback = Array.from(document.querySelectorAll('.demo-btn')).find(b => {
+          if (scenarioKey === 'standard') return b.textContent.includes('Típica');
+          if (scenarioKey === 'abundante') return b.textContent.includes('Familiar');
+          if (scenarioKey === 'empty') return b.textContent.includes('Vacía');
+          return false;
+        });
+        if (fallback) fallback.classList.add('active');
+      }
+
+      currentItems = JSON.parse(JSON.stringify(SCENARIOS[scenarioKey]));
+      renderComanda();
+    }
+
+    // Modificar cantidad con stepper
+    function updateQty(index, delta) {
+      if (!currentItems[index]) return;
+      currentItems[index].qty += delta;
+      if (currentItems[index].qty <= 0) {
+        deleteItem(index);
+        return;
+      }
+      syncStorage();
+      renderComanda();
+    }
+
+    // Eliminar ítem con soporte de Deshacer
+    function deleteItem(index) {
+      if (!currentItems[index]) return;
+      lastDeletedItem = currentItems[index];
+      lastDeletedIndex = index;
+      
+      const itemName = lastDeletedItem.name;
+      currentItems.splice(index, 1);
+      syncStorage();
+      renderComanda();
+      showUndoToast(itemName);
+    }
+
+    function showUndoToast(itemName) {
+      const toast = document.getElementById('undoToast');
+      const msg = document.getElementById('toastMsg');
+      if (!toast) return;
+
+      msg.textContent = `"${itemName}" eliminado de la comanda`;
+      toast.classList.add('show');
+
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+        lastDeletedItem = null;
+        lastDeletedIndex = -1;
+      }, 4500);
+    }
+
+    function undoLastDelete() {
+      if (lastDeletedItem && lastDeletedIndex >= 0) {
+        currentItems.splice(lastDeletedIndex, 0, lastDeletedItem);
+        lastDeletedItem = null;
+        lastDeletedIndex = -1;
+        const toast = document.getElementById('undoToast');
+        if (toast) toast.classList.remove('show');
+        syncStorage();
+        renderComanda();
+      }
+    }
+
+    function syncStorage() {
+      try {
+        const mapped = {};
+        currentItems.forEach((item, i) => {
+          mapped['item_' + i] = {
+            name: item.name,
+            price: item.unitBasePrice,
+            qty: item.qty,
+            variant: item.variant,
+            img: item.img,
+            note: item.note,
+            excluded: (item.customs || []).filter(c => c.type === 'excluded').map(c => c.text)
+          };
+        });
+        localStorage.setItem('sereno_moreno_comanda', JSON.stringify(mapped));
+      } catch(e){}
+    }
+
+    // Renderizar lista y recalcular valores
+    function renderComanda() {
+      const container = document.getElementById('itemsListContainer');
+      const mainGrid = document.getElementById('mainGrid');
+      const emptyState = document.getElementById('emptyState');
+
+      if (currentItems.length === 0) {
+        mainGrid.style.display = 'none';
+        emptyState.style.display = 'flex';
+        document.getElementById('headerItemCount').textContent = '0 productos';
+        return;
+      }
+
+      mainGrid.style.display = 'grid';
+      emptyState.style.display = 'none';
+
+      let totalQty = 0;
+      let rawSubtotal = 0;
+      let countCocina = 0;
+      let countBar = 0;
+
+      container.innerHTML = '';
+
+      currentItems.forEach((item, idx) => {
+        const itemUnit = item.unitBasePrice + (item.variantExtra || 0);
+        const itemTotal = itemUnit * item.qty;
+        
+        totalQty += item.qty;
+        rawSubtotal += itemTotal;
+
+        if (item.station === 'cocina') countCocina += item.qty;
+        else countBar += item.qty;
+
+        // Custom chips HTML
+        let customsHtml = '';
+        if (item.customs && item.customs.length > 0) {
+          customsHtml = item.customs.map(c => 
+            `<span class="custom-chip ${c.type}">${c.type === 'included' ? '✓' : '✗'} ${c.text}</span>`
+          ).join('');
+        }
+
+        // Note HTML
+        let noteHtml = item.note ? `
+          <div class="item-kitchen-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+            <span>${item.note}</span>
+          </div>
+        ` : '';
+
+        const card = document.createElement('div');
+        card.className = 'comanda-item-card';
+        card.innerHTML = `
+          <div class="item-stage">
+            <img src="${item.img}" class="${item.isTilt ? 'bottle-tilt' : ''}" alt="${item.name}" onerror="this.src='catalogo_imagenes/drawings/logosm.svg'">
+          </div>
+
+          <div class="item-content">
+            <div class="item-top-row">
+              <h3 class="item-title">${item.name}</h3>
+              <span class="item-badge-area ${item.station}">${item.badgeText}</span>
+            </div>
+
+            ${item.variant ? `<div class="item-variant-line">${item.variant} ${item.variantExtra > 0 ? `(+$${item.variantExtra.toFixed(2)})` : ''}</div>` : ''}
+
+            ${customsHtml ? `<div class="item-customizations">${customsHtml}</div>` : ''}
+            ${noteHtml}
+          </div>
+
+          <div class="item-actions-col">
+            <div class="item-price-block">
+              <div class="item-subtotal">$${itemTotal.toFixed(2)}</div>
+              <div class="item-unit-calc">$${itemUnit.toFixed(2)} c/u</div>
+            </div>
+
+            <div class="item-controls-row">
+              <div class="stepper" role="group" aria-label="Cantidad">
+                <button class="stepper-btn" onclick="updateQty(${idx}, -1)" title="Reducir cantidad" aria-label="Reducir">－</button>
+                <span class="stepper-value" aria-live="polite">${item.qty}</span>
+                <button class="stepper-btn" onclick="updateQty(${idx}, 1)" title="Aumentar cantidad" aria-label="Aumentar">＋</button>
+              </div>
+
+              <button class="btn-delete-item" onclick="deleteItem(${idx})" title="Eliminar ítem de la comanda" aria-label="Eliminar ${item.name}">
+                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+              </button>
+            </div>
+          </div>
+        `;
+
+        container.appendChild(card);
+      });
+
+      // Cálculos Financieros Oficiales (Normativa Ecuador: IVA 15%, Servicio 10%)
+      const discountRate = 0.10; // Happy Hour 10%
+      const discountVal = rawSubtotal * discountRate;
+      const netSubtotal = rawSubtotal - discountVal;
+      const serviceVal = netSubtotal * 0.10; // 10% servicio
+      const ivaVal = netSubtotal * 0.15; // 15% IVA Ecuador
+      const grandTotal = netSubtotal + serviceVal + ivaVal;
+
+      // Actualizar UI de totales y badges
+      document.getElementById('headerItemCount').textContent = `${totalQty} producto${totalQty > 1 ? 's' : ''}`;
+      document.getElementById('badgeTotalItems').textContent = `${totalQty} Ítem${totalQty > 1 ? 's' : ''}`;
+      document.getElementById('countCocina').textContent = countCocina + (countCocina === 1 ? ' plato' : ' platos');
+      document.getElementById('countBar').textContent = countBar + (countBar === 1 ? ' bebida' : ' bebidas');
+
+      document.getElementById('valSubtotalRaw').textContent = `$${rawSubtotal.toFixed(2)}`;
+      document.getElementById('valDiscount').textContent = `-$${discountVal.toFixed(2)}`;
+      document.getElementById('valNetSubtotal').textContent = `$${netSubtotal.toFixed(2)}`;
+      document.getElementById('valService').textContent = `$${serviceVal.toFixed(2)}`;
+      document.getElementById('valIva').textContent = `$${ivaVal.toFixed(2)}`;
+      document.getElementById('valTotal').textContent = `$${grandTotal.toFixed(2)}`;
+
+      // Modal resumen
+      document.getElementById('modalSummaryCount').textContent = `${totalQty} producto${totalQty > 1 ? 's' : ''}`;
+      document.getElementById('modalSummaryTotal').textContent = `$${grandTotal.toFixed(2)}`;
+    }
+
+    // Diálogo de Confirmación
+    function openConfirmDialog() {
+      document.getElementById('preConfirmState').style.display = 'block';
+      document.getElementById('successState').style.display = 'none';
+      document.getElementById('confirmModal').classList.add('open');
+    }
+
+    function closeConfirmDialog() {
+      document.getElementById('confirmModal').classList.remove('open');
+    }
+
+    // Cerrar al pulsar Escape o clic fuera
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeConfirmDialog();
+    });
+
+    document.getElementById('confirmModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('confirmModal')) closeConfirmDialog();
+    });
+
+    function executeOrderConfirmation() {
+      document.getElementById('preConfirmState').style.display = 'none';
+      document.getElementById('successState').style.display = 'flex';
+      try {
+        localStorage.removeItem('sereno_moreno_comanda');
+      } catch(e){}
+    }
+
+    // Inicializar al cargar con soporte para parámetros de URL
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const scenarioParam = urlParams.get('scenario');
+      const modalParam = urlParams.get('modal');
+
+      if (scenarioParam && SCENARIOS[scenarioParam]) {
+        document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('active'));
+        const targetBtn = Array.from(document.querySelectorAll('.demo-btn')).find(b => 
+          (scenarioParam === 'standard' && b.textContent.includes('Típica')) ||
+          (scenarioParam === 'abundante' && b.textContent.includes('Familiar')) ||
+          (scenarioParam === 'empty' && b.textContent.includes('Vacía'))
+        );
+        if (targetBtn) targetBtn.classList.add('active');
+        currentItems = JSON.parse(JSON.stringify(SCENARIOS[scenarioParam]));
+      } else {
+        // Cargar comanda real de la experiencia previa en test-orbital si existe
+        try {
+          const stored = localStorage.getItem('sereno_moreno_comanda');
+          if (stored) {
+            const parsed = JSON.parse(stored);
+            const keys = Object.keys(parsed);
+            if (keys.length > 0) {
+              document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('active'));
+              let liveBtn = document.getElementById('btnLiveSession');
+              if (!liveBtn) {
+                liveBtn = document.createElement('button');
+                liveBtn.id = 'btnLiveSession';
+                liveBtn.className = 'demo-btn active';
+                liveBtn.textContent = `En Vivo Menú (${keys.length} ${keys.length > 1 ? 'ítems' : 'ítem'})`;
+                document.querySelector('.demo-bar').appendChild(liveBtn);
+              }
+              currentItems = keys.map((k, idx) => {
+                const item = parsed[k];
+                const catLower = (item.colCategory || item.name || '').toLowerCase();
+                const isBar = catLower.includes('fermento') || catLower.includes('chicha') || catLower.includes('bebida') || catLower.includes('botella');
+                return {
+                  id: 'live-' + idx,
+                  name: item.name,
+                  category: item.colCategory || (isBar ? 'Fermentos Vivos' : 'Cocina de Fogón'),
+                  station: isBar ? 'bar' : 'cocina',
+                  badgeText: isBar ? 'Barra de Fermentos' : 'Cocina de Fogón',
+                  variant: item.variant || 'Porción Estándar',
+                  variantExtra: 0,
+                  unitBasePrice: item.price,
+                  qty: item.qty || 1,
+                  customs: [
+                    ...(item.excluded || []).map(ex => ({ text: 'Sin: ' + ex, type: 'excluded' }))
+                  ],
+                  note: item.note || '',
+                  img: item.img || (isBar ? 'catalogo_imagenes/fermentos/botella_roja_float.png' : 'catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png'),
+                  isTilt: isBar
+                };
+              });
+            }
+          }
+        } catch(err) {
+          console.warn('Error reading stored comanda, using standard fallback:', err);
+        }
+      }
+
+      renderComanda();
+
+      if (modalParam === 'confirm') {
+        openConfirmDialog();
+      } else if (modalParam === 'success') {
+        openConfirmDialog();
+        executeOrderConfirmation();
+      }
+    });
+  </script>
+</body>
+</html>
