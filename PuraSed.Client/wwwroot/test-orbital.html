@@ -3859,18 +3859,19 @@
     }
 
   
-    /* NOTIFICACIÓN ARTESANAL FLOTANTE SUPERIOR (NO OBSTRUYE EL TICKET NI BOTONES) */
+    /* NOTIFICACIÓN ARTESANAL INFERIOR (ESTILO CARTA / TICKET SERENO MORENO - NO TAPA EL TICKET) */
     .artisan-quick-toast {
       position: fixed;
-      top: 76px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-14px) scale(0.96);
-      background: #1C110A; /* Tono cálido madera quemada / malta tostada Sereno Moreno */
-      border: 1.5px solid #E59F38; /* Borde oro ámbar artesanal */
-      color: #FAF7EC;
-      padding: 6px 16px 6px 12px;
-      border-radius: 999px;
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 18px rgba(229, 159, 56, 0.25);
+      bottom: 26px;
+      left: 36vw;
+      transform: translateX(-50%) translateY(16px);
+      background: #FAF7EC; /* Papel marfil idéntico al ticket y cartas de Sereno Moreno */
+      border: 1px solid #D5CEBE;
+      border-left: 4px solid var(--toast-accent, #C0392B);
+      color: #241D17;
+      padding: 7px 14px 7px 12px;
+      border-radius: 4px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.42), 0 2px 6px rgba(0, 0, 0, 0.15);
       z-index: 2500;
       display: none;
       align-items: center;
@@ -3881,19 +3882,18 @@
     }
     .artisan-quick-toast.is-visible {
       opacity: 1;
-      transform: translateX(-50%) translateY(0) scale(1);
+      transform: translateX(-50%) translateY(0);
     }
-    .artisan-toast-check {
-      background: #E59F38;
-      color: #1C110A;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 900;
+    .artisan-toast-stamp {
+      border: 1px solid var(--toast-accent, #C0392B);
+      color: var(--toast-accent, #C0392B);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 2px;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
       flex-shrink: 0;
     }
     .artisan-toast-info {
@@ -3903,23 +3903,23 @@
     }
     .artisan-toast-name {
       font-family: 'Oswald', sans-serif;
-      font-weight: 600;
-      font-size: 0.92rem;
+      font-weight: 700;
+      font-size: 0.94rem;
       letter-spacing: 0.5px;
-      color: #FAF7EC;
+      color: #241D17;
       text-transform: uppercase;
     }
     .artisan-toast-desc {
-      color: #D5C9B8;
+      color: #7A6F62;
       font-size: 0.82rem;
       font-family: 'Inter', sans-serif;
     }
     .artisan-toast-btn {
-      background: #E59F38;
-      color: #1C110A;
+      background: #141A16; /* Negro carbón basalto idéntico a botones +COMANDA del catálogo */
+      color: #FAF7EC;
       border: none;
-      padding: 4px 12px;
-      border-radius: 14px;
+      padding: 5px 12px;
+      border-radius: 4px;
       font-family: 'Oswald', sans-serif;
       font-size: 0.78rem;
       font-weight: 700;
@@ -3932,8 +3932,8 @@
       margin-left: 4px;
     }
     .artisan-toast-btn:hover {
-      background: #F8AD00;
-      transform: scale(1.04);
+      background: #000000;
+      transform: scale(1.03);
     }
 
   </style>
@@ -4980,11 +4980,16 @@
         toast.className = 'artisan-quick-toast';
         document.body.appendChild(toast);
       }
+
+      const accentColors = ['#E59F38', '#C0392B', '#2D6A4F', '#2A527A', '#F8AD00'];
+      const accent = accentColors[currentColIdx] || '#C0392B';
+      toast.style.setProperty('--toast-accent', accent);
+
       toast.innerHTML = `
-        <span class="artisan-toast-check">✓</span>
+        <span class="artisan-toast-stamp">COMANDADO</span>
         <div class="artisan-toast-info">
           <span class="artisan-toast-name">${qty}x ${dishName}</span>
-          <span class="artisan-toast-desc">añadido a la comanda</span>
+          <span class="artisan-toast-desc">añadido al pedido</span>
         </div>
         <button type="button" class="artisan-toast-btn" onclick="toggleComandaDrawer(event); hideQuickFeedbackToast();">
           VER COMANDA &rarr;
@@ -4997,7 +5002,7 @@
       if (window._quickToastTimeout) clearTimeout(window._quickToastTimeout);
       window._quickToastTimeout = setTimeout(() => {
         hideQuickFeedbackToast();
-      }, 2400);
+      }, 2600);
     }
 
     function hideQuickFeedbackToast() {
