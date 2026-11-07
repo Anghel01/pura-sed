@@ -1122,18 +1122,26 @@
       overflow: hidden;
       transition: transform 0.25s ease;
       position: relative;
+      /* Auténtico corte dentado / serrado superior e inferior de ticket de recibo (referencias 095426 y 095417) */
+      --ticket-tooth-w: 10px;
+      --ticket-tooth-h: 5px;
+      -webkit-mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--ticket-tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x;
+      mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--ticket-tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x;
     }
 
     .paper-ticket-card:hover {
       transform: rotate(1deg);
     }
 
-    /* DIENTES ONDULADOS SERRADOS (ARRANCADO TÉRMICO DE TICKET 095417/095426) */
+    /* ESPACIADORES DE DIENTES SERRADOS (ARRANCADO TÉRMICO DE TICKET 095417/095426) */
     .ticket-scallop-top {
-      height: 7px;
-      background-image: radial-gradient(circle at 5px 0px, transparent 4px, #FAF7EC 4.5px);
-      background-size: 10px 7px;
-      background-repeat: repeat-x;
+      height: 6px;
       flex-shrink: 0;
       z-index: 2;
     }
@@ -1141,10 +1149,10 @@
     .ticket-card-content {
       flex: 1;
       min-height: 0;
-      height: calc(100% - 14px);
+      height: calc(100% - 12px);
       display: flex;
       flex-direction: column;
-      padding: 12px 14px 6px 14px;
+      padding: 6px 14px 6px 14px;
       overflow: hidden;
     }
     #ticketListView {
@@ -1156,10 +1164,7 @@
     }
 
     .ticket-scallop-bottom {
-      height: 7px;
-      background-image: radial-gradient(circle at 5px 7px, transparent 4px, #FAF7EC 4.5px);
-      background-size: 10px 7px;
-      background-repeat: repeat-x;
+      height: 6px;
       flex-shrink: 0;
       z-index: 2;
     }
@@ -4943,8 +4948,17 @@
       const addedName = currentCustomizerItem.name;
       const addedQty = ticketCustomQty;
 
-      updateOrderUI();
-      renderTicketItems();
+      try {
+        updateOrderUI();
+      } catch (err) {
+        console.warn("Error en updateOrderUI:", err);
+      }
+      try {
+        renderTicketItems();
+      } catch (err) {
+        console.warn("Error en renderTicketItems:", err);
+      }
+      // Volver SIEMPRE automáticamente a la carta de opciones del ticket
       closeTicketCustomizer();
 
       showQuickFeedbackToast(`✔ ${addedQty}x ${addedName} añadido a la comanda`);
@@ -5093,6 +5107,7 @@
           extBtn.classList.remove('has-items');
         }
       }
+      const countEl = document.getElementById('footerOrderCount');
       if (countEl) countEl.innerText = `${totalCount} ${totalCount === 1 ? 'ÍTEM' : 'ÍTEMS'}`;
       const expHeadCount = document.getElementById('expandedHeaderCounter');
       if (expHeadCount) expHeadCount.innerText = `${totalCount}`;
