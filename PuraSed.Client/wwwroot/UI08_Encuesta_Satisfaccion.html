@@ -218,24 +218,33 @@
       min-height: 220px;
     }
 
-    .folk-art-stage .mask-img {
-      width: 245px;
-      height: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 22px 32px rgba(18, 22, 20, 0.45)); /* taste-skill-ignore */
-      transform: rotate(-4deg);
-      z-index: 2;
+    .folk-art-stage {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 230px;
     }
 
-    .folk-art-stage .vessel-img {
-      width: 175px;
+    .folk-art-stage .chicha-jug-img {
+      height: 270px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 20px 30px rgba(18, 22, 20, 0.5)); /* taste-skill-ignore */
+      transform: rotate(-3deg);
+      z-index: 1;
+    }
+
+    .folk-art-stage .locro-bowl-img {
+      width: 210px;
       height: auto;
       object-fit: contain;
-      filter: drop-shadow(0 18px 26px rgba(18, 22, 20, 0.4)); /* taste-skill-ignore */
-      margin-left: -36px;
-      margin-top: 34px;
-      transform: rotate(6deg);
-      z-index: 1;
+      filter: drop-shadow(0 18px 28px rgba(18, 22, 20, 0.45)); /* taste-skill-ignore */
+      margin-left: -48px;
+      margin-top: 60px;
+      transform: rotate(4deg);
+      z-index: 2;
     }
 
     .visit-ledger-strip {
@@ -544,8 +553,8 @@
       </div>
 
       <div class="folk-art-stage">
-        <img src="catalogo_imagenes/drawings/mascara_diablo_huma_float.png" alt="Diablo Huma Sereno Moreno" class="mask-img" onerror="this.style.display='none'" />
-        <img src="catalogo_imagenes/drawings/vasija_barro_chicha_float.png" alt="Vasija de Barro" class="vessel-img" onerror="this.style.display='none'" />
+        <img src="catalogo_imagenes/fermentos/cantaro_maiz_float.png" alt="Cántaro Mucha Chicha Maíz" class="chicha-jug-img" />
+        <img src="catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png" alt="Locro de Papa de Paila" class="locro-bowl-img" />
       </div>
 
       <div class="visit-ledger-strip">
