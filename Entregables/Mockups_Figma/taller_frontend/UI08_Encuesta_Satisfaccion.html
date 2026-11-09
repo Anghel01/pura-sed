@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-08: Calificación de Experiencia y Encuesta — PuraSed / Sereno Moreno</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0D110F;
+      --bg-surface: #141A17;
+      --bg-card: #1A221E;
+      --border-subtle: rgba(245, 234, 219, 0.12);
+      --border-amber: rgba(229, 159, 56, 0.4);
+      --amber-sereno: #E59F38;
+      --gold-highlight: #F8AD00;
+      --terracotta: #C0392B;
+      --paper-ivory: #FAF7EC;
+      --text-cream: #FFF8ED;
+      --text-muted: #D1C7BA;
+      --font-display: 'Bebas Neue', 'Oswald', sans-serif;
+      --font-body: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-cream);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 20px;
+      background-image: 
+        radial-gradient(circle at 50% 20%, rgba(229, 159, 56, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 20% 80%, rgba(192, 57, 43, 0.1) 0%, transparent 45%);
+    }
+
+    .bg-linocut {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      height: 80vh;
+      opacity: 0.08;
+      pointer-events: none;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+      z-index: 0;
+    }
+
+    /* Tarjeta Principal de Calificación */
+    .survey-card {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-amber);
+      border-radius: 12px;
+      max-width: 580px;
+      width: 100%;
+      padding: 36px 32px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+      position: relative;
+      z-index: 10;
+      text-align: center;
+    }
+
+    .survey-badge {
+      display: inline-block;
+      border: 1px solid var(--terracotta);
+      color: var(--terracotta);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .survey-title {
+      font-family: var(--font-display);
+      font-size: 2.3rem;
+      letter-spacing: 1.5px;
+      color: var(--text-cream);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .survey-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      max-width: 440px;
+      margin: 0 auto 24px auto;
+    }
+
+    .rating-block {
+      background: #0E1210;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .rating-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .rating-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text-cream);
+      text-transform: uppercase;
+    }
+    .rating-score-txt {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      color: var(--gold-highlight);
+      font-weight: 700;
+    }
+
+    /* Estrellas Interactivas */
+    .stars-row {
+      display: flex;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .star-btn {
+      font-size: 2rem;
+      color: rgba(245, 234, 219, 0.2);
+      transition: color 0.15s, transform 0.15s;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+    .star-btn.active {
+      color: var(--gold-highlight);
+      text-shadow: 0 0 12px rgba(248, 173, 0, 0.5);
+    }
+    .star-btn:hover {
+      transform: scale(1.15);
+    }
+
+    /* Comentario */
+    .feedback-input {
+      width: 100%;
+      background: #0E1210;
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 12px 14px;
+      color: var(--text-cream);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      outline: none;
+      resize: vertical;
+      min-height: 80px;
+      margin-bottom: 22px;
+      transition: border-color 0.2s ease;
+    }
+    .feedback-input:focus {
+      border-color: var(--amber-sereno);
+    }
+
+    /* Botón Finalizar */
+    .btn-finish-visit {
+      width: 100%;
+      background: var(--amber-sereno);
+      color: #101412;
+      border: none;
+      padding: 14px;
+      border-radius: 4px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-finish-visit:hover {
+      background: var(--gold-highlight);
+      transform: scale(1.02);
+    }
+
+    /* Pantalla de Despedida Final */
+    .farewell-screen {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 0;
+    }
+    .farewell-icon {
+      width: 72px;
+      height: 72px;
+      background: rgba(74, 222, 128, 0.15);
+      border: 2px solid #4ADE80;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: #4ADE80;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Linocut de fondo -->
+  <img src="catalogo_imagenes/drawings/mascara_diablo_huma_float.png" class="bg-linocut" alt="Diablo Huma" />
+
+  <article class="survey-card" id="surveyCard">
+    <span class="survey-badge">MESA 04 • EXPERIENCIA DEL CLIENTE</span>
+    <h1 class="survey-title">¡GRACIAS POR TU VISITA!</h1>
+    <p class="survey-sub">Tu valoración nos ayuda a mantener vivos los sabores y tradiciones de Sereno Moreno.</p>
+
+    <!-- Pregunta 1: Mesero (HU-25) -->
+    <div class="rating-block">
+      <div class="rating-header">
+        <span class="rating-label">1. Atención de tu mesero (Mateo V.)</span>
+        <span class="rating-score-txt" id="lblScoreWaiter">5/5 • EXCELENTE</span>
+      </div>
+      <div class="stars-row" id="starsWaiter">
+        <button type="button" class="star-btn active" onclick="setStars('Waiter', 1)">★</button>
+        <button type="button" class="star-btn active" onclick="setStars('Waiter', 2)">★</button>
+        <button type="button" class="star-btn active" onclick="setStars('Waiter', 3)">★</button>
+        <button type="button" class="star-btn active" onclick="setStars('Waiter', 4)">★</button>
+        <button type="button" class="star-btn active" onclick="setStars('Waiter', 5)">★</button>
+      </div>
+    </div>
+
+    <!-- Pregunta 2: Experiencia General & Comida (HU-26) -->
+    <div class="rating-block">
+      <div class="rating-header">
+        <span class="rating-label">2. Calidad de la comida, chicha y ambiente</span>
+        <span class="rating-score-txt" id="lblScoreFood">5/5 • EXCELENTE</span>
+      </div>
+      <div class="stars-row" id="starsFood">
+        <button type="button" class="star-btn active" onclick="setStars('Food', 1)">★</button>
+        <button type="button" class="star-btn active" onclick="setStars('Food', 2)">★</button>
+        <button type="button" class="star-btn active" onclick="setStars('Food', 3)">★</button>
+        <button type="button" class="star-btn active" onclick="setStars('Food', 4)">★</button>
+        <button type="button" class="star-btn active" onclick="setStars('Food', 5)">★</button>
+      </div>
+    </div>
+
+    <!-- Comentarios opcionales -->
+    <textarea class="feedback-input" placeholder="¿Algún mensaje para el chef o sugerencia musical para la próxima visita? (Opcional)"></textarea>
+
+    <!-- Botón de Envío -->
+    <button type="button" class="btn-finish-visit" onclick="submitSurveyAndExit()">
+      <span>ENVIAR VALORACIÓN & LIBERAR MESA &rarr;</span>
+    </button>
+
+    <!-- Pantalla de Despedida Dinámica -->
+    <div class="farewell-screen" id="farewellScreen">
+      <div class="farewell-icon">✓</div>
+      <h2 style="font-family: var(--font-display); font-size: 2.2rem; letter-spacing: 1.5px; color: var(--gold-highlight);">¡HASTA PRONTO, AMIGO!</h2>
+      <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 420px;">
+        Que la chicha y el buen comer te acompañen. La mesa se liberará en breves segundos.
+      </p>
+      <div style="font-family: 'Oswald'; font-size: 0.82rem; color: var(--amber-sereno); margin-top: 10px;">
+        Reiniciando sesión para nuevos comensales...
+      </div>
+    </div>
+
+  </article>
+
+  <script>
+    const scoreDescriptions = {
+      1: '1/5 • MEJORABLE',
+      2: '2/5 • REGULAR',
+      3: '3/5 • BUENO',
+      4: '4/5 • MUY BUENO',
+      5: '5/5 • EXCELENTE'
+    };
+
+    function setStars(target, count) {
+      const container = document.getElementById('stars' + target);
+      const buttons = container.querySelectorAll('.star-btn');
+      buttons.forEach((btn, idx) => {
+        btn.classList.toggle('active', idx < count);
+      });
+      document.getElementById('lblScore' + target).innerText = scoreDescriptions[count];
+    }
+
+    function submitSurveyAndExit() {
+      // Ocultar formulario y mostrar despedida
+      const card = document.getElementById('surveyCard');
+      const children = Array.from(card.children);
+      children.forEach(el => {
+        if (el.id !== 'farewellScreen') el.style.display = 'none';
+      });
+      document.getElementById('farewellScreen').style.display = 'flex';
+
+      // Redirigir a Bienvenida (UI-01) en 2.8 segundos
+      setTimeout(() => {
+        window.location.href = '01_menu_orbital_pos.html';
+      }, 2800);
+    }
+  </script>
+</body>
+</html>

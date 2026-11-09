@@ -3936,7 +3936,41 @@
       transform: scale(1.03);
     }
 
-  </style>
+  
+    /* SERVICIO: BOTON LLAMAR MESERO EN BARRA DE MESA */
+    .badge-waiter-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(229, 159, 56, 0.12);
+      border: 1px solid rgba(229, 159, 56, 0.45);
+      border-radius: 3px;
+      color: #E59F38;
+      font-family: var(--font-display, 'Bebas Neue', sans-serif);
+      font-size: 0.92rem;
+      letter-spacing: 1px;
+      padding: 4px 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .badge-waiter-trigger:hover {
+      background: #E59F38;
+      color: #121614;
+      border-color: #E59F38;
+      box-shadow: 0 0 10px rgba(229, 159, 56, 0.4);
+    }
+    .badge-waiter-trigger.is-called {
+      background: #2D6A4F;
+      color: #FFFFFF;
+      border-color: #52B788;
+      animation: pulse-green 1.5s infinite;
+    }
+    @keyframes pulse-green {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(82, 183, 136, 0.5); }
+      50% { box-shadow: 0 0 0 6px rgba(82, 183, 136, 0); }
+    }
+
+</style>
 </head>
 <body>
 
@@ -4148,6 +4182,11 @@
 
     <!-- Ficha artesanal de Mesa & Comanda (Captura 170723.png) -->
     <div class="floating-table-badge" role="region" aria-label="Información de mesa y comanda">
+      <button class="badge-waiter-trigger" id="headerWaiterBtn" onclick="callWaiterAction(event)" type="button" title="Llamar mesero a Mesa 04">
+        <span class="bell-glyph" aria-hidden="true">&#128276;</span>
+        <span class="waiter-txt">LLAMAR MESERO</span>
+      </button>
+      <div class="badge-craft-sep" aria-hidden="true"></div>
       <div class="table-badge-brand" onclick="returnToWelcome()" style="cursor: pointer;" title="Volver al inicio / Mesa 04">
         <span class="badge-moon-glyph" aria-hidden="true">&#9790;</span>
         <span class="badge-table-num">MESA 04</span>
@@ -4197,6 +4236,11 @@
       <!-- Ficha artesanal de Mesa & Comanda con Popover desplegable -->
       <div class="header-comanda-anchor">
         <div class="floating-table-badge" style="position: static; margin: 0; box-shadow: none;" role="region" aria-label="Información de mesa y comanda">
+          <button class="badge-waiter-trigger" id="expandedHeaderWaiterBtn" onclick="callWaiterAction(event)" type="button" title="Llamar mesero a Mesa 04">
+            <span class="bell-glyph" aria-hidden="true">&#128276;</span>
+            <span class="waiter-txt">LLAMAR MESERO</span>
+          </button>
+          <div class="badge-craft-sep" aria-hidden="true"></div>
           <div class="table-badge-brand" onclick="returnToWelcome()" style="cursor: pointer;" title="Volver al inicio / Mesa 04">
             <span class="badge-moon-glyph" aria-hidden="true">&#9790;</span>
             <span class="badge-table-num">MESA 04</span>
@@ -5833,6 +5877,47 @@
     window.openDrawerConfirmModal = openDrawerConfirmModal;
     window.closeDrawerConfirmModal = closeDrawerConfirmModal;
     window.executeDrawerOrderConfirmation = executeDrawerOrderConfirmation;
+
+    function callWaiterAction(e) {
+      if (e) e.stopPropagation();
+      const btn = document.getElementById('headerWaiterBtn');
+      const btnExp = document.getElementById('expandedHeaderWaiterBtn');
+      const markCalled = (el) => {
+        if (!el) return;
+        el.classList.add('is-called');
+        el.innerHTML = '<span class="bell-glyph" aria-hidden="true">&#10003;</span> <span class="waiter-txt">SOLICITADO...</span>';
+        setTimeout(() => {
+          el.classList.remove('is-called');
+          el.innerHTML = '<span class="bell-glyph" aria-hidden="true">&#128276;</span> <span class="waiter-txt">LLAMAR MESERO</span>';
+        }, 5000);
+      };
+      markCalled(btn);
+      markCalled(btnExp);
+
+      let toast = document.getElementById('quickFeedbackToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'quickFeedbackToast';
+        toast.className = 'artisan-quick-toast';
+        document.body.appendChild(toast);
+      }
+      toast.style.setProperty('--toast-accent', '#E59F38');
+      toast.innerHTML = `
+        <span class="artisan-toast-stamp" style="border-color:#E59F38; color:#E59F38;">&#128276; ASISTENCIA</span>
+        <div class="artisan-toast-info">
+          <span class="artisan-toast-name">MATEO V. NOTIFICADO</span>
+          <span class="artisan-toast-desc">viene en camino a Mesa 04 (~1 min)</span>
+        </div>
+      `;
+      toast.style.display = 'inline-flex';
+      requestAnimationFrame(() => toast.classList.add('is-visible'));
+      if (window._quickToastTimeout) clearTimeout(window._quickToastTimeout);
+      window._quickToastTimeout = setTimeout(() => {
+        if (typeof hideQuickFeedbackToast === 'function') hideQuickFeedbackToast();
+      }, 4500);
+    }
+    window.callWaiterAction = callWaiterAction;
+
   </script>
 
   <!-- BACKDROP Y BARRA LATERAL DERECHA DE COMANDA (OFF-CANVAS SLIDE DRAWER) -->
@@ -5958,8 +6043,11 @@
         <div style="background: #121614; border: 1.5px dashed #E59F38; border-radius: 6px; padding: 8px 18px; font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 2px; color: #F8AD00;">
           ORDEN #284 • MESA 04
         </div>
-        <button type="button" onclick="closeComandaDrawer(); closeDrawerConfirmModal();" style="width: 100%; background: #E59F38; color: #121614; border: 1px solid #D49020; font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 1.2px; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; margin-top: 6px;">
-          CONTINUAR EN EL MENÚ &rarr;
+        <a href="UI05_Timeline_Pedido.html" style="display: block; width: 100%; text-decoration: none; text-align: center; background: #E59F38; color: #121614; border: 1px solid #D49020; font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 1.2px; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 14px rgba(229,159,56,0.35);">
+          VER ESTADO EN VIVO (TIMELINE KDS) &rarr;
+        </a>
+        <button type="button" onclick="closeComandaDrawer(); closeDrawerConfirmModal();" style="width: 100%; background: transparent; color: #D1C7BA; border: 1px solid rgba(209,199,186,0.25); font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; letter-spacing: 1px; padding: 8px; border-radius: 6px; cursor: pointer; margin-top: 4px;">
+          CONTINUAR EN EL MENÚ
         </button>
       </div>
 

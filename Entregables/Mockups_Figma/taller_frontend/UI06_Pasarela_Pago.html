@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-06: Pasarela de Pago en Mesa — PuraSed / Sereno Moreno</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0D110F;
+      --bg-surface: #141A17;
+      --bg-card: #1A221E;
+      --bg-card-inner: #222C27;
+      --border-subtle: rgba(245, 234, 219, 0.12);
+      --border-amber: rgba(229, 159, 56, 0.4);
+      --amber-sereno: #E59F38;
+      --gold-highlight: #F8AD00;
+      --terracotta: #C0392B;
+      --green-leaf: #2D6A4F;
+      --paper-ivory: #FAF7EC;
+      --text-cream: #FFF8ED;
+      --text-muted: #D1C7BA;
+      --text-dim: #8E8474;
+      --font-display: 'Bebas Neue', 'Oswald', sans-serif;
+      --font-body: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-cream);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(229, 159, 56, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(192, 57, 43, 0.08) 0%, transparent 40%);
+    }
+
+    .bg-linocut {
+      position: fixed;
+      left: -30px;
+      bottom: -20px;
+      height: 65vh;
+      opacity: 0.12;
+      pointer-events: none;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+      z-index: 0;
+    }
+
+    /* Cabecera */
+    .top-header {
+      background: rgba(16, 21, 18, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-back-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #141A16;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-cream);
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-back-menu:hover {
+      background: #202723;
+      border-color: var(--amber-sereno);
+      color: var(--amber-sereno);
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      letter-spacing: 1.5px;
+      color: var(--text-cream);
+    }
+    .brand-title span { color: var(--amber-sereno); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .stamp-mesa {
+      border: 1.5px solid var(--terracotta);
+      color: var(--terracotta);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 4px 10px;
+      border-radius: 3px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(192, 57, 43, 0.08);
+    }
+
+    /* Layout principal */
+    .main-container {
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 80px 20px;
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 1fr 410px;
+      gap: 28px;
+    }
+    @media (max-width: 960px) {
+      .main-container { grid-template-columns: 1fr; }
+    }
+
+    /* Columna Izquierda: Métodos de Pago y Formularios */
+    .payment-forms-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .section-title-box h1 {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: 1.5px;
+      line-height: 1;
+      color: var(--text-cream);
+    }
+    .section-title-box p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Tabs de Método de Pago */
+    .payment-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .method-tab-btn {
+      background: var(--bg-surface);
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .method-tab-btn:hover {
+      border-color: var(--amber-sereno);
+      color: var(--text-cream);
+    }
+    .method-tab-btn.active {
+      background: rgba(229, 159, 56, 0.12);
+      border-color: var(--amber-sereno);
+      color: var(--amber-sereno);
+      box-shadow: 0 0 16px rgba(229, 159, 56, 0.2);
+    }
+    .method-tab-icon {
+      font-size: 1.5rem;
+    }
+    .method-tab-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.88rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* Panel del Método Seleccionado */
+    .method-details-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 22px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    /* Formulario Tarjeta */
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-label {
+      display: block;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.82rem;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .form-input {
+      width: 100%;
+      background: #0D110F;
+      border: 1.5px solid var(--border-subtle);
+      border-radius: 4px;
+      padding: 11px 14px;
+      color: var(--text-cream);
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    .form-input:focus {
+      border-color: var(--amber-sereno);
+    }
+    .card-row-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .card-security-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(45, 106, 79, 0.16);
+      border: 1px solid rgba(45, 106, 79, 0.4);
+      color: #74C69D;
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin-top: 14px;
+    }
+
+    /* Panel Transferencia */
+    .bank-info-box {
+      background: #0D110F;
+      border: 1px dashed var(--border-amber);
+      border-radius: 6px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .bank-info-line {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.86rem;
+      margin-bottom: 6px;
+    }
+    .bank-info-line span:first-child { color: var(--text-dim); }
+    .bank-info-line strong { color: var(--gold-highlight); font-family: 'Oswald', sans-serif; letter-spacing: 0.5px; }
+
+    .file-upload-dropzone {
+      border: 2px dashed rgba(245, 234, 219, 0.2);
+      border-radius: 6px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      background: rgba(0,0,0,0.2);
+      transition: all 0.2s ease;
+    }
+    .file-upload-dropzone:hover {
+      border-color: var(--amber-sereno);
+      background: rgba(229, 159, 56, 0.05);
+    }
+
+    /* Panel Efectivo */
+    .cash-calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 12px 0 16px 0;
+    }
+    .btn-cash-quick {
+      background: #0D110F;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-cream);
+      padding: 10px 0;
+      border-radius: 4px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+    .btn-cash-quick:hover, .btn-cash-quick.active {
+      background: var(--amber-sereno);
+      color: #101412;
+      border-color: var(--amber-sereno);
+    }
+
+    /* Selector de Propina Voluntaria */
+    .tip-section {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 18px 22px;
+    }
+    .tip-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      color: var(--text-cream);
+      margin-bottom: 4px;
+    }
+    .tip-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .tip-pills-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .tip-pill {
+      background: #0D110F;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 8px 0;
+      border-radius: 4px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s ease;
+    }
+    .tip-pill:hover, .tip-pill.active {
+      background: rgba(248, 173, 0, 0.15);
+      border-color: var(--gold-highlight);
+      color: var(--gold-highlight);
+    }
+
+    /* COLUMNA DERECHA: TICKET MARFIL DENTADO DE LIQUIDACIÓN */
+    .receipt-sidebar {
+      position: sticky;
+      top: 80px;
+      height: fit-content;
+    }
+
+    .paper-ticket-receipt {
+      background: var(--paper-ivory);
+      color: #241D17;
+      border-left: 1px solid #E2DCCF;
+      border-right: 1px solid #E2DCCF;
+      border-radius: 0;
+      padding: 18px 20px;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.55);
+      transform: rotate(1deg);
+      transition: transform 0.25s ease;
+      position: relative;
+      /* Corte dentado con máscara CSS auténtica */
+      --tooth-w: 10px;
+      --tooth-h: 5px;
+      -webkit-mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+      mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+    }
+    .paper-ticket-receipt:hover {
+      transform: rotate(0deg);
+    }
+
+    .receipt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #D5CEBE;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+    .receipt-brand {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+      color: #241D17;
+    }
+    .receipt-stamp-pill {
+      border: 1px solid var(--terracotta);
+      color: var(--terracotta);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .receipt-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+    }
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .receipt-sep {
+      border-top: 1px dashed #D5CEBE;
+      margin: 10px 0;
+    }
+
+    .receipt-totals {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.82rem;
+      color: #6A5E52;
+    }
+    .receipt-total-line {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .receipt-grand-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid #241D17;
+      padding-top: 10px;
+      margin-top: 8px;
+    }
+    .receipt-grand-total span:first-child {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #241D17;
+    }
+    .receipt-grand-total span:last-child {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: #241D17;
+      letter-spacing: 1px;
+    }
+
+    /* Botón de Pago Principal */
+    .btn-confirm-payment {
+      width: 100%;
+      background: var(--amber-sereno);
+      color: #101412;
+      border: none;
+      padding: 13px;
+      border-radius: 4px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 16px;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .btn-confirm-payment:hover {
+      background: var(--gold-highlight);
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Linocut de fondo -->
+  <img src="catalogo_imagenes/drawings/draw0.webp" class="bg-linocut" alt="Catador Sereno Moreno" />
+
+  <!-- Cabecera -->
+  <header class="top-header">
+    <div class="header-left">
+      <a href="UI05_Timeline_Pedido.html" class="btn-back-menu">
+        &larr; VOLVER AL SEGUIMIENTO
+      </a>
+      <div class="brand-title">
+        SERENO MORENO <span>• PAGO EN MESA</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <span class="stamp-mesa">MESA 04</span>
+    </div>
+  </header>
+
+  <main class="main-container">
+
+    <!-- COLUMNA IZQUIERDA: FORMULARIOS DE PAGO -->
+    <div class="payment-forms-section">
+
+      <div class="section-title-box">
+        <h1>LIQUIDACIÓN DE CUENTA</h1>
+        <p>Selecciona tu forma de pago preferida. Todos los cargos han sido consolidados al cierre de tu visita.</p>
+      </div>
+
+      <!-- Selector de 3 Métodos Oficiales -->
+      <div class="payment-methods-grid">
+        <div class="method-tab-btn active" id="tabCard" onclick="selectPaymentMethod('card')">
+          <span class="method-tab-icon">💳</span>
+          <span class="method-tab-name">Tarjeta</span>
+        </div>
+        <div class="method-tab-btn" id="tabTransfer" onclick="selectPaymentMethod('transfer')">
+          <span class="method-tab-icon">🏦</span>
+          <span class="method-tab-name">Transferencia</span>
+        </div>
+        <div class="method-tab-btn" id="tabCash" onclick="selectPaymentMethod('cash')">
+          <span class="method-tab-icon">💵</span>
+          <span class="method-tab-name">Efectivo</span>
+        </div>
+      </div>
+
+      <!-- PANEL 1: TARJETA DE CRÉDITO/DÉBITO -->
+      <div class="method-details-panel" id="panelCard">
+        <div class="form-group">
+          <label class="form-label">Nombre del Titular</label>
+          <input type="text" class="form-input" value="Angelo Conterón" placeholder="Como figura en la tarjeta" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Número de Tarjeta (Cifrado RNF-02)</label>
+          <input type="text" class="form-input" value="4532 •••• •••• 8819" placeholder="4532 0000 0000 0000" />
+        </div>
+        <div class="card-row-split">
+          <div class="form-group">
+            <label class="form-label">Vencimiento</label>
+            <input type="text" class="form-input" value="08/28" placeholder="MM/AA" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV / CVC</label>
+            <input type="password" class="form-input" value="842" maxlength="4" placeholder="•••" />
+          </div>
+        </div>
+
+        <div class="card-security-badge">
+          <span>🔒</span>
+          <div>
+            <strong>Transacción Cifrada TLS 1.3:</strong> Procesada mediante pasarela bancaria externa homologada. Sereno Moreno no retiene datos de tarjeta.
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 2: TRANSFERENCIA BANCARIA (Oculto inicialmente) -->
+      <div class="method-details-panel" id="panelTransfer" style="display: none;">
+        <div class="bank-info-box">
+          <div class="bank-info-line">
+            <span>Beneficiario:</span>
+            <strong>SERENO MORENO S.A.S.</strong>
+          </div>
+          <div class="bank-info-line">
+            <span>RUC:</span>
+            <strong>1793123456001</strong>
+          </div>
+          <div class="bank-info-line">
+            <span>Banco:</span>
+            <strong>BANCO PICHINCHA (Cta. Corriente)</strong>
+          </div>
+          <div class="bank-info-line">
+            <span>Número de Cuenta:</span>
+            <strong>2100897654</strong>
+          </div>
+          <div class="bank-info-line">
+            <span>Correo para soporte:</span>
+            <strong>pagos@serenomorenoec.com</strong>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Comprobante de Transferencia (Captura)</label>
+          <div class="file-upload-dropzone" onclick="document.getElementById('fileUploadInput').click()">
+            <div style="font-size: 1.8rem; margin-bottom: 6px;">📄</div>
+            <div style="font-weight: 600; color: var(--text-cream); font-size: 0.9rem;" id="fileNameDisplay">
+              Toca para adjuntar comprobante (PNG, JPG o PDF)
+            </div>
+            <div style="font-size: 0.78rem; color: var(--text-dim); margin-top: 4px;">Máximo 5MB • Verificación inmediata en caja</div>
+            <input type="file" id="fileUploadInput" style="display: none;" onchange="handleFileSelected(event)" />
+          </div>
+        </div>
+      </div>
+
+      <!-- PANEL 3: EFECTIVO (Oculto inicialmente) -->
+      <div class="method-details-panel" id="panelCash" style="display: none;">
+        <div class="form-group">
+          <label class="form-label">¿Con cuánto vas a pagar? (Para que el mesero traiga el cambio exacto)</label>
+          <div class="cash-calc-grid">
+            <button type="button" class="btn-cash-quick" onclick="setCashAmount(30)">$30.00</button>
+            <button type="button" class="btn-cash-quick active" onclick="setCashAmount(40)">$40.00</button>
+            <button type="button" class="btn-cash-quick" onclick="setCashAmount(50)">$50.00</button>
+            <button type="button" class="btn-cash-quick" onclick="setCashAmount(100)">$100.00</button>
+          </div>
+          <input type="number" class="form-input" id="cashInputVal" value="40.00" oninput="recalcChange()" placeholder="Otro monto..." />
+        </div>
+
+        <div style="background: rgba(229,159,56,0.1); border: 1px solid var(--border-amber); border-radius: 6px; padding: 14px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Cambio a devolver por mesero:</div>
+            <div style="font-family: 'Bebas Neue'; font-size: 1.8rem; color: var(--gold-highlight);" id="lblCashChange">$9.03</div>
+          </div>
+          <span style="font-size: 1.5rem;">🛎️</span>
+        </div>
+      </div>
+
+      <!-- Selector de Propina Voluntaria -->
+      <div class="tip-section">
+        <div class="tip-title">Propina Voluntaria para el Personal</div>
+        <div class="tip-sub">Reconocimiento voluntario para el equipo de cocina, barra y servicio de mesa.</div>
+        <div class="tip-pills-row">
+          <button type="button" class="tip-pill" onclick="selectTip(0)">Sin propina</button>
+          <button type="button" class="tip-pill active" onclick="selectTip(10)">10% ($2.49)</button>
+          <button type="button" class="tip-pill" onclick="selectTip(15)">15% ($3.74)</button>
+          <button type="button" class="tip-pill" onclick="selectTip(20)">20% ($4.99)</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- COLUMNA DERECHA: TICKET RECIBO DENTADO -->
+    <aside class="receipt-sidebar">
+      <div class="paper-ticket-receipt">
+        <div class="receipt-header">
+          <div>
+            <div class="receipt-brand">SERENO MORENO</div>
+            <span style="font-size: 0.72rem; color: #7A6F62;">Liquidación Orden #284</span>
+          </div>
+          <span class="receipt-stamp-pill">MESA 04</span>
+        </div>
+
+        <div class="receipt-rows">
+          <div class="receipt-row">
+            <span>1x Locrito de Papa</span>
+            <span>$5.50</span>
+          </div>
+          <div class="receipt-row">
+            <span>1x Alitas Caseras</span>
+            <span>$8.50</span>
+          </div>
+          <div class="receipt-row">
+            <span>2x Mucha Chicha Maíz (Roja)</span>
+            <span>$8.00</span>
+          </div>
+          <div class="receipt-row" style="color: #C0392B;">
+            <span>2x Cover Show: Máquina Camaleón</span>
+            <span>$6.00</span>
+          </div>
+        </div>
+
+        <div class="receipt-sep"></div>
+
+        <div class="receipt-totals">
+          <div class="receipt-total-line">
+            <span>Consumo Alimentos & Bebidas</span>
+            <span>$22.00</span>
+          </div>
+          <div class="receipt-total-line" style="color: #C0392B;">
+            <span>Descuento Happy Hour (10%)</span>
+            <span>-$2.20</span>
+          </div>
+          <div class="receipt-total-line">
+            <span>Subtotal Neto</span>
+            <span>$19.80</span>
+          </div>
+          <div class="receipt-total-line">
+            <span>Servicio de Mesa (10%)</span>
+            <span>$2.20</span>
+          </div>
+          <div class="receipt-total-line">
+            <span>I.V.A. Ecuador (15%)</span>
+            <span>$2.97</span>
+          </div>
+          <div class="receipt-total-line" style="color: #C0392B; font-weight: 700;">
+            <span>Cover Cultural Espectáculo</span>
+            <span>+$6.00</span>
+          </div>
+          <div class="receipt-total-line" id="lineTipDisplay" style="color: var(--green-leaf); font-weight: 700;">
+            <span>Propina Voluntaria (10%)</span>
+            <span id="lblTipAmount">+$2.49</span>
+          </div>
+        </div>
+
+        <div class="receipt-grand-total">
+          <span>TOTAL FINAL</span>
+          <span id="lblTotalToPay">$33.46</span>
+        </div>
+
+        <!-- Botón de Confirmación que lleva a Factura Digital (UI-07) -->
+        <a href="UI07_Factura_Digital.html" class="btn-confirm-payment">
+          <span>CONFIRMAR PAGO ($33.46) &rarr;</span>
+        </a>
+      </div>
+    </aside>
+
+  </main>
+
+  <script>
+    let currentTipRate = 0.10;
+    const baseWithoutTip = 30.97; // $24.97 + $6 cover
+
+    function selectPaymentMethod(method) {
+      document.getElementById('tabCard').classList.toggle('active', method === 'card');
+      document.getElementById('tabTransfer').classList.toggle('active', method === 'transfer');
+      document.getElementById('tabCash').classList.toggle('active', method === 'cash');
+
+      document.getElementById('panelCard').style.display = method === 'card' ? 'block' : 'none';
+      document.getElementById('panelTransfer').style.display = method === 'transfer' ? 'block' : 'none';
+      document.getElementById('panelCash').style.display = method === 'cash' ? 'block' : 'none';
+    }
+
+    function selectTip(percent) {
+      const pills = document.querySelectorAll('.tip-pill');
+      pills.forEach((p, idx) => {
+        p.classList.remove('active');
+        if ((percent === 0 && idx === 0) || (percent === 10 && idx === 1) || (percent === 15 && idx === 2) || (percent === 20 && idx === 3)) {
+          p.classList.add('active');
+        }
+      });
+
+      const tipVal = baseWithoutTip * (percent / 100);
+      const totalVal = baseWithoutTip + tipVal;
+
+      document.getElementById('lblTipAmount').innerText = percent === 0 ? '$0.00' : '+$' + tipVal.toFixed(2);
+      document.getElementById('lblTotalToPay').innerText = '$' + totalVal.toFixed(2);
+      document.querySelector('.btn-confirm-payment span').innerText = `CONFIRMAR PAGO ($${totalVal.toFixed(2)}) →`;
+    }
+
+    function handleFileSelected(e) {
+      const file = e.target.files[0];
+      if (file) {
+        document.getElementById('fileNameDisplay').innerText = `✔ Comprobante adjuntado: ${file.name}`;
+      }
+    }
+
+    function setCashAmount(amt) {
+      document.getElementById('cashInputVal').value = amt.toFixed(2);
+      recalcChange();
+    }
+
+    function recalcChange() {
+      const given = parseFloat(document.getElementById('cashInputVal').value) || 0;
+      const total = 30.97;
+      const change = Math.max(0, given - total);
+      document.getElementById('lblCashChange').innerText = '$' + change.toFixed(2);
+    }
+  </script>
+</body>
+</html>

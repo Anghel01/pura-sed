@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI-05: Monitor de Estado del Pedido (Timeline en Vivo) — PuraSed / Sereno Moreno</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0D110F;
+      --bg-surface: #141A17;
+      --bg-card: #1A221E;
+      --bg-card-inner: #222C27;
+      --border-subtle: rgba(245, 234, 219, 0.12);
+      --border-amber: rgba(229, 159, 56, 0.4);
+      --amber-sereno: #E59F38;
+      --gold-highlight: #F8AD00;
+      --terracotta: #C0392B;
+      --green-leaf: #2D6A4F;
+      --paper-ivory: #FAF7EC;
+      --text-cream: #FFF8ED;
+      --text-muted: #D1C7BA;
+      --text-dim: #8E8474;
+      --font-display: 'Bebas Neue', 'Oswald', sans-serif;
+      --font-body: 'Plus Jakarta Sans', 'Inter', sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-cream);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 80% 20%, rgba(229, 159, 56, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 15% 85%, rgba(192, 57, 43, 0.08) 0%, transparent 40%);
+    }
+
+    /* Grabado linograbado de fondo Sereno Moreno */
+    .bg-linocut {
+      position: fixed;
+      right: -40px;
+      bottom: -30px;
+      height: 70vh;
+      opacity: 0.14;
+      pointer-events: none;
+      filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+      z-index: 0;
+    }
+
+    /* Cabecera de Mesa y Servicio */
+    .top-header {
+      background: rgba(16, 21, 18, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-back-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #141A16;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-cream);
+      padding: 8px 14px;
+      border-radius: 4px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.8px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-back-menu:hover {
+      background: #202723;
+      border-color: var(--amber-sereno);
+      color: var(--amber-sereno);
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      letter-spacing: 1.5px;
+      color: var(--text-cream);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .brand-title span { color: var(--amber-sereno); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .stamp-mesa {
+      border: 1.5px solid var(--terracotta);
+      color: var(--terracotta);
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      padding: 4px 10px;
+      border-radius: 3px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background: rgba(192, 57, 43, 0.08);
+    }
+
+    /* Botón Campanita Llamar Mesero */
+    .btn-call-waiter {
+      background: #1F1710;
+      border: 1.5px solid var(--amber-sereno);
+      color: var(--amber-sereno);
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-call-waiter:hover {
+      background: var(--amber-sereno);
+      color: #101412;
+      transform: scale(1.03);
+    }
+    .btn-call-waiter.called {
+      background: #2D6A4F;
+      border-color: #52B788;
+      color: #FFFFFF;
+    }
+
+    /* Notificación de llamada a mesero */
+    .waiter-called-toast {
+      position: fixed;
+      top: 68px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #FAF7EC;
+      color: #1A201C;
+      border: 1px solid #D5CEBE;
+      border-left: 4px solid var(--amber-sereno);
+      border-radius: 4px;
+      padding: 9px 18px;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.55);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transition: all 0.28s ease;
+    }
+    .waiter-called-toast.active {
+      display: flex;
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Layout principal */
+    .main-container {
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 24px 20px 100px 20px;
+      position: relative;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: 1fr 390px;
+      gap: 24px;
+    }
+
+    @media (max-width: 960px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* SECCIÓN IZQUIERDA: TIMELINE Y ESTACIONES */
+    .timeline-section {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Tarjeta Hero de Estado Activo */
+    .hero-status-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    .hero-status-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--terracotta), var(--amber-sereno), var(--gold-highlight));
+    }
+
+    .order-meta-line {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .order-code {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      color: var(--amber-sereno);
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+
+    .status-highlight-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: rgba(229, 159, 56, 0.08);
+      border: 1px solid var(--border-amber);
+      border-radius: 6px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .status-pulse-dot {
+      width: 14px;
+      height: 14px;
+      background: var(--amber-sereno);
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(229, 159, 56, 0.7);
+      animation: pulseAmber 1.8s infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulseAmber {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 159, 56, 0.7); }
+      70% { transform: scale(1.15); box-shadow: 0 0 0 12px rgba(229, 159, 56, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(229, 159, 56, 0); }
+    }
+
+    .status-text-block h2 {
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+      letter-spacing: 1px;
+      color: var(--text-cream);
+      line-height: 1;
+    }
+    .status-text-block p {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .time-estimate-badge {
+      text-align: right;
+    }
+    .time-val {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.2rem;
+      color: var(--gold-highlight);
+      line-height: 1;
+      letter-spacing: 1px;
+    }
+    .time-lbl {
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Línea de tiempo visual horizontal / vertical */
+    .timeline-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      position: relative;
+      margin-top: 10px;
+      padding-top: 10px;
+    }
+    .timeline-steps::before {
+      content: '';
+      position: absolute;
+      top: 25px;
+      left: 10%;
+      right: 10%;
+      height: 3px;
+      background: rgba(245, 234, 219, 0.12);
+      z-index: 1;
+    }
+    .timeline-progress-bar {
+      position: absolute;
+      top: 25px;
+      left: 10%;
+      width: 45%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--amber-sereno), var(--gold-highlight));
+      z-index: 2;
+      transition: width 0.5s ease;
+    }
+
+    .step-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 3;
+    }
+    .step-node {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 2px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+      transition: all 0.25s ease;
+    }
+    .step-item.completed .step-node {
+      background: var(--amber-sereno);
+      border-color: var(--amber-sereno);
+      color: #101412;
+    }
+    .step-item.active .step-node {
+      background: #101412;
+      border-color: var(--gold-highlight);
+      color: var(--gold-highlight);
+      box-shadow: 0 0 14px rgba(248, 173, 0, 0.4);
+    }
+
+    .step-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-cream);
+    }
+    .step-item:not(.active):not(.completed) .step-title {
+      color: var(--text-dim);
+    }
+    .step-time {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    /* Desglose por Estaciones de Trabajo KDS */
+    .stations-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 680px) {
+      .stations-grid { grid-template-columns: 1fr; }
+    }
+
+    .station-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .station-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed var(--border-subtle);
+      margin-bottom: 12px;
+    }
+    .station-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .station-badge {
+      font-size: 0.72rem;
+      padding: 2px 7px;
+      border-radius: 3px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .station-badge.cocina {
+      background: rgba(192, 57, 43, 0.16);
+      color: #FF8F80;
+      border: 1px solid rgba(192, 57, 43, 0.4);
+    }
+    .station-badge.barra {
+      background: rgba(56, 132, 140, 0.18);
+      color: #72D5DE;
+      border: 1px solid rgba(56, 132, 140, 0.4);
+    }
+
+    .station-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .kds-item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 9px 12px;
+      border-radius: 5px;
+    }
+    .kds-item-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 4px;
+      object-fit: contain;
+      background: #101412;
+      flex-shrink: 0;
+    }
+    .kds-item-details {
+      flex: 1;
+      min-width: 0;
+    }
+    .kds-item-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.88rem;
+      color: var(--text-cream);
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .kds-item-note {
+      font-size: 0.75rem;
+      color: var(--amber-sereno);
+      margin-top: 2px;
+    }
+    .kds-item-status-pill {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 12px;
+      background: rgba(229, 159, 56, 0.15);
+      color: var(--amber-sereno);
+      border: 1px solid var(--border-amber);
+      white-space: nowrap;
+    }
+
+    /* BANNER INTELIGENTE DE EVENTO CULTURAL (Cover de $3.00) */
+    .cultural-event-banner {
+      background: linear-gradient(135deg, #1C120A 0%, #2A170A 100%);
+      border: 1.5px solid var(--amber-sereno);
+      border-radius: 8px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .cultural-event-banner::after {
+      content: 'EN VIVO 18:00';
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--gold-highlight);
+      letter-spacing: 1px;
+      background: rgba(248, 173, 0, 0.14);
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+    .event-info-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .event-poster-mini {
+      width: 52px;
+      height: 68px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid var(--border-amber);
+      flex-shrink: 0;
+    }
+    .event-details h3 {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 0.8px;
+      color: var(--gold-highlight);
+      line-height: 1.1;
+    }
+    .event-details p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+      max-width: 420px;
+    }
+    .event-cover-tag {
+      display: inline-block;
+      margin-top: 5px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.8rem;
+      color: #FAF7EC;
+      background: rgba(255,255,255,0.08);
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+
+    .event-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      min-width: 190px;
+    }
+    .btn-add-cover {
+      background: var(--amber-sereno);
+      color: #101412;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .btn-add-cover:hover {
+      background: var(--gold-highlight);
+      transform: scale(1.02);
+    }
+    .btn-cover-dismiss {
+      background: transparent;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-dim);
+      font-size: 0.74rem;
+      padding: 5px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-cover-dismiss:hover {
+      color: var(--text-cream);
+    }
+
+    /* SECCIÓN DERECHA: TICKET RECIBO VIVO DE CUENTA (PAPEL MARFIL DENTADO) */
+    .receipt-sidebar {
+      position: sticky;
+      top: 80px;
+      height: fit-content;
+    }
+
+    .paper-ticket-receipt {
+      background: var(--paper-ivory);
+      color: #241D17;
+      border-left: 1px solid #E2DCCF;
+      border-right: 1px solid #E2DCCF;
+      border-radius: 0;
+      padding: 16px 18px;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+      transform: rotate(1.2deg);
+      transition: transform 0.25s ease;
+      position: relative;
+      /* Corte dentado superior e inferior con CSS Mask (095426 y 095417) */
+      --tooth-w: 10px;
+      --tooth-h: 5px;
+      -webkit-mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+      mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+    }
+    .paper-ticket-receipt:hover {
+      transform: rotate(0deg);
+    }
+
+    .receipt-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #D5CEBE;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+    .receipt-brand {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+      color: #241D17;
+    }
+    .receipt-stamp-pill {
+      border: 1px solid var(--terracotta);
+      color: var(--terracotta);
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .receipt-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 0.85rem;
+      margin-bottom: 14px;
+    }
+    .receipt-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .receipt-row-name {
+      font-weight: 600;
+      color: #241D17;
+    }
+    .receipt-row-price {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      color: #241D17;
+    }
+
+    .receipt-sep {
+      border-top: 1px dashed #D5CEBE;
+      margin: 12px 0;
+    }
+
+    .receipt-totals {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.82rem;
+      color: #6A5E52;
+    }
+    .receipt-total-line {
+      display: flex;
+      justify-content: space-between;
+    }
+    .receipt-grand-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 2px solid #241D17;
+      padding-top: 8px;
+      margin-top: 6px;
+    }
+    .receipt-grand-total span:first-child {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #241D17;
+    }
+    .receipt-grand-total span:last-child {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.85rem;
+      color: #241D17;
+      letter-spacing: 1px;
+    }
+
+    /* Botón de cierre: Pedir cuenta y pagar */
+    .btn-request-bill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: #141A16;
+      color: var(--paper-ivory);
+      border: none;
+      padding: 12px;
+      border-radius: 4px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-request-bill:hover {
+      background: #000;
+      color: var(--gold-highlight);
+    }
+
+    /* Barra inferior de navegación rápida */
+    .bottom-dock {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(16, 21, 18, 0.96);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--border-subtle);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 100;
+    }
+    .dock-status-summary {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .dock-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Linocut andino de fondo -->
+  <img src="catalogo_imagenes/drawings/diablo-huma-emblem.png" class="bg-linocut" alt="Diablo Huma Sereno Moreno" />
+
+  <!-- Cabecera Superior -->
+  <header class="top-header">
+    <div class="header-left">
+      <a href="01_menu_orbital_pos.html?view=expanded&col=0" class="btn-back-menu">
+        &larr; VOLVER A LA CARTA
+      </a>
+      <div class="brand-title">
+        SERENO MORENO <span>• SEGUIMIENTO EN VIVO</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <span class="stamp-mesa">MESA 04</span>
+      <!-- Campanita Llamar Mesero -->
+      <button type="button" class="btn-call-waiter" id="btnCallWaiter" onclick="callWaiterPrompt()">
+        <span>🔔</span>
+        <span id="callWaiterText">LLAMAR MESERO</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Toast flotante al presionar campanita -->
+  <div class="waiter-called-toast" id="waiterToast">
+    <span style="color: #2D6A4F; font-size: 1.1rem;">🔔</span>
+    <div>
+      <strong>Mesero Notificado:</strong> Mateo V. viene en camino a tu mesa.
+    </div>
+  </div>
+
+  <!-- Contenido Principal -->
+  <main class="main-container">
+
+    <!-- COLUMNA IZQUIERDA: ESTADO Y TIMELINE KDS -->
+    <div class="timeline-section">
+
+      <!-- Hero Card de Estado de Preparación -->
+      <section class="hero-status-card">
+        <div class="order-meta-line">
+          <div>
+            Orden Activa: <span class="order-code">#284</span>
+          </div>
+          <div>
+            Sesión iniciada: <strong>17:15</strong> • Comensales: <strong>2 personas</strong>
+          </div>
+        </div>
+
+        <div class="status-highlight-box">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div class="status-pulse-dot"></div>
+            <div class="status-text-block">
+              <h2>EN PREPARACIÓN ACTIVA</h2>
+              <p>Tu comida está al fuego en la paila y las bebidas se sirven frías en la barra.</p>
+            </div>
+          </div>
+
+          <div class="time-estimate-badge">
+            <div class="time-val" id="countdownVal">08:45</div>
+            <div class="time-lbl">Tiempo Estimado</div>
+          </div>
+        </div>
+
+        <!-- Barra de Progreso y Nodos Timeline -->
+        <div class="timeline-steps">
+          <div class="timeline-progress-bar"></div>
+
+          <!-- Paso 1 -->
+          <div class="step-item completed">
+            <div class="step-node">✓</div>
+            <span class="step-title">Comanda Enviada</span>
+            <span class="step-time">17:15 • KDS Cocina/Barra</span>
+          </div>
+
+          <!-- Paso 2 -->
+          <div class="step-item active">
+            <div class="step-node">2</div>
+            <span class="step-title">Al Fuego & Barra</span>
+            <span class="step-time">17:18 • Elaboración</span>
+          </div>
+
+          <!-- Paso 3 -->
+          <div class="step-item">
+            <div class="step-node">3</div>
+            <span class="step-title">Listo en Despacho</span>
+            <span class="step-time">~17:26 • Por retirar</span>
+          </div>
+
+          <!-- Paso 4 -->
+          <div class="step-item">
+            <div class="step-node">4</div>
+            <span class="step-title">Servido en Mesa</span>
+            <span class="step-time">~17:28 • Disfrute</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- BANNER INTELIGENTE: AGENDA CULTURAL & COVER DE $3.00 -->
+      <section class="cultural-event-banner" id="culturalEventBanner">
+        <div class="event-info-left">
+          <img src="catalogo_imagenes/drawings/ni_tan_joven_poster.png" class="event-poster-mini" alt="Máquina Camaleón" />
+          <div class="event-details">
+            <h3>MÁQUINA CAMALEÓN — POP PSICODÉLICO</h3>
+            <p>Concierto acústico en vivo en el escenario central a partir de las <strong>18:00</strong>. Puedes quedarte a disfrutar el show sumando el cover a tu cuenta.</p>
+            <span class="event-cover-tag">COVER CULTURAL: $3.00 / PERSONA</span>
+          </div>
+        </div>
+
+        <div class="event-actions" id="eventActionsBox">
+          <button type="button" class="btn-add-cover" id="btnAddCover" onclick="addCoverToTab()">
+            QUEDARME AL EVENTO (+ $3.00)
+          </button>
+          <button type="button" class="btn-cover-dismiss" onclick="dismissEventBanner()">
+            Solo cena / Salir antes de 18:00
+          </button>
+        </div>
+      </section>
+
+      <!-- Desglose por Estaciones de Trabajo KDS -->
+      <div class="stations-grid">
+
+        <!-- Estación 1: Cocina de Paila -->
+        <div class="station-card">
+          <div class="station-header">
+            <div class="station-name">
+              <span>🔥</span> Cocina de Paila
+            </div>
+            <span class="station-badge cocina">2 Platos</span>
+          </div>
+
+          <div class="station-items-list">
+            <div class="kds-item-row">
+              <img src="catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png" class="kds-item-thumb" alt="Locrito de Papa" />
+              <div class="kds-item-details">
+                <div class="kds-item-name">1x Locrito de Papa</div>
+                <div class="kds-item-note">Aguacate tierno y queso de hoja</div>
+              </div>
+              <span class="kds-item-status-pill">En Paila</span>
+            </div>
+
+            <div class="kds-item-row">
+              <img src="catalogo_imagenes/pida_no_mas/alitas_caseras_8.5_float.png" class="kds-item-thumb" alt="Alitas a la Leña" />
+              <div class="kds-item-details">
+                <div class="kds-item-name">1x Alitas a la Leña Caseras</div>
+                <div class="kds-item-note">Glaseado en reducción de chicha</div>
+              </div>
+              <span class="kds-item-status-pill">En Brasas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estación 2: Barra de Fermentos -->
+        <div class="station-card">
+          <div class="station-header">
+            <div class="station-name">
+              <span>❄️</span> Barra de Fermentos
+            </div>
+            <span class="station-badge barra">2 Bebidas</span>
+          </div>
+
+          <div class="station-items-list">
+            <div class="kds-item-row">
+              <img src="catalogo_imagenes/fermentos/botella_roja_float.png" class="kds-item-thumb" alt="Mucha Chicha Roja" />
+              <div class="kds-item-details">
+                <div class="kds-item-name">2x Mucha Chicha Maíz (Roja)</div>
+                <div class="kds-item-note">330ml • En copa escarchada bien fría</div>
+              </div>
+              <span class="kds-item-status-pill" style="color: #72D5DE; border-color: rgba(56,132,140,0.4); background: rgba(56,132,140,0.15);">En Vaso</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- COLUMNA DERECHA: PRECUENTA EN VIVO DE MESA (TICKET DENTADO MARFIL) -->
+    <aside class="receipt-sidebar">
+      <div class="paper-ticket-receipt">
+        <div class="receipt-header">
+          <div>
+            <div class="receipt-brand">SERENO MORENO</div>
+            <span style="font-size: 0.72rem; color: #7A6F62;">Ticket #284 • Centro Histórico</span>
+          </div>
+          <span class="receipt-stamp-pill">MESA 04</span>
+        </div>
+
+        <div class="receipt-rows" id="receiptRowsContainer">
+          <div class="receipt-row">
+            <span class="receipt-row-name">1x Locrito de Papa</span>
+            <span class="receipt-row-price">$5.50</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-row-name">1x Alitas a la Leña Caseras</span>
+            <span class="receipt-row-price">$8.50</span>
+          </div>
+          <div class="receipt-row">
+            <span class="receipt-row-name">2x Mucha Chicha Maíz (Roja)</span>
+            <span class="receipt-row-price">$8.00</span>
+          </div>
+          <div class="receipt-row" id="receiptRowCover" style="display: none; color: #C0392B;">
+            <span class="receipt-row-name">2x Cover Show: Máquina Camaleón</span>
+            <span class="receipt-row-price">$6.00</span>
+          </div>
+        </div>
+
+        <div class="receipt-sep"></div>
+
+        <div class="receipt-totals">
+          <div class="receipt-total-line">
+            <span>Consumo Alimentos & Bebidas</span>
+            <span id="lblSubtotalAlimentos">$22.00</span>
+          </div>
+          <div class="receipt-total-line" style="color: #C0392B;">
+            <span>Descuento Happy Hour (10%)</span>
+            <span>-$2.20</span>
+          </div>
+          <div class="receipt-total-line">
+            <span>Subtotal Neto</span>
+            <span id="lblSubtotalNeto">$19.80</span>
+          </div>
+          <div class="receipt-total-line">
+            <span>Servicio de Mesa (10%)</span>
+            <span id="lblServicio">$2.20</span>
+          </div>
+          <div class="receipt-total-line">
+            <span>I.V.A. Ecuador (15%)</span>
+            <span id="lblIva">$2.97</span>
+          </div>
+          <div class="receipt-total-line" id="lineEventCover" style="display: none; color: #C0392B; font-weight: 700;">
+            <span>Cover Espectáculo (Exento IVA)</span>
+            <span>+$6.00</span>
+          </div>
+        </div>
+
+        <div class="receipt-grand-total">
+          <span>TOTAL A PAGAR</span>
+          <span id="lblGrandTotal">$24.97</span>
+        </div>
+
+        <!-- Botón de Acción Principal: Pedir Cuenta y Pagar -->
+        <a href="UI06_Pasarela_Pago.html" class="btn-request-bill">
+          <span>PEDIR CUENTA Y PAGAR &rarr;</span>
+        </a>
+      </div>
+    </aside>
+
+  </main>
+
+  <!-- Barra Inferior de Información Rápida -->
+  <footer class="bottom-dock">
+    <div class="dock-status-summary">
+      <span style="color: var(--amber-sereno); font-weight: 700;">● MESA ACTIVA:</span>
+      <span>4 productos en marcha. Si te quedas después de las 18:00, el cover se integrará a esta misma cuenta.</span>
+    </div>
+    <div class="dock-actions">
+      <a href="01_menu_orbital_pos.html?view=expanded&col=0" style="color: var(--text-muted); text-decoration: underline; font-size: 0.82rem; margin-right: 12px;">+ Seguir pidiendo</a>
+      <a href="UI06_Pasarela_Pago.html" class="btn-back-menu" style="background: var(--amber-sereno); color: #101412; font-weight: 700;">
+        PAGAR CUENTA ($24.97) &rarr;
+      </a>
+    </div>
+  </footer>
+
+  <script>
+    // Lógica interactiva de Campanita Llamar Mesero
+    let waiterCalled = false;
+    function callWaiterPrompt() {
+      const btn = document.getElementById('btnCallWaiter');
+      const text = document.getElementById('callWaiterText');
+      const toast = document.getElementById('waiterToast');
+
+      if (!waiterCalled) {
+        waiterCalled = true;
+        btn.classList.add('called');
+        text.innerText = 'MESERO EN CAMINO';
+        toast.classList.add('active');
+        setTimeout(() => {
+          toast.classList.remove('active');
+        }, 4000);
+      } else {
+        alert('Tu mesero Mateo V. ya fue notificado y está aproximándose a la Mesa 04.');
+      }
+    }
+
+    // Lógica del Cover de Espectáculo Cultural ($3 por persona)
+    let coverAdded = false;
+    function addCoverToTab() {
+      if (coverAdded) return;
+      coverAdded = true;
+
+      // Actualizar vista del banner
+      const bannerActions = document.getElementById('eventActionsBox');
+      bannerActions.innerHTML = '<div style="background: rgba(74,222,128,0.16); border: 1px solid #4ADE80; color: #4ADE80; padding: 6px 12px; border-radius: 4px; font-family: \'Oswald\'; font-size: 0.85rem; text-align: center;">✔ COVER REGISTRADO (+$6.00)</div>';
+
+      // Actualizar ticket marfil
+      document.getElementById('receiptRowCover').style.display = 'flex';
+      document.getElementById('lineEventCover').style.display = 'flex';
+      
+      // Actualizar total: $24.97 + $6.00 (2 personas x $3) = $30.97
+      document.getElementById('lblGrandTotal').innerText = '$30.97';
+
+      // Feedback toast
+      const toast = document.getElementById('waiterToast');
+      toast.innerHTML = '<span style="color: #E59F38; font-size: 1.1rem;">🎶</span><div><strong>Pases de Concierto Asignados:</strong> 2x Cover Máquina Camaleón sumados al total.</div>';
+      toast.classList.add('active');
+      setTimeout(() => { toast.classList.remove('active'); }, 3500);
+    }
+
+    function dismissEventBanner() {
+      const banner = document.getElementById('culturalEventBanner');
+      banner.style.display = 'none';
+    }
+
+    // Cronómetro regresivo simulado en vivo (8 min 45 seg)
+    let secondsLeft = 525;
+    setInterval(() => {
+      if (secondsLeft > 0) {
+        secondsLeft--;
+        const m = Math.floor(secondsLeft / 60);
+        const s = secondsLeft % 60;
+        const formatted = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+        const el = document.getElementById('countdownVal');
+        if (el) el.innerText = formatted;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
