@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sereno Moreno — UI-07 Comprobante y Factura Electrónica SRI (Mesa 04)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-chalk: #121614;
+      --paper-cream: #FAF7EC;
+      --paper-inset: #F2EDE0;
+      --paper-border: #D5CDC0;
+      --ink-dark: #1E1712;
+      --ink-muted: #5A524C;
+      --c-chicha: #D47E2F;
+      --c-pida: #9E4429;
+      --c-lleve: #546652;
+      --c-merch: #344B5C;
+      --ticket-tooth-w: 10px;
+      --ticket-tooth-h: 5px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-sans: 'Space Grotesk', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      color: var(--paper-cream);
+      /* Mundo Azul Pizarra Andina idéntico al pilar 04 de 01_menu_orbital_pos.html */
+      background: radial-gradient(circle at 65% 50%, #405A6E 0%, #344B5C 55%, #273A48 100%); /* taste-skill-ignore */
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chalkboard-grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Grabados serigráficos de fondo */
+    .bg-woodcut-left {
+      position: fixed;
+      bottom: -30px;
+      left: -30px;
+      width: 340px;
+      height: auto;
+      opacity: 0.16;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: multiply;
+      filter: contrast(1.4);
+    }
+
+    .bg-woodcut-right {
+      position: fixed;
+      top: 70px;
+      right: -30px;
+      width: 300px;
+      height: auto;
+      opacity: 0.14;
+      pointer-events: none;
+      z-index: 1;
+      filter: invert(1) sepia(0.25) opacity(0.65);
+    }
+
+    /* CABECERA IDÉNTICA A 01_menu_orbital_pos.html */
+    .expanded-header {
+      position: relative;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 36px 8px;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .btn-back-orbital {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #141615;
+      color: #FAF7EC;
+      border: 2px solid rgba(250, 247, 236, 0.35);
+      padding: 7px 15px;
+      border-radius: 3px;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-back-orbital:hover {
+      background: #FAF7EC;
+      color: #141615;
+      border-color: #FAF7EC;
+    }
+
+    .expanded-nav-tabs {
+      display: flex;
+      gap: 6px;
+      background: rgba(15, 18, 16, 0.84);
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.14); /* taste-skill-ignore */
+    }
+
+    .exp-tab {
+      background: transparent;
+      border: none;
+      color: rgba(250, 247, 236, 0.68);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      padding: 5px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .exp-tab:hover { color: #FFF; }
+    .exp-tab.active {
+      background: #2A527A;
+      color: #FAF7EC;
+    }
+
+    .floating-table-badge {
+      background: #121614;
+      border: 2px solid #FAF7EC;
+      padding: 5px 13px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.38); /* taste-skill-ignore */
+    }
+
+    .waiter-call-btn {
+      background: rgba(248, 173, 0, 0.14);
+      border: 1.5px solid rgba(248, 173, 0, 0.55);
+      color: #F8AD00;
+      padding: 4px 10px;
+      border-radius: 2px;
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .waiter-call-btn.called {
+      background: #2D6A4F;
+      border-color: #52B788;
+      color: #FAF7EC;
+    }
+
+    /* CONTENEDOR PRINCIPAL CENTRADO CON MARGEN AMPLIO PARA DIENTES SUPERIORES E INFERIORES */
+    .workspace {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 36px 14px;
+      min-height: 0;
+    }
+
+    /* FACTURA ELECTRÓNICA SRI EN PAPEL MARFIL DENTADO (#FAF7EC) */
+    .sri-paper-sheet {
+      width: 100%;
+      max-width: 1120px;
+      max-height: 100%;
+      background-color: var(--paper-cream);
+      color: var(--ink-dark);
+      padding: calc(var(--ticket-tooth-h) + 16px) 32px calc(var(--ticket-tooth-h) + 14px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+            --tooth-w: 10px;
+      --tooth-h: 5px;
+      -webkit-mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+      mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+      filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.52)); /* taste-skill-ignore */
+    }
+
+    /* CABECERA FISCAL SRI */
+    .invoice-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px dashed var(--paper-border);
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      gap: 20px;
+    }
+
+    .issuer-col {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .issuer-logo-stamp {
+      border: 2px solid var(--ink-dark);
+      background: #121614;
+      padding: 6px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .issuer-logo-stamp img {
+      height: 28px;
+      width: auto;
+      background: #121614; padding: 5px 10px; border-radius: 2px;
+    }
+
+    .issuer-logo-stamp span {
+      font-family: var(--font-display);
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      color: #F8AD00;
+    }
+
+    .issuer-brand {
+      font-family: var(--font-display);
+      font-size: 1.95rem;
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      color: var(--ink-dark);
+    }
+
+    .issuer-meta {
+      font-size: 0.78rem;
+      color: var(--ink-muted);
+      line-height: 1.4;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .fiscal-box {
+      border: 2px solid var(--ink-dark);
+      padding: 8px 14px;
+      background: var(--paper-inset);
+      text-align: right;
+      min-width: 345px;
+      position: relative;
+    }
+
+    .sri-rubber-stamp {
+      display: inline-block;
+      border: 2px solid #2D6A4F;
+      color: #2D6A4F;
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      padding: 1px 8px;
+      transform: rotate(-1.5deg);
+      background: rgba(45, 106, 79, 0.06);
+      margin-bottom: 3px;
+    }
+
+    .fiscal-doc-title {
+      font-family: var(--font-display);
+      font-size: 1.28rem;
+      letter-spacing: 0.08em;
+      color: #BA3C2A;
+      line-height: 1.05;
+    }
+
+    .fiscal-number {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin: 2px 0;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink-dark);
+    }
+
+    .fiscal-auth {
+      font-size: 0.68rem;
+      color: var(--ink-muted);
+      font-variant-numeric: tabular-nums;
+      word-break: break-all;
+      line-height: 1.3;
+    }
+
+    /* RECEPTOR TRIBUTARIO — INTERRUPTORES DE SELLO IMPRESO (CERO RADIO BUTTONS GENÉRICOS) */
+    .recipient-bar {
+      background: var(--paper-inset);
+      border: 1.5px solid var(--paper-border);
+      padding: 10px 14px;
+      margin-bottom: 10px;
+    }
+
+    .recipient-mode-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px dashed var(--paper-border); /* taste-skill-ignore */
+    }
+
+    .recipient-label {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-dark);
+    }
+
+    .stamp-switch-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .stamp-switch-btn {
+      background: #FFFFFF;
+      border: 1.5px solid var(--ink-dark);
+      color: var(--ink-muted);
+      padding: 4px 12px;
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: all 0.15s ease;
+    }
+
+    .stamp-switch-box {
+      width: 11px;
+      height: 11px;
+      border: 1.5px solid var(--ink-dark);
+      display: inline-block;
+      background: transparent;
+    }
+
+    .stamp-switch-btn.active {
+      background: var(--ink-dark);
+      color: var(--paper-cream);
+      box-shadow: 2px 2px 0px #BA3C2A; /* taste-skill-ignore */
+    }
+
+    .stamp-switch-btn.active .stamp-switch-box {
+      background: #F8AD00;
+      border-color: #F8AD00;
+    }
+
+    .recipient-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr 1.35fr 1.1fr;
+      gap: 10px;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 0.66rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: 3px;
+    }
+
+    .field-group input {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1.5px solid #C5BDB0;
+      padding: 5px 9px;
+      font-family: var(--font-sans);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--ink-dark);
+      border-radius: 2px;
+    }
+    .field-group input:focus {
+      outline: none;
+      border-color: var(--ink-dark);
+    }
+
+    /* TABLA DE DETALLE FISCAL */
+    .invoice-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 10px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .invoice-table th {
+      text-align: left;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      border-bottom: 2px solid var(--ink-dark);
+      padding: 4px 8px;
+    }
+
+    .invoice-table td {
+      padding: 6px 8px;
+      font-size: 0.82rem;
+      border-bottom: 1px dashed var(--paper-border); /* taste-skill-ignore */
+      font-weight: 500;
+    }
+
+    .invoice-table th:last-child,
+    .invoice-table td:last-child,
+    .invoice-table th:nth-child(4),
+    .invoice-table td:nth-child(4) {
+      text-align: right;
+    }
+
+    .td-code {
+      font-family: var(--font-display);
+      letter-spacing: 0.06em;
+      color: #BA3C2A;
+      font-size: 0.86rem;
+    }
+
+    /* PIE DE TOTALES Y CLAVE DE ACCESO */
+    .invoice-footer-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 18px;
+      align-items: stretch;
+      margin-bottom: 10px;
+    }
+
+    .sri-info-box {
+      border: 1.5px dashed var(--paper-border);
+      padding: 9px 13px;
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      line-height: 1.42;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: rgba(242, 237, 224, 0.55);
+    }
+
+    .sri-info-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed var(--paper-border); /* taste-skill-ignore */
+      padding-bottom: 4px;
+      margin-bottom: 4px;
+    }
+
+    .sri-info-top strong {
+      color: var(--ink-dark);
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* Código de barras tipográfico vectorial en CSS */
+    .sri-barcode-strip {
+      margin-top: 5px;
+      padding-top: 5px;
+      border-top: 1px dashed var(--paper-border); /* taste-skill-ignore */
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .barcode-bars {
+      height: 18px;
+      flex: 1;
+      background: repeating-linear-gradient(
+        90deg,
+        #1E1712 0px,
+        #1E1712 2px,
+        transparent 2px,
+        transparent 4px,
+        #1E1712 4px,
+        #1E1712 5px,
+        transparent 5px,
+        transparent 8px,
+        #1E1712 8px,
+        #1E1712 11px,
+        transparent 11px,
+        transparent 13px
+      );
+      opacity: 0.82;
+    }
+
+    .barcode-num {
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink-dark);
+    }
+
+    .totals-table {
+      border: 2px solid var(--ink-dark);
+      background: var(--paper-inset);
+      padding: 8px 14px;
+      font-variant-numeric: tabular-nums;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .tot-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      padding: 2px 0;
+      color: var(--ink-muted);
+      font-weight: 600;
+    }
+
+    .tot-row.grand {
+      border-top: 2px solid var(--ink-dark);
+      margin-top: 5px;
+      padding-top: 6px;
+      font-family: var(--font-display);
+      font-size: 1.45rem;
+      color: var(--ink-dark);
+      letter-spacing: 0.04em;
+    }
+
+    /* ACCIONES DE COMPROBANTE (CERO EMOJIS) */
+    .action-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-top: 8px;
+      border-top: 2px solid var(--ink-dark);
+    }
+
+    .btn-action {
+      padding: 10px 18px;
+      border-radius: 3px;
+      font-family: var(--font-display);
+      font-size: 1.08rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.18s ease;
+    }
+
+    .btn-download {
+      background: #FFFFFF;
+      color: var(--ink-dark);
+      border: 2px solid var(--ink-dark);
+      box-shadow: 2px 2px 0px var(--ink-dark); /* taste-skill-ignore */
+    }
+    .btn-download:hover {
+      background: var(--ink-dark);
+      color: var(--paper-cream);
+    }
+
+    .btn-finish {
+      background: #121614;
+      color: #F8AD00;
+      border: 2px solid #121614;
+      box-shadow: 3px 3px 0px #BA3C2A; /* taste-skill-ignore */
+    }
+    .btn-finish:hover {
+      background: #BA3C2A;
+      border-color: #BA3C2A;
+      color: #FAF7EC;
+      box-shadow: 3px 3px 0px #121614; /* taste-skill-ignore */
+    }
+  </style>
+</head>
+<body>
+  <div class="chalkboard-grid-overlay"></div>
+
+  <!-- Grabados serigráficos de fondo -->
+  <img src="catalogo_imagenes/drawings/recurso-19.png" alt="" class="bg-woodcut-left" onerror="this.style.display='none'" />
+  <img src="catalogo_imagenes/drawings/draw1.webp" alt="" class="bg-woodcut-right" onerror="this.style.display='none'" />
+
+  <!-- CABECERA EXPANDIDA UNIFICADA -->
+  <header class="expanded-header">
+    <a href="UI06_Pasarela_Pago.html" class="btn-back-orbital">
+      ← VOLVER AL PAGO
+    </a>
+
+    <nav class="expanded-nav-tabs" aria-label="Flujo de Mesa">
+      <a href="01_menu_orbital_pos.html" class="exp-tab">01 CATÁLOGO</a>
+      <a href="UI05_Timeline_Pedido.html" class="exp-tab">02 MONITOR KDS</a>
+      <a href="UI06_Pasarela_Pago.html" class="exp-tab">03 PAGO</a>
+      <a href="UI07_Factura_Digital.html" class="exp-tab active">04 FACTURA SRI</a>
+      <a href="UI08_Encuesta_Satisfaccion.html" class="exp-tab">05 CIERRE</a>
+    </nav>
+
+    <div class="floating-table-badge">
+      <button type="button" class="waiter-call-btn" id="waiterBtn" onclick="callWaiter()">
+        LLAMAR MESERO
+      </button>
+      <span style="font-family: var(--font-display); font-size: 1.28rem; letter-spacing: 0.08em; color: #FAF7EC;">MESA 04</span>
+      <span style="background: #2D6A4F; color: #FAF7EC; padding: 3px 10px; border-radius: 2px; font-weight: 700; font-size: 0.74rem; letter-spacing: 0.06em;">AUTORIZADO SRI</span>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <!-- HOJA DE PAPEL MARFIL CON BORDES DENTADOS SUPERIOR E INFERIOR -->
+    <article class="sri-paper-sheet">
+      <div>
+        <div class="invoice-header">
+          <div class="issuer-col">
+            <div class="issuer-logo-stamp">
+              <img src="catalogo_imagenes/drawings/logosm.svg" alt="Sereno Moreno" onerror="this.style.display='none'" />
+              <span>QUITO • ECU</span>
+            </div>
+            <div>
+              <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: #BA3C2A; margin-bottom: 2px;">
+                COMPROBANTE TRIBUTARIO ELECTRÓNICO • ESQUEMA OFFLINE SRI
+              </div>
+              <h1 class="issuer-brand">SERENO MORENO — CHICHERÍA CONTEMPORÁNEA S.A.S.</h1>
+              <div class="issuer-meta">
+                <strong>RUC EMISOR:</strong> 1793204859001 &nbsp;|&nbsp; <strong>MATRIZ:</strong> Centro Histórico de Quito, Calle Ronda N4-120<br>
+                <strong>OBLIGADO A LLEVAR CONTABILIDAD:</strong> SÍ &nbsp;|&nbsp; <strong>RÉGIMEN:</strong> RIMPE EMPRENDEDOR
+              </div>
+            </div>
+          </div>
+
+          <div class="fiscal-box">
+            <div class="sri-rubber-stamp">AUTORIZADO SRI • EN LÍNEA</div>
+            <div class="fiscal-doc-title">FACTURA ELECTRÓNICA SRI</div>
+            <div class="fiscal-number">Nro. 001-002-000048291</div>
+            <div class="fiscal-auth">
+              <strong>CLAVE DE ACCESO / AUTORIZACIÓN:</strong><br>
+              0911202601179320485900120010020000482911234567819
+            </div>
+          </div>
+        </div>
+
+        <!-- DATOS DEL ADQUIRIENTE CON INTERRUPTORES DE SELLO (CERO RADIO GENÉRICO) -->
+        <div class="recipient-bar">
+          <div class="recipient-mode-row">
+            <span class="recipient-label">DATOS TRIBUTARIOS DEL COMENSAL (MESA 04)</span>
+            <div class="stamp-switch-group" role="radiogroup" aria-label="Modalidad de Facturación">
+              <button type="button" class="stamp-switch-btn active" id="modeDatosBtn" onclick="toggleConsumer(false)">
+                <span class="stamp-switch-box"></span>
+                01 · FACTURA CON DATOS TRIBUTARIOS
+              </button>
+              <button type="button" class="stamp-switch-btn" id="modeCFBtn" onclick="toggleConsumer(true)">
+                <span class="stamp-switch-box"></span>
+                02 · CONSUMIDOR FINAL
+              </button>
+            </div>
+          </div>
+
+          <div class="recipient-grid" id="recipientFields">
+            <div class="field-group">
+              <label for="inpRuc">RUC / Cédula / Pasaporte</label>
+              <input id="inpRuc" type="text" value="1724589631001" />
+            </div>
+            <div class="field-group">
+              <label for="inpName">Razón Social / Nombres y Apellidos</label>
+              <input id="inpName" type="text" value="ANGELO CONTERÓN" />
+            </div>
+            <div class="field-group">
+              <label for="inpEmail">Correo Electrónico (Envío XML + RIDE PDF)</label>
+              <input id="inpEmail" type="email" value="angelo.conteron@epn.edu.ec" />
+            </div>
+            <div class="field-group">
+              <label for="inpAddress">Teléfono / Dirección Fiscal</label>
+              <input id="inpAddress" type="text" value="0998451230 — Quito, Pichincha" />
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLA DE DETALLE DE FACTURA -->
+        <table class="invoice-table">
+          <thead>
+            <tr>
+              <th style="width: 65px;">CANT.</th>
+              <th style="width: 115px;">CÓDIGO</th>
+              <th>DESCRIPCIÓN FISCAL (PRECIO CONGELADO EN DETALLE_PEDIDO)</th>
+              <th style="width: 115px;">V. UNIT.</th>
+              <th style="width: 115px;">SUBTOTAL</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2.00</td>
+              <td class="td-code">PNM-001</td>
+              <td>Locrito de Papa Chola — Queso de Hoja y Aguacate</td>
+              <td>$4.78</td>
+              <td>$9.57</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td class="td-code">PNM-004</td>
+              <td>Alitas a la Leña — Glaseado de Chicha y Panela</td>
+              <td>$7.39</td>
+              <td>$7.39</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td class="td-code">CHI-002</td>
+              <td>Botella Chicha Roja Fermentada en Vasija (750 ml)</td>
+              <td>$5.22</td>
+              <td>$5.22</td>
+            </tr>
+            <tr>
+              <td>1.00</td>
+              <td class="td-code">CUL-180</td>
+              <td>Entrada Agenda Cultural 18:00 — Máquina Camaleón (1 Persona)</td>
+              <td>$3.47</td>
+              <td>$3.47</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- TOTALES Y METADATOS SRI -->
+        <div class="invoice-footer-grid">
+          <div class="sri-info-box">
+            <div>
+              <div class="sri-info-top">
+                <strong>INFORMACIÓN ADICIONAL TRIBUTARIA SRI</strong>
+                <span>FECHA EMISIÓN: 09/11/2026 — 17:56:12</span>
+              </div>
+              <div>
+                <strong>FORMA DE PAGO SRI:</strong> 20 — Otros con utilización del sistema financiero &nbsp;|&nbsp; <strong>CAJERO / TURNO:</strong> Terminal Mesa 04<br>
+                Comprobante electrónico generado y enviado en formato <strong>XML + PDF (RIDE)</strong> al correo registrado.
+              </div>
+            </div>
+            <div class="sri-barcode-strip">
+              <div class="barcode-bars" aria-hidden="true"></div>
+              <span class="barcode-num">SRI-2026-000048291-OK</span>
+            </div>
+          </div>
+
+          <div class="totals-table">
+            <div class="tot-row"><span>SUBTOTAL 15%</span><span>$25.65</span></div>
+            <div class="tot-row"><span>SUBTOTAL 0%</span><span>$0.00</span></div>
+            <div class="tot-row"><span>IVA 15%</span><span>$3.85</span></div>
+            <div class="tot-row"><span>PROPINA SERVICIO (10%)</span><span>$2.95</span></div>
+            <div class="tot-row grand"><span>VALOR TOTAL PAGADO</span><span>$32.45</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACCIONES DE DESCARGA Y CIERRE -->
+      <div class="action-bar">
+        <button type="button" class="btn-action btn-download" id="downloadBtn" onclick="downloadInvoice()">
+          DESCARGAR XML Y RIDE PDF OFICIAL
+        </button>
+
+        <a href="UI08_Encuesta_Satisfaccion.html" class="btn-action btn-finish">
+          FINALIZAR Y CALIFICAR EXPERIENCIA →
+        </a>
+      </div>
+    </article>
+  </main>
+
+  <script>
+    function toggleConsumer(isFinal) {
+      const ruc = document.getElementById('inpRuc');
+      const name = document.getElementById('inpName');
+      const email = document.getElementById('inpEmail');
+      const addr = document.getElementById('inpAddress');
+      const btnDatos = document.getElementById('modeDatosBtn');
+      const btnCF = document.getElementById('modeCFBtn');
+
+      if (isFinal) {
+        btnCF.classList.add('active');
+        btnDatos.classList.remove('active');
+        ruc.value = '9999999999999';
+        name.value = 'CONSUMIDOR FINAL';
+        email.value = 'facturacion@serenomoreno.ec';
+        addr.value = 'Quito — Venta en Mesa 04';
+      } else {
+        btnDatos.classList.add('active');
+        btnCF.classList.remove('active');
+        ruc.value = '1724589631001';
+        name.value = 'ANGELO CONTERÓN';
+        email.value = 'angelo.conteron@epn.edu.ec';
+        addr.value = '0998451230 — Quito, Pichincha';
+      }
+    }
+
+    function downloadInvoice() {
+      const btn = document.getElementById('downloadBtn');
+      btn.textContent = 'RIDE PDF + XML DESCARGADOS (001-002-000048291)';
+      btn.style.background = '#2D6A4F';
+      btn.style.color = '#FAF7EC';
+      btn.style.borderColor = '#2D6A4F';
+    }
+
+    function callWaiter() {
+      const btn = document.getElementById('waiterBtn');
+      btn.classList.add('called');
+      btn.textContent = 'MESERO EN CAMINO (MATEO V.)';
+      setTimeout(() => {
+        btn.classList.remove('called');
+        btn.textContent = 'LLAMAR MESERO';
+      }, 4500);
+    }
+  </script>
+</body>
+</html>

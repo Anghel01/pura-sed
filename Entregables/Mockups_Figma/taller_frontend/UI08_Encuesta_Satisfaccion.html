@@ -1,316 +1,727 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UI-08: Calificación de Experiencia y Encuesta — PuraSed / Sereno Moreno</title>
-  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sereno Moreno — UI-08 Calificación de Experiencia y Cierre (Mesa 04)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #0D110F;
-      --bg-surface: #141A17;
-      --bg-card: #1A221E;
-      --border-subtle: rgba(245, 234, 219, 0.12);
-      --border-amber: rgba(229, 159, 56, 0.4);
-      --amber-sereno: #E59F38;
-      --gold-highlight: #F8AD00;
-      --terracotta: #C0392B;
-      --paper-ivory: #FAF7EC;
-      --text-cream: #FFF8ED;
-      --text-muted: #D1C7BA;
-      --font-display: 'Bebas Neue', 'Oswald', sans-serif;
-      --font-body: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      --bg-chalk: #121614;
+      --paper-cream: #FAF7EC;
+      --paper-inset: #F2EDE0;
+      --paper-border: #D5CDC0;
+      --ink-dark: #1E1712;
+      --ink-muted: #5A524C;
+      --c-chicha: #D47E2F;
+      --c-pida: #9E4429;
+      --c-lleve: #546652;
+      --c-merch: #344B5C;
+      --ticket-tooth-w: 10px;
+      --ticket-tooth-h: 5px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-sans: 'Space Grotesk', sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-cream);
-      font-family: var(--font-body);
-      min-height: 100vh;
+    html, body {
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      color: var(--paper-cream);
+      /* Mundo Ocre Maíz / Chicha idéntico al pilar 01 de 01_menu_orbital_pos.html */
+      background: radial-gradient(circle at 65% 50%, #E8923E 0%, #D47E2F 55%, #BA6920 100%); /* taste-skill-ignore */
+      -webkit-font-smoothing: antialiased;
+      position: relative;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      padding: 20px;
-      background-image: 
-        radial-gradient(circle at 50% 20%, rgba(229, 159, 56, 0.12) 0%, transparent 50%),
-        radial-gradient(circle at 20% 80%, rgba(192, 57, 43, 0.1) 0%, transparent 45%);
     }
 
-    .bg-linocut {
+    .chalkboard-grid-overlay {
       position: fixed;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      height: 80vh;
-      opacity: 0.08;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
       pointer-events: none;
-      filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
-      z-index: 0;
+      z-index: 1;
     }
 
-    /* Tarjeta Principal de Calificación */
-    .survey-card {
-      background: var(--bg-surface);
-      border: 1.5px solid var(--border-amber);
-      border-radius: 12px;
-      max-width: 580px;
+    /* Grabados serigráficos de fondo */
+    .bg-woodcut-left {
+      position: fixed;
+      bottom: -40px;
+      left: -30px;
+      width: 390px;
+      height: auto;
+      opacity: 0.16;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: multiply;
+      filter: contrast(1.4);
+    }
+
+    .bg-woodcut-right {
+      position: fixed;
+      top: 60px;
+      right: -30px;
+      width: 320px;
+      height: auto;
+      opacity: 0.14;
+      pointer-events: none;
+      z-index: 1;
+      filter: invert(1) sepia(0.3) opacity(0.6);
+    }
+
+    /* CABECERA EXPANDIDA IDÉNTICA A 01_menu_orbital_pos.html */
+    .expanded-header {
+      position: relative;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 36px 8px;
       width: 100%;
-      padding: 36px 32px;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+      flex-shrink: 0;
+    }
+
+    .btn-back-orbital {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #141615;
+      color: #FAF7EC;
+      border: 2px solid rgba(250, 247, 236, 0.35);
+      padding: 7px 15px;
+      border-radius: 3px;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-back-orbital:hover {
+      background: #FAF7EC;
+      color: #141615;
+      border-color: #FAF7EC;
+    }
+
+    .expanded-nav-tabs {
+      display: flex;
+      gap: 6px;
+      background: rgba(15, 18, 16, 0.84);
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.14); /* taste-skill-ignore */
+    }
+
+    .exp-tab {
+      background: transparent;
+      border: none;
+      color: rgba(250, 247, 236, 0.68);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      padding: 5px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .exp-tab:hover { color: #FFF; }
+    .exp-tab.active {
+      background: #E59F38;
+      color: #121614;
+    }
+
+    .floating-table-badge {
+      background: #121614;
+      border: 2px solid #FAF7EC;
+      padding: 5px 13px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.38); /* taste-skill-ignore */
+    }
+
+    /* ESCENARIO PRINCIPAL 2 COLUMNAS: CARTEL FOLKLÓRICO + BOLETA DE HOSPITALIDAD EN PAPEL MARFIL */
+    .workspace {
       position: relative;
       z-index: 10;
-      text-align: center;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 42% 58%;
+      gap: 28px;
+      padding: 8px 36px 18px;
+      min-height: 0;
+      align-items: center;
     }
 
-    .survey-badge {
+    /* COLUMNA IZQUIERDA: IDENTIDAD FOLKLÓRICA Y ARTE DE LA CASA */
+    .folk-poster-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding: 12px 10px;
+      position: relative;
+    }
+
+    .folk-eyebrow {
       display: inline-block;
-      border: 1px solid var(--terracotta);
-      color: var(--terracotta);
-      font-family: 'Oswald', sans-serif;
-      font-weight: 700;
-      font-size: 0.78rem;
-      letter-spacing: 1px;
-      padding: 3px 10px;
-      border-radius: 3px;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-
-    .survey-title {
+      align-self: flex-start;
+      background: #121614;
+      color: #F8AD00;
       font-family: var(--font-display);
-      font-size: 2.3rem;
-      letter-spacing: 1.5px;
-      color: var(--text-cream);
-      line-height: 1.1;
-      margin-bottom: 6px;
-    }
-    .survey-sub {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      max-width: 440px;
-      margin: 0 auto 24px auto;
+      font-size: 0.92rem;
+      letter-spacing: 0.16em;
+      padding: 4px 12px;
+      border-radius: 2px;
+      margin-bottom: 8px;
     }
 
+    .folk-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 4.4vw, 4.3rem);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      color: #1E1712;
+      text-shadow: 0 2px 0 rgba(250, 247, 236, 0.35);
+    }
+
+    .folk-subtitle {
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: #2B1F16;
+      line-height: 1.45;
+      margin-top: 8px;
+      max-width: 44ch;
+    }
+
+    .folk-art-stage {
+      position: relative;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 220px;
+    }
+
+    .folk-art-stage .mask-img {
+      width: 245px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 22px 32px rgba(18, 22, 20, 0.45)); /* taste-skill-ignore */
+      transform: rotate(-4deg);
+      z-index: 2;
+    }
+
+    .folk-art-stage .vessel-img {
+      width: 175px;
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 26px rgba(18, 22, 20, 0.4)); /* taste-skill-ignore */
+      margin-left: -36px;
+      margin-top: 34px;
+      transform: rotate(6deg);
+      z-index: 1;
+    }
+
+    .visit-ledger-strip {
+      background: #121614;
+      color: var(--paper-cream);
+      border: 2px solid #1E1712;
+      padding: 12px 16px;
+      border-radius: 3px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      box-shadow: 4px 4px 0px rgba(30, 23, 18, 0.38); /* taste-skill-ignore */
+    }
+
+    .visit-stat-lbl {
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(250, 247, 236, 0.65);
+    }
+
+    .visit-stat-val {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.06em;
+      color: #F8AD00;
+      margin-top: 2px;
+    }
+
+    /* COLUMNA DERECHA: BOLETA DE HOSPITALIDAD EN PAPEL MARFIL DENTADO (#FAF7EC) */
+    .hospitality-paper-sheet {
+      width: 100%;
+      max-height: 100%;
+      background-color: var(--paper-cream);
+      color: var(--ink-dark);
+      padding: calc(var(--ticket-tooth-h) + 16px) 30px calc(var(--ticket-tooth-h) + 16px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+            --tooth-w: 10px;
+      --tooth-h: 5px;
+      -webkit-mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+      mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+      filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.5)); /* taste-skill-ignore */
+    }
+
+    .sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px dashed var(--paper-border);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .sheet-title {
+      font-family: var(--font-display);
+      font-size: 2.05rem;
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      color: var(--ink-dark);
+    }
+
+    .sheet-sub {
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      font-weight: 500;
+      margin-top: 3px;
+    }
+
+    .rubber-stamp-tag {
+      border: 2px solid #BA3C2A;
+      color: #BA3C2A;
+      font-family: var(--font-display);
+      font-size: 0.86rem;
+      letter-spacing: 0.1em;
+      padding: 3px 10px;
+      transform: rotate(2deg);
+      background: rgba(186, 60, 42, 0.06);
+      flex-shrink: 0;
+    }
+
+    /* BLOQUES DE CALIFICACIÓN POR SELLO IMPRESO (1 A 5, CERO EMOJIS) */
     .rating-block {
-      background: #0E1210;
-      border: 1px solid var(--border-subtle);
-      border-radius: 8px;
-      padding: 18px 20px;
-      margin-bottom: 16px;
-      text-align: left;
+      background: var(--paper-inset);
+      border: 1.5px solid var(--paper-border);
+      padding: 10px 14px;
+      margin-bottom: 10px;
     }
 
-    .rating-header {
+    .rating-block-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
-    }
-    .rating-label {
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      color: var(--text-cream);
-      text-transform: uppercase;
-    }
-    .rating-score-txt {
-      font-family: 'Oswald', sans-serif;
-      font-size: 0.85rem;
-      color: var(--gold-highlight);
-      font-weight: 700;
+      margin-bottom: 8px;
     }
 
-    /* Estrellas Interactivas */
-    .stars-row {
-      display: flex;
-      gap: 12px;
-      cursor: pointer;
-    }
-    .star-btn {
-      font-size: 2rem;
-      color: rgba(245, 234, 219, 0.2);
-      transition: color 0.15s, transform 0.15s;
-      background: none;
-      border: none;
-      cursor: pointer;
-    }
-    .star-btn.active {
-      color: var(--gold-highlight);
-      text-shadow: 0 0 12px rgba(248, 173, 0, 0.5);
-    }
-    .star-btn:hover {
-      transform: scale(1.15);
+    .rating-axis-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      color: var(--ink-dark);
     }
 
-    /* Comentario */
-    .feedback-input {
-      width: 100%;
-      background: #0E1210;
-      border: 1px solid var(--border-subtle);
-      border-radius: 6px;
-      padding: 12px 14px;
-      color: var(--text-cream);
-      font-family: var(--font-body);
+    .rating-score-pill {
+      font-family: var(--font-display);
       font-size: 0.88rem;
-      outline: none;
-      resize: vertical;
-      min-height: 80px;
-      margin-bottom: 22px;
-      transition: border-color 0.2s ease;
-    }
-    .feedback-input:focus {
-      border-color: var(--amber-sereno);
+      letter-spacing: 0.08em;
+      background: var(--ink-dark);
+      color: #F8AD00;
+      padding: 2px 9px;
+      border-radius: 2px;
     }
 
-    /* Botón Finalizar */
-    .btn-finish-visit {
-      width: 100%;
-      background: var(--amber-sereno);
-      color: #101412;
-      border: none;
-      padding: 14px;
-      border-radius: 4px;
-      font-family: 'Oswald', sans-serif;
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .stamp-scale-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
       gap: 8px;
     }
-    .btn-finish-visit:hover {
-      background: var(--gold-highlight);
-      transform: scale(1.02);
-    }
 
-    /* Pantalla de Despedida Final */
-    .farewell-screen {
-      display: none;
+    .scale-stamp-btn {
+      background: #FFFFFF;
+      border: 1.5px solid var(--ink-dark);
+      padding: 7px 6px;
+      cursor: pointer;
+      display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
-      padding: 20px 0;
+      gap: 3px;
+      transition: all 0.15s ease;
+      color: var(--ink-muted);
     }
-    .farewell-icon {
-      width: 72px;
-      height: 72px;
-      background: rgba(74, 222, 128, 0.15);
-      border: 2px solid #4ADE80;
-      border-radius: 50%;
+
+    .scale-stamp-num {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      line-height: 1;
+      letter-spacing: 0.04em;
+      color: var(--ink-dark);
+    }
+
+    .scale-stamp-lbl {
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .scale-stamp-btn.active {
+      background: var(--ink-dark);
+      color: var(--paper-cream);
+      border-color: var(--ink-dark);
+      box-shadow: 2px 2px 0px #BA3C2A; /* taste-skill-ignore */
+    }
+
+    .scale-stamp-btn.active .scale-stamp-num {
+      color: #F8AD00;
+    }
+
+    /* ETIQUETAS RÁPIDAS IMPRESAS */
+    .tags-section-lbl {
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: 6px;
+    }
+
+    .quick-tags-row {
       display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .paper-tag-chip {
+      background: #FFFFFF;
+      border: 1.5px solid var(--ink-dark);
+      color: var(--ink-dark);
+      padding: 4px 11px;
+      font-family: var(--font-display);
+      font-size: 0.86rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .paper-tag-chip.active {
+      background: #BA3C2A;
+      border-color: #BA3C2A;
+      color: var(--paper-cream);
+      box-shadow: 2px 2px 0px var(--ink-dark); /* taste-skill-ignore */
+    }
+
+    /* NOTA EN PAPEL RAYADO */
+    .comment-input {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1.5px solid var(--ink-dark);
+      padding: 8px 12px;
+      font-family: var(--font-sans);
+      font-size: 0.82rem;
+      color: var(--ink-dark);
+      resize: none;
+      height: 50px;
+      margin-bottom: 12px;
+    }
+    .comment-input:focus {
+      outline: none;
+      border-color: #BA3C2A;
+    }
+
+    .btn-submit-sheet {
+      width: 100%;
+      padding: 12px 18px;
+      background: #121614;
+      color: #F8AD00;
+      border: 2px solid #121614;
+      border-radius: 3px;
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      box-shadow: 3px 3px 0px #BA3C2A; /* taste-skill-ignore */
+      transition: all 0.18s ease;
+    }
+    .btn-submit-sheet:hover {
+      background: #BA3C2A;
+      border-color: #BA3C2A;
+      color: #FAF7EC;
+      box-shadow: 3px 3px 0px #121614; /* taste-skill-ignore */
+    }
+
+    /* VISTA DE DESPEDIDA EN EL MISMO PAPEL MARFIL (CERO CÍRCULOS VERDES NEÓN) */
+    .farewell-paper-view {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 8px 0;
+    }
+
+    .farewell-stamp-banner {
+      border: 2px solid #2D6A4F;
+      background: rgba(45, 106, 79, 0.08);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      color: #4ADE80;
+    }
+
+    .farewell-ledger {
+      background: var(--paper-inset);
+      border: 1.5px solid var(--paper-border);
+      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
     }
   </style>
 </head>
 <body>
+  <div class="chalkboard-grid-overlay"></div>
 
-  <!-- Linocut de fondo -->
-  <img src="catalogo_imagenes/drawings/mascara_diablo_huma_float.png" class="bg-linocut" alt="Diablo Huma" />
+  <!-- Grabados serigráficos de fondo -->
+  <img src="catalogo_imagenes/drawings/recurso-16.png" alt="" class="bg-woodcut-left" onerror="this.style.display='none'" />
+  <img src="catalogo_imagenes/drawings/draw0.webp" alt="" class="bg-woodcut-right" onerror="this.style.display='none'" />
 
-  <article class="survey-card" id="surveyCard">
-    <span class="survey-badge">MESA 04 • EXPERIENCIA DEL CLIENTE</span>
-    <h1 class="survey-title">¡GRACIAS POR TU VISITA!</h1>
-    <p class="survey-sub">Tu valoración nos ayuda a mantener vivos los sabores y tradiciones de Sereno Moreno.</p>
+  <!-- CABECERA EXPANDIDA UNIFICADA -->
+  <header class="expanded-header">
+    <a href="UI07_Factura_Digital.html" class="btn-back-orbital">
+      ← VOLVER A FACTURA SRI
+    </a>
 
-    <!-- Pregunta 1: Mesero (HU-25) -->
-    <div class="rating-block">
-      <div class="rating-header">
-        <span class="rating-label">1. Atención de tu mesero (Mateo V.)</span>
-        <span class="rating-score-txt" id="lblScoreWaiter">5/5 • EXCELENTE</span>
-      </div>
-      <div class="stars-row" id="starsWaiter">
-        <button type="button" class="star-btn active" onclick="setStars('Waiter', 1)">★</button>
-        <button type="button" class="star-btn active" onclick="setStars('Waiter', 2)">★</button>
-        <button type="button" class="star-btn active" onclick="setStars('Waiter', 3)">★</button>
-        <button type="button" class="star-btn active" onclick="setStars('Waiter', 4)">★</button>
-        <button type="button" class="star-btn active" onclick="setStars('Waiter', 5)">★</button>
-      </div>
+    <nav class="expanded-nav-tabs" aria-label="Flujo de Mesa">
+      <a href="01_menu_orbital_pos.html" class="exp-tab">01 CATÁLOGO</a>
+      <a href="UI05_Timeline_Pedido.html" class="exp-tab">02 MONITOR KDS</a>
+      <a href="UI06_Pasarela_Pago.html" class="exp-tab">03 PAGO</a>
+      <a href="UI07_Factura_Digital.html" class="exp-tab">04 FACTURA SRI</a>
+      <a href="UI08_Encuesta_Satisfaccion.html" class="exp-tab active">05 CIERRE</a>
+    </nav>
+
+    <div class="floating-table-badge">
+      <span style="font-family: var(--font-display); font-size: 1.28rem; letter-spacing: 0.08em; color: #FAF7EC;">MESA 04</span>
+      <span style="background: #E59F38; color: #121614; padding: 3px 10px; border-radius: 2px; font-weight: 800; font-size: 0.74rem; letter-spacing: 0.06em;">CUENTA SALDADA</span>
     </div>
+  </header>
 
-    <!-- Pregunta 2: Experiencia General & Comida (HU-26) -->
-    <div class="rating-block">
-      <div class="rating-header">
-        <span class="rating-label">2. Calidad de la comida, chicha y ambiente</span>
-        <span class="rating-score-txt" id="lblScoreFood">5/5 • EXCELENTE</span>
+  <main class="workspace">
+    <!-- COLUMNA IZQUIERDA: CARTEL FOLKLÓRICO DE DESPEDIDA -->
+    <section class="folk-poster-col">
+      <div>
+        <span class="folk-eyebrow">HOSPITALIDAD QUITEÑA • TRADICIÓN DE PAILA Y VASIJA</span>
+        <h1 class="folk-title">HASTA LA PRÓXIMA JORA</h1>
+        <p class="folk-subtitle">
+          En Sereno Moreno cada receta de paila, cada fermento de vasija y cada concierto en La Ronda se construye con la voz de quienes comparten nuestra mesa.
+        </p>
       </div>
-      <div class="stars-row" id="starsFood">
-        <button type="button" class="star-btn active" onclick="setStars('Food', 1)">★</button>
-        <button type="button" class="star-btn active" onclick="setStars('Food', 2)">★</button>
-        <button type="button" class="star-btn active" onclick="setStars('Food', 3)">★</button>
-        <button type="button" class="star-btn active" onclick="setStars('Food', 4)">★</button>
-        <button type="button" class="star-btn active" onclick="setStars('Food', 5)">★</button>
+
+      <div class="folk-art-stage">
+        <img src="catalogo_imagenes/drawings/mascara_diablo_huma_float.png" alt="Diablo Huma Sereno Moreno" class="mask-img" onerror="this.style.display='none'" />
+        <img src="catalogo_imagenes/drawings/vasija_barro_chicha_float.png" alt="Vasija de Barro" class="vessel-img" onerror="this.style.display='none'" />
       </div>
-    </div>
 
-    <!-- Comentarios opcionales -->
-    <textarea class="feedback-input" placeholder="¿Algún mensaje para el chef o sugerencia musical para la próxima visita? (Opcional)"></textarea>
-
-    <!-- Botón de Envío -->
-    <button type="button" class="btn-finish-visit" onclick="submitSurveyAndExit()">
-      <span>ENVIAR VALORACIÓN & LIBERAR MESA &rarr;</span>
-    </button>
-
-    <!-- Pantalla de Despedida Dinámica -->
-    <div class="farewell-screen" id="farewellScreen">
-      <div class="farewell-icon">✓</div>
-      <h2 style="font-family: var(--font-display); font-size: 2.2rem; letter-spacing: 1.5px; color: var(--gold-highlight);">¡HASTA PRONTO, AMIGO!</h2>
-      <p style="font-size: 0.95rem; color: var(--text-muted); max-width: 420px;">
-        Que la chicha y el buen comer te acompañen. La mesa se liberará en breves segundos.
-      </p>
-      <div style="font-family: 'Oswald'; font-size: 0.82rem; color: var(--amber-sereno); margin-top: 10px;">
-        Reiniciando sesión para nuevos comensales...
+      <div class="visit-ledger-strip">
+        <div>
+          <div class="visit-stat-lbl">MESA ATENDIDA</div>
+          <div class="visit-stat-val">MESA 04 • SALÓN</div>
+        </div>
+        <div>
+          <div class="visit-stat-lbl">MESERO ASIGNADO</div>
+          <div class="visit-stat-val">MATEO V.</div>
+        </div>
+        <div>
+          <div class="visit-stat-lbl">TOTAL FACTURADO</div>
+          <div class="visit-stat-val">$32.45 USD</div>
+        </div>
       </div>
-    </div>
+    </section>
 
-  </article>
+    <!-- COLUMNA DERECHA: BOLETA DE HOSPITALIDAD EN PAPEL MARFIL DENTADO (#FAF7EC) -->
+    <section class="hospitality-paper-sheet">
+      <!-- VISTA 1: FORMULARIO DE VALORACIÓN -->
+      <div id="surveyFormView">
+        <div class="sheet-header">
+          <div>
+            <div style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: #BA3C2A; margin-bottom: 2px;">
+              BITÁCORA DE HOSPITALIDAD • SERENO MORENO QUITO
+            </div>
+            <h2 class="sheet-title">BOLETA DE VALORACIÓN DE MESA 04</h2>
+            <p class="sheet-sub">Evalúa la atención recibida y el sabor de nuestra cocina antes de liberar la terminal.</p>
+          </div>
+          <div class="rubber-stamp-tag">VISITA #048291</div>
+        </div>
+
+        <!-- EJE 1: ATENCIÓN DEL MESERO -->
+        <div class="rating-block">
+          <div class="rating-block-head">
+            <span class="rating-axis-title">01 · ATENCIÓN EN MESA — MESERO: MATEO V.</span>
+            <span class="rating-score-pill" id="waiterScorePill">SELLO 5 / 5 · EXCELENTE</span>
+          </div>
+          <div class="stamp-scale-grid" id="waiterScale">
+            <button type="button" class="scale-stamp-btn" onclick="setRating('waiter', 1, 'DEFICIENTE')">
+              <span class="scale-stamp-num">01</span>
+              <span class="scale-stamp-lbl">DEFICIENTE</span>
+            </button>
+            <button type="button" class="scale-stamp-btn" onclick="setRating('waiter', 2, 'REGULAR')">
+              <span class="scale-stamp-num">02</span>
+              <span class="scale-stamp-lbl">REGULAR</span>
+            </button>
+            <button type="button" class="scale-stamp-btn" onclick="setRating('waiter', 3, 'BUENO')">
+              <span class="scale-stamp-num">03</span>
+              <span class="scale-stamp-lbl">BUENO</span>
+            </button>
+            <button type="button" class="scale-stamp-btn" onclick="setRating('waiter', 4, 'MUY BUENO')">
+              <span class="scale-stamp-num">04</span>
+              <span class="scale-stamp-lbl">MUY BUENO</span>
+            </button>
+            <button type="button" class="scale-stamp-btn active" onclick="setRating('waiter', 5, 'EXCELENTE')">
+              <span class="scale-stamp-num">05</span>
+              <span class="scale-stamp-lbl">EXCELENTE</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- EJE 2: COCINA DE PAILA, CHICHA Y AGENDA CULTURAL -->
+        <div class="rating-block">
+          <div class="rating-block-head">
+            <span class="rating-axis-title">02 · SABOR DE PAILA, FERMENTOS Y AMBIENTE CULTURAL</span>
+            <span class="rating-score-pill" id="foodScorePill">SELLO 5 / 5 · IMPECABLE</span>
+          </div>
+          <div class="stamp-scale-grid" id="foodScale">
+            <button type="button" class="scale-stamp-btn" onclick="setRating('food', 1, 'DEFICIENTE')">
+              <span class="scale-stamp-num">01</span>
+              <span class="scale-stamp-lbl">DEFICIENTE</span>
+            </button>
+            <button type="button" class="scale-stamp-btn" onclick="setRating('food', 2, 'REGULAR')">
+              <span class="scale-stamp-num">02</span>
+              <span class="scale-stamp-lbl">REGULAR</span>
+            </button>
+            <button type="button" class="scale-stamp-btn" onclick="setRating('food', 3, 'BUENO')">
+              <span class="scale-stamp-num">03</span>
+              <span class="scale-stamp-lbl">BUENO</span>
+            </button>
+            <button type="button" class="scale-stamp-btn" onclick="setRating('food', 4, 'NOTABLE')">
+              <span class="scale-stamp-num">04</span>
+              <span class="scale-stamp-lbl">NOTABLE</span>
+            </button>
+            <button type="button" class="scale-stamp-btn active" onclick="setRating('food', 5, 'IMPECABLE')">
+              <span class="scale-stamp-num">05</span>
+              <span class="scale-stamp-lbl">IMPECABLE</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ETIQUETAS DE DESTAQUE -->
+        <div class="tags-section-lbl">SELLOS DESTACADOS DE TU VISITA (SELECCIÓN MÚLTIPLE):</div>
+        <div class="quick-tags-row">
+          <button type="button" class="paper-tag-chip active" onclick="this.classList.toggle('active')">LOCRO Y PAILA</button>
+          <button type="button" class="paper-tag-chip active" onclick="this.classList.toggle('active')">CHICHA EN SU PUNTO</button>
+          <button type="button" class="paper-tag-chip" onclick="this.classList.toggle('active')">RAPIDEZ EN MESA</button>
+          <button type="button" class="paper-tag-chip active" onclick="this.classList.toggle('active')">MÁQUINA CAMALEÓN EN VIVO</button>
+          <button type="button" class="paper-tag-chip" onclick="this.classList.toggle('active')">AMBIENTE DE LA RONDA</button>
+        </div>
+
+        <textarea class="comment-input" id="commentInput" placeholder="Escribe una nota opcional para los cocineros, chicheros o el equipo de sala..."></textarea>
+
+        <button type="button" class="btn-submit-sheet" onclick="submitSurvey()">
+          REGISTRAR VALORACIÓN Y LIBERAR MESA 04 →
+        </button>
+      </div>
+
+      <!-- VISTA 2: TALÓN DE DESPEDIDA EN PAPEL MARFIL (REEMPLAZA EL CUADRO NEGRO CON CHECK VERDE) -->
+      <div class="farewell-paper-view" id="farewellView">
+        <div class="sheet-header">
+          <div>
+            <div style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: #2D6A4F; margin-bottom: 2px;">
+              BITÁCORA DE HOSPITALIDAD ACTUALIZADA • CIERRE COMPLETADO
+            </div>
+            <h2 class="sheet-title" style="font-size: 2.35rem;">¡SHUK SHUNGO! GRACIAS POR VENIR</h2>
+          </div>
+          <div class="rubber-stamp-tag" style="border-color: #2D6A4F; color: #2D6A4F; background: rgba(45, 106, 79, 0.08);">
+            MESA 04 LIBERADA
+          </div>
+        </div>
+
+        <div class="farewell-stamp-banner">
+          <div>
+            <div style="font-family: var(--font-display); font-size: 1.25rem; letter-spacing: 0.06em; color: #1E1712;">
+              VALORACIÓN REGISTRADA EN EL LIBRO DE SALA Y COCINA
+            </div>
+            <div style="font-size: 0.82rem; color: var(--ink-muted); margin-top: 2px;">
+              Tu comprobante SRI <strong>#001-002-000048291</strong> fue enviado a <strong>angelo.conteron@epn.edu.ec</strong>.
+            </div>
+          </div>
+          <img src="catalogo_imagenes/drawings/logosm.svg" alt="Sereno Moreno" style="height: 36px; background: #121614; padding: 5px 10px; border-radius: 2px;" onerror="this.style.display='none'" />
+        </div>
+
+        <div class="farewell-ledger">
+          <div>
+            <div style="font-size: 0.68rem; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em;">CALIFICACIÓN MESERO (MATEO V.)</div>
+            <div style="font-family: var(--font-display); font-size: 1.35rem; color: var(--ink-dark); margin-top: 2px;" id="summaryWaiter">SELLO 5 / 5 · EXCELENTE</div>
+          </div>
+          <div>
+            <div style="font-size: 0.68rem; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em;">CALIFICACIÓN COCINA Y CULTURA</div>
+            <div style="font-family: var(--font-display); font-size: 1.35rem; color: var(--ink-dark); margin-top: 2px;" id="summaryFood">SELLO 5 / 5 · IMPECABLE</div>
+          </div>
+        </div>
+
+        <div style="border-top: 2px dashed var(--paper-border); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.78rem; color: var(--ink-muted); font-weight: 600;">
+            La terminal táctil de Mesa 04 está lista para recibir al próximo grupo.
+          </span>
+          <a href="01_menu_orbital_pos.html" class="btn-submit-sheet" style="width: auto; text-decoration: none; display: inline-flex; align-items: center; padding: 11px 22px;">
+            VOLVER A PANTALLA DE BIENVENIDA (UI-01) →
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <script>
-    const scoreDescriptions = {
-      1: '1/5 • MEJORABLE',
-      2: '2/5 • REGULAR',
-      3: '3/5 • BUENO',
-      4: '4/5 • MUY BUENO',
-      5: '5/5 • EXCELENTE'
-    };
-
-    function setStars(target, count) {
-      const container = document.getElementById('stars' + target);
-      const buttons = container.querySelectorAll('.star-btn');
+    function setRating(axis, val, label) {
+      const containerId = axis === 'waiter' ? 'waiterScale' : 'foodScale';
+      const pillId = axis === 'waiter' ? 'waiterScorePill' : 'foodScorePill';
+      const summaryId = axis === 'waiter' ? 'summaryWaiter' : 'summaryFood';
+      const buttons = document.getElementById(containerId).querySelectorAll('.scale-stamp-btn');
       buttons.forEach((btn, idx) => {
-        btn.classList.toggle('active', idx < count);
+        btn.classList.toggle('active', idx + 1 === val);
       });
-      document.getElementById('lblScore' + target).innerText = scoreDescriptions[count];
+      const text = 'SELLO ' + val + ' / 5 · ' + label;
+      document.getElementById(pillId).textContent = text;
+      document.getElementById(summaryId).textContent = text;
     }
 
-    function submitSurveyAndExit() {
-      // Ocultar formulario y mostrar despedida
-      const card = document.getElementById('surveyCard');
-      const children = Array.from(card.children);
-      children.forEach(el => {
-        if (el.id !== 'farewellScreen') el.style.display = 'none';
-      });
-      document.getElementById('farewellScreen').style.display = 'flex';
-
-      // Redirigir a Bienvenida (UI-01) en 2.8 segundos
-      setTimeout(() => {
-        window.location.href = '01_menu_orbital_pos.html';
-      }, 2800);
+    function submitSurvey() {
+      document.getElementById('surveyFormView').style.display = 'none';
+      document.getElementById('farewellView').style.display = 'flex';
     }
   </script>
 </body>

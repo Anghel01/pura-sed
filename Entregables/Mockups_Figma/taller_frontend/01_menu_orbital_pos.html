@@ -4183,7 +4183,6 @@
     <!-- Ficha artesanal de Mesa & Comanda (Captura 170723.png) -->
     <div class="floating-table-badge" role="region" aria-label="Información de mesa y comanda">
       <button class="badge-waiter-trigger" id="headerWaiterBtn" onclick="callWaiterAction(event)" type="button" title="Llamar mesero a Mesa 04">
-        <span class="bell-glyph" aria-hidden="true">&#128276;</span>
         <span class="waiter-txt">LLAMAR MESERO</span>
       </button>
       <div class="badge-craft-sep" aria-hidden="true"></div>
@@ -4237,7 +4236,6 @@
       <div class="header-comanda-anchor">
         <div class="floating-table-badge" style="position: static; margin: 0; box-shadow: none;" role="region" aria-label="Información de mesa y comanda">
           <button class="badge-waiter-trigger" id="expandedHeaderWaiterBtn" onclick="callWaiterAction(event)" type="button" title="Llamar mesero a Mesa 04">
-            <span class="bell-glyph" aria-hidden="true">&#128276;</span>
             <span class="waiter-txt">LLAMAR MESERO</span>
           </button>
           <div class="badge-craft-sep" aria-hidden="true"></div>
@@ -4344,7 +4342,7 @@
                   <h3 class="ticket-custom-name" id="ticketCustomName">ALITAS A LA LEÑA</h3>
                   <div class="ticket-custom-meta">
                     <span class="ticket-custom-price" id="ticketCustomPrice">$8.50</span>
-                    <span class="ticket-custom-badge" id="ticketCustomCraft">🔥 Brasas & Leña</span>
+                    <span class="ticket-custom-badge" id="ticketCustomCraft">Brasas & Leña</span>
                   </div>
                   <p class="ticket-custom-desc" id="ticketCustomDesc">Alitas glaseadas en reducción de chicha y panela, con papas rústicas y salsas artesanas.</p>
                 </div>
@@ -4630,7 +4628,7 @@
     const DISH_CUSTOMIZATIONS = {
       // --- PIDA NO MÁS (COCINA DE FOGÓN) ---
       "Locrito de Papa": {
-        craftBadge: "🍲 Paila de Bronce Tradicional",
+        craftBadge: "Paila de Bronce Tradicional",
         variants: [
           { name: "Cazuela Personal", extra: 0.00, selected: true },
           { name: "Cazuela Pailón", extra: 2.50, selected: false }
@@ -4643,7 +4641,7 @@
         ]
       },
       "Alitas a la Leña": {
-        craftBadge: "🔥 Brasas & Leña de Guayacán",
+        craftBadge: "Brasas & Leña de Guayacán",
         variants: [
           { name: "Porción 6 Alitas", extra: 0.00, selected: true },
           { name: "Porción 12 Alitas", extra: 5.50, selected: false },
@@ -4657,7 +4655,7 @@
         ]
       },
       "Papas con Mapahuira": {
-        craftBadge: "🍲 Paila Andina a la Leña",
+        craftBadge: "Paila Andina a la Leña",
         variants: [
           { name: "Porción Personal", extra: 0.00, selected: true },
           { name: "Porción Pailón Compartir", extra: 3.25, selected: false }
@@ -4670,7 +4668,7 @@
         ]
       },
       "Choclo Papa con Queso": {
-        craftBadge: "🌽 Cosecha de la Sierra",
+        craftBadge: "Cosecha de la Sierra",
         variants: [
           { name: "Porción Tradicional", extra: 0.00, selected: true },
           { name: "Porción Extra Queso de Hoja", extra: 2.00, selected: false }
@@ -4683,7 +4681,7 @@
         ]
       },
       "Ensalada Chulpi Tostado": {
-        craftBadge: "🥗 Huerto Andino Fresco",
+        craftBadge: "Huerto Andino Fresco",
         variants: [
           { name: "Porción Personal", extra: 0.00, selected: true },
           { name: "Porción para Compartir", extra: 2.50, selected: false }
@@ -4696,7 +4694,7 @@
         ]
       },
       "Hongos Portobello": {
-        craftBadge: "🍄 Brasas de Carbón Vegetal",
+        craftBadge: "Brasas de Carbón Vegetal",
         variants: [
           { name: "Porción 2 Portobellos", extra: 0.00, selected: true },
           { name: "Porción 4 Portobellos", extra: 6.50, selected: false }
@@ -4709,7 +4707,7 @@
         ]
       },
       "Ceviche de Coco": {
-        craftBadge: "🥥 Receta de la Costa Andina",
+        craftBadge: "Receta de la Costa Andina",
         variants: [
           { name: "Copa Personal", extra: 0.00, selected: true },
           { name: "Copa Doble", extra: 3.50, selected: false }
@@ -4722,7 +4720,7 @@
         ]
       },
       "Maduro con Queso": {
-        craftBadge: "🍌 Brasa Tradicional de Carbón",
+        craftBadge: "Brasa Tradicional de Carbón",
         variants: [
           { name: "1 Maduro Grande", extra: 0.00, selected: true },
           { name: "2 Maduros a la Brasa", extra: 3.75, selected: false }
@@ -4736,7 +4734,7 @@
 
       // --- FERMENTOS VIVOS (MUCHA CHICHA) ---
       "Mucha Chicha Maíz (Roja / Morado)": {
-        craftBadge: "🍺 Fermentación Ancestral en Roble",
+        craftBadge: "Fermentación Ancestral en Roble",
         variants: [
           { name: "Botella 330ml", extra: 0.00, selected: true },
           { name: "Con Vaso Cervecero Escarchado", extra: 0.50, selected: false }
@@ -4748,7 +4746,7 @@
         ]
       },
       "Mucha Chicha Maíz (Amarilla / Clásica)": {
-        craftBadge: "🍺 Fermentación Tradicional 4.5% v/v",
+        craftBadge: "Fermentación Tradicional 4.5% v/v",
         variants: [
           { name: "Botella 330ml", extra: 0.00, selected: true },
           { name: "Con Vaso Cervecero Frío", extra: 0.50, selected: false }
@@ -4760,7 +4758,7 @@
         ]
       },
       "Cántaro Mucha Chicha Maíz (1 Litro)": {
-        craftBadge: "🏺 Cántaro de Vidrio Ámbar de Litro",
+        craftBadge: "Cántaro de Vidrio Ámbar de Litro",
         variants: [
           { name: "Cántaro 1 Litro", extra: 0.00, selected: true },
           { name: "Con 4 Vasos de Barro Tradicionales", extra: 1.50, selected: false }
@@ -4772,7 +4770,7 @@
         ]
       },
       "Cántaro Mucha Chicha Yuca (1 Litro)": {
-        craftBadge: "🏺 Fermento Amazónico en Cántaro",
+        craftBadge: "Fermento Amazónico en Cántaro",
         variants: [
           { name: "Cántaro 1 Litro", extra: 0.00, selected: true },
           { name: "Con 4 Vasos de Barro Tradicionales", extra: 1.50, selected: false }
@@ -4786,7 +4784,7 @@
 
       // --- LLEVE LLEVE (MERCADO & DESPENSA) ---
       "Costilla Precocida Ahumada": {
-        craftBadge: "🥩 Ahumado al Vacío Hermético",
+        craftBadge: "Ahumado al Vacío Hermético",
         variants: [
           { name: "Empaque 500g", extra: 0.00, selected: true },
           { name: "Empaque 1kg Familiar", extra: 9.50, selected: false }
@@ -4800,7 +4798,7 @@
 
       // --- SI HAY SI HAY (INDUMENTARIA & MERCH) ---
       "Camiseta Sereno Moreno": {
-        craftBadge: "👕 Algodón Orgánico 240g",
+        craftBadge: "Algodón Orgánico 240g",
         variants: [
           { name: "Talla M (Recomendada)", extra: 0.00, selected: true },
           { name: "Talla L", extra: 0.00, selected: false },
@@ -4815,7 +4813,7 @@
 
       // --- AGENDA CULTURAL (EN VIVO & TABERNA SERENO MORENO) ---
       "Guardarraya": {
-        craftBadge: "🎸 Banda Ícono de Quito · En Vivo",
+        craftBadge: "Banda Ícono de Quito · En Vivo",
         variants: [
           { name: "Preventa General + Vaso Conmemorativo", extra: 0.00, selected: true },
           { name: "Mesa VIP Fogón (Incluye Botella Mucha Chicha)", extra: 15.00, selected: false }
@@ -4827,7 +4825,7 @@
         ]
       },
       "Máquina Camaleón": {
-        craftBadge: "🦎 Pop Andino Psicodélico · En Vivo",
+        craftBadge: "Pop Andino Psicodélico · En Vivo",
         variants: [
           { name: "Preventa General + Shot Destilado", extra: 0.00, selected: true },
           { name: "Mesa Terraza Acústica (4 personas)", extra: 20.00, selected: false }
@@ -4839,7 +4837,7 @@
         ]
       },
       "Mugre Sur": {
-        craftBadge: "🎤 Hip-Hop Quiteño & Pasillo Fusión",
+        craftBadge: "Hip-Hop Quiteño & Pasillo Fusión",
         variants: [
           { name: "Entrada General + Chopp Chicha", extra: 0.00, selected: true },
           { name: "Acceso Backstage & Charla con Artistas", extra: 10.00, selected: false }
@@ -4861,7 +4859,7 @@
         ]
       },
       "Noche de Vinilos": {
-        craftBadge: "📻 Joyas en Vinilo 45 RPM",
+        craftBadge: "Joyas en Vinilo 45 RPM",
         variants: [
           { name: "Pase Degustación 4 Fermentos", extra: 0.00, selected: true }
         ],
@@ -4922,7 +4920,7 @@
           { name: "Servida bien fría de bodega", included: true },
           { name: "Destapada en mesa", included: true }
         ];
-        if (craftEl) craftEl.textContent = "🍺 Fermento Vivo";
+        if (craftEl) craftEl.textContent = "Fermento Vivo";
       } else {
         ticketCustomVariants = [
           { name: "Porción Estándar", extra: 0.00, selected: true }
@@ -4979,7 +4977,7 @@
         chip.className = 'ticket-ing-chip ' + (ing.included ? 'included' : 'excluded');
         chip.onclick = () => toggleTicketCustomIngredient(idx);
         chip.innerHTML = `
-          <span class="ticket-ing-icon">${ing.included ? '✓' : '✕'}</span>
+          <span class="ticket-ing-icon">${ing.included ? 'OK' : '✕'}</span>
           <span>${ing.name}</span>
         `;
         container.appendChild(chip);
@@ -5885,10 +5883,10 @@
       const markCalled = (el) => {
         if (!el) return;
         el.classList.add('is-called');
-        el.innerHTML = '<span class="bell-glyph" aria-hidden="true">&#10003;</span> <span class="waiter-txt">SOLICITADO...</span>';
+        el.innerHTML = '<span class="waiter-txt">MESERO EN CAMINO</span>';
         setTimeout(() => {
           el.classList.remove('is-called');
-          el.innerHTML = '<span class="bell-glyph" aria-hidden="true">&#128276;</span> <span class="waiter-txt">LLAMAR MESERO</span>';
+          el.innerHTML = '<span class="waiter-txt">LLAMAR MESERO</span>';
         }, 5000);
       };
       markCalled(btn);
@@ -5903,7 +5901,7 @@
       }
       toast.style.setProperty('--toast-accent', '#E59F38');
       toast.innerHTML = `
-        <span class="artisan-toast-stamp" style="border-color:#E59F38; color:#E59F38;">&#128276; ASISTENCIA</span>
+        <span class="artisan-toast-stamp" style="border-color:#E59F38; color:#E59F38;">ASISTENCIA MESA 04</span>
         <div class="artisan-toast-info">
           <span class="artisan-toast-name">MATEO V. NOTIFICADO</span>
           <span class="artisan-toast-desc">viene en camino a Mesa 04 (~1 min)</span>
@@ -6003,52 +6001,89 @@
 
   </aside>
 
-  <!-- DIÁLOGO DE CONFIRMACIÓN DIRECTO EN EL CATÁLOGO -->
+  <!-- DIÁLOGO DE CONFIRMACIÓN DIRECTO EN EL CATÁLOGO: TALÓN DE PAPEL MARFIL DENTADO -->
   <div class="modal-overlay" id="drawerConfirmModal" style="z-index: 5000;">
-    <div class="confirm-dialog" style="background: #181E1A; border: 1.5px solid #E59F38; border-radius: 14px; max-width: 480px; width: 100%; padding: 28px 24px; box-shadow: 0 25px 60px rgba(0,0,0,0.85); color: #FFF8ED;">
+    <div class="confirm-dialog" style="background: #FAF7EC; color: #1E1712; border-left: 1px solid #E2DCCF; border-right: 1px solid #E2DCCF; border-radius: 0; max-width: 470px; width: 100%; padding: 26px 26px 24px 26px; box-shadow: 0 28px 65px rgba(0,0,0,0.85); transform: rotate(-0.6deg); position: relative; --ticket-tooth-w: 10px; --ticket-tooth-h: 5px; -webkit-mask: radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x, linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--ticket-tooth-h) * 2) no-repeat, radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x; mask: radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x, linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--ticket-tooth-h) * 2) no-repeat, radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x;">
       
       <div id="drawerPreConfirm">
-        <div style="background: rgba(229,159,56,0.15); border: 1.5px solid #E59F38; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px;">
-          <svg viewBox="0 0 24 24" style="width: 28px; height: 28px; stroke: #E59F38; fill: none; stroke-width: 2;"><path d="M12 2a5 5 0 0 1 5 5v2h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2h2V7a5 5 0 0 1 5-5z"></path></svg>
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px dashed #D5CDC0; padding-bottom: 10px; margin-bottom: 12px;">
+          <div style="display: flex; flex-direction: column;">
+            <span style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; color: #7A6E60; letter-spacing: 1.5px; text-transform: uppercase;">SERENO MORENO &bull; TALÓN DE ORDEN</span>
+            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.85rem; letter-spacing: 1.2px; color: #1E1712; line-height: 1; margin: 2px 0 0 0;">CONFIRMAR MARCHA A COCINA</h3>
+          </div>
+          <span style="border: 1.5px solid #BA3C2A; color: #BA3C2A; font-family: 'Bebas Neue', sans-serif; font-size: 0.95rem; padding: 2px 9px; letter-spacing: 1px; font-weight: 700; border-radius: 2px; transform: rotate(-2deg);">MESA 04</span>
         </div>
-        <div style="text-align: center; margin-bottom: 14px;">
-          <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 1.2px; color: #FFF8ED; line-height: 1; margin-bottom: 6px;">¿CONFIRMAR Y ENVIAR COMANDA?</h3>
-          <p style="font-size: 0.85rem; color: #D1C7BA;">Tu pedido será transferido de inmediato a las pantallas KDS de cocina y barra.</p>
+
+        <p style="font-family: 'Space Grotesk', sans-serif; font-size: 0.84rem; color: #4A4035; line-height: 1.4; margin-bottom: 12px;">
+          Verifica el resumen de tu comanda antes de despacharla a los tableros KDS de fogón y barra.
+        </p>
+
+        <div style="background: #F2EDE0; border-top: 1.5px dashed #C8C0B0; border-bottom: 1.5px dashed #C8C0B0; padding: 12px 14px; margin-bottom: 12px; font-family: 'Space Grotesk', sans-serif;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 7px;">
+            <span style="color: #6B6258; font-weight: 600;">UBICACIÓN DE SERVICIO:</span>
+            <strong style="color: #1E1712;">MESA 04 &bull; SALÓN PRINCIPAL</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 7px;">
+            <span style="color: #6B6258; font-weight: 600;">ÍTEMS EN COMANDA:</span>
+            <strong id="modalDrawerCount" style="color: #1E1712;">0 productos</strong>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.82rem; margin-bottom: 8px;">
+            <span style="color: #6B6258; font-weight: 600;">ESTACIONES KDS:</span>
+            <div style="display: flex; gap: 6px;">
+              <span style="font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.8px; padding: 1px 7px; background: rgba(158, 68, 41, 0.12); color: #9E4429; border: 1px solid rgba(158, 68, 41, 0.4); border-radius: 2px;">COCINA DE PAILA</span>
+              <span style="font-family: 'Bebas Neue', sans-serif; font-size: 0.82rem; letter-spacing: 0.8px; padding: 1px 7px; background: rgba(45, 106, 79, 0.12); color: #2D6A4F; border: 1px solid rgba(45, 106, 79, 0.4); border-radius: 2px;">BARRA FERMENTOS</span>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: 'Bebas Neue', sans-serif; border-top: 1.5px dashed #C8C0B0; padding-top: 8px; margin-top: 4px;">
+            <span style="font-size: 1.15rem; letter-spacing: 1px; color: #1E1712;">TOTAL ACUMULADO EN ORDEN:</span>
+            <span id="modalDrawerTotal" style="font-size: 1.95rem; letter-spacing: 0.8px; color: #9E3F27; line-height: 1;">$0.00</span>
+          </div>
         </div>
-        <div style="background: #121614; border: 1px solid rgba(245,234,219,0.12); border-radius: 8px; padding: 12px 16px; margin-bottom: 12px;">
-          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;"><span style="color: #AFA79A;">Ubicación:</span><strong>Mesa 04 (Salón Principal)</strong></div>
-          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;"><span style="color: #AFA79A;">Total Productos:</span><strong id="modalDrawerCount">0 productos</strong></div>
-          <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 6px;"><span style="color: #AFA79A;">Estaciones:</span><span>Cocina de Fogón y Barra</span></div>
-          <div style="display: flex; justify-content: space-between; font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; color: #F8AD00; border-top: 1px dashed rgba(245,234,219,0.15); padding-top: 8px;"><span>TOTAL A FACTURAR:</span><span id="modalDrawerTotal">$0.00</span></div>
+
+        <div style="background: rgba(186, 60, 42, 0.08); border-left: 3px solid #BA3C2A; padding: 9px 12px; font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem; color: #5C2318; line-height: 1.35; margin-bottom: 16px;">
+          <strong style="text-transform: uppercase; letter-spacing: 0.5px;">Nota de Fogón:</strong> Al marchar la orden, los insumos entran a fuego de inmediato. Toda la cuenta de la mesa se liquida en un único pago al cierre de tu visita.
         </div>
-        <div style="background: rgba(158, 68, 41, 0.22); border: 1px solid rgba(158, 68, 41, 0.45); border-radius: 6px; padding: 10px 14px; font-size: 0.8rem; color: #FF9D80; margin-bottom: 16px;">
-          <strong>Aviso de preparación:</strong> Una vez enviada, los insumos se reservan en inventario y comienza la elaboración al instante.
-        </div>
+
         <div style="display: flex; flex-direction: column; gap: 8px;">
-          <button type="button" onclick="executeDrawerOrderConfirmation()" style="background: #E59F38; color: #121614; border: 1px solid #D49020; font-family: 'Bebas Neue', sans-serif; font-size: 1.3rem; letter-spacing: 1.2px; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer;">
-            SÍ, ENVIAR COMANDA AHORA &rarr;
+          <button type="button" onclick="executeDrawerOrderConfirmation()" style="background: #121614; color: #FAF7EC; border: 2px solid #121614; font-family: 'Bebas Neue', sans-serif; font-size: 1.35rem; letter-spacing: 2px; padding: 11px 16px; border-radius: 3px; font-weight: 700; cursor: pointer; box-shadow: 3px 3px 0px #E59F38;">
+            MARCHAR COMANDA A COCINA Y BARRA &rarr;
           </button>
-          <button type="button" onclick="closeDrawerConfirmModal()" style="background: transparent; border: 1px solid rgba(245,234,219,0.2); color: #D1C7BA; padding: 10px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; cursor: pointer;">
-            Revisar o Cambiar Algo
+          <button type="button" onclick="closeDrawerConfirmModal()" style="background: transparent; border: 1.5px solid #1E1712; color: #1E1712; font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; letter-spacing: 1.5px; padding: 8px 14px; border-radius: 3px; font-weight: 700; cursor: pointer;">
+            VOLVER A REVISAR LA COMANDA
           </button>
         </div>
       </div>
 
-      <div id="drawerSuccessState" style="display: none; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 10px 0;">
-        <div style="width: 64px; height: 64px; background: rgba(74,222,128,0.16); border: 2px solid #4ADE80; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
-          <svg viewBox="0 0 24 24" style="width: 32px; height: 32px; stroke: #4ADE80; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      <div id="drawerSuccessState" style="display: none; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 2px dashed #D5CDC0; padding-bottom: 10px;">
+          <div style="display: flex; flex-direction: column;">
+            <span style="font-family: 'Space Grotesk', sans-serif; font-size: 0.72rem; font-weight: 700; color: #7A6E60; letter-spacing: 1.5px; text-transform: uppercase;">SERENO MORENO &bull; COMPROBANTE DE MARCHA</span>
+            <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 1.85rem; letter-spacing: 1.2px; color: #1E1712; line-height: 1; margin: 2px 0 0 0;">TALÓN DE DESPACHO #284</h3>
+          </div>
+          <span style="border: 1.5px solid #2D6A4F; color: #2D6A4F; background: rgba(45, 106, 79, 0.08); font-family: 'Bebas Neue', sans-serif; font-size: 0.92rem; padding: 2px 9px; letter-spacing: 1px; font-weight: 700; border-radius: 2px; transform: rotate(-2deg);">EN PREPARACIÓN</span>
         </div>
-        <h3 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.1rem; letter-spacing: 1.5px; color: #FFF8ED; line-height: 1;">¡COMANDA ENVIADA!</h3>
-        <p style="font-size: 0.88rem; color: #D1C7BA; max-width: 340px;">Cocina y barra ya tienen tu pedido en pantalla KDS. Relájate mientras preparamos tu orden.</p>
-        <div style="background: #121614; border: 1.5px dashed #E59F38; border-radius: 6px; padding: 8px 18px; font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 2px; color: #F8AD00;">
-          ORDEN #284 • MESA 04
+
+        <div style="background: #F2EDE0; border: 2px solid #1E1712; padding: 14px 16px; text-align: center; box-shadow: 3px 3px 0px rgba(30,23,18,0.12);">
+          <div style="font-family: 'Bebas Neue', sans-serif; font-size: 2.1rem; letter-spacing: 2px; color: #1E1712; line-height: 1; margin-bottom: 4px;">
+            ¡COMANDA EN FUEGO Y BARRA!
+          </div>
+          <div style="font-family: 'Space Grotesk', sans-serif; font-size: 0.78rem; font-weight: 700; color: #9E3F27; letter-spacing: 1px; text-transform: uppercase;">
+            ORDEN #284 &bull; MESA 04 &bull; MESERO: MATEO V.
+          </div>
         </div>
-        <a href="UI05_Timeline_Pedido.html" style="display: block; width: 100%; text-decoration: none; text-align: center; background: #E59F38; color: #121614; border: 1px solid #D49020; font-family: 'Bebas Neue', sans-serif; font-size: 1.25rem; letter-spacing: 1.2px; padding: 12px; border-radius: 6px; font-weight: 700; cursor: pointer; margin-top: 6px; box-shadow: 0 4px 14px rgba(229,159,56,0.35);">
-          VER ESTADO EN VIVO (TIMELINE KDS) &rarr;
-        </a>
-        <button type="button" onclick="closeComandaDrawer(); closeDrawerConfirmModal();" style="width: 100%; background: transparent; color: #D1C7BA; border: 1px solid rgba(209,199,186,0.25); font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; letter-spacing: 1px; padding: 8px; border-radius: 6px; cursor: pointer; margin-top: 4px;">
-          CONTINUAR EN EL MENÚ
-        </button>
+
+        <p style="font-family: 'Space Grotesk', sans-serif; font-size: 0.84rem; color: #4A4035; line-height: 1.42; margin: 0;">
+          Cocina de Paila y Barra de Fermentos ya recibieron tu pedido en pantalla KDS. Puedes consultar el monitor en tiempo real o continuar en la carta.
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 4px;">
+          <a href="UI05_Timeline_Pedido.html" style="display: block; width: 100%; text-decoration: none; text-align: center; background: #121614; color: #FAF7EC; border: 2px solid #121614; font-family: 'Bebas Neue', sans-serif; font-size: 1.35rem; letter-spacing: 2px; padding: 11px 16px; border-radius: 3px; font-weight: 700; cursor: pointer; box-shadow: 3px 3px 0px #E59F38;">
+            ABRIR MONITOR DE PEDIDO EN VIVO &rarr;
+          </a>
+          <button type="button" onclick="closeComandaDrawer(); closeDrawerConfirmModal();" style="width: 100%; background: transparent; color: #1E1712; border: 1.5px solid #1E1712; font-family: 'Bebas Neue', sans-serif; font-size: 1.05rem; letter-spacing: 1.5px; padding: 8px 14px; border-radius: 3px; font-weight: 700; cursor: pointer;">
+            CONTINUAR EN EL MENÚ
+          </button>
+        </div>
       </div>
 
     </div>

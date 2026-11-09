@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sereno Moreno — UI-04 Confirmación y Envío de Comanda (Mesa 04)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper-ivory: #FAF7EC;
+      --paper-inset: #F2EDE0;
+      --paper-border: #D5CDC0;
+      --ink-dark: #1E1712;
+      --ink-muted: #5A524C;
+      --tooth-w: 10px;
+      --tooth-h: 5px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-sans: 'Space Grotesk', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      color: var(--paper-ivory);
+      background: radial-gradient(circle at 65% 50%, #B85233 0%, #9E4429 55%, #82341C 100%); /* taste-skill-ignore */
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chalkboard-grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .bg-woodcut-left {
+      position: fixed;
+      bottom: -40px;
+      left: -30px;
+      width: 390px;
+      height: auto;
+      opacity: 0.16;
+      pointer-events: none;
+      z-index: 1;
+      mix-blend-mode: multiply;
+      filter: contrast(1.4);
+    }
+
+    .bg-woodcut-right {
+      position: fixed;
+      top: 65px;
+      right: -30px;
+      width: 320px;
+      height: auto;
+      opacity: 0.14;
+      pointer-events: none;
+      z-index: 1;
+      filter: invert(1) sepia(0.25) opacity(0.6);
+    }
+
+    .expanded-header {
+      position: relative;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 36px 8px;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .btn-back-orbital {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #141615;
+      color: #FAF7EC;
+      border: 2px solid rgba(250, 247, 236, 0.35);
+      padding: 7px 15px;
+      border-radius: 3px;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .expanded-nav-tabs {
+      display: flex;
+      gap: 6px;
+      background: rgba(15, 18, 16, 0.84);
+      padding: 5px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.14); /* taste-skill-ignore */
+    }
+
+    .exp-tab {
+      background: transparent;
+      border: none;
+      color: rgba(250, 247, 236, 0.68);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      padding: 5px 14px;
+      border-radius: 2px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .exp-tab.active {
+      background: #C0392B;
+      color: #FAF7EC;
+    }
+
+    .floating-table-badge {
+      background: #121614;
+      border: 2px solid #FAF7EC;
+      padding: 5px 13px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.38); /* taste-skill-ignore */
+    }
+
+    .workspace {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 60% 40%;
+      gap: 24px;
+      padding: 8px 36px 18px;
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    .paper-sheet {
+      background: var(--paper-ivory);
+      color: var(--ink-dark);
+      padding: 20px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      box-shadow: 0 20px 44px rgba(0, 0, 0, 0.48); /* taste-skill-ignore */
+      -webkit-mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+      mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+    }
+
+    .sheet-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px dashed var(--paper-border);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .sheet-title {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+    }
+
+    .rubber-stamp {
+      border: 2px solid #BA3C2A;
+      color: #BA3C2A;
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      letter-spacing: 0.1em;
+      padding: 2px 10px;
+      transform: rotate(-2deg);
+    }
+
+    .item-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--paper-inset);
+      border: 1.5px solid var(--paper-border);
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      gap: 14px;
+    }
+
+    .item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .item-left img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .item-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      letter-spacing: 0.04em;
+      color: var(--ink-dark);
+    }
+
+    .item-mods {
+      font-size: 0.76rem;
+      color: var(--ink-muted);
+      font-weight: 500;
+    }
+
+    .station-tag {
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border: 1.5px solid #9E4429;
+      color: #9E4429;
+      margin-left: 8px;
+    }
+
+    .item-price {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: #BA3C2A;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .btn-primary-ink {
+      width: 100%;
+      padding: 12px 18px;
+      background: #121614;
+      color: #F8AD00;
+      border: 2px solid #121614;
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      box-shadow: 3px 3px 0px #BA3C2A; /* taste-skill-ignore */
+      text-decoration: none;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(12, 15, 13, 0.82);
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <div class="chalkboard-grid-overlay"></div>
+  <img src="catalogo_imagenes/drawings/recurso-17.png" alt="" class="bg-woodcut-left" onerror="this.style.display='none'" />
+  <img src="catalogo_imagenes/drawings/draw2.webp" alt="" class="bg-woodcut-right" onerror="this.style.display='none'" />
+
+  <header class="expanded-header">
+    <a href="01_menu_orbital_pos.html" class="btn-back-orbital">← VOLVER AL CATÁLOGO</a>
+    <nav class="expanded-nav-tabs">
+      <a href="01_menu_orbital_pos.html" class="exp-tab">01 CATÁLOGO</a>
+      <a href="ui04_resumen_comanda.html" class="exp-tab active">02 COMANDA DE MESA</a>
+      <a href="UI05_Timeline_Pedido.html" class="exp-tab">03 MONITOR KDS</a>
+      <a href="UI06_Pasarela_Pago.html" class="exp-tab">04 PAGO</a>
+    </nav>
+    <div class="floating-table-badge">
+      <span style="font-family: var(--font-display); font-size: 1.25rem; letter-spacing: 0.08em; color: #FAF7EC;">MESA 04</span>
+      <span style="background: #E59F38; color: #121614; padding: 3px 10px; border-radius: 2px; font-weight: 800; font-size: 0.74rem;">TICKET #284</span>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <!-- HOJA IZQUIERDA: DETALLE DE ÍTEMS EN COMANDA -->
+    <section class="paper-sheet">
+      <div>
+        <div class="sheet-head">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <img src="catalogo_imagenes/drawings/logosm.svg" alt="Sereno Moreno" style="height: 32px; background: #121614; padding: 5px 10px; border-radius: 2px;" onerror="this.style.display='none'" />
+            <div>
+              <div style="font-size: 0.7rem; font-weight: 700; color: #BA3C2A; letter-spacing: 0.12em;">UI-04 • REVISIÓN ANTES DE ENVÍO A KDS</div>
+              <h1 class="sheet-title">COMANDA DE MESA 04 — ORDEN #284</h1>
+            </div>
+          </div>
+          <span class="rubber-stamp">3 PRODUCTOS EN LISTA</span>
+        </div>
+
+        <div class="item-row">
+          <div class="item-left">
+            <img src="catalogo_imagenes/pida_no_mas/locrito_de_papa_5.50_float.png" alt="Locrito de Papa" onerror="this.style.display='none'" />
+            <div>
+              <div>
+                <span class="item-name">1X LOCRITO DE PAPA TRADICIONAL</span>
+                <span class="station-tag">COCINA DE PAILA</span>
+              </div>
+              <div class="item-mods">Variante: Cazuela Pailón (+$2.50) • Con queso tierno de hoja y aguacate criollo</div>
+            </div>
+          </div>
+          <div class="item-price">$8.00</div>
+        </div>
+
+        <div class="item-row">
+          <div class="item-left">
+            <img src="catalogo_imagenes/chicha/botella_roja_float.png" alt="Chicha Roja" onerror="this.style.display='none'" />
+            <div>
+              <div>
+                <span class="item-name">1X MUCHA CHICHA BOTELLA ROJA (330 ML)</span>
+                <span class="station-tag" style="border-color: #2D6A4F; color: #2D6A4F;">BARRA DE FERMENTOS</span>
+              </div>
+              <div class="item-mods">Bien fría de vasija • Con vaso escarchado en sal en grano</div>
+            </div>
+          </div>
+          <div class="item-price">$4.50</div>
+        </div>
+
+        <div class="item-row">
+          <div class="item-left">
+            <img src="catalogo_imagenes/lleve_lleve/costilla_de_cerdo_ahumada_6.50_float.png" alt="Costilla Ahumada" onerror="this.style.display='none'" />
+            <div>
+              <div>
+                <span class="item-name">1X COSTILLA PRECOCIDA AHUMADA (500 G)</span>
+                <span class="station-tag">COCINA DE PAILA</span>
+              </div>
+              <div class="item-mods">Empaque al vacío • Calentar y servir en mesa con salsa de panela</div>
+            </div>
+          </div>
+          <div class="item-price">$6.50</div>
+        </div>
+      </div>
+
+      <div style="background: var(--paper-inset); border: 1.5px dashed var(--paper-border); padding: 10px 14px; font-size: 0.8rem; color: var(--ink-muted);">
+        <strong style="color: var(--ink-dark);">NOTA PARA EL DESPACHO:</strong> Al confirmar, la orden se enruta de forma simultánea a Cocina de Paila (2 platos) y Barra de Fermentos (1 bebida).
+      </div>
+    </section>
+
+    <!-- HOJA DERECHA: TALÓN DE CONFIRMACIÓN Y ENVÍO -->
+    <aside class="paper-sheet">
+      <div>
+        <div class="sheet-head">
+          <div>
+            <div style="font-size: 0.7rem; font-weight: 700; color: var(--ink-muted); letter-spacing: 0.12em;">PRE-CUENTA ACUMULADA</div>
+            <h2 class="sheet-title">RESUMEN DE MARCHA</h2>
+          </div>
+          <span class="rubber-stamp">MESA 04</span>
+        </div>
+
+        <div style="font-size: 0.86rem; line-height: 1.9; border-bottom: 2px dashed var(--paper-border); padding-bottom: 10px; margin-bottom: 12px; font-variant-numeric: tabular-nums;">
+          <div style="display: flex; justify-content: space-between;"><span>Subtotal Alimentos y Bebidas</span><strong>$19.00</strong></div>
+          <div style="display: flex; justify-content: space-between; color: #2D6A4F;"><span>Descuento Happy Hour (-10%)</span><strong>-$1.90</strong></div>
+          <div style="display: flex; justify-content: space-between;"><span>Servicio de Mesa (10%)</span><strong>$1.71</strong></div>
+          <div style="display: flex; justify-content: space-between;"><span>I.V.A. Vigente (15%)</span><strong>$2.56</strong></div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: baseline; font-family: var(--font-display); margin-bottom: 14px;">
+          <span style="font-size: 1.4rem;">TOTAL DE LA COMANDA:</span>
+          <span style="font-size: 2.5rem; color: #BA3C2A;">$21.38</span>
+        </div>
+
+        <div style="background: rgba(186, 60, 42, 0.08); border-left: 4px solid #BA3C2A; padding: 10px 12px; font-size: 0.78rem; color: #5C2318; line-height: 1.4;">
+          <strong>CUENTA ABIERTA DE MESA:</strong> No realizas ningún pago ahora. Todos tus pedidos y entradas culturales se liquidan en un único cobro al cerrar la mesa.
+        </div>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <button type="button" class="btn-primary-ink" onclick="openConfirmModal()">
+          MARCHAR COMANDA A COCINA Y BARRA →
+        </button>
+        <a href="01_menu_orbital_pos.html" style="text-align: center; padding: 9px; border: 1.5px solid var(--ink-dark); color: var(--ink-dark); font-family: var(--font-display); font-size: 1.05rem; letter-spacing: 0.08em; text-decoration: none;">
+          + SEGUIR AGREGANDO PRODUCTOS DE LA CARTA
+        </a>
+      </div>
+    </aside>
+  </main>
+
+  <!-- MODAL DE TALÓN IMPRESO EN PAPEL MARFIL DENTADO -->
+  <div class="modal-overlay" id="confirmModal">
+    <div class="paper-sheet" style="max-width: 480px; width: 100%; transform: rotate(-0.5deg);">
+      <div id="preConfirmView">
+        <div class="sheet-head">
+          <div>
+            <span style="font-size: 0.7rem; font-weight: 700; color: #BA3C2A; letter-spacing: 0.12em;">SERENO MORENO • TALÓN DE ORDEN</span>
+            <h3 class="sheet-title">CONFIRMAR MARCHA A COCINA</h3>
+          </div>
+          <span class="rubber-stamp">MESA 04</span>
+        </div>
+        <p style="font-size: 0.84rem; color: var(--ink-muted); margin-bottom: 12px;">
+          Se despacharán <strong>3 productos ($21.38)</strong> de forma simultánea a Cocina de Paila y Barra de Fermentos.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <button type="button" class="btn-primary-ink" onclick="confirmAndSendOrder()">
+            CONFIRMAR Y ENVIAR A KDS →
+          </button>
+          <button type="button" onclick="closeConfirmModal()" style="padding: 9px; background: transparent; border: 1.5px solid var(--ink-dark); font-family: var(--font-display); font-size: 1.05rem; cursor: pointer;">
+            VOLVER A REVISAR
+          </button>
+        </div>
+      </div>
+
+      <div id="sentOrderView" style="display: none; flex-direction: column; gap: 12px;">
+        <div class="sheet-head">
+          <div>
+            <span style="font-size: 0.7rem; font-weight: 700; color: #2D6A4F; letter-spacing: 0.12em;">COMANDA REGISTRADA EN KDS</span>
+            <h3 class="sheet-title">¡COMANDA EN FUEGO Y BARRA!</h3>
+          </div>
+          <span class="rubber-stamp" style="border-color: #2D6A4F; color: #2D6A4F;">EN PREPARACIÓN</span>
+        </div>
+        <p style="font-size: 0.84rem; color: var(--ink-muted);">
+          Tu orden <strong>#284</strong> ya está en manos de nuestros cocineros y chicheros.
+        </p>
+        <a href="UI05_Timeline_Pedido.html" class="btn-primary-ink">
+          ABRIR MONITOR DE PEDIDO EN VIVO (UI-05) →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function openConfirmModal() {
+      document.getElementById('confirmModal').classList.add('open');
+    }
+    function closeConfirmModal() {
+      document.getElementById('confirmModal').classList.remove('open');
+    }
+    function confirmAndSendOrder() {
+      document.getElementById('preConfirmView').style.display = 'none';
+      document.getElementById('sentOrderView').style.display = 'flex';
+    }
+  </script>
+</body>
+</html>
