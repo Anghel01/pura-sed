@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 150" width="100%" height="100%" role="img" aria-labelledby="figmaTitle figmaDesc">
+  <title id="figmaTitle">Prototipo Interactivo en Figma — PuraSed</title>
+  <desc id="figmaDesc">Acceso directo al workspace oficial de prototipos y componentes UI/UX de PuraSed en Figma.</desc>
+  <defs>
+    <style>
+      .f-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
+      .f-desc  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 400; fill: #475569; }
+      .f-tag   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #1E293B; }
+      .f-btn-t { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12.5px; font-weight: 700; fill: #FFFFFF; }
+      
+      @keyframes pulseFigmaDot {
+        0%, 100% { transform: scale(1); opacity: 1; }
+        50%      { transform: scale(1.3); opacity: 0.5; }
+      }
+      .f-beacon {
+        transform-origin: center;
+        animation: pulseFigmaDot 2s ease-in-out infinite;
+      }
+    </style>
+    <linearGradient id="figmaBorderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#F24E1E"/>
+      <stop offset="25%" stop-color="#FF7262"/>
+      <stop offset="50%" stop-color="#A259FF"/>
+      <stop offset="75%" stop-color="#1ABCFE"/>
+      <stop offset="100%" stop-color="#0ACF83"/>
+    </linearGradient>
+    <linearGradient id="figmaBtnGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1E1E1E"/>
+      <stop offset="100%" stop-color="#2C2C2C"/>
+    </linearGradient>
+    <filter id="figmaCardShadow" x="-2%" y="-6%" width="104%" height="120%">
+      <feDropShadow flood-color="#A259FF" flood-opacity="0.12" dx="0" dy="3" stdDeviation="5"/>
+    </filter>
+    <filter id="figmaBtnShadow" x="-5%" y="-10%" width="110%" height="130%">
+      <feDropShadow flood-color="#000000" flood-opacity="0.25" dx="0" dy="2" stdDeviation="4"/>
+    </filter>
+  </defs>
+
+  <!-- Tarjeta contenedor blanca -->
+  <rect x="10" y="8" width="940" height="134" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#figmaCardShadow)"/>
+  
+  <!-- Borde lateral multicolor Figma -->
+  <rect x="10" y="8" width="6" height="134" rx="3" fill="url(#figmaBorderGrad)"/>
+
+  <!-- Logo Oficial Figma Vectorial -->
+  <g transform="translate(36, 31)">
+    <circle cx="42" cy="42" r="38" fill="#1E1E1E"/>
+    <!-- Ícono Figma estilizado -->
+    <g transform="translate(25, 18) scale(1.4)">
+      <path d="M6 0H12V6H6C2.686 0 0 2.686 0 6C0 9.314 2.686 12 6 12Z" fill="#F24E1E" transform="matrix(0.5 0 0 0.5 0 0)"/>
+      <path d="M12 0H18C21.314 0 24 2.686 24 6C24 9.314 21.314 12 18 12H12V0Z" fill="#FF7262" transform="matrix(0.5 0 0 0.5 0 0)"/>
+      <path d="M6 12H12V24H6C2.686 24 0 21.314 0 18C0 14.686 2.686 12 6 12Z" fill="#A259FF" transform="matrix(0.5 0 0 0.5 0 0)"/>
+      <circle cx="9" cy="9" r="3" fill="#1ABCFE"/>
+      <path d="M6 24H12V30C12 33.314 9.314 36 6 36C2.686 36 0 33.314 0 30C0 26.686 2.686 24 6 24Z" fill="#0ACF83" transform="matrix(0.5 0 0 0.5 0 0)"/>
+    </g>
+  </g>
+
+  <!-- Bloque Central de Información -->
+  <g transform="translate(132, 24)">
+    <text class="f-title" x="0" y="24">Prototipo Interactivo y Sistema de Diseño &#183; Figma</text>
+    <text class="f-desc" x="0" y="47">Exploración visual completa de alta fidelidad, flujos navegables y arquitectura de componentes.</text>
+
+    <!-- Chips informativos alineados -->
+    <g transform="translate(0, 64)">
+      <rect x="0" y="0" width="138" height="24" rx="12" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1"/>
+      <circle cx="12" cy="12" r="3.5" fill="#8B5CF6" class="f-beacon"/>
+      <text class="f-tag" x="22" y="16" fill="#6D28D9">Figma Prototype Live</text>
+
+      <rect x="148" y="0" width="145" height="24" rx="12" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1"/>
+      <circle cx="160" cy="12" r="3.5" fill="#D97706"/>
+      <text class="f-tag" x="170" y="16" fill="#B45309">32 Pantallas Full HD</text>
+
+      <rect x="303" y="0" width="225" height="24" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
+      <text class="f-tag" x="415" y="16" text-anchor="middle" fill="#475569">3 Módulos (Angelo &#183; Jannys &#183; Ángel)</text>
+    </g>
+  </g>
+
+  <!-- Botón de Enlace al Prototipo en Vivo -->
+  <g transform="translate(735, 52)">
+    <rect width="195" height="44" rx="8" fill="url(#figmaBtnGrad)" filter="url(#figmaBtnShadow)"/>
+    <!-- Pequeño logo figma en botón -->
+    <circle cx="28" cy="22" r="8" fill="#FFFFFF" fill-opacity="0.12"/>
+    <text class="f-btn-t" x="110" y="27" text-anchor="middle">Ver Prototipo en Figma &#8594;</text>
+  </g>
+</svg>

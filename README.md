@@ -57,11 +57,12 @@ El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilida
 | `02` | [**Arquitectura del Sistema**](#arquitectura-del-sistema) | Arquitectura en capas desacoplada, WebSockets y ciclo de vida de comandas |
 | `03` | [**Casos de Uso**](#casos-de-uso) | Diagrama UML formal interactivo, actores operativos y matriz funcional |
 | `04` | [**Modelo de Base de Datos – Diagrama Entidad-Relación**](#modelo-de-base-de-datos--diagrama-entidad-relación) | Modelo relacional, 23 entidades, claves PK/FK y cardinalidades |
-| `05` | [**Estructura de la Solución .NET**](#estructura-de-la-solución-net) | Árbol estructurado de carpetas, responsabilidades de WebApi y Blazor Client |
-| `06` | [**Guía de Ejecución Local**](#guía-de-ejecución-local) | Requisitos previos (.NET 10, SQL Server), clonación, migraciones y arranque |
-| `07` | [**Estrategia de Ramas y Flujo en Git**](#estrategia-de-ramas-y-flujo-en-git) | Modelo GitFlow, convención de ramas `develop`/`feature` y commits semánticos |
-| `08` | [**Backlog, Planificación y Sprints**](#backlog-planificación-y-sprints) | Metodología Scrum, historias de usuario, estimación y tablero Jira Cloud |
-| `09` | [**Licencia y Uso Académico**](#licencia-y-uso-académico) | Régimen institucional Escuela Politécnica Nacional (EPN - FIEE) |
+| `05` | [**Prototipo Interactivo y Sistema de Diseño UI/UX en Figma**](#prototipo-interactivo-y-sistema-de-diseño-uiux-en-figma) | Prototipo navegable oficial de 32 pantallas Full HD organizado en 3 subsistemas |
+| `06` | [**Estructura de la Solución .NET**](#estructura-de-la-solución-net) | Árbol estructurado de carpetas, responsabilidades de WebApi y Blazor Client |
+| `07` | [**Guía de Ejecución Local**](#guía-de-ejecución-local) | Requisitos previos (.NET 10, SQL Server), clonación, migraciones y arranque |
+| `08` | [**Estrategia de Ramas y Flujo en Git**](#estrategia-de-ramas-y-flujo-en-git) | Modelo GitFlow, convención de ramas `develop`/`feature` y commits semánticos |
+| `09` | [**Backlog, Planificación y Sprints**](#backlog-planificación-y-sprints) | Metodología Scrum, historias de usuario, estimación y tablero Jira Cloud |
+| `10` | [**Licencia y Uso Académico**](#licencia-y-uso-académico) | Régimen institucional Escuela Politécnica Nacional (EPN - FIEE) |
 
 ---
 
@@ -141,6 +142,74 @@ El diagrama entidad-relación representa las entidades del sistema, sus atributo
 </p>
 
 El modelo permite relacionar los pedidos con las sesiones de mesa, controlar automáticamente los movimientos de inventario y gestionar las cuentas de los clientes. También contempla el cobro opcional de entradas por persona cuando existen espectáculos.
+
+---
+
+## <img src="./assets/icons/figma.svg" width="22" height="22" align="absmiddle" /> Prototipo Interactivo y Sistema de Diseño UI/UX en Figma
+
+El diseño visual y prototipo interactivo de **PuraSed** encarna la identidad de **Taller Indie Craft & Herencia Andina** del establecimiento *Sereno Moreno* (Centro Histórico de Quito), rechazando plantillas corporativas genéricas. El sistema se estructuró en Figma en **32 pantallas Full HD (1920×1080)** distribuidas en 3 módulos funcionales con navegación interactiva completa (*flows* y estados de comanda):
+
+<p align="center">
+  <a href="https://www.figma.com/design/DsNPoA8toR0BhSr1jCQvq1/Pura-Sed?node-id=0-1&t=fsQYngq4znHIIZzZ-1" target="_blank" rel="noopener noreferrer">
+    <img src="./assets/figma-board.svg" width="100%" alt="Prototipo Interactivo en Figma — PuraSed" />
+  </a>
+</p>
+
+### Estructura Oficial de Módulos en Figma
+
+<table>
+  <thead>
+    <tr>
+      <th width="33%" align="center">
+        <b>1. Front-Office: Menú Orbital POS 3D</b><br/>
+        <sub>Angelo Conterón (Frontend Lead)</sub>
+      </th>
+      <th width="33%" align="center">
+        <b>2. Back-Office: KDS / KDD y Salón</b><br/>
+        <sub>Jannys Garrido (Scrum Master)</sub>
+      </th>
+      <th width="33%" align="center">
+        <b>3. Back-Office: Caja y Analítica</b><br/>
+        <sub>Ángel Chicaiza (Backend Architect)</sub>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td valign="top">
+        <ul>
+          <li><b>Bienvenida y acceso a mesa</b> (cero fricción, sin registro forzoso).</li>
+          <li><b>Menú Orbital 3D</b> en 5 capítulos culturales (Mucha Chicha, Pida No Más, Lleve Lleve, Si Hay Si Hay, Oro Ancestral).</li>
+          <li><b>Detalle con botella rotada a -45°</b> en Three.js y ticket tiza inclinado a 1.2°.</li>
+          <li><b>Drawer comanda lateral</b>, timeline en tiempo real, pasarela de pago, factura digital y encuesta de satisfacción.</li>
+        </ul>
+      </td>
+      <td valign="top">
+        <ul>
+          <li><b>Login operativo</b> con autenticación JWT y roles RBAC.</li>
+          <li><b>KDD Barra de Fermentos</b>: despacho táctil de bebidas y cócteles con aislamiento.</li>
+          <li><b>KDS Cocina de Paila</b>: gestión cronológica de comidas calientes con cambio de estados.</li>
+          <li><b>Formulario de reservas públicas</b> y <b>Mapa interactivo de mesas</b> con agenda sin solapamientos.</li>
+        </ul>
+      </td>
+      <td valign="top">
+        <ul>
+          <li><b>Punto de Caja y Liquidación</b>: precuenta en ticket tiza, verificación de transferencias y arqueo.</li>
+          <li><b>Control de Inventario y Stock</b>: conmutación de insumos y marcado de platos agotados (HU-10).</li>
+          <li><b>Catálogo de Menú y Promociones</b>: combos con descuentos porcentuales.</li>
+          <li><b>Directorio de Personal</b>, matriz de 8 roles, bitácora inmutable y reportes de cierre.</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" align="center">
+        <a href="https://www.figma.com/design/DsNPoA8toR0BhSr1jCQvq1/Pura-Sed?node-id=0-1&t=fsQYngq4znHIIZzZ-1" target="_blank">
+          <b>🚀 Abrir Prototipo Interactivo en Figma (Lienzo Oficial PuraSed) →</b>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
