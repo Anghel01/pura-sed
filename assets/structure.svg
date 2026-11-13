@@ -1,198 +1,273 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 590" width="100%" height="100%" role="img" aria-labelledby="strTitle strDesc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 658" width="100%" height="100%" role="img" aria-labelledby="strTitle strDesc">
   <title id="strTitle">Estructura del Proyecto PuraSed</title>
-  <desc id="strDesc">&#193;rbol estructurado de la soluci&#243;n con iconos vectoriales y comentarios alineados.</desc>
+  <desc id="strDesc">&#193;rbol estructurado de la soluci&#243;n .NET 10 con arquitectura SOLID, Figma UI/UX y comentarios alineados.</desc>
   <defs>
     <style>
-      .t-dir   { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 13px; font-weight: 700; fill: #0F172A; }
-      .t-file  { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12.5px; font-weight: 600; fill: #1E293B; }
-      .t-desc  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 500; fill: #64748B; }
-      .t-tag   { font-family: ui-monospace, monospace; font-size: 10px; font-weight: 700; }
-      .tree-guide { stroke: #CBD5E1; stroke-width: 1.2; stroke-dasharray: 2 2; }
+      :root {
+        --ide-bg: #FFFFFF;
+        --ide-bd: #D8DEE4;
+        --bar-bg: #F8FAFC;
+        --dir-clr: #0F172A;
+        --file-clr: #1E293B;
+        --desc-clr: #64748B;
+        --guide-clr: #CBD5E1;
+        --pill-bg: #ECFDF5;
+        --pill-bd: #A7F3D0;
+        --pill-tx: #047857;
+        --sh-clr: rgba(15, 23, 42, 0.06);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --ide-bg: #161B22;
+          --ide-bd: #30363D;
+          --bar-bg: #0D1117;
+          --dir-clr: #F0F6FC;
+          --file-clr: #E6EDF3;
+          --desc-clr: #8B949E;
+          --guide-clr: #30363D;
+          --pill-bg: rgba(16, 185, 129, 0.14);
+          --pill-bd: rgba(52, 211, 153, 0.35);
+          --pill-tx: #6EE7B7;
+          --sh-clr: rgba(0, 0, 0, 0.45);
+        }
+      }
+
+      .ide-win    { fill: var(--ide-bg); stroke: var(--ide-bd); stroke-width: 1.4; }
+      .t-dir      { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 13px; font-weight: 700; fill: var(--dir-clr); }
+      .t-file     { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12.5px; font-weight: 600; fill: var(--file-clr); }
+      .t-desc     { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 400; fill: var(--desc-clr); }
+      .tree-guide { stroke: var(--guide-clr); stroke-width: 1.2; stroke-dasharray: 2.5 2.5; }
+
+      @keyframes buildPulse {
+        0%   { transform: scale(1); opacity: 0.85; }
+        70%  { transform: scale(2.2); opacity: 0; }
+        100% { transform: scale(2.2); opacity: 0; }
+      }
+      .build-dot {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: buildPulse 2.4s ease-out infinite;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .build-dot { animation: none; }
+      }
     </style>
-    <filter id="card-shadow" x="-3%" y="-3%" width="106%" height="106%">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.05"/>
+
+    <filter id="card-shadow" x="-3%" y="-3%" width="106%" height="108%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="var(--sh-clr)"/>
     </filter>
+    <clipPath id="ideClip">
+      <rect width="980" height="658" rx="14"/>
+    </clipPath>
   </defs>
 
-  <!-- Lienzo blanco con cabecera de explorador -->
-  <rect width="940" height="590" rx="14" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#card-shadow)"/>
-  
+  <!-- Ventana IDE adaptativa -->
+  <rect class="ide-win" width="980" height="658" rx="14" filter="url(#card-shadow)"/>
+
   <!-- Barra superior estilo IDE -->
-  <path d="M 0 14 C 0 6 6 0 14 0 L 926 0 C 934 0 940 6 940 14 L 940 38 L 0 38 Z" fill="#F8FAFC" stroke="#E2E8F0" stroke-width="1"/>
-  <circle cx="22" cy="19" r="5" fill="#EF4444" opacity="0.8"/>
-  <circle cx="38" cy="19" r="5" fill="#F59E0B" opacity="0.8"/>
-  <circle cx="54" cy="19" r="5" fill="#10B981" opacity="0.8"/>
-  <text x="76" y="23" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5px" font-weight="600" fill="#64748B">Explorador de la Soluci&#243;n .NET 10 &#183; pura-sed</text>
+  <g clip-path="url(#ideClip)">
+    <rect x="0" y="0" width="980" height="40" fill="var(--bar-bg)"/>
+    <line x1="0" y1="40" x2="980" y2="40" stroke="var(--ide-bd)" stroke-width="1"/>
+  </g>
+  <circle cx="22" cy="20" r="5" fill="#EF4444" opacity="0.85"/>
+  <circle cx="38" cy="20" r="5" fill="#F59E0B" opacity="0.85"/>
+  <circle cx="54" cy="20" r="5" fill="#10B981" opacity="0.85"/>
+  <text x="76" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12px" font-weight="600" fill="var(--desc-clr)">Explorador de la Soluci&#243;n .NET 10 &#183; pura-sed</text>
+
+  <!-- Pill derecho: Estado de compilación -->
+  <rect x="772" y="9" width="190" height="22" rx="11" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/>
+  <circle class="build-dot" cx="786" cy="20" r="4" fill="#10B981"/>
+  <circle cx="786" cy="20" r="3" fill="#10B981"/>
+  <text x="797" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5px" font-weight="600" fill="var(--pill-tx)">Build Verified &#183; 0 Warnings</text>
 
   <!-- ============================================== -->
   <!-- RAÍZ: pura-sed/ (y: 62) -->
   <!-- ============================================== -->
   <g transform="translate(30, 62)">
-    <!-- Icono carpeta raíz -->
-    <path d="M 0 3 L 8 3 L 12 7 L 22 7 C 23.5 7 24 7.5 24 9 L 24 19 C 24 20.5 23.5 21 22 21 L 2 21 C 0.5 21 0 20.5 0 19 Z" fill="#F59E0B" />
+    <path d="M 0 3 L 8 3 L 12 7 L 22 7 C 23.5 7 24 7.5 24 9 L 24 19 C 24 20.5 23.5 21 22 21 L 2 21 C 0.5 21 0 20.5 0 19 Z" fill="#F59E0B"/>
     <text x="32" y="16" class="t-dir">pura-sed/</text>
   </g>
 
-  <!-- Líneas guías del árbol -->
-  <line x1="42" y1="85" x2="42" y2="560" class="tree-guide"/>
+  <!-- Línea guía raíz -->
+  <line x1="42" y1="85" x2="42" y2="564" class="tree-guide"/>
 
-  <!-- ============================================== -->
-  <!-- ARCHIVOS RAÍZ (y: 92, 116, 140) -->
-  <!-- ============================================== -->
-  <!-- PuraSed.slnx -->
-  <g transform="translate(56, 92)">
+  <!-- Archivos raíz -->
+  <g transform="translate(56, 90)">
     <line x1="-14" y1="10" x2="0" y2="10" class="tree-guide"/>
     <rect x="0" y="2" width="16" height="18" rx="2" fill="#EDE9FE" stroke="#8B5CF6" stroke-width="1.2"/>
     <text x="8" y="15" text-anchor="middle" font-size="9px" font-weight="bold" fill="#7C3AED">&#9670;</text>
-    <text x="26" y="16" class="t-file">PuraSed.slnx</text>
-    <text x="370" y="16" class="t-desc"># Archivo contenedor de la soluci&#243;n .NET (formato moderno)</text>
+    <text x="26" y="15" class="t-file">PuraSed.slnx</text>
+    <text x="415" y="15" class="t-desc"># Soluci&#243;n moderna .NET 10 (WebApi + Blazor WASM)</text>
   </g>
 
-  <!-- README.md -->
-  <g transform="translate(56, 118)">
+  <g transform="translate(56, 114)">
     <line x1="-14" y1="10" x2="0" y2="10" class="tree-guide"/>
     <rect x="0" y="2" width="16" height="18" rx="2" fill="#E0F2FE" stroke="#0284C7" stroke-width="1.2"/>
     <text x="8" y="15" text-anchor="middle" font-size="8px" font-weight="bold" fill="#0369A1">&#10003;</text>
-    <text x="26" y="16" class="t-file">README.md</text>
-    <text x="370" y="16" class="t-desc"># Documentaci&#243;n t&#233;cnica interactiva del sistema</text>
+    <text x="26" y="15" class="t-file">README.md</text>
+    <text x="415" y="15" class="t-desc"># Documentaci&#243;n interactiva del sistema y gu&#237;as</text>
   </g>
 
-  <!-- .gitignore -->
-  <g transform="translate(56, 144)">
+  <g transform="translate(56, 138)">
     <line x1="-14" y1="10" x2="0" y2="10" class="tree-guide"/>
     <rect x="0" y="2" width="16" height="18" rx="2" fill="#F1F5F9" stroke="#94A3B8" stroke-width="1.2"/>
     <text x="8" y="15" text-anchor="middle" font-size="8px" font-weight="bold" fill="#475569">~</text>
-    <text x="26" y="16" class="t-file">.gitignore</text>
-    <text x="370" y="16" class="t-desc"># Exclusiones de artefactos de compilaci&#243;n binaria (bin, obj)</text>
+    <text x="26" y="15" class="t-file">.gitignore</text>
+    <text x="415" y="15" class="t-desc"># Exclusiones de compilaci&#243;n binaria (bin/, obj/)</text>
   </g>
 
-  <!-- ============================================== -->
-  <!-- CARPETA assets/ (y: 172) -->
-  <!-- ============================================== -->
-  <g transform="translate(56, 172)">
+  <!-- CARPETA assets/ -->
+  <g transform="translate(56, 166)">
     <line x1="-14" y1="10" x2="0" y2="10" class="tree-guide"/>
     <path d="M 0 2 L 6 2 L 9 5 L 18 5 C 19 5 19.5 5.5 19.5 6.5 L 19.5 15 C 19.5 16 19 16.5 18 16.5 L 1.5 16.5 C 0.5 16.5 0 16 0 15 Z" fill="#F59E0B"/>
-    <text x="26" y="15" class="t-file" fill="#B45309">assets/</text>
-    <text x="370" y="15" class="t-desc"># Recursos vectoriales SVG puros, animaciones e identidad gr&#225;fica</text>
+    <text x="26" y="15" class="t-dir" fill="#F59E0B">assets/</text>
+    <text x="415" y="15" class="t-desc"># Recursos SVG animados (Dark/Light) e identidad gr&#225;fica</text>
   </g>
 
-  <!-- Sub-guía assets -->
-  <line x1="72" y1="192" x2="72" y2="280" class="tree-guide"/>
+  <line x1="72" y1="186" x2="72" y2="286" class="tree-guide"/>
 
-  <g transform="translate(86, 196)">
+  <g transform="translate(86, 190)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
     <circle cx="6" cy="8" r="4" fill="#06B6D4"/>
-    <text x="18" y="12" class="t-file">banner.svg, tags.svg</text>
-    <text x="340" y="12" class="t-desc"># Hero animado con burbujas y lienzo de tecnolog&#237;as con logos</text>
+    <text x="18" y="12" class="t-file">banner.svg, tags.svg, jira-board.svg</text>
+    <text x="385" y="12" class="t-desc"># Hero animado, lienzo tecnol&#243;gico y portal Scrum</text>
   </g>
 
-  <g transform="translate(86, 218)">
+  <g transform="translate(86, 212)">
+    <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
+    <circle cx="6" cy="8" r="4" fill="#A259FF"/>
+    <text x="18" y="12" class="t-file">figma-board.svg, figma-modules.svg</text>
+    <text x="385" y="12" class="t-desc"># Portales interactivos y m&#243;dulos UI/UX en Figma</text>
+  </g>
+
+  <g transform="translate(86, 234)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
     <circle cx="6" cy="8" r="4" fill="#10B981"/>
     <text x="18" y="12" class="t-file">architecture.svg, casos-de-uso.svg</text>
-    <text x="340" y="12" class="t-desc"># Diagramas en capas y casos de uso con flujo animado</text>
+    <text x="385" y="12" class="t-desc"># Diagramas animados de arquitectura y casos UML</text>
   </g>
 
-  <g transform="translate(86, 240)">
+  <g transform="translate(86, 256)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
     <circle cx="6" cy="8" r="4" fill="#8B5CF6"/>
-    <text x="18" y="12" class="t-file">jira-board.svg, icons/*.svg</text>
-    <text x="340" y="12" class="t-desc"># Portal interactivo Scrum e iconograf&#237;a vectorial por secci&#243;n</text>
+    <text x="18" y="12" class="t-file">security-rbac.svg, git-flow.svg</text>
+    <text x="385" y="12" class="t-desc"># Matriz JWT/RBAC y flujo animado de ramas GitFlow</text>
   </g>
 
-  <g transform="translate(86, 262)">
+  <g transform="translate(86, 278)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
     <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
-    <text x="20" y="12" class="t-file" fill="#B45309">team/</text>
-    <text x="340" y="12" class="t-desc"># Tarjetas SVG animadas para los cuatro integrantes Scrum</text>
+    <text x="20" y="12" class="t-file">team/, icons/</text>
+    <text x="385" y="12" class="t-desc"># Tarjetas orbitales del equipo Scrum e iconograf&#237;a</text>
   </g>
 
-  <!-- ============================================== -->
-  <!-- CARPETA PuraSed.WebApi/ (y: 295) -->
-  <!-- ============================================== -->
-  <g transform="translate(56, 295)">
+  <!-- CARPETA Entregables/ -->
+  <g transform="translate(56, 308)">
+    <line x1="-14" y1="10" x2="0" y2="10" class="tree-guide"/>
+    <path d="M 0 2 L 6 2 L 9 5 L 18 5 C 19 5 19.5 5.5 19.5 6.5 L 19.5 15 C 19.5 16 19 16.5 18 16.5 L 1.5 16.5 C 0.5 16.5 0 16 0 15 Z" fill="#EC4899"/>
+    <text x="26" y="15" class="t-dir" fill="#EC4899">Entregables/</text>
+    <text x="415" y="15" class="t-desc"># Especificaciones, UML, diccionario BD y gu&#237;as</text>
+  </g>
+
+  <line x1="72" y1="328" x2="72" y2="362" class="tree-guide"/>
+
+  <g transform="translate(86, 332)">
+    <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
+    <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
+    <text x="20" y="12" class="t-file">SP1/, SP2/, Sprint2/</text>
+    <text x="385" y="12" class="t-desc"># Alcance, HU, UML, ER y Acoplamiento_Roles.md</text>
+  </g>
+
+  <g transform="translate(86, 354)">
+    <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
+    <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
+    <text x="20" y="12" class="t-file">Mockups_Figma/</text>
+    <text x="385" y="12" class="t-desc"># Taller HTML5/Three.js, capturas @2x y manual UI</text>
+  </g>
+
+  <!-- CARPETA retrospective/ -->
+  <g transform="translate(56, 382)">
+    <line x1="-14" y1="10" x2="0" y2="10" class="tree-guide"/>
+    <path d="M 0 2 L 6 2 L 9 5 L 18 5 C 19 5 19.5 5.5 19.5 6.5 L 19.5 15 C 19.5 16 19 16.5 18 16.5 L 1.5 16.5 C 0.5 16.5 0 16 0 15 Z" fill="#14B8A6"/>
+    <text x="26" y="15" class="t-dir" fill="#14B8A6">retrospective/</text>
+    <text x="415" y="15" class="t-desc"># Actas de retrospectiva semanal (SP1, SP2 y SP3)</text>
+  </g>
+
+  <!-- CARPETA PuraSed.WebApi/ -->
+  <g transform="translate(56, 412)">
     <line x1="-14" y1="10" x2="0" y2="10" class="tree-guide"/>
     <path d="M 0 2 L 6 2 L 9 5 L 18 5 C 19 5 19.5 5.5 19.5 6.5 L 19.5 15 C 19.5 16 19 16.5 18 16.5 L 1.5 16.5 C 0.5 16.5 0 16 0 15 Z" fill="#6366F1"/>
-    <text x="26" y="15" class="t-dir" fill="#4338CA">PuraSed.WebApi/</text>
-    <text x="370" y="15" class="t-desc"># Capa Backend: ASP.NET Core Web API 10.0 (REST &amp; SignalR)</text>
+    <text x="26" y="15" class="t-dir" fill="#818CF8">PuraSed.WebApi/</text>
+    <text x="415" y="15" class="t-desc"># Backend: ASP.NET Core 10 (Identity + JWT + RBAC)</text>
   </g>
 
-  <!-- Sub-guía WebApi -->
-  <line x1="72" y1="315" x2="72" y2="405" class="tree-guide"/>
+  <line x1="72" y1="432" x2="72" y2="532" class="tree-guide"/>
 
-  <g transform="translate(86, 320)">
+  <g transform="translate(86, 436)">
+    <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
+    <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
+    <text x="20" y="12" class="t-file">Constants/, DTOs/, Models/</text>
+    <text x="385" y="12" class="t-desc"># Roles.cs (8 roles DRY), ApplicationUser y entidades</text>
+  </g>
+
+  <g transform="translate(86, 458)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
     <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
     <text x="20" y="12" class="t-file">Controllers/</text>
-    <text x="340" y="12" class="t-desc"># Endpoints RESTful para comandas, cartas, stock y auditor&#237;a</text>
+    <text x="385" y="12" class="t-desc"># Auth, Mesas, Pedidos, Productos, Pagos, Usuarios</text>
   </g>
 
-  <g transform="translate(86, 342)">
+  <g transform="translate(86, 480)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
     <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
-    <text x="20" y="12" class="t-file">Properties/</text>
-    <text x="340" y="12" class="t-desc"># launchSettings.json (Perfiles HTTP 5107 / HTTPS 7129)</text>
+    <text x="20" y="12" class="t-file">Services/, Repositories/</text>
+    <text x="385" y="12" class="t-desc"># Capa de negocio e interfaces desacopladas (SOLID)</text>
   </g>
 
-  <g transform="translate(86, 364)">
+  <g transform="translate(86, 502)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
-    <circle cx="6" cy="8" r="4" fill="#10B981"/>
-    <text x="18" y="12" class="t-file">appsettings.json</text>
-    <text x="340" y="12" class="t-desc"># Par&#225;metros de configuraci&#243;n, cadena de conexi&#243;n SQL y JWT</text>
+    <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
+    <text x="20" y="12" class="t-file">Data/, Migrations/</text>
+    <text x="385" y="12" class="t-desc"># PuraSedDbContext, Seeders y migraciones EF Core</text>
   </g>
 
-  <g transform="translate(86, 386)">
+  <g transform="translate(86, 524)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
     <rect x="0" y="1" width="13" height="14" rx="2" fill="#E0F2FE" stroke="#0284C7" stroke-width="1"/>
-    <text x="18" y="12" class="t-file">Program.cs</text>
-    <text x="340" y="12" class="t-desc"># Inyecci&#243;n de dependencias, hubs SignalR y OpenAPI Explorer</text>
+    <text x="18" y="12" class="t-file">appsettings.json, Program.cs</text>
+    <text x="385" y="12" class="t-desc"># Configuraci&#243;n JWT Bearer, DI, Identity y Swagger</text>
   </g>
 
-  <!-- ============================================== -->
-  <!-- CARPETA PuraSed.Client/ (y: 420) -->
-  <!-- ============================================== -->
-  <g transform="translate(56, 420)">
+  <!-- CARPETA PuraSed.Client/ -->
+  <g transform="translate(56, 554)">
     <line x1="-14" y1="10" x2="0" y2="10" class="tree-guide"/>
     <path d="M 0 2 L 6 2 L 9 5 L 18 5 C 19 5 19.5 5.5 19.5 6.5 L 19.5 15 C 19.5 16 19 16.5 18 16.5 L 1.5 16.5 C 0.5 16.5 0 16 0 15 Z" fill="#10B981"/>
-    <text x="26" y="15" class="t-dir" fill="#047857">PuraSed.Client/</text>
-    <text x="370" y="15" class="t-desc"># Capa Frontend: Blazor WebAssembly 10.0 (Cliente Reactivo SPA)</text>
+    <text x="26" y="15" class="t-dir" fill="#34D399">PuraSed.Client/</text>
+    <text x="415" y="15" class="t-desc"># Frontend: Blazor WebAssembly 10.0 (Cliente SPA)</text>
   </g>
 
-  <!-- Sub-guía Client -->
-  <line x1="72" y1="440" x2="72" y2="550" class="tree-guide"/>
+  <line x1="72" y1="574" x2="72" y2="630" class="tree-guide"/>
 
-  <g transform="translate(86, 445)">
+  <g transform="translate(86, 578)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
     <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
-    <text x="20" y="12" class="t-file">Layout/</text>
-    <text x="340" y="12" class="t-desc"># Estructura maestra de navegaci&#243;n (MainLayout, NavMenu)</text>
+    <text x="20" y="12" class="t-file">Layout/, Pages/</text>
+    <text x="385" y="12" class="t-desc"># Navegaci&#243;n y vistas Razor reactivas por rol</text>
   </g>
 
-  <g transform="translate(86, 467)">
+  <g transform="translate(86, 600)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
     <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
-    <text x="20" y="12" class="t-file">Pages/</text>
-    <text x="340" y="12" class="t-desc"># Vistas Razor reactivas (Comandas, Men&#250;, Despacho, Arqueo)</text>
+    <text x="20" y="12" class="t-file">Properties/, wwwroot/</text>
+    <text x="385" y="12" class="t-desc"># Perfiles HTTPS 7020 / HTTP 5068 y estilos CSS</text>
   </g>
 
-  <g transform="translate(86, 489)">
-    <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
-    <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
-    <text x="20" y="12" class="t-file">Properties/</text>
-    <text x="340" y="12" class="t-desc"># launchSettings.json (Perfiles HTTP 5068 / HTTPS 7020)</text>
-  </g>
-
-  <g transform="translate(86, 511)">
-    <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
-    <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="#F59E0B"/>
-    <text x="20" y="12" class="t-file">wwwroot/</text>
-    <text x="340" y="12" class="t-desc"># Hojas de estilo CSS globales, iconos y runtime WebAssembly</text>
-  </g>
-
-  <g transform="translate(86, 533)">
+  <g transform="translate(86, 622)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
     <rect x="0" y="1" width="13" height="14" rx="2" fill="#E0F2FE" stroke="#0284C7" stroke-width="1"/>
     <text x="18" y="12" class="t-file">Program.cs</text>
-    <text x="340" y="12" class="t-desc"># Inicializador WebAssembly, inyecci&#243;n de HttpClient y servicios</text>
+    <text x="385" y="12" class="t-desc"># Inicializador WebAssembly, HttpClient y servicios</text>
   </g>
 </svg>

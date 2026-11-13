@@ -12,6 +12,18 @@
 </p>
 
 <p align="center">
+  <a href="https://www.figma.com/design/DsNPoA8toR0BhSr1jCQvq1/Pura-Sed?node-id=0-1&t=fsQYngq4znHIIZzZ-1"><b>Prototipo Figma</b></a>
+  &nbsp;·&nbsp;
+  <a href="#arquitectura-del-sistema"><b>Arquitectura</b></a>
+  &nbsp;·&nbsp;
+  <a href="#seguridad-identity-jwt-y-matriz-de-roles"><b>Seguridad &amp; RBAC</b></a>
+  &nbsp;·&nbsp;
+  <a href="#guía-de-ejecución-local"><b>Ejecución Local</b></a>
+  &nbsp;·&nbsp;
+  <a href="https://jannysgarrido21.atlassian.net/jira/software/projects/SCRUM/boards/1"><b>Tablero Jira</b></a>
+</p>
+
+<p align="center">
   <b>Escuela Politécnica Nacional (EPN)</b> · Facultad de Ingeniería Eléctrica y Electrónica (FIEE)<br/>
   <sub>ITID803 · Diseño de Aplicaciones y Servicios para Internet (DASI) · Periodo Académico 2026</sub>
 </p>
@@ -54,15 +66,16 @@ El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilida
 | N° | Sección del Proyecto | Alcance y Contenido Técnico |
 | :---: | :--- | :--- |
 | `01` | [**Sobre el Proyecto y Objetivo del Sistema**](#sobre-el-proyecto-y-objetivo-del-sistema) | Problemática de bares nocturnos, propuesta de valor y alcances funcionales |
-| `02` | [**Arquitectura del Sistema**](#arquitectura-del-sistema) | Arquitectura en capas desacoplada, WebSockets y ciclo de vida de comandas |
+| `02` | [**Arquitectura del Sistema**](#arquitectura-del-sistema) | Monolito modular desacoplado, diagrama de capas, SignalR y ciclo de vida |
 | `03` | [**Casos de Uso**](#casos-de-uso) | Diagrama UML formal interactivo, actores operativos y matriz funcional |
 | `04` | [**Modelo de Base de Datos – Diagrama Entidad-Relación**](#modelo-de-base-de-datos--diagrama-entidad-relación) | Modelo relacional, 23 entidades, claves PK/FK y cardinalidades |
-| `05` | [**Prototipo Interactivo y Sistema de Diseño UI/UX en Figma**](#prototipo-interactivo-y-sistema-de-diseño-uiux-en-figma) | Prototipo navegable oficial de 32 pantallas Full HD organizado en 3 subsistemas |
-| `06` | [**Estructura de la Solución .NET**](#estructura-de-la-solución-net) | Árbol estructurado de carpetas, responsabilidades de WebApi y Blazor Client |
-| `07` | [**Guía de Ejecución Local**](#guía-de-ejecución-local) | Requisitos previos (.NET 10, SQL Server), clonación, migraciones y arranque |
-| `08` | [**Estrategia de Ramas y Flujo en Git**](#estrategia-de-ramas-y-flujo-en-git) | Modelo GitFlow, convención de ramas `develop`/`feature` y commits semánticos |
-| `09` | [**Backlog, Planificación y Sprints**](#backlog-planificación-y-sprints) | Metodología Scrum, historias de usuario, estimación y tablero Jira Cloud |
-| `10` | [**Licencia y Uso Académico**](#licencia-y-uso-académico) | Régimen institucional Escuela Politécnica Nacional (EPN - FIEE) |
+| `05` | [**Prototipo Interactivo y Diseño en Figma**](#prototipo-interactivo-y-diseño-en-figma) | Lienzo oficial de 32 pantallas Full HD organizado en 3 subsistemas |
+| `06` | [**Seguridad, Identity JWT y Matriz de Roles**](#seguridad-identity-jwt-y-matriz-de-roles) | Autenticación Bearer, catálogo DRY `Roles.cs` y cuentas de prueba |
+| `07` | [**Estructura de la Solución .NET**](#estructura-de-la-solución-net) | Explorador visual de carpetas, capas de WebApi y Blazor WebAssembly |
+| `08` | [**Guía de Ejecución Local**](#guía-de-ejecución-local) | Requisitos previos (.NET 10, SQL Server), sembrado automático y Swagger UI |
+| `09` | [**Estrategia de Ramas y Flujo en Git**](#estrategia-de-ramas-y-flujo-en-git) | Modelo GitFlow animado, ramas `develop`/`feature/*` y commits semánticos |
+| `10` | [**Backlog, Planificación y Sprints**](#backlog-planificación-y-sprints) | Metodología Scrum, historias de usuario, estimación y tablero Jira Cloud |
+| `11` | [**Licencia y Uso Académico**](#licencia-y-uso-académico) | Régimen institucional Escuela Politécnica Nacional (EPN - FIEE) |
 
 ---
 
@@ -73,7 +86,7 @@ El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilida
 | Dimensión Operativa | Gestión Tradicional (Manual) | Solución Digital con PuraSed |
 | :--- | :--- | :--- |
 | **Atención en Mesa** | Comandas físicas en papel; desplazamientos constantes y confusiones de mesa. | **Acceso sin fricción**: el cliente pide y consulta el estado de su orden desde su dispositivo disponible en mesa sin registro previo. |
-| **Catálogo y Menú** | Cartas físicas o imágenes estáticas en Canva que no avisan de productos agotados. | **Disponibilidad **: bloqueo automático de insumos agotados y promociones por franja horaria. |
+| **Catálogo y Menú** | Cartas físicas o imágenes estáticas en Canva que no avisan de productos agotados. | **Disponibilidad en tiempo real**: bloqueo automático de insumos agotados y promociones por franja horaria. |
 | **Despacho a Cocina y Bar** | Comandas divididas manualmente entre coctelería y cocina con extravíos frecuentes. | **Enrutamiento automático con SignalR**: derivación simultánea de bebidas a la barra y comidas a la cocina. |
 | **Cobro y Facturación** | Cuentas divididas a mano, validación tardía de transferencias y cuadres manuales. | **Pasarela integrada y arqueo**: cobro con tarjeta, verificación de transferencias y emisión secuencial de facturas. |
 
@@ -95,6 +108,12 @@ PuraSed adopta una **arquitectura monolítica modular en capas**. Todo el sistem
 
 <p align="center">
   <img src="./assets/Arquitectura_Pura_Sed.png" width="100%" alt="Diagrama de Arquitectura de PuraSed" />
+</p>
+
+### Flujo Animado por Capas y SignalR
+
+<p align="center">
+  <img src="./assets/architecture.svg" width="100%" alt="Arquitectura en Capas Desacoplada y Flujo Reactivo SignalR" />
 </p>
 
 ### Capas y responsabilidades
@@ -145,131 +164,112 @@ El modelo permite relacionar los pedidos con las sesiones de mesa, controlar aut
 
 ---
 
-## <img src="./assets/icons/figma.svg" width="22" height="22" align="absmiddle" /> Prototipo Interactivo y Sistema de Diseño UI/UX en Figma
+## <img src="./assets/icons/figma.svg" width="22" height="22" align="absmiddle" /> Prototipo Interactivo y Diseño en Figma
 
-El diseño visual y prototipo interactivo de **PuraSed** encarna la identidad de **Taller Indie Craft & Herencia Andina** del establecimiento *Sereno Moreno* (Centro Histórico de Quito), rechazando plantillas corporativas genéricas. El sistema se estructuró en Figma en **32 pantallas Full HD (1920×1080)** distribuidas en 3 módulos funcionales con navegación interactiva completa (*flows* y estados de comanda):
+El sistema visual de **PuraSed** encarna la estética de **Taller Indie Craft & Herencia Andina** (*Sereno Moreno*, Centro Histórico de Quito), alejándose de plantillas genéricas. En Figma se diseñaron **32 pantallas Full HD (1920×1080)** con flujos navegables completos divididos en 3 módulos coordinados:
 
 <p align="center">
   <a href="https://www.figma.com/design/DsNPoA8toR0BhSr1jCQvq1/Pura-Sed?node-id=0-1&t=fsQYngq4znHIIZzZ-1" target="_blank" rel="noopener noreferrer">
-    <img src="./assets/figma-board.svg" width="100%" alt="Prototipo Interactivo en Figma — PuraSed" />
+    <img src="./assets/figma-board.svg" width="100%" alt="Prototipo Interactivo Oficial en Figma — PuraSed" />
   </a>
 </p>
 
-### Estructura Oficial de Módulos en Figma
+<p align="center">
+  <img src="./assets/figma-modules.svg" width="100%" alt="Arquitectura Modular de 3 Subsistemas en Figma: Front-Office POS 3D, KDS/KDD Salón y Caja Analítica" />
+</p>
 
-<table>
-  <thead>
-    <tr>
-      <th width="33%" align="center">
-        <b>1. Front-Office: Menú Orbital POS 3D</b><br/>
-        <sub>Angelo Conterón (Frontend Lead)</sub>
-      </th>
-      <th width="33%" align="center">
-        <b>2. Back-Office: KDS / KDD y Salón</b><br/>
-        <sub>Jannys Garrido (Scrum Master)</sub>
-      </th>
-      <th width="33%" align="center">
-        <b>3. Back-Office: Caja y Analítica</b><br/>
-        <sub>Ángel Chicaiza (Backend Architect)</sub>
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td valign="top">
-        <ul>
-          <li><b>Bienvenida y acceso a mesa</b> (cero fricción, sin registro forzoso).</li>
-          <li><b>Menú Orbital 3D</b> en 5 capítulos culturales (Mucha Chicha, Pida No Más, Lleve Lleve, Si Hay Si Hay, Oro Ancestral).</li>
-          <li><b>Detalle con botella rotada a -45°</b> en Three.js y ticket tiza inclinado a 1.2°.</li>
-          <li><b>Drawer comanda lateral</b>, timeline en tiempo real, pasarela de pago, factura digital y encuesta de satisfacción.</li>
-        </ul>
-      </td>
-      <td valign="top">
-        <ul>
-          <li><b>Login operativo</b> con autenticación JWT y roles RBAC.</li>
-          <li><b>KDD Barra de Fermentos</b>: despacho táctil de bebidas y cócteles con aislamiento.</li>
-          <li><b>KDS Cocina de Paila</b>: gestión cronológica de comidas calientes con cambio de estados.</li>
-          <li><b>Formulario de reservas públicas</b> y <b>Mapa interactivo de mesas</b> con agenda sin solapamientos.</li>
-        </ul>
-      </td>
-      <td valign="top">
-        <ul>
-          <li><b>Punto de Caja y Liquidación</b>: precuenta en ticket tiza, verificación de transferencias y arqueo.</li>
-          <li><b>Control de Inventario y Stock</b>: conmutación de insumos y marcado de platos agotados (HU-10).</li>
-          <li><b>Catálogo de Menú y Promociones</b>: combos con descuentos porcentuales.</li>
-          <li><b>Directorio de Personal</b>, matriz de 8 roles, bitácora inmutable y reportes de cierre.</li>
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="3" align="center">
-        <a href="https://www.figma.com/design/DsNPoA8toR0BhSr1jCQvq1/Pura-Sed?node-id=0-1&t=fsQYngq4znHIIZzZ-1" target="_blank">
-          <b>🚀 Abrir Prototipo Interactivo en Figma (Lienzo Oficial PuraSed) →</b>
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+### Distribución Funcional por Subsistema
+
+| Módulo en Figma | Responsable | Enfoque y Flujos Principales |
+| :--- | :--- | :--- |
+| **1. Front-Office: Menú Orbital POS 3D** | **Angelo Conterón** (*Frontend Lead*) | Bienvenida en mesa sin fricción, Menú Orbital 3D en 5 capítulos culturales, vista detalle en Three.js (-45°) con ticket tiza inclinado (1.2°), drawer comanda, timeline en vivo, pago, factura y encuesta. |
+| **2. Back-Office: KDS / KDD y Salón** | **Jannys Garrido** (*Scrum Master*) | Login RBAC, pantalla táctil KDD Barra de Fermentos, pantalla KDS Cocina de Paila por orden cronológico, formulario de reservas públicas y mapa interactivo de mesas. |
+| **3. Back-Office: Caja, Stock y Analítica** | **Ángel Chicaiza** (*Backend Architect*) | Punto de caja y arqueo diario, validación de transferencias, inventario y conmutación de platos agotados (HU-10), promociones, matriz de 8 roles, bitácora y reportes. |
+
+<details>
+<summary><b>Ver desglose completo de pantallas y tokens visuales por módulo</b></summary>
+
+* **Paleta e Identidad (*Taller Indie Craft*):** Fondo basalto (`#121614` / `#1F2421`), Oro Inti (`#E59F38`), Blanco Tiza (`#FFFDF9`) y Terracota Paila (`#B85335`).
+* **Front-Office (Comensal):** Selección de mesa sin registro previo, carrusel orbital y detalle 3D (`Mockups_Figma`), seguimiento reactivo de comanda (`Pendiente` → `En preparación` → `Listo` → `Entregado`) y encuesta post-consumo.
+* **Back-Office Operativo (Salón, Cocina y Barra):** Autenticación del personal, aislamiento KDS/KDD por área y prevención de solapamiento de reservas en mapa interactivo de mesas.
+* **Back-Office Gerencial (Administración):** Liquidación en ticket tiza, administración del menú por franjas y control de auditoría del personal.
+
+</details>
+
+---
+
+## <img src="./assets/icons/roles.svg" width="22" height="22" align="absmiddle" /> Seguridad, Identity JWT y Matriz de Roles
+
+El control de acceso se implementa con **ASP.NET Core Identity**, emisión de tokens **JWT Bearer (HMAC-SHA256)** mediante `TokenService` y políticas centralizadas bajo principios **SOLID** y **DRY** en `PuraSed.WebApi/Constants/Roles.cs` (`8` roles independientes agrupados en constantes para `[Authorize(Roles = ...)]`).
+
+<p align="center">
+  <img src="./assets/security-rbac.svg" width="100%" alt="Pipeline JWT Bearer y Matriz de 8 Roles RBAC en PuraSed" />
+</p>
+
+### Endpoints de Autenticación y Credenciales Sembradas (`IdentitySeeder`)
+
+En entorno de desarrollo (`Development`), `Program.cs` ejecuta automáticamente las migraciones de EF Core y siembra la base de datos mediante `IdentitySeeder`, `ProductoSeeder` y `MesaSeeder`. Las solicitudes autenticadas obtienen su token en `POST /api/Auth/login` (o registro público en `POST /api/Auth/register`):
+
+| Usuario | Correo Electrónico | Contraseña Seed | Rol(es) Asignado(s) | Alcance Operativo |
+| :--- | :--- | :--- | :--- | :--- |
+| `admin` | `admin@purased.com` | `Admin123` | `Admin`, `SuperAdmin` | Control total, bitácora, menú, promociones, reportes |
+| `mesero` | `mesero@purased.com` | `Mesero123` | `Mesero` | Toma de pedidos en mesas (`HU-13`), estado de salón |
+| `cocina` | `cocina@purased.com` | `Cocina123` | `AdminCocina` | Panel KDS de cocina e inventario de platos (`HU-11`, `HU-15`) |
+| `bar` | `bar@purased.com` | `Bar12345` | `AdminBar` | Panel KDD de barra, fermentos y bebidas (`HU-11`, `HU-15`) |
+| `asistente` | `asistente@purased.com` | `Asistente123` | `Asistente` | Gestión de reservas y disponibilidad de mesas (`HU-18`) |
+| `cliente` | `cliente@purased.com` | `Cliente123` | `Cliente`, `Usuario` | Auto-orden desde tablet en mesa (`HU-01`, `HU-13`) |
 
 ---
 
 ## <img src="./assets/icons/estructura.svg" width="22" height="22" align="absmiddle" /> Estructura de la Solución .NET
 
-El repositorio utiliza el formato unificado de solución moderna de .NET (`.slnx`), garantizando un desacoplamiento limpio entre la capa de presentación y los servicios backend:
+El repositorio utiliza el formato unificado moderno de .NET (`.slnx`), manteniendo separadas las responsabilidades de UI WebAssembly, Web API REST, lógica de negocio (`Services/`) y acceso a datos (`Repositories/`):
 
 <p align="center">
-  <img src="./assets/structure.svg" width="100%" alt="Explorador de Estructura de la Solución" />
+  <img src="./assets/structure.svg" width="100%" alt="Explorador Visual de Estructura de la Solución PuraSed" />
 </p>
+
+<details>
+<summary><b>Ver árbol detallado de carpetas y archivos del repositorio</b></summary>
 
 ```text
 pura-sed/
-├── PuraSed.slnx            # Archivo contenedor de la solución .NET (formato moderno)
-├── README.md               # Documentación técnica interactiva del sistema
-├── .gitignore              # Exclusiones de compilación binaria (bin, obj)
-├── Entregables/                                  # Documentación y diagramas del proyecto
-│   ├── SP1/                                      # Alcance y requisitos iniciales
-│   └── SP2/                                      # Arquitectura, UML y diseño del prototipo
-│       ├── Arquitectura del sistema/
-│       │   ├── Arquitectura_Pura_Sed.png
-│       │   └── Diseño arquitectura sistema.md
-│       ├── Diagramas UML/
-│       │   ├── Diagramas Casos de Uso/
-│       │   │   ├── Pedido.png
-│       │   │   ├── Reserva Mesas.png
-│       │   │   ├── Pagos y Facturación.png
-│       │   │   └── Reportes y estadisticas.png
-│       │   ├── Diagrama de clases/
-│       │   │   ├── PuraSed_Diagrama_ER.png
-│       │   │   ├── PuraSed_DIS02_Diccionario_Ampliado.docx
-│       │   │   └── PuraSed_DIS03_Convenciones_BD.docx
-│       │   └── Listado de entidades y atributos principales.pdf
-│       └── Link Figma_prototipo.md
-│
-├── assets/                 # Recursos vectoriales SVG, animaciones e identidad visual
-│   ├── banner.svg          # Hero animado con burbujas y espuma de cerveza
-│   ├── tags.svg            # Lienzo tecnológico con logos vectoriales oficiales
-│   ├── architecture.svg    # Arquitectura en capas y ciclo SignalR con flujo animado
-│   ├── casos-de-uso.svg    # Diagrama UML formal interactivo con actores y casos de uso
-│   ├── structure.svg       # Explorador visual de la solución y componentes
-│   ├── jira-board.svg      # Tarjeta interactiva de acceso al tablero Jira Software
-│   ├── PuraSed_Diagrama_ER.svg  # Diagrama entidad-relación del sistema
-│   ├── team/               # Tarjetas vectoriales del Scrum Team
-│   └── icons/              # Iconografía vectorial cromática por sección
-├── retrospective/          # Acualización de semana a semana de como se avanza en el trabajo colaborativo
-│
-├── PuraSed.WebApi/         # Backend: ASP.NET Core Web API 10.0 (REST & SignalR)
-│   ├── Controllers/        # Controladores RESTful para mesas, pedidos, menú y caja
-│   ├── Properties/         # launchSettings.json (Perfiles HTTP 5107 / HTTPS 7129)
-│   ├── appsettings.json    # Cadenas de conexión a SQL Server y tokens JWT
-│   └── Program.cs          # Inyección de dependencias, hubs SignalR y OpenAPI Explorer
-│
-└── PuraSed.Client/         # Frontend: Blazor WebAssembly 10.0 (Cliente Reactivo SPA)
-    ├── Layout/             # Estructura maestra de navegación (MainLayout, NavMenu)
-    ├── Pages/              # Vistas Razor reactivas por rol de usuario
-    ├── Properties/         # launchSettings.json (Perfiles HTTP 5068 / HTTPS 7020)
-    ├── wwwroot/            # Hojas de estilo CSS globales, iconos y runtime WebAssembly
-    └── Program.cs          # Inicializador WebAssembly, inyección de HttpClient y servicios
+├── PuraSed.slnx                        # Solución moderna .NET 10 (WebApi + Client)
+├── README.md                           # Documentación técnica y visual del sistema
+├── .gitignore                          # Exclusión de artefactos binarios (bin/, obj/)
+├── assets/                             # SVGs animados adaptativos (Dark/Light) e íconos
+│   ├── banner.svg, tags.svg            # Hero con burbujas y lienzo tecnológico oficial
+│   ├── figma-board.svg, figma-modules.svg  # Portal oficial y 3 módulos Figma
+│   ├── architecture.svg, casos-de-uso.svg  # Diagramas animados de arquitectura y UML
+│   ├── security-rbac.svg, git-flow.svg # Matriz JWT/RBAC y flujo GitFlow animado
+│   ├── jira-board.svg, structure.svg   # Portal Scrum en Jira Cloud y explorador .NET
+│   ├── PuraSed_Diagrama_ER.svg         # Diagrama Entidad-Relación (23 entidades)
+│   └── team/, icons/                   # Tarjetas orbitales del equipo e iconografía SVG
+├── Entregables/                        # Artefactos académicos y documentación EPN
+│   ├── SP1/, SP2/, Sprint2/            # Alcance, HU, UML, ER y Acoplamiento_Roles.md
+│   └── Mockups_Figma/                  # Prototipos HTML5/Three.js, capturas y manuales
+├── retrospective/                      # Actas de retrospectiva Scrum por sprint
+│   ├── README.md                       # Índice de retrospectivas
+│   ├── SP1_REVIEW.md                   # Cierre y aprendizajes Sprint 1
+│   ├── SP2_RREVIEW.md                  # Cierre y aprendizajes Sprint 2
+│   └── SP3_REVIEW.md                   # Cierre y aprendizajes Sprint 3
+├── PuraSed.WebApi/                     # Backend ASP.NET Core Web API (.NET 10)
+│   ├── Constants/                      # Roles.cs (8 roles DRY y constantes [Authorize])
+│   ├── Controllers/                    # Auth, Mesas, Pagos, Pedidos, Productos, Reportes, Usuarios
+│   ├── Data/                           # PuraSedDbContext, IdentitySeeder, ProductoSeeder, MesaSeeder
+│   ├── DTOs/, Models/, Migrations/     # Contratos tipados, entidades y migraciones EF Core
+│   ├── Repositories/, Services/        # Patrón Repository y servicios SOLID desacoplados
+│   ├── Properties/launchSettings.json  # Perfiles HTTPS 7129 / HTTP 5107
+│   ├── appsettings.json                # Configuración SQL Server, Jwt:Issuer/Audience/Key
+│   └── Program.cs                      # DI, Identity + JWT Bearer, CORS, Seeders y Swagger
+└── PuraSed.Client/                     # Frontend Blazor WebAssembly (.NET 10 SPA)
+    ├── Layout/, Pages/                 # Navegación maestra y vistas Razor por rol
+    ├── Properties/launchSettings.json  # Perfiles HTTPS 7020 / HTTP 5068
+    ├── wwwroot/                        # Assets estáticos, CSS globales y runtime WASM
+    └── Program.cs                      # Configuración WebAssembly, HttpClient y servicios
 ```
+
+</details>
 
 ---
 
@@ -299,7 +299,8 @@ pura-sed/
    ```bash
    dotnet run --project PuraSed.WebApi --launch-profile https
    ```
-   * *Swagger / OpenAPI UI:* `https://localhost:7129/openapi/v1.json`
+   > Al arrancar en entorno `Development`, el backend aplica automáticamente las migraciones de EF Core y ejecuta `IdentitySeeder`, `ProductoSeeder` y `MesaSeeder`. La raíz `/` redirige directamente a la interfaz interactiva de **Swagger** con botón `Authorize (Bearer JWT)`.
+   * *Swagger UI interactiva:* `https://localhost:7129/swagger`
    * *Puerto HTTPS:* `7129` | *Puerto HTTP:* `5107`
 
 4. **Ejecutar el Frontend (Blazor WebAssembly):**
@@ -314,15 +315,11 @@ pura-sed/
 
 ## <img src="./assets/icons/git.svg" width="22" height="22" align="absmiddle" /> Estrategia de Ramas y Flujo en Git
 
-El proyecto sigue una adaptación rigurosa de **GitFlow**:
+El proyecto sigue una adaptación rigurosa de **GitFlow** sobre ramas de integración continua y entregables incrementales por sprint:
 
-```text
-main       ─────────────────────────────────────────── [Producción / Versiones estables]
-               \                                /
-develop     ────●──────●──────●──────●────────●─────── [Integración continua]
-                  \   /        \   /
-feature/*          ──●──────────●───────────────────── [Historias de usuario / Sprints]
-```
+<p align="center">
+  <img src="./assets/git-flow.svg" width="100%" alt="Diagrama GitFlow Animado de PuraSed: main, develop y feature/*" />
+</p>
 
 ### Políticas de Integración
 

@@ -1,65 +1,160 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 150" width="100%" height="100%" role="img" aria-labelledby="jiraTitle jiraDesc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 156" width="100%" height="100%" role="img" aria-labelledby="jiraTitle jiraDesc">
   <title id="jiraTitle">Tablero Scrum en Atlassian Jira Software</title>
   <desc id="jiraDesc">Acceso directo al tablero Scrum oficial de PuraSed en Atlassian Jira Cloud.</desc>
   <defs>
     <style>
-      .j-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
-      .j-desc  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 400; fill: #475569; }
-      .j-tag   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #1E293B; }
+      :root {
+        --card-bg: #FFFFFF;
+        --card-bd: #D8DEE4;
+        --title-clr: #0F172A;
+        --desc-clr: #475569;
+        --p1-bg: #E0F2FE;
+        --p1-bd: #BAE6FD;
+        --p1-tx: #0369A1;
+        --p2-bg: #ECFDF5;
+        --p2-bd: #A7F3D0;
+        --p2-tx: #047857;
+        --p3-bg: #F1F5F9;
+        --p3-bd: #CBD5E1;
+        --p3-tx: #475569;
+        --sh-clr: rgba(0, 82, 204, 0.12);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --card-bg: #161B22;
+          --card-bd: #30363D;
+          --title-clr: #F0F6FC;
+          --desc-clr: #8B949E;
+          --p1-bg: rgba(14, 165, 233, 0.15);
+          --p1-bd: rgba(56, 189, 248, 0.35);
+          --p1-tx: #7DD3FC;
+          --p2-bg: rgba(16, 185, 129, 0.15);
+          --p2-bd: rgba(52, 211, 153, 0.35);
+          --p2-tx: #6EE7B7;
+          --p3-bg: #21262D;
+          --p3-bd: #30363D;
+          --p3-tx: #C9D1D9;
+          --sh-clr: rgba(0, 0, 0, 0.48);
+        }
+      }
+
+      .j-card  { fill: var(--card-bg); stroke: var(--card-bd); stroke-width: 1.4; }
+      .j-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 18.5px; font-weight: 700; fill: var(--title-clr); }
+      .j-desc  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 400; fill: var(--desc-clr); }
+      .j-tag   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 600; }
       .j-btn-t { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12.5px; font-weight: 700; fill: #FFFFFF; }
-      
-      @keyframes pulseDot {
-        0%, 100% { transform: scale(1); opacity: 1; }
-        50%      { transform: scale(1.3); opacity: 0.5; }
+
+      @keyframes radarPulse {
+        0%   { transform: scale(1); opacity: 0.75; }
+        70%  { transform: scale(2.3); opacity: 0; }
+        100% { transform: scale(2.3); opacity: 0; }
       }
       .j-beacon {
+        transform-box: fill-box;
         transform-origin: center;
-        animation: pulseDot 2s ease-in-out infinite;
+        animation: radarPulse 2.2s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+      }
+
+      @keyframes jiraOrbit {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(-360deg); }
+      }
+      .j-orbit {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: jiraOrbit 30s linear infinite;
+      }
+
+      @keyframes jiraFloat {
+        0%, 100% { transform: translateY(0px); }
+        50%      { transform: translateY(-2px); }
+      }
+      .j-float {
+        animation: jiraFloat 3.8s ease-in-out infinite;
+      }
+
+      @keyframes shimmerSweep {
+        0%   { transform: translateX(-80px) skewX(-22deg); opacity: 0; }
+        18%  { opacity: 0.20; }
+        42%  { transform: translateX(260px) skewX(-22deg); opacity: 0; }
+        100% { transform: translateX(260px) skewX(-22deg); opacity: 0; }
+      }
+      .j-shimmer {
+        opacity: 0;
+        transform: translateX(-80px) skewX(-22deg);
+        animation: shimmerSweep 5.2s ease-in-out infinite 1.2s;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .j-beacon, .j-orbit, .j-float, .j-shimmer { animation: none; }
       }
     </style>
-    <filter id="jiraShadow" x="-2%" y="-6%" width="104%" height="120%">
-      <feDropShadow flood-color="#0052CC" flood-opacity="0.10" dx="0" dy="3" stdDeviation="5"/>
+
+    <linearGradient id="jiraBtnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#0052CC"/>
+      <stop offset="100%" stop-color="#0284C7"/>
+    </linearGradient>
+
+    <filter id="jiraShadow" x="-2%" y="-8%" width="104%" height="124%">
+      <feDropShadow flood-color="var(--sh-clr)" dx="0" dy="4" stdDeviation="7"/>
     </filter>
-    <filter id="btnShadow" x="-5%" y="-10%" width="110%" height="130%">
-      <feDropShadow flood-color="#0052CC" flood-opacity="0.25" dx="0" dy="2" stdDeviation="3"/>
+    <filter id="btnShadow" x="-6%" y="-12%" width="112%" height="132%">
+      <feDropShadow flood-color="#0052CC" flood-opacity="0.30" dx="0" dy="3" stdDeviation="4"/>
     </filter>
+
+    <clipPath id="jiraCardClip">
+      <rect x="10" y="10" width="940" height="136" rx="14"/>
+    </clipPath>
+    <clipPath id="jiraBtnClip">
+      <rect x="0" y="0" width="204" height="46" rx="10"/>
+    </clipPath>
   </defs>
 
-  <!-- Tarjeta contenedor blanca -->
-  <rect x="10" y="8" width="940" height="134" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#jiraShadow)"/>
-  <rect x="10" y="8" width="6" height="134" fill="#0052CC" rx="3"/>
-
-  <!-- Logo Jira Oficial Vectorial -->
-  <g transform="translate(34, 32)">
-    <circle cx="42" cy="42" r="36" fill="#0052CC"/>
-    <path d="M42 17 L57 32 L42 47 L27 32 Z" fill="#2684FF"/>
-    <path d="M42 28 L53 39 L42 50 L31 39 Z" fill="#FFFFFF"/>
-    <path d="M42 39 L57 54 L42 69 L27 54 Z" fill="#0052CC" opacity="0.35"/>
+  <!-- Tarjeta Contenedor Adaptativa -->
+  <rect class="j-card" x="10" y="10" width="940" height="136" rx="14" filter="url(#jiraShadow)"/>
+  <g clip-path="url(#jiraCardClip)">
+    <rect x="10" y="10" width="6" height="136" fill="#0052CC"/>
   </g>
 
-  <!-- Bloque Central de Información (Con margen seguro para evitar colisión) -->
-  <g transform="translate(130, 24)">
-    <text class="j-title" x="0" y="24">Tablero Scrum del Proyecto &#183; Atlassian Jira Software</text>
-    <text class="j-desc" x="0" y="47">Seguimiento de historias de usuario, sprints y flujo del ciclo de vida.</text>
-
-    <!-- Chips informativos alineados -->
-    <g transform="translate(0, 64)">
-      <rect x="0" y="0" width="125" height="24" rx="12" fill="#E0F2FE" stroke="#BAE6FD" stroke-width="1"/>
-      <circle cx="12" cy="12" r="3.5" fill="#0284C7" class="j-beacon"/>
-      <text class="j-tag" x="22" y="16" fill="#0369A1">Jira Cloud Live</text>
-
-      <rect x="135" y="0" width="135" height="24" rx="12" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
-      <circle cx="147" cy="12" r="3.5" fill="#16A34A"/>
-      <text class="j-tag" x="157" y="16" fill="#15803D">Scrum Framework</text>
-
-      <rect x="280" y="0" width="190" height="24" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
-      <text class="j-tag" x="375" y="16" text-anchor="middle" fill="#475569">Backlog &#8594; Sprints &#8594; Done</text>
+  <!-- Logo Jira Oficial Vectorial con Anillo Orbital -->
+  <g>
+    <circle class="j-orbit" cx="74" cy="78" r="44" fill="none" stroke="#2684FF" stroke-width="1.6" stroke-dasharray="4 6" stroke-linecap="round" opacity="0.6"/>
+    <circle cx="74" cy="78" r="36" fill="#0052CC"/>
+    <g class="j-float">
+      <path d="M74 52 L89 67 L74 82 L59 67 Z" fill="#2684FF"/>
+      <path d="M74 63 L85 74 L74 85 L63 74 Z" fill="#FFFFFF"/>
+      <path d="M74 74 L89 89 L74 104 L59 89 Z" fill="#0747A6" opacity="0.45"/>
     </g>
   </g>
 
-  <!-- Botón de Enlace al Tablero en Vivo (Ubicado a la derecha sin solapamientos) -->
-  <g transform="translate(735, 52)">
-    <rect width="195" height="44" rx="8" fill="#0052CC" filter="url(#btnShadow)"/>
-    <text class="j-btn-t" x="97" y="27" text-anchor="middle">Abrir Tablero en Jira &#8594;</text>
+  <!-- Bloque Central de Información -->
+  <g transform="translate(140, 32)">
+    <text class="j-title" x="0" y="20">Tablero Scrum del Proyecto &#183; Atlassian Jira Software</text>
+    <text class="j-desc" x="0" y="45">Seguimiento de historias de usuario, planificaci&#243;n de sprints y flujo del ciclo de vida.</text>
+
+    <!-- Chips informativos alineados -->
+    <g transform="translate(0, 62)">
+      <rect x="0" y="0" width="128" height="26" rx="13" fill="var(--p1-bg)" stroke="var(--p1-bd)" stroke-width="1"/>
+      <circle class="j-beacon" cx="15" cy="13" r="4.5" fill="#0EA5E9"/>
+      <circle cx="15" cy="13" r="3.5" fill="#0EA5E9"/>
+      <text class="j-tag" x="26" y="17" fill="var(--p1-tx)">Jira Cloud Live</text>
+
+      <rect x="138" y="0" width="142" height="26" rx="13" fill="var(--p2-bg)" stroke="var(--p2-bd)" stroke-width="1"/>
+      <circle cx="152" cy="13" r="3.5" fill="#10B981"/>
+      <text class="j-tag" x="163" y="17" fill="var(--p2-tx)">Scrum Framework</text>
+
+      <rect x="290" y="0" width="196" height="26" rx="13" fill="var(--p3-bg)" stroke="var(--p3-bd)" stroke-width="1"/>
+      <text class="j-tag" x="388" y="17" text-anchor="middle" fill="var(--p3-tx)">Backlog &#8594; Sprints &#8594; Done</text>
+    </g>
+  </g>
+
+  <!-- Botón de Enlace al Tablero en Vivo con Shimmer -->
+  <g transform="translate(724, 55)" filter="url(#btnShadow)">
+    <g clip-path="url(#jiraBtnClip)">
+      <rect width="204" height="46" rx="10" fill="url(#jiraBtnGrad)"/>
+      <rect class="j-shimmer" x="0" y="-10" width="46" height="66" fill="#FFFFFF"/>
+    </g>
+    <text class="j-btn-t" x="102" y="27.5" text-anchor="middle">Abrir Tablero en Jira &#8594;</text>
   </g>
 </svg>

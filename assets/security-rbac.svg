@@ -1,0 +1,238 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 356" width="100%" height="100%" role="img" aria-labelledby="secTitle secDesc">
+  <title id="secTitle">Seguridad ASP.NET Core Identity, JWT Bearer y Matriz RBAC PuraSed</title>
+  <desc id="secDesc">Pipeline animado de autenticaci&#243;n JWT Bearer HMAC-SHA256 y distribuci&#243;n DRY de los 8 roles en Roles.cs.</desc>
+  <defs>
+    <style>
+      :root {
+        --sec-bg: #F6F8FA;
+        --sec-bd: #D0D7DE;
+        --sec-card: #FFFFFF;
+        --sec-card-bd: #E2E8F0;
+        --sec-pill: #F1F5F9;
+        --sec-pill-bd: #CBD5E1;
+        --sec-txt: #0F172A;
+        --sec-sub: #475569;
+        --sec-muted: #64748B;
+        --sec-live-bg: #ECFDF5;
+        --sec-live-bd: #A7F3D0;
+        --sec-live-tx: #047857;
+        --sec-pipe-bg: #EFF6FF;
+        --sec-pipe-bd: #BFDBFE;
+        --sec-sh: rgba(15, 23, 42, 0.06);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --sec-bg: #0D1117;
+          --sec-bd: #30363D;
+          --sec-card: #161B22;
+          --sec-card-bd: #30363D;
+          --sec-pill: #0D1117;
+          --sec-pill-bd: #21262D;
+          --sec-txt: #F0F6FC;
+          --sec-sub: #8B949E;
+          --sec-muted: #6E7681;
+          --sec-live-bg: rgba(16, 185, 129, 0.14);
+          --sec-live-bd: rgba(52, 211, 153, 0.35);
+          --sec-live-tx: #6EE7B7;
+          --sec-pipe-bg: #161B22;
+          --sec-pipe-bd: #30363D;
+          --sec-sh: rgba(0, 0, 0, 0.45);
+        }
+      }
+
+      .s-canvas  { fill: var(--sec-bg); stroke: var(--sec-bd); stroke-width: 1.4; }
+      .s-card    { fill: var(--sec-card); stroke: var(--sec-card-bd); stroke-width: 1.25; }
+      .s-pill    { fill: var(--sec-pill); stroke: var(--sec-pill-bd); stroke-width: 1; }
+      .s-pipe    { fill: var(--sec-pipe-bg); stroke: var(--sec-pipe-bd); stroke-width: 1.1; }
+
+      .s-h1      { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 17px; font-weight: 800; fill: var(--sec-txt); }
+      .s-h2      { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12.5px; font-weight: 500; fill: var(--sec-sub); }
+      .s-title   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14.5px; font-weight: 800; fill: var(--sec-txt); }
+      .s-chip    { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: var(--sec-txt); text-anchor: middle; }
+      .s-foot    { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; font-weight: 600; fill: var(--sec-sub); text-anchor: middle; }
+      .s-mono    { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 700; fill: var(--sec-txt); text-anchor: middle; }
+      .s-lbl     { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.6px; }
+      .s-flowlbl { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; font-weight: 800; letter-spacing: 0.8px; text-anchor: middle; }
+
+      @keyframes shieldOrbit {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+      .sec-orbit {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: shieldOrbit 22s linear infinite;
+      }
+
+      @keyframes tokenFlow {
+        from { stroke-dashoffset: 24; }
+        to   { stroke-dashoffset: 0; }
+      }
+      .sec-stream-v { stroke-dasharray: 5 4; animation: tokenFlow 1.2s linear infinite; }
+      .sec-stream-e { stroke-dasharray: 5 4; animation: tokenFlow 1.4s linear infinite; }
+
+      @keyframes radarSec {
+        0%   { transform: scale(1); opacity: 0.85; }
+        70%  { transform: scale(2.35); opacity: 0; }
+        100% { transform: scale(2.35); opacity: 0; }
+      }
+      .sec-radar {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: radarSec 2.3s ease-out infinite;
+      }
+
+      @keyframes nodeGlow {
+        0%, 100% { opacity: 0.95; transform: scale(1); }
+        50%      { opacity: 0.55; transform: scale(1.18); }
+      }
+      .sec-glow {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: nodeGlow 2.8s ease-in-out infinite;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .sec-orbit, .sec-stream-v, .sec-stream-e, .sec-radar, .sec-glow { animation: none; }
+      }
+    </style>
+
+    <filter id="secShadow" x="-2%" y="-4%" width="104%" height="112%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="var(--sec-sh)"/>
+    </filter>
+    <clipPath id="secClip1"><rect x="28"  y="146" width="366" height="184" rx="12"/></clipPath>
+    <clipPath id="secClip2"><rect x="417" y="146" width="366" height="184" rx="12"/></clipPath>
+    <clipPath id="secClip3"><rect x="806" y="146" width="366" height="184" rx="12"/></clipPath>
+  </defs>
+
+  <!-- Lienzo contenedor -->
+  <rect class="s-canvas" x="2" y="2" width="1196" height="352" rx="16"/>
+
+  <!-- Cabecera con escudo orbital y radar JWT -->
+  <g transform="translate(50, 44)">
+    <circle class="sec-orbit" cx="0" cy="0" r="22" fill="none" stroke="#8B5CF6" stroke-width="1.6" stroke-dasharray="4 4" opacity="0.85"/>
+    <circle cx="0" cy="0" r="16" fill="#8B5CF6" opacity="0.16"/>
+    <path d="M 0 -10 L 8 -6.5 V 1 C 8 6.2 4.5 10.4 0 12 C -4.5 10.4 -8 6.2 -8 1 V -6.5 Z" fill="#8B5CF6"/>
+    <path d="M -3 1 L -0.8 3.2 L 3.8 -1.8" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="86" y="40" class="s-h1">Seguridad JWT Bearer &amp; Matriz de Roles RBAC</text>
+  <text x="86" y="59" class="s-h2">ASP.NET Core Identity &#183; Firma HMAC-SHA256 &#183; Pol&#237;ticas DRY centralizadas en Roles.cs</text>
+
+  <rect x="928" y="28" width="244" height="28" rx="14" fill="var(--sec-live-bg)" stroke="var(--sec-live-bd)" stroke-width="1"/>
+  <circle class="sec-radar" cx="946" cy="42" r="4" fill="#10B981"/>
+  <circle cx="946" cy="42" r="3.5" fill="#10B981"/>
+  <text x="959" y="46" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5px" font-weight="700" fill="var(--sec-live-tx)">8 Roles &#183; IdentitySeeder Activo</text>
+
+  <!-- Pipeline animado de autenticación -->
+  <rect class="s-pipe" x="28" y="84" width="240" height="38" rx="9"/>
+  <circle cx="46" cy="103" r="4" fill="#3B82F6"/>
+  <text x="155" y="107" class="s-mono">POST /api/Auth/login</text>
+
+  <path d="M 274 103 L 358 103" fill="none" stroke="#8B5CF6" stroke-width="2" class="sec-stream-v"/>
+  <polygon points="356,99 365,103 356,107" fill="#8B5CF6"/>
+  <text x="319" y="96" class="s-flowlbl" fill="#A855F7">IDENTITY</text>
+
+  <rect class="s-pipe" x="370" y="84" width="256" height="38" rx="9"/>
+  <circle cx="388" cy="103" r="4" fill="#8B5CF6"/>
+  <text x="506" y="107" class="s-mono">TokenService &#183; Claims + Rol</text>
+
+  <path d="M 632 103 L 716 103" fill="none" stroke="#10B981" stroke-width="2" class="sec-stream-e"/>
+  <polygon points="714,99 723,103 714,107" fill="#10B981"/>
+  <text x="677" y="96" class="s-flowlbl" fill="#10B981">BEARER JWT</text>
+
+  <rect class="s-pipe" x="728" y="84" width="444" height="38" rx="9"/>
+  <circle cx="746" cy="103" r="4" fill="#10B981"/>
+  <text x="958" y="107" class="s-mono">[Authorize(Roles = Roles.*)] &#8594; Endpoints Protegidos</text>
+
+  <!-- =================================================== -->
+  <!-- BLOQUE 1: NIVEL GERENCIAL (Administracion) -->
+  <!-- =================================================== -->
+  <g transform="translate(28, 146)" filter="url(#secShadow)">
+    <rect class="s-card" width="366" height="184" rx="12"/>
+  </g>
+  <g clip-path="url(#secClip1)">
+    <rect x="28" y="146" width="366" height="4" fill="#8B5CF6"/>
+  </g>
+  <g transform="translate(28, 146)">
+    <circle cx="28" cy="30" r="10" fill="#8B5CF6" opacity="0.16"/>
+    <circle class="sec-glow" cx="28" cy="30" r="4.5" fill="#8B5CF6"/>
+    <text x="48" y="25" class="s-lbl" fill="#A855F7">1 &#183; GESTI&#211;N Y RESERVAS &#183; Control RBAC</text>
+    <text x="48" y="45" class="s-title">SuperAdmin &#183; Admin &#183; Asistente</text>
+
+    <rect class="s-pill" x="18"  y="68" width="158" height="30" rx="7"/>
+    <text x="97"  y="87" class="s-chip">Cat&#225;logo y Promociones</text>
+
+    <rect class="s-pill" x="190" y="68" width="158" height="30" rx="7"/>
+    <text x="269" y="87" class="s-chip">Caja, Cobros y Facturas</text>
+
+    <rect class="s-pill" x="18"  y="108" width="158" height="30" rx="7"/>
+    <text x="97"  y="127" class="s-chip">Reservas y Mesas (HU-18)</text>
+
+    <rect class="s-pill" x="190" y="108" width="158" height="30" rx="7"/>
+    <text x="269" y="127" class="s-chip">Usuarios y Bit&#225;cora Audit</text>
+
+    <text x="183" y="164" class="s-foot">Cuentas seed: admin &#183; asistente</text>
+  </g>
+
+  <!-- =================================================== -->
+  <!-- BLOQUE 2: OPERACIÓN EN PISO (TodosPersonal) -->
+  <!-- =================================================== -->
+  <g transform="translate(417, 146)" filter="url(#secShadow)">
+    <rect class="s-card" width="366" height="184" rx="12"/>
+  </g>
+  <g clip-path="url(#secClip2)">
+    <rect x="417" y="146" width="366" height="4" fill="#10B981"/>
+  </g>
+  <g transform="translate(417, 146)">
+    <circle cx="28" cy="30" r="10" fill="#10B981" opacity="0.16"/>
+    <circle class="sec-glow" cx="28" cy="30" r="4.5" fill="#10B981" style="animation-delay: 0.7s"/>
+    <text x="48" y="25" class="s-lbl" fill="#10B981">2 &#183; OPERATIVO &#183; Roles.TodosPersonal</text>
+    <text x="48" y="45" class="s-title">Mesero &#183; AdminCocina &#183; AdminBar</text>
+
+    <rect class="s-pill" x="18"  y="68" width="158" height="30" rx="7"/>
+    <text x="97"  y="87" class="s-chip">Toma de Pedidos (HU-13)</text>
+
+    <rect class="s-pill" x="190" y="68" width="158" height="30" rx="7"/>
+    <text x="269" y="87" class="s-chip">KDS Cocina (AdminCocina)</text>
+
+    <rect class="s-pill" x="18"  y="108" width="158" height="30" rx="7"/>
+    <text x="97"  y="127" class="s-chip">KDD Fermentos (AdminBar)</text>
+
+    <rect class="s-pill" x="190" y="108" width="158" height="30" rx="7"/>
+    <text x="269" y="127" class="s-chip">Control Stock y Agotados</text>
+
+    <text x="183" y="164" class="s-foot">Cuentas seed: mesero &#183; cocina &#183; bar</text>
+  </g>
+
+  <!-- =================================================== -->
+  <!-- BLOQUE 3: COMENSALES Y ACCESO (TomaPedidos) -->
+  <!-- =================================================== -->
+  <g transform="translate(806, 146)" filter="url(#secShadow)">
+    <rect class="s-card" width="366" height="184" rx="12"/>
+  </g>
+  <g clip-path="url(#secClip3)">
+    <rect x="806" y="146" width="366" height="4" fill="#F59E0B"/>
+  </g>
+  <g transform="translate(806, 146)">
+    <circle cx="28" cy="30" r="10" fill="#F59E0B" opacity="0.16"/>
+    <circle class="sec-glow" cx="28" cy="30" r="4.5" fill="#F59E0B" style="animation-delay: 1.4s"/>
+    <text x="48" y="25" class="s-lbl" fill="#D97706">3 &#183; COMENSAL &#183; Roles.TomaPedidos</text>
+    <text x="48" y="45" class="s-title">Cliente &#183; Usuario Registrado</text>
+
+    <rect class="s-pill" x="18"  y="68" width="158" height="30" rx="7"/>
+    <text x="97"  y="87" class="s-chip">Auto-Orden Tablet / QR</text>
+
+    <rect class="s-pill" x="190" y="68" width="158" height="30" rx="7"/>
+    <text x="269" y="87" class="s-chip">Timeline Comanda en Vivo</text>
+
+    <rect class="s-pill" x="18"  y="108" width="158" height="30" rx="7"/>
+    <text x="97"  y="127" class="s-chip">Pago Digital &amp; Factura PDF</text>
+
+    <rect class="s-pill" x="190" y="108" width="158" height="30" rx="7"/>
+    <text x="269" y="127" class="s-chip">Encuesta Satisfacci&#243;n</text>
+
+    <text x="183" y="164" class="s-foot">Cuenta seed: cliente &#183; /api/Auth/register</text>
+  </g>
+</svg>

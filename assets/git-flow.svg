@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 245" width="100%" height="100%" role="img" aria-labelledby="gitTitle gitDesc">
+  <title id="gitTitle">Estrategia GitFlow PuraSed</title>
+  <desc id="gitDesc">Flujo animado de ramas GitFlow entre main, develop y ramas feature por historia de usuario.</desc>
+  <defs>
+    <style>
+      :root {
+        --g-bg: #F6F8FA;
+        --g-bar: #FFFFFF;
+        --g-bd: #D0D7DE;
+        --g-txt: #0F172A;
+        --g-sub: #475569;
+        --g-track: #CBD5E1;
+        --g-pill-bg: #EFF6FF;
+        --g-pill-bd: #BFDBFE;
+        --g-pill-tx: #1D4ED8;
+        --g-sh: rgba(15, 23, 42, 0.06);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --g-bg: #0D1117;
+          --g-bar: #161B22;
+          --g-bd: #30363D;
+          --g-txt: #F0F6FC;
+          --g-sub: #8B949E;
+          --g-track: #30363D;
+          --g-pill-bg: rgba(59, 130, 246, 0.14);
+          --g-pill-bd: rgba(96, 165, 250, 0.35);
+          --g-pill-tx: #93C5FD;
+          --g-sh: rgba(0, 0, 0, 0.45);
+        }
+      }
+
+      .g-win   { fill: var(--g-bg); stroke: var(--g-bd); stroke-width: 1.4; }
+      .g-top   { fill: var(--g-bar); }
+      .g-lbl   { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; font-weight: 700; text-anchor: middle; }
+      .g-sub   { font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 10px; font-weight: 500; fill: var(--g-sub); }
+      .g-node-t{ font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; font-weight: 600; fill: var(--g-sub); text-anchor: middle; }
+
+      @keyframes gitDash {
+        from { stroke-dashoffset: 24; }
+        to   { stroke-dashoffset: 0; }
+      }
+      .g-flow-m { stroke-dasharray: 6 5; animation: gitDash 2.2s linear infinite; }
+      .g-flow-d { stroke-dasharray: 6 4; animation: gitDash 1.3s linear infinite; }
+      .g-flow-f { stroke-dasharray: 5 4; animation: gitDash 1.6s linear infinite; }
+
+      @keyframes headPulse {
+        0%   { transform: scale(1); opacity: 0.85; }
+        70%  { transform: scale(2.35); opacity: 0; }
+        100% { transform: scale(2.35); opacity: 0; }
+      }
+      .g-head-ring {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: headPulse 2.2s ease-out infinite;
+      }
+
+      @keyframes commitBreath {
+        0%, 100% { transform: scale(1); }
+        50%      { transform: scale(1.16); }
+      }
+      .g-c1 { transform-box: fill-box; transform-origin: center; animation: commitBreath 3s ease-in-out infinite 0s; }
+      .g-c2 { transform-box: fill-box; transform-origin: center; animation: commitBreath 3s ease-in-out infinite 1s; }
+      .g-c3 { transform-box: fill-box; transform-origin: center; animation: commitBreath 3s ease-in-out infinite 2s; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .g-flow-m, .g-flow-d, .g-flow-f, .g-head-ring, .g-c1, .g-c2, .g-c3 { animation: none; }
+      }
+    </style>
+
+    <clipPath id="gitClip">
+      <rect x="2" y="2" width="996" height="241" rx="14"/>
+    </clipPath>
+  </defs>
+
+  <rect class="g-win" x="2" y="2" width="996" height="241" rx="14"/>
+  <g clip-path="url(#gitClip)">
+    <rect class="g-top" x="2" y="2" width="996" height="40"/>
+    <line x1="2" y1="42" x2="998" y2="42" stroke="var(--g-bd)" stroke-width="1"/>
+  </g>
+
+  <text x="24" y="26" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13px" font-weight="700" fill="var(--g-txt)">Modelo GitFlow &#183; Flujo de Integraci&#243;n Continua</text>
+  <rect x="716" y="10" width="260" height="22" rx="11" fill="var(--g-pill-bg)" stroke="var(--g-pill-bd)" stroke-width="1"/>
+  <circle class="g-head-ring" cx="731" cy="21" r="4" fill="#3B82F6"/>
+  <circle cx="731" cy="21" r="3" fill="#3B82F6"/>
+  <text x="743" y="25" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5px" font-weight="600" fill="var(--g-pill-tx)">Rama Activa: develop (HEAD Sprint 3)</text>
+
+  <!-- Carril etiquetas izquierdas -->
+  <rect x="24" y="68" width="114" height="24" rx="6" fill="rgba(16,185,129,0.14)" stroke="#10B981" stroke-width="1"/>
+  <text x="81" y="84" class="g-lbl" fill="#10B981">main</text>
+  <text x="24" y="106" class="g-sub">Producci&#243;n estable</text>
+
+  <rect x="24" y="128" width="114" height="24" rx="6" fill="rgba(59,130,246,0.16)" stroke="#3B82F6" stroke-width="1"/>
+  <text x="81" y="144" class="g-lbl" fill="#60A5FA">develop</text>
+  <text x="24" y="166" class="g-sub">Integraci&#243;n del equipo</text>
+
+  <rect x="24" y="188" width="114" height="24" rx="6" fill="rgba(168,85,247,0.14)" stroke="#A855F7" stroke-width="1"/>
+  <text x="81" y="204" class="g-lbl" fill="#C084FC">feature/*</text>
+  <text x="24" y="226" class="g-sub">Historias de usuario</text>
+
+  <!-- Guías base -->
+  <line x1="175" y1="80"  x2="965" y2="80"  stroke="var(--g-track)" stroke-width="2"/>
+  <line x1="175" y1="140" x2="965" y2="140" stroke="var(--g-track)" stroke-width="2"/>
+
+  <!-- Flujo animado en main -->
+  <line x1="205" y1="80" x2="925" y2="80" stroke="#10B981" stroke-width="2.5" class="g-flow-m" opacity="0.75"/>
+
+  <!-- Bifurcación inicial main -> develop -->
+  <path d="M 210 80 C 235 80, 235 140, 265 140" fill="none" stroke="#3B82F6" stroke-width="2.4" class="g-flow-d"/>
+
+  <!-- Flujo animado en develop -->
+  <line x1="265" y1="140" x2="875" y2="140" stroke="#3B82F6" stroke-width="2.8" class="g-flow-d"/>
+
+  <!-- Rama Feature 1: UI/UX Figma -->
+  <path d="M 290 140 C 310 140, 310 200, 332 200 L 420 200 C 442 200, 442 140, 462 140" fill="none" stroke="#A855F7" stroke-width="2.2" class="g-flow-f"/>
+  <circle class="g-c1" cx="352" cy="200" r="6" fill="#A855F7" stroke="var(--g-bg)" stroke-width="2"/>
+  <circle class="g-c2" cx="400" cy="200" r="6" fill="#A855F7" stroke="var(--g-bg)" stroke-width="2"/>
+  <text x="376" y="220" class="g-node-t">feature/ui-figma</text>
+
+  <!-- Rama Feature 2: Identity + JWT + SOLID -->
+  <path d="M 500 140 C 520 140, 520 200, 542 200 L 650 200 C 672 200, 672 140, 692 140" fill="none" stroke="#EC4899" stroke-width="2.2" class="g-flow-f"/>
+  <circle class="g-c2" cx="568" cy="200" r="6" fill="#EC4899" stroke="var(--g-bg)" stroke-width="2"/>
+  <circle class="g-c3" cx="624" cy="200" r="6" fill="#EC4899" stroke="var(--g-bg)" stroke-width="2"/>
+  <text x="596" y="220" class="g-node-t">feature/identity-rbac</text>
+
+  <!-- Rama Feature 3: Docs & SVG Redesign -->
+  <path d="M 720 140 C 740 140, 740 200, 760 200 L 818 200 C 838 200, 838 140, 858 140" fill="none" stroke="#F59E0B" stroke-width="2.2" class="g-flow-f"/>
+  <circle class="g-c1" cx="789" cy="200" r="6" fill="#F59E0B" stroke="var(--g-bg)" stroke-width="2"/>
+  <text x="789" y="220" class="g-node-t">style/readme</text>
+
+  <!-- Merge futuro develop -> main -->
+  <path d="M 875 140 C 898 140, 898 80, 922 80" fill="none" stroke="#10B981" stroke-width="2.2" class="g-flow-m" opacity="0.85"/>
+
+  <!-- Nodos main -->
+  <circle cx="210" cy="80" r="7.5" fill="#10B981" stroke="var(--g-bg)" stroke-width="2"/>
+  <text x="210" y="64" class="g-node-t">v1.0 &#183; SP1</text>
+
+  <circle cx="535" cy="80" r="7" fill="#10B981" stroke="var(--g-bg)" stroke-width="2"/>
+  <text x="535" y="64" class="g-node-t">v2.0 &#183; SP2</text>
+
+  <circle cx="922" cy="80" r="7.5" fill="#10B981" stroke="var(--g-bg)" stroke-width="2"/>
+  <text x="922" y="64" class="g-node-t">Release SP3</text>
+
+  <!-- Nodos develop -->
+  <circle cx="265" cy="140" r="6.5" fill="#3B82F6" stroke="var(--g-bg)" stroke-width="2"/>
+  <circle cx="462" cy="140" r="7"   fill="#3B82F6" stroke="var(--g-bg)" stroke-width="2"/>
+  <circle cx="692" cy="140" r="7"   fill="#3B82F6" stroke="var(--g-bg)" stroke-width="2"/>
+
+  <!-- HEAD animado en develop -->
+  <circle class="g-head-ring" cx="875" cy="140" r="7" fill="#3B82F6"/>
+  <circle cx="875" cy="140" r="7.5" fill="#3B82F6" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="875" y="162" class="g-node-t" fill="#60A5FA">HEAD</text>
+</svg>

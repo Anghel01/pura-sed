@@ -1,85 +1,208 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 150" width="100%" height="100%" role="img" aria-labelledby="figmaTitle figmaDesc">
-  <title id="figmaTitle">Prototipo Interactivo en Figma — PuraSed</title>
-  <desc id="figmaDesc">Acceso directo al workspace oficial de prototipos y componentes UI/UX de PuraSed en Figma.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 156" width="100%" height="100%" role="img" aria-labelledby="figmaTitle figmaDesc">
+  <title id="figmaTitle">Prototipo Interactivo en Figma &#8212; PuraSed</title>
+  <desc id="figmaDesc">Acceso directo al workspace oficial de prototipos y sistema de dise&#241;o UI/UX de PuraSed en Figma.</desc>
   <defs>
     <style>
-      .f-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 18px; font-weight: 700; fill: #0F172A; }
-      .f-desc  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 400; fill: #475569; }
-      .f-tag   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #1E293B; }
-      .f-btn-t { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12.5px; font-weight: 700; fill: #FFFFFF; }
-      
-      @keyframes pulseFigmaDot {
-        0%, 100% { transform: scale(1); opacity: 1; }
-        50%      { transform: scale(1.3); opacity: 0.5; }
+      :root {
+        --card-bg: #FFFFFF;
+        --card-border: #D8DEE4;
+        --badge-bg: #18181B;
+        --badge-ring: rgba(162, 89, 255, 0.28);
+        --title-clr: #0F172A;
+        --sub-clr: #475569;
+        --pill1-bg: #F5F3FF;
+        --pill1-bd: #DDD6FE;
+        --pill1-tx: #6D28D9;
+        --pill2-bg: #FEF3C7;
+        --pill2-bd: #FDE68A;
+        --pill2-tx: #B45309;
+        --pill3-bg: #F1F5F9;
+        --pill3-bd: #CBD5E1;
+        --pill3-tx: #334155;
+        --shadow-clr: rgba(124, 58, 237, 0.14);
       }
-      .f-beacon {
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --card-bg: #161B22;
+          --card-border: #30363D;
+          --badge-bg: #0D1117;
+          --badge-ring: rgba(162, 89, 255, 0.45);
+          --title-clr: #F0F6FC;
+          --sub-clr: #8B949E;
+          --pill1-bg: rgba(162, 89, 255, 0.14);
+          --pill1-bd: rgba(162, 89, 255, 0.35);
+          --pill1-tx: #D8B4FE;
+          --pill2-bg: rgba(245, 158, 11, 0.14);
+          --pill2-bd: rgba(245, 158, 11, 0.35);
+          --pill2-tx: #FCD34D;
+          --pill3-bg: #21262D;
+          --pill3-bd: #30363D;
+          --pill3-tx: #C9D1D9;
+          --shadow-clr: rgba(0, 0, 0, 0.50);
+        }
+      }
+
+      .card    { fill: var(--card-bg); stroke: var(--card-border); stroke-width: 1.4; }
+      .f-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 18.5px; font-weight: 700; fill: var(--title-clr); }
+      .f-desc  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 400; fill: var(--sub-clr); }
+      .f-tag   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 600; }
+      .f-btn-t { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #FFFFFF; }
+
+      /* Animación orbital sutil del anillo exterior */
+      @keyframes orbitSpin {
+        from { transform: rotate(0deg); }
+        to   { transform: rotate(360deg); }
+      }
+      .f-orbit {
+        transform-box: fill-box;
         transform-origin: center;
-        animation: pulseFigmaDot 2s ease-in-out infinite;
+        animation: orbitSpin 28s linear infinite;
+      }
+
+      /* Flotación suave del isotipo Figma */
+      @keyframes figmaFloat {
+        0%, 100% { transform: translateY(0px); }
+        50%      { transform: translateY(-2.5px); }
+      }
+      .f-float {
+        animation: figmaFloat 3.6s ease-in-out infinite;
+      }
+
+      /* Pulso radar encapsulado en la píldora Live */
+      @keyframes radarPulse {
+        0%   { transform: scale(1); opacity: 0.75; }
+        70%  { transform: scale(2.3); opacity: 0; }
+        100% { transform: scale(2.3); opacity: 0; }
+      }
+      .f-radar {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: radarPulse 2.2s cubic-bezier(0.2, 0.8, 0.4, 1) infinite;
+      }
+
+      /* Destello sutil sobre el botón CTA */
+      @keyframes shimmerSweep {
+        0%   { transform: translateX(-80px) skewX(-22deg); opacity: 0; }
+        18%  { opacity: 0.22; }
+        42%  { transform: translateX(260px) skewX(-22deg); opacity: 0; }
+        100% { transform: translateX(260px) skewX(-22deg); opacity: 0; }
+      }
+      .f-shimmer {
+        opacity: 0;
+        transform: translateX(-80px) skewX(-22deg);
+        animation: shimmerSweep 4.8s ease-in-out infinite;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .f-orbit, .f-float, .f-radar, .f-shimmer { animation: none; }
       }
     </style>
+
     <linearGradient id="figmaBorderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#F24E1E"/>
-      <stop offset="25%" stop-color="#FF7262"/>
-      <stop offset="50%" stop-color="#A259FF"/>
-      <stop offset="75%" stop-color="#1ABCFE"/>
+      <stop offset="0%"   stop-color="#F24E1E"/>
+      <stop offset="25%"  stop-color="#FF7262"/>
+      <stop offset="50%"  stop-color="#A259FF"/>
+      <stop offset="75%"  stop-color="#1ABCFE"/>
       <stop offset="100%" stop-color="#0ACF83"/>
     </linearGradient>
-    <linearGradient id="figmaBtnGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#1E1E1E"/>
-      <stop offset="100%" stop-color="#2C2C2C"/>
+
+    <linearGradient id="figmaOrbitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#F24E1E"/>
+      <stop offset="35%"  stop-color="#A259FF"/>
+      <stop offset="70%"  stop-color="#1ABCFE"/>
+      <stop offset="100%" stop-color="#0ACF83"/>
     </linearGradient>
-    <filter id="figmaCardShadow" x="-2%" y="-6%" width="104%" height="120%">
-      <feDropShadow flood-color="#A259FF" flood-opacity="0.12" dx="0" dy="3" stdDeviation="5"/>
+
+    <linearGradient id="figmaBtnGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#6D28D9"/>
+      <stop offset="100%" stop-color="#9333EA"/>
+    </linearGradient>
+
+    <filter id="figmaCardShadow" x="-2%" y="-8%" width="104%" height="124%">
+      <feDropShadow flood-color="var(--shadow-clr)" dx="0" dy="4" stdDeviation="7"/>
     </filter>
-    <filter id="figmaBtnShadow" x="-5%" y="-10%" width="110%" height="130%">
-      <feDropShadow flood-color="#000000" flood-opacity="0.25" dx="0" dy="2" stdDeviation="4"/>
+    <filter id="figmaBtnShadow" x="-6%" y="-12%" width="112%" height="132%">
+      <feDropShadow flood-color="#7C3AED" flood-opacity="0.32" dx="0" dy="3" stdDeviation="4"/>
     </filter>
+
+    <clipPath id="cardClip">
+      <rect x="10" y="10" width="940" height="136" rx="14"/>
+    </clipPath>
+    <clipPath id="btnClip">
+      <rect x="0" y="0" width="204" height="46" rx="10"/>
+    </clipPath>
   </defs>
 
-  <!-- Tarjeta contenedor blanca -->
-  <rect x="10" y="8" width="940" height="134" rx="12" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#figmaCardShadow)"/>
-  
-  <!-- Borde lateral multicolor Figma -->
-  <rect x="10" y="8" width="6" height="134" rx="3" fill="url(#figmaBorderGrad)"/>
+  <!-- Tarjeta Contenedor Adaptativa (Light / Dark) -->
+  <rect class="card" x="10" y="10" width="940" height="136" rx="14" filter="url(#figmaCardShadow)"/>
 
-  <!-- Logo Oficial Figma Vectorial -->
-  <g transform="translate(36, 31)">
-    <circle cx="42" cy="42" r="38" fill="#1E1E1E"/>
-    <!-- Ícono Figma estilizado -->
-    <g transform="translate(25, 18) scale(1.4)">
-      <path d="M6 0H12V6H6C2.686 0 0 2.686 0 6C0 9.314 2.686 12 6 12Z" fill="#F24E1E" transform="matrix(0.5 0 0 0.5 0 0)"/>
-      <path d="M12 0H18C21.314 0 24 2.686 24 6C24 9.314 21.314 12 18 12H12V0Z" fill="#FF7262" transform="matrix(0.5 0 0 0.5 0 0)"/>
-      <path d="M6 12H12V24H6C2.686 24 0 21.314 0 18C0 14.686 2.686 12 6 12Z" fill="#A259FF" transform="matrix(0.5 0 0 0.5 0 0)"/>
-      <circle cx="9" cy="9" r="3" fill="#1ABCFE"/>
-      <path d="M6 24H12V30C12 33.314 9.314 36 6 36C2.686 36 0 33.314 0 30C0 26.686 2.686 24 6 24Z" fill="#0ACF83" transform="matrix(0.5 0 0 0.5 0 0)"/>
+  <!-- Franja lateral multicolor Figma recortada exactamente al radio de la tarjeta -->
+  <g clip-path="url(#cardClip)">
+    <rect x="10" y="10" width="6" height="136" fill="url(#figmaBorderGrad)"/>
+  </g>
+
+  <!-- Bloque Izquierdo: Emblema Figma Centrado con Anillo Orbital Animado -->
+  <g>
+    <!-- Anillo orbital discontinuo rotando alrededor de (74, 78) -->
+    <circle class="f-orbit" cx="74" cy="78" r="44" fill="none" stroke="url(#figmaOrbitGrad)" stroke-width="1.6" stroke-dasharray="4 6" stroke-linecap="round" opacity="0.8"/>
+    <!-- Fondo oscuro del emblema -->
+    <circle cx="74" cy="78" r="36" fill="var(--badge-bg)" stroke="var(--badge-ring)" stroke-width="1.4"/>
+    <!-- Isotipo Oficial Figma centrado geométricamente en (74, 78) -->
+    <g transform="translate(74, 78)">
+      <g class="f-float">
+        <path d="M-7 -21H0V-7H-7A7 7 0 0 1-7-21Z" fill="#F24E1E"/>
+        <path d="M0 -21H7A7 7 0 0 1 7-7H0V-21Z" fill="#FF7262"/>
+        <path d="M-7 -7H0V7H-7A7 7 0 0 1-7-7Z" fill="#A259FF"/>
+        <circle cx="7" cy="0" r="7" fill="#1ABCFE"/>
+        <path d="M-7 7H0V14A7 7 0 1 1-7 7Z" fill="#0ACF83"/>
+      </g>
     </g>
   </g>
 
   <!-- Bloque Central de Información -->
-  <g transform="translate(132, 24)">
-    <text class="f-title" x="0" y="24">Prototipo Interactivo y Sistema de Diseño &#183; Figma</text>
-    <text class="f-desc" x="0" y="47">Exploración visual completa de alta fidelidad, flujos navegables y arquitectura de componentes.</text>
+  <g transform="translate(140, 32)">
+    <text class="f-title" x="0" y="20">Prototipo Interactivo y Sistema de Dise&#241;o &#183; Figma</text>
+    <text class="f-desc" x="0" y="45">Identidad Andina Anti-Slop &#183; Flujos navegables de comanda, KDS/KDD, caja y roles en alta fidelidad.</text>
 
-    <!-- Chips informativos alineados -->
-    <g transform="translate(0, 64)">
-      <rect x="0" y="0" width="138" height="24" rx="12" fill="#F5F3FF" stroke="#DDD6FE" stroke-width="1"/>
-      <circle cx="12" cy="12" r="3.5" fill="#8B5CF6" class="f-beacon"/>
-      <text class="f-tag" x="22" y="16" fill="#6D28D9">Figma Prototype Live</text>
+    <!-- Chips informativos perfectamente alineados -->
+    <g transform="translate(0, 62)">
+      <!-- Chip 1: Figma Live con radar centrado en (16, 13) -->
+      <rect x="0" y="0" width="136" height="26" rx="13" fill="var(--pill1-bg)" stroke="var(--pill1-bd)" stroke-width="1"/>
+      <circle class="f-radar" cx="16" cy="13" r="4.5" fill="#A259FF"/>
+      <circle cx="16" cy="13" r="3.5" fill="#A259FF"/>
+      <text class="f-tag" x="28" y="17" fill="var(--pill1-tx)">Figma Workspace</text>
 
-      <rect x="148" y="0" width="145" height="24" rx="12" fill="#FEF3C7" stroke="#FDE68A" stroke-width="1"/>
-      <circle cx="160" cy="12" r="3.5" fill="#D97706"/>
-      <text class="f-tag" x="170" y="16" fill="#B45309">32 Pantallas Full HD</text>
+      <!-- Chip 2: Pantallas Full HD con icono monitor -->
+      <rect x="146" y="0" width="158" height="26" rx="13" fill="var(--pill2-bg)" stroke="var(--pill2-bd)" stroke-width="1"/>
+      <rect x="157" y="7" width="13" height="9" rx="1.5" fill="none" stroke="var(--pill2-tx)" stroke-width="1.4"/>
+      <line x1="160.5" y1="19" x2="166.5" y2="19" stroke="var(--pill2-tx)" stroke-width="1.4" stroke-linecap="round"/>
+      <text class="f-tag" x="176" y="17" fill="var(--pill2-tx)">32 Pantallas Full HD</text>
 
-      <rect x="303" y="0" width="225" height="24" rx="12" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1"/>
-      <text class="f-tag" x="415" y="16" text-anchor="middle" fill="#475569">3 Módulos (Angelo &#183; Jannys &#183; Ángel)</text>
+      <!-- Chip 3: 3 Módulos del equipo con puntos de módulo -->
+      <rect x="314" y="0" width="212" height="26" rx="13" fill="var(--pill3-bg)" stroke="var(--pill3-bd)" stroke-width="1"/>
+      <circle cx="329" cy="13" r="3" fill="#E59F38"/>
+      <circle cx="337" cy="13" r="3" fill="#10B981"/>
+      <circle cx="345" cy="13" r="3" fill="#6366F1"/>
+      <text class="f-tag" x="356" y="17" fill="var(--pill3-tx)">Angelo &#183; Jannys &#183; &#193;ngel</text>
     </g>
   </g>
 
-  <!-- Botón de Enlace al Prototipo en Vivo -->
-  <g transform="translate(735, 52)">
-    <rect width="195" height="44" rx="8" fill="url(#figmaBtnGrad)" filter="url(#figmaBtnShadow)"/>
-    <!-- Pequeño logo figma en botón -->
-    <circle cx="28" cy="22" r="8" fill="#FFFFFF" fill-opacity="0.12"/>
-    <text class="f-btn-t" x="110" y="27" text-anchor="middle">Ver Prototipo en Figma &#8594;</text>
+  <!-- Botón CTA Derecho con Icono Figma Real y Shimmer Animado -->
+  <g transform="translate(724, 55)" filter="url(#figmaBtnShadow)">
+    <g clip-path="url(#btnClip)">
+      <rect width="204" height="46" rx="10" fill="url(#figmaBtnGrad)"/>
+      <!-- Haz de luz animado -->
+      <rect class="f-shimmer" x="0" y="-10" width="46" height="66" fill="#FFFFFF"/>
+    </g>
+    <!-- Mini logo Figma blanco/multicolor centrado verticalmente en el botón -->
+    <g transform="translate(26, 23) scale(0.45)">
+      <path d="M-7 -21H0V-7H-7A7 7 0 0 1-7-21Z" fill="#F24E1E"/>
+      <path d="M0 -21H7A7 7 0 0 1 7-7H0V-21Z" fill="#FF7262"/>
+      <path d="M-7 -7H0V7H-7A7 7 0 0 1-7-7Z" fill="#DDD6FE"/>
+      <circle cx="7" cy="0" r="7" fill="#1ABCFE"/>
+      <path d="M-7 7H0V14A7 7 0 1 1-7 7Z" fill="#0ACF83"/>
+    </g>
+    <text class="f-btn-t" x="118" y="27.5" text-anchor="middle">Abrir en Figma &#8594;</text>
   </g>
 </svg>
