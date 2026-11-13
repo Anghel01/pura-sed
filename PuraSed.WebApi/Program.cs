@@ -1,3 +1,26 @@
+// ************************************************* 
+// Deber/Ejercicio: Práctica N° 03 - Diseño del Sistema y Arquitectura
+// Asignatura: ITID803 - Diseño de Aplicaciones y Servicios para Internet
+// Nombre: Angelo Conterón 
+// Fecha de realización: 11/11/2026
+// Fecha de entrega: 14/11/2026
+// Resultados: Implementación e integración de autenticación desacoplada con ASP.NET Core Identity Core,
+//             emisión y validación de tokens JWT Bearer, control de acceso basado en roles (RBAC) para 8 roles
+//             oficiales de PuraSed (Sereno Moreno), arquitectura limpia con servicios e interfaces (SOLID/DRY)
+//             y verificación mediante respuestas HTTP 200 OK, 201 Created, 401 Unauthorized y 403 Forbidden.
+// Conclusiones: 
+// * La separación entre AddIdentityCore y JwtBearer proporciona una API REST completamente stateless y desacoplada.
+// * El catálogo centralizado Roles.cs erradica magic strings y simplifica el mantenimiento bajo el principio DRY.
+// * La inversión de dependencias con interfaces de servicios y repositorios aísla la lógica de negocio del controlador.
+// Recomendaciones: 
+// * Implementar AuthenticationStateProvider en Blazor WebAssembly para sincronizar claims en el cliente reactivo.
+// * Incorporar Refresh Tokens con rotación para evitar reautenticaciones constantes durante la jornada nocturna.
+// Bibliografía: 
+// * Microsoft Learn, "Role-based authorization in ASP.NET Core", Microsoft, 2026.
+// * Martin, R. C., "Clean Architecture: A Craftsman's Guide to Software Structure and Design", Prentice Hall, 2017.
+// * FIEE EPN, "Guía de Aprendizaje N° 4: ASP.NET Core Identity con JWT", ITID803, 2026.
+// **************************************************
+
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
