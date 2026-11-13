@@ -7,6 +7,9 @@ using Microsoft.OpenApi;
 using PuraSed.WebApi.Data;
 using PuraSed.WebApi.Models;
 using PuraSed.WebApi.Repositories;
+using PuraSed.WebApi.Repositories.Interfaces;
+using PuraSed.WebApi.Services;
+using PuraSed.WebApi.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,9 +29,10 @@ builder.Services.AddCors(options =>
 // ---------- SERVICIOS ----------
 builder.Services.AddControllers();
 
-// Base de datos con Entity Framework Core (Paso 4)
-builder.Services.AddDbContext<CafeteriaDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("CafeteriaDb")));
+// Base de datos con Entity Framework Core (Pura Sed DbContext)
+builder.Services.AddDbContext<PuraSedDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("PuraSedDb")
+        ?? builder.Configuration.GetConnectionString("CafeteriaDb")));
 
 // Configuración de ASP.NET Core Identity (Guía 4 - Paso 3)
 builder.Services
@@ -42,10 +46,16 @@ builder.Services
         options.User.RequireUniqueEmail = true;
     })
     .AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<CafeteriaDbContext>();
+    .AddEntityFrameworkStores<PuraSedDbContext>();
 
-// Repositorio Scoped para interactuar con DbContext por petición (Paso 8)
-builder.Services.AddScoped<ProductoRepository>();
+// Repositorio Scoped para interactuar con DbContext por petición
+builder.Services.AddScoped<IProductoServicio,ProductoServicio>();
+builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped< IValidacionUsuarioService,ValidacionUsuarioService>();
+builder.Services.AddScoped<IMesaRepository, MesaRepository>();
+builder.Services.AddScoped<IMesaServicio, MesaServicio>();
 
 // Autenticación: "los usuarios se identifican con un JWT"
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -67,7 +77,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Habilita las reglas de permisos ([Authorize], roles, políticas)
 builder.Services.AddAuthorization();
 
-// Swagger con soporte para JWT (Pasos 8 y 9)
+// Swagger con soporte para JWT
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -89,10 +99,14 @@ builder.Services.AddSwaggerGen(c =>
 // ---------- PIPELINE ----------
 var app = builder.Build();
 
-// Sembrado de roles y Administrador inicial (Guía 4 - Paso 4)
+// Sembrado de roles, usuarios base y catálogo Cervecería/Picantería (Sereno Moreno / Pura Sed)
 using (var scope = app.Services.CreateScope())
 {
+    var context = scope.ServiceProvider.GetRequiredService<PuraSedDbContext>();
+    await context.Database.MigrateAsync();
     await IdentitySeeder.SeedAsync(scope.ServiceProvider, app.Configuration);
+    await ProductoSeeder.SeedAsync(context);
+    await MesaSeeder.SeedAsync(context);
 }
 
 app.UseHttpsRedirection();
@@ -100,7 +114,7 @@ app.UseHttpsRedirection();
 // CORS debe ejecutarse antes de la autenticación/autorización
 app.UseCors("PuraSedClient");
 
-// Activar Swagger en el pipeline (solo en desarrollo) - Paso 10
+// Activar Swagger en el pipeline (solo en desarrollo)
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
