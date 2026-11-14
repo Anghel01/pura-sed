@@ -48,7 +48,7 @@ El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilida
   <tr>
     <td width="50%" align="center" valign="top">
       <a href="https://github.com/angelch1595-glitch">
-        <img src="./assets/team/angel-chicaiza.svg?v=3" width="100%" alt="Angel Chicaiza — Equipo de Desarrollo" />
+        <img src="./assets/team/angel-chicaiza.svg" width="100%" alt="Angel Chicaiza — Equipo de Desarrollo" />
       </a>
     </td>
     <td width="50%" align="center" valign="top">
@@ -66,15 +66,15 @@ El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilida
 | N° | Sección del Proyecto | Alcance y Contenido Técnico |
 | :---: | :--- | :--- |
 | `01` | [**Sobre el Proyecto y Objetivo del Sistema**](#sobre-el-proyecto-y-objetivo-del-sistema) | Problemática de bares nocturnos, propuesta de valor y alcances funcionales |
-| `02` | [**Arquitectura del Sistema**](#arquitectura-del-sistema) | Monolito modular desacoplado, diagrama de capas, SignalR y ciclo de vida |
-| `03` | [**Casos de Uso**](#casos-de-uso) | Diagrama UML formal interactivo, actores operativos y matriz funcional |
-| `04` | [**Modelo de Base de Datos – Diagrama Entidad-Relación**](#modelo-de-base-de-datos--diagrama-entidad-relación) | Modelo relacional, 23 entidades, claves PK/FK y cardinalidades |
-| `05` | [**Prototipo Interactivo y Diseño en Figma**](#prototipo-interactivo-y-diseño-en-figma) | Lienzo oficial de 32 pantallas Full HD organizado en 3 subsistemas |
-| `06` | [**Seguridad, Identity JWT y Matriz de Roles**](#seguridad-identity-jwt-y-matriz-de-roles) | Autenticación Bearer, catálogo DRY `Roles.cs` y cuentas de prueba |
+| `02` | [**Arquitectura del Sistema**](#arquitectura-del-sistema) | Monolito modular de 6 capas, flujo SignalR y pasarela externa |
+| `03` | [**Casos de Uso**](#casos-de-uso) | Diagrama UML 2.5 interactivo, 5 actores operativos y 12 flujos funcionales |
+| `04` | [**Modelo de Base de Datos – Diagrama Entidad-Relación**](#modelo-de-base-de-datos--diagrama-entidad-relación) | Esquema relacional SQL Server (23 entidades en 5 dominios) y avance Code-First |
+| `05` | [**Prototipo Interactivo y Diseño en Figma**](#prototipo-interactivo-y-diseño-en-figma) | Lienzo oficial en 3 subsistemas, identidad Sereno Moreno y capturas del taller |
+| `06` | [**Seguridad, Identity JWT y Matriz de Roles**](#seguridad-identity-jwt-y-matriz-de-roles) | Autenticación Bearer, catálogo DRY `Roles.cs` y cuentas sembradas |
 | `07` | [**Estructura de la Solución .NET**](#estructura-de-la-solución-net) | Explorador visual de carpetas, capas de WebApi y Blazor WebAssembly |
 | `08` | [**Guía de Ejecución Local**](#guía-de-ejecución-local) | Requisitos previos (.NET 10, SQL Server), sembrado automático y Swagger UI |
 | `09` | [**Estrategia de Ramas y Flujo en Git**](#estrategia-de-ramas-y-flujo-en-git) | Modelo GitFlow animado, ramas `develop`/`feature/*` y commits semánticos |
-| `10` | [**Backlog, Planificación y Sprints**](#backlog-planificación-y-sprints) | Metodología Scrum, historias de usuario, estimación y tablero Jira Cloud |
+| `10` | [**Backlog, Planificación y Sprints**](#backlog-planificación-y-sprints) | Marco Scrum, 32 historias de usuario (`HU-01`..`HU-32`), Jira y retrospectivas |
 | `11` | [**Licencia y Uso Académico**](#licencia-y-uso-académico) | Régimen institucional Escuela Politécnica Nacional (EPN - FIEE) |
 
 ---
@@ -104,17 +104,19 @@ Diseñar e implementar una solución web desacoplada y de alta disponibilidad qu
 
 ## <img src="./assets/icons/arquitectura.svg" width="22" height="22" align="absmiddle" /> Arquitectura del Sistema
 
-PuraSed adopta una **arquitectura monolítica modular en capas**. Todo el sistema se despliega como una unidad, pero sus responsabilidades se mantienen separadas para facilitar las pruebas, el mantenimiento y una futura extracción de módulos. La base de datos y la pasarela de pago son servicios externos al monolito.
+PuraSed adopta una **arquitectura monolítica modular en capas**. Todo el sistema se despliega como una unidad, pero sus responsabilidades se mantienen separadas en 6 niveles desacoplados para facilitar las pruebas, el mantenimiento y el control de dependencias. La base de datos y la pasarela de pago operan como servicios externos al monolito.
 
 <p align="center">
-  <img src="./assets/Arquitectura_Pura_Sed.png" width="100%" alt="Diagrama de Arquitectura de PuraSed" />
+  <img src="./assets/architecture.svg" width="100%" alt="Arquitectura Monolítica Modular en 6 Capas y Flujo Reactivo SignalR" />
 </p>
 
-### Flujo Animado por Capas y SignalR
-
+<details>
+<summary><b>Ver diagrama arquitectónico estático original (referencia SP2)</b></summary>
+<br/>
 <p align="center">
-  <img src="./assets/architecture.svg" width="100%" alt="Arquitectura en Capas Desacoplada y Flujo Reactivo SignalR" />
+  <img src="./assets/Arquitectura_Pura_Sed.png" width="72%" alt="Diagrama técnico estático original de arquitectura PuraSed" />
 </p>
+</details>
 
 ### Capas y responsabilidades
 
@@ -152,15 +154,23 @@ Representación formal interactiva de los actores del negocio (*Cliente*, *Meser
 
 ## <img src="./assets/icons/base-datos.svg" width="22" height="22" align="absmiddle" /> Modelo de Base de Datos – Diagrama Entidad-Relación
 
-El sistema Pura Sed cuenta con un modelo de base de datos relacional diseñado en SQL Server, conformado por **23 entidades** que permiten administrar los usuarios, productos, pedidos, reservas, inventario, pagos, facturación y espectáculos.
-
-El diagrama entidad-relación representa las entidades del sistema, sus atributos, claves primarias (PK), claves foráneas (FK) y las relaciones existentes entre ellas. Para representar las cardinalidades se utiliza la notación de pata de gallo (*Crow's Foot*), que permite identificar las relaciones obligatorias y opcionales.
+El modelo completo de **PuraSed** en SQL Server comprende **23 entidades** y **29 relaciones** bajo notación **Crow's Foot** (pata de gallo), agrupadas en 5 dominios funcionales para proteger la trazabilidad histórica de precios en cada pedido, evitar doble cobro de mesa y aislar las existencias de cocina y barra.
 
 <p align="center">
-  <img src="./assets/PuraSed_Diagrama_ER.svg" width="100%" alt="Diagrama Entidad-Relación de Pura Sed" />
+  <img src="./assets/PuraSed_Diagrama_ER.svg" width="100%" alt="Diagrama Entidad-Relación SQL Server PuraSed (23 Entidades, 29 Relaciones Crow's Foot)" />
 </p>
 
-El modelo permite relacionar los pedidos con las sesiones de mesa, controlar automáticamente los movimientos de inventario y gestionar las cuentas de los clientes. También contempla el cobro opcional de entradas por persona cuando existen espectáculos.
+### Desglose del Esquema por Dominio (23 Entidades)
+
+| Dominio Funcional | Tablas / Entidades | Responsabilidad Principal |
+| :--- | :--- | :--- |
+| **Catálogo, Recetas y Promociones (8)** | `Categoria`, `Producto`, `Variante`, `Ingrediente`, `ProductoIngrediente`, `Combo`, `ComboProducto`, `Promocion` | Carta cultural, variantes de tamaño, composición de recetas por insumo, combos y descuentos programados |
+| **Salón, Mesas y Comandas (5)** | `Mesa`, `Reserva`, `SesionMesa`, `Pedido`, `DetallePedido` | Reservas sin solapamiento, sesión activa por mesa, órdenes en tiempo real y congelamiento de `PrecioUnitario` |
+| **Facturación, Pagos y Espectáculos (5)** | `Espectaculo`, `Cuenta`, `Pago`, `Factura`, `Calificacion` | Cargo opcional de entradas por evento, conciliación por método de pago, comprobante secuencial y encuesta de servicio |
+| **Inventario y Movimientos (2)** | `Inventario`, `MovimientoInventario` | Control de stock mínimo por área (`Cocina` / `Bar`) y kardex auditado de descuentos e ingresos |
+| **Seguridad RBAC y Auditoría (3)** | `Rol`, `Usuario`, `Bitacora` | Control de acceso por rol y registro histórico de acciones administrativas y operativas |
+
+> **Alcance Code-First actual (Sprint 3):** `PuraSedDbContext` ([`PuraSedDbContext.cs`](./PuraSed.WebApi/Data/PuraSedDbContext.cs)) hereda de `IdentityDbContext<ApplicationUser>` y persiste el núcleo operativo vigente (`ApplicationUser`, `Producto`, `Mesa`, `Pedido`, `DetallePedido`); el resto de entidades del diagrama ER se incorporan progresivamente en migraciones posteriores.
 
 ---
 
@@ -187,12 +197,34 @@ El sistema visual de **PuraSed** encarna la estética de **Taller Indie Craft & 
 | **3. Back-Office: Caja, Stock y Analítica** | **Ángel Chicaiza** (*Backend Architect*) | Punto de caja y arqueo diario, validación de transferencias, inventario y conmutación de platos agotados (HU-10), promociones, matriz de 8 roles, bitácora y reportes. |
 
 <details>
-<summary><b>Ver desglose completo de pantallas y tokens visuales por módulo</b></summary>
+<summary><b>Ver capturas reales del taller UI y tokens visuales Sereno Moreno</b></summary>
+<br/>
 
-* **Paleta e Identidad (*Taller Indie Craft*):** Fondo basalto (`#121614` / `#1F2421`), Oro Inti (`#E59F38`), Blanco Tiza (`#FFFDF9`) y Terracota Paila (`#B85335`).
-* **Front-Office (Comensal):** Selección de mesa sin registro previo, carrusel orbital y detalle 3D (`Mockups_Figma`), seguimiento reactivo de comanda (`Pendiente` → `En preparación` → `Listo` → `Entregado`) y encuesta post-consumo.
-* **Back-Office Operativo (Salón, Cocina y Barra):** Autenticación del personal, aislamiento KDS/KDD por área y prevención de solapamiento de reservas en mapa interactivo de mesas.
-* **Back-Office Gerencial (Administración):** Liquidación en ticket tiza, administración del menú por franjas y control de auditoría del personal.
+* **Paleta e Identidad (*Taller Indie Craft*):** Fondo basalto (`#121614` / `#1F2421`), Oro Inti (`#E59F38`), Blanco Tiza (`#FFFDF9`), Terracota Paila (`#B85335`) y Verde Sabia (`#637761`). Referencia completa en [`Guia_Diseno_UI_UX_PuraSed.md`](./Entregables/Guia_Diseno_UI_UX_PuraSed.md).
+* **Prototipos HTML/Three.js (`Entregables/Mockups_Figma/`):** `14` prototipos interactivos en [`taller_frontend/`](./Entregables/Mockups_Figma/taller_frontend) y `6` capturas `@2x` en [`capturas_exportadas/`](./Entregables/Mockups_Figma/capturas_exportadas).
+
+<table>
+  <tr>
+    <td width="50%" align="center">
+      <img src="./Entregables/Mockups_Figma/capturas_exportadas/01_Menu_POS_Principal.png" width="100%" alt="Menú Orbital POS Principal — PuraSed" />
+      <br/><sub><b>Menú Orbital POS 3D</b> — Navegación cultural en 5 capítulos</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="./Entregables/Mockups_Figma/capturas_exportadas/02_Mucha_Chicha_Detalle.png" width="100%" alt="Detalle 3D Three.js y Ticket Tiza — Mucha Chicha" />
+      <br/><sub><b>Detalle 3D &amp; Ticket Tiza</b> — Escena Three.js (-45°) y comanda inclinada</sub>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <img src="./Entregables/Mockups_Figma/capturas_exportadas/03_Pida_No_Mas_Carta_Ticket.png" width="100%" alt="Carta Ticket en Mesa — PuraSed" />
+      <br/><sub><b>Carta Ticket</b> — Personalización sin registro en mesa</sub>
+    </td>
+    <td width="50%" align="center">
+      <img src="./Entregables/Mockups_Figma/capturas_exportadas/06_Confirmacion_Despacho_KDS.png" width="100%" alt="Confirmación y Despacho KDS en Tiempo Real — PuraSed" />
+      <br/><sub><b>Despacho en Vivo</b> — Confirmación reactiva hacia cocina y barra</sub>
+    </td>
+  </tr>
+</table>
 
 </details>
 
@@ -218,6 +250,23 @@ En entorno de desarrollo (`Development`), `Program.cs` ejecuta automáticamente 
 | `bar` | `bar@purased.com` | `Bar12345` | `AdminBar` | Panel KDD de barra, fermentos y bebidas (`HU-11`, `HU-15`) |
 | `asistente` | `asistente@purased.com` | `Asistente123` | `Asistente` | Gestión de reservas y disponibilidad de mesas (`HU-18`) |
 | `cliente` | `cliente@purased.com` | `Cliente123` | `Cliente`, `Usuario` | Auto-orden desde tablet en mesa (`HU-01`, `HU-13`) |
+
+<details>
+<summary><b>Ver constantes agrupadas para [Authorize(Roles = Roles.*)] en Roles.cs</b></summary>
+<br/>
+
+| Constante DRY | Roles Incluidos | Alcance en Controladores |
+| :--- | :--- | :--- |
+| `Administracion` / `GestionMenu` | `SuperAdmin`, `Admin` | Catálogo, promociones, reportes, bitácora y configuración |
+| `TodosPersonal` | `SuperAdmin`, `Admin`, `Mesero`, `AdminCocina`, `AdminBar`, `Asistente` | Endpoints internos exclusivos para personal del local |
+| `TomaPedidos` | `SuperAdmin`, `Admin`, `Mesero`, `Cliente` | Creación de comandas desde tablet en mesa o dispositivo móvil |
+| `OperativoMesas` | `SuperAdmin`, `Admin`, `Mesero`, `Asistente` | Estado físico y disponibilidad de mesas del salón |
+| `CocinaYBar` / `GestionInventario` | `SuperAdmin`, `Admin`, `AdminCocina`, `AdminBar` | Pantallas KDS/KDD, actualización de estado y bloqueo de agotados |
+| `GestionCocina` / `GestionBar` | `SuperAdmin`, `Admin`, `AdminCocina` / `AdminBar` | Colas aisladas por área de preparación |
+| `GestionReservas` | `SuperAdmin`, `Admin`, `Asistente` | Agenda y validación de reservas sin solapamiento |
+| `GestionCobro` | `SuperAdmin`, `Admin`, `Mesero` | Habilitación y confirmación de cobros en caja o mesa |
+
+</details>
 
 ---
 
@@ -250,9 +299,9 @@ pura-sed/
 │   └── Mockups_Figma/                  # Prototipos HTML5/Three.js, capturas y manuales
 ├── retrospective/                      # Actas de retrospectiva Scrum por sprint
 │   ├── README.md                       # Índice de retrospectivas
-│   ├── SP1_REVIEW.md                   # Cierre y aprendizajes Sprint 1
-│   ├── SP2_RREVIEW.md                  # Cierre y aprendizajes Sprint 2
-│   └── SP3_REVIEW.md                   # Cierre y aprendizajes Sprint 3
+│   ├── SP1_REVIEW.md                   # Retrospectiva y mejoras Sprint 1
+│   ├── SP2_RREVIEW.md                  # Retrospectiva y mejoras Sprint 2
+│   └── SP3_REVIEW.md                   # Retrospectiva y mejoras Sprint 3
 ├── PuraSed.WebApi/                     # Backend ASP.NET Core Web API (.NET 10)
 │   ├── Constants/                      # Roles.cs (8 roles DRY y constantes [Authorize])
 │   ├── Controllers/                    # Auth, Mesas, Pagos, Pedidos, Productos, Reportes, Usuarios
@@ -347,12 +396,21 @@ El ciclo de desarrollo está organizado bajo el marco de trabajo **Scrum**, con 
 
 ### Metodología de Trabajo y Gestión Ágil
 
-* **Historias de Usuario (HU)**: Cada funcionalidad del sistema se modela bajo el formato formal:
+* **Historias de Usuario (HU)**: `32` historias funcionales (`HU-01` – `HU-32`) especificadas en [`Historias_Usuarios_RF.md`](./Entregables/SP1/Historias_Usuarios_RF.md) bajo el formato formal:
   $$\text{Como } [\text{Rol de negocio}] \quad \text{quiero } [\text{Acción / Capacidad}] \quad \text{para } [\text{Beneficio esperado}]$$
 * **Criterios de Aceptación (Definition of Done)**: Cada requerimiento cuenta con condiciones de validación verificables antes de ser promovido al siguiente estado.
 * **Estimación por Story Points**: Planificación de esfuerzo basada en la serie de Fibonacci para medir la velocidad del equipo.
 * **Flujo de Estados en el Tablero Jira**:
   $$\text{Backlog} \;\longrightarrow\; \text{Por Hacer (To Do)} \;\longrightarrow\; \text{En Progreso} \;\longrightarrow\; \text{Revisión/ QA} \;\longrightarrow\; \text{Listo (Done)}$$
+
+### Artefactos de Seguimiento y Retrospectivas
+
+| Iteración / Artefacto | Archivo en el Repositorio | Contenido Principal |
+| :--- | :--- | :--- |
+| **Índice de Retrospectivas** | [`retrospective/README.md`](./retrospective/README.md) | Estructura de análisis Scrum (*aciertos, dificultades y mejoras*) |
+| **Sprint 1 · Retrospectiva** | [`retrospective/SP1_REVIEW.md`](./retrospective/SP1_REVIEW.md) | Definición de roles, adaptación a herramientas (Jira) y organización |
+| **Sprint 2 · Retrospectiva** | [`retrospective/SP2_RREVIEW.md`](./retrospective/SP2_RREVIEW.md) | Comunicación del equipo, refuerzo de flujo Git y horario fijo |
+| **Sprint 3 · Retrospectiva** | [`retrospective/SP3_REVIEW.md`](./retrospective/SP3_REVIEW.md) | Estandarización, dominio de Git y agenda presencial inamovible |
 
 ---
 

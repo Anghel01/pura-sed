@@ -1,4 +1,4 @@
-# Script integral de generación de componentes vectoriales PuraSed (100% Clean Entities & High Fidelity)
+﻿# Script integral de generación de componentes vectoriales PuraSed (100% Clean Entities & High Fidelity)
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.Drawing
 
@@ -45,8 +45,8 @@ if (Test-Path $bannerJpg) {
   <desc id="bannerDesc">Plataforma digital para bar nocturno y restaurante: pedidos por mesa, comanda a barra y cocina, y control de jornada.</desc>
   <defs>
     <style>
-      .frame { fill: none; stroke: #1F3A4D; stroke-opacity: .12; stroke-width: 1.5; }
-      .ds    { flood-color: #1F3A4D; flood-opacity: .25; }
+      .frame { fill: none; stroke: #1A201C; stroke-opacity: .20; stroke-width: 1.5; }
+      .ds    { flood-color: #1A201C; flood-opacity: .22; }
       
       /* Efervescencia de burbujas en el cuerpo de la cerveza */
       .bubble {
@@ -68,6 +68,8 @@ if (Test-Path $bannerJpg) {
       .fizz {
         fill: #FFFFFF;
         opacity: 0.2;
+        transform-box: fill-box;
+        transform-origin: center;
         animation: fizzle 2s ease-in-out infinite alternate;
       }
       .fz1 { animation-delay: 0.2s; }
@@ -89,7 +91,7 @@ if (Test-Path $bannerJpg) {
       }
 
       @media (prefers-color-scheme: dark) {
-        .frame { stroke: #FFFFFF; stroke-opacity: .14; }
+        .frame { stroke: #E59F38; stroke-opacity: .38; }
         .ds    { flood-color: #000000; flood-opacity: .60; }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -102,7 +104,7 @@ if (Test-Path $bannerJpg) {
     </filter>
 
     <clipPath id="round">
-      <rect x="20" y="12" width="1600" height="397" rx="20"/>
+      <rect x="20" y="12" width="1600" height="397" rx="10"/>
     </clipPath>
 
     <clipPath id="glassArea">
@@ -120,7 +122,7 @@ if (Test-Path $bannerJpg) {
     </filter>
   </defs>
 
-  <rect x="20" y="12" width="1600" height="397" rx="20" fill="#86BDD0" filter="url(#shadow)"/>
+  <rect x="20" y="12" width="1600" height="397" rx="10" fill="#86BDD0" filter="url(#shadow)"/>
 
   <g clip-path="url(#round)">
     <image xlink:href="data:image/jpeg;base64,$b64" x="20" y="12" width="1600" height="397" preserveAspectRatio="xMidYMid slice"/>
@@ -158,7 +160,7 @@ if (Test-Path $bannerJpg) {
     </g>
   </g>
 
-  <rect class="frame" x="20.5" y="12.5" width="1599" height="396" rx="19.5"/>
+  <rect class="frame" x="20.5" y="12.5" width="1599" height="396" rx="9.5"/>
 </svg>
 "@
     $outBanner = Join-Path $assetsDir "banner.svg"
@@ -279,8 +281,9 @@ $teamMembers = @(
         Name = "Jose Naranjo"
         Role = "PRODUCT OWNER"
         RoleText = "Product Owner"
-        Accent = "#E4524F"
-        ChipW = 152
+        LightAccent = "#9E3E22"
+        DarkAccent = "#E68A6E"
+        ChipW = 158
         Line1 = "Requerimientos y aceptaci&#243;n"
         Line2 = "de entregables del cliente"
         Foot = "FIEE &#183; EPN"
@@ -292,8 +295,9 @@ $teamMembers = @(
         Name = "Jannys Garrido"
         Role = "SCRUM MASTER"
         RoleText = "Scrum Master y desarrollo"
-        Accent = "#D98C2B"
-        ChipW = 148
+        LightAccent = "#9E5B08"
+        DarkAccent = "#F8AD00"
+        ChipW = 154
         Line1 = "Facilitaci&#243;n &#225;gil, remoci&#243;n de"
         Line2 = "impedimentos y desarrollo"
         Foot = "@JannysG1"
@@ -305,8 +309,9 @@ $teamMembers = @(
         Name = "Angel Chicaiza"
         Role = "DESARROLLO"
         RoleText = "Equipo de desarrollo"
-        Accent = "#3E9A4A"
-        ChipW = 135
+        LightAccent = "#3D523B"
+        DarkAccent = "#9EC09B"
+        ChipW = 136
         Line1 = "Arquitectura de datos, l&#243;gica"
         Line2 = "de backend y base de datos"
         Foot = "@angelch1595-glitch"
@@ -318,8 +323,9 @@ $teamMembers = @(
         Name = "Angelo Conter&#243;n"
         Role = "DESARROLLO"
         RoleText = "Equipo de desarrollo"
-        Accent = "#3D8FAE"
-        ChipW = 135
+        LightAccent = "#2F4658"
+        DarkAccent = "#8EB2CE"
+        ChipW = 136
         Line1 = "Interfaces Blazor WASM, UX/UI"
         Line2 = "y control de versiones"
         Foot = "@Anghel01"
@@ -340,15 +346,15 @@ foreach ($m in $teamMembers) {
   <image clip-path="url(#avatarClip)" xlink:href="data:image/jpeg;base64,$avatarB64" x="48" y="57" width="112" height="112" preserveAspectRatio="xMidYMid slice"/>
 "@
     } else {
-        $accent = $m.Accent
         $initials = $m.Initials
         $avatarBlock = @"
-  <circle cx="104" cy="113" r="56" fill="$accent" fill-opacity=".15"/>
+  <circle class="mono-bg" cx="104" cy="113" r="56"/>
   <text class="mono" x="104" y="126" text-anchor="middle">$initials</text>
 "@
     }
 
-    $accentColor = $m.Accent
+    $lightAccent = $m.LightAccent
+    $darkAccent = $m.DarkAccent
     $memberName = $m.Name
     $memberRole = $m.Role
     $roleText = $m.RoleText
@@ -361,64 +367,79 @@ foreach ($m in $teamMembers) {
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 560 230" width="560" height="230" role="img" aria-label="$memberName, $roleText">
   <defs>
     <style>
-      :root {
-        --card: #FFFFFF;
-        --ink: #1F3A4D;
-        --muted: #5B7383;
-        --line: rgba(31,58,77,.10);
-        --frame: rgba(31,58,77,.12);
-        --ds: rgba(31,58,77,.14);
+      svg {
+        --card: #FFFDF9;
+        --panel: #F2EDE0;
+        --ink: #1A201C;
+        --muted: #574F49;
+        --line: #DFD7C8;
+        --frame: #CFC5B4;
+        --accent: $lightAccent;
+        --chip-bg: #F2EDE0;
       }
       @media (prefers-color-scheme: dark) {
-        :root {
-          --card: #161B22;
-          --ink: #E6EDF3;
-          --muted: #8B9BA8;
-          --line: rgba(255,255,255,.08);
-          --frame: rgba(255,255,255,.10);
-          --ds: rgba(0,0,0,.55);
+        svg {
+          --card: #1F2421;
+          --panel: #161A17;
+          --ink: #F5EADB;
+          --muted: #B5AA99;
+          --line: #313934;
+          --frame: #363F39;
+          --accent: $darkAccent;
+          --chip-bg: #151916;
         }
+        .ds { flood-color: #000000; flood-opacity: .55; }
       }
-      .card  { fill: var(--card); }
-      .hole  { fill: var(--card); }
-      .frame { fill: none; stroke: var(--frame); stroke-width: 1; }
-      .sep   { stroke: var(--line); stroke-width: 1; }
-      .name  { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; font-weight: 600; fill: var(--ink); }
-      .role  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11.5px; font-weight: 700; letter-spacing: 2px; fill: $accentColor; }
-      .txt   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 15px; font-weight: 400; fill: var(--muted); }
-      .foot  { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 14px; font-weight: 600; fill: $accentColor; }
-      .mono  { font-family: Georgia, 'Times New Roman', serif; font-size: 38px; font-weight: 600; fill: $accentColor; }
-      .orbit { transform-origin: 104px 113px; animation: spin 32s linear infinite; }
+      .ds     { flood-color: #1A201C; flood-opacity: .14; }
+      .card   { fill: var(--card); }
+      .panel  { fill: var(--panel); }
+      .hole   { fill: var(--card); }
+      .frame  { fill: none; stroke: var(--frame); stroke-width: 1.2; }
+      .sep    { stroke: var(--line); stroke-width: 1; }
+      .rail   { fill: var(--accent); }
+      .chip   { fill: var(--chip-bg); stroke: var(--line); stroke-width: 1; }
+      .mono-bg { fill: var(--accent); fill-opacity: .14; }
+      .ring   { fill: none; stroke: var(--accent); stroke-width: 2.8; }
+      .orbit  { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 2 7; stroke-linecap: round; transform-box: fill-box; transform-origin: center; animation: spin 32s linear infinite; }
+      .dot    { fill: var(--accent); transform-box: fill-box; transform-origin: center; animation: pulse 2.6s ease-in-out infinite; }
+      .name   { font-family: Georgia, 'Times New Roman', serif; font-size: 27px; font-weight: 700; fill: var(--ink); letter-spacing: -0.3px; }
+      .role   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 1.8px; fill: var(--accent); }
+      .txt    { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 14.5px; font-weight: 400; fill: var(--muted); }
+      .foot   { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13.5px; font-weight: 600; fill: var(--accent); }
+      .mono   { font-family: Georgia, 'Times New Roman', serif; font-size: 38px; font-weight: 700; fill: var(--accent); }
       @keyframes spin { to { transform: rotate(360deg); } }
-      @media (prefers-reduced-motion: reduce) { .orbit { animation: none; } }
+      @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.78); } }
+      @media (prefers-reduced-motion: reduce) { .orbit, .dot { animation: none; } }
     </style>
     <filter id="sh" x="-6%" y="-10%" width="112%" height="128%">
-      <feDropShadow flood-color="var(--ds)" dx="0" dy="8" stdDeviation="9"/>
+      <feDropShadow class="ds" dx="0" dy="8" stdDeviation="9"/>
     </filter>
-    <clipPath id="cardClip"><rect x="10" y="8" width="540" height="210" rx="20"/></clipPath>
+    <clipPath id="cardClip"><rect x="10" y="8" width="540" height="210" rx="10"/></clipPath>
     <clipPath id="avatarClip"><circle cx="104" cy="113" r="56"/></clipPath>
   </defs>
 
-  <rect class="card" x="10" y="8" width="540" height="210" rx="20" filter="url(#sh)"/>
+  <rect class="card" x="10" y="8" width="540" height="210" rx="10" filter="url(#sh)"/>
   <g clip-path="url(#cardClip)">
-    <rect x="10" y="8" width="188" height="210" fill="$accentColor" fill-opacity=".09"/>
-    <rect x="10" y="8" width="5" height="210" fill="$accentColor"/>
+    <rect class="panel" x="10" y="8" width="188" height="210"/>
+    <line class="sep" x1="198" y1="8" x2="198" y2="218"/>
+    <rect class="rail" x="10" y="8" width="6" height="210"/>
   </g>
 
-  <circle class="orbit" cx="104" cy="113" r="70" fill="none" stroke="$accentColor" stroke-width="1.6" stroke-dasharray="2 7" stroke-linecap="round"/>
+  <circle class="orbit" cx="104" cy="113" r="70"/>
   <circle class="hole" cx="104" cy="113" r="61"/>
 $avatarBlock
-  <circle cx="104" cy="113" r="56" fill="none" stroke="$accentColor" stroke-width="3"/>
+  <circle class="ring" cx="104" cy="113" r="56"/>
 
-  <rect x="214" y="32" width="$chipW" height="28" rx="14" fill="$accentColor" fill-opacity=".12"/>
-  <text class="role" x="226" y="50.5">$memberRole</text>
-  <text class="name" x="214" y="98">$memberName</text>
-  <text class="txt" x="214" y="130">$line1</text>
-  <text class="txt" x="214" y="154">$line2</text>
-  <line class="sep" x1="214" y1="172" x2="526" y2="172"/>
-  <text class="foot" x="214" y="196">$foot</text>
+  <rect class="chip" x="218" y="30" width="$chipW" height="26" rx="4"/>
+  <circle class="dot" cx="231" cy="43" r="3.2"/>
+  <text class="role" x="242" y="47">$memberRole</text>
+  <text class="name" x="218" y="96">$memberName</text>
+  <text class="txt" x="218" y="128">$line1</text>
+  <text class="txt" x="218" y="151">$line2</text>
+  <line class="sep" x1="218" y1="171" x2="526" y2="171"/>
+  <text class="foot" x="218" y="196">$foot</text>
 
-  <rect class="frame" x="10.5" y="8.5" width="539" height="209" rx="19.5"/>
+  <rect class="frame" x="10.5" y="8.5" width="539" height="209" rx="9.5"/>
 </svg>
 "@
 
