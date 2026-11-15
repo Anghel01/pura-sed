@@ -5,53 +5,35 @@
     <style>
       :root {
         --bg: #FFFFFF;
-        --bd: #D2E3F0;
-        --bar: #EFF7FC;
-        --dir: #152336;
-        --file: #1E3048;
-        --desc: #4B6178;
-        --guide: #CFE0EE;
+        --bd: #DCDCE0;
+        --bar: #ECECEE;
+        --dir: #18181B;
+        --file: #27272A;
+        --desc: #52525B;
+        --guide: #B8B8C0;
 
-        --gold-st: #D08414;
-        --gold-tx: #854D03;
-        --gold-bg: #FFF7E4;
-
-        --terra-st: #DF5E55;
-        --terra-tx: #A62B23;
-
-        --sage-st: #2BA36D;
-        --sage-tx: #136740;
-        --sage-bg: #E8F9F1;
-
-        --pizarra-st: #2E98BE;
-        --pizarra-tx: #0C5F7D;
-        --pizarra-bg: #E7F6FC;
+        --gold-st:    #D97706;   --gold-tx:    #854D03;   --gold-bg:    #FFFBEB;
+        --terra-st:   #E11D48;   --terra-tx:   #9F1239;
+        --sage-st:    #059669; --sage-tx:    #065F46; --sage-bg:    #ECFDF5;
+        --pizarra-st: #7C3AED;  --pizarra-tx: #5B21B6;  --pizarra-bg: #F5F3FF;
+        --client-st:  #EA580C;  --client-tx:  #9A3412;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #152033;
-          --bd: #2B3D59;
-          --bar: #1C2A42;
-          --dir: #F1F6FC;
-          --file: #DBE6F5;
-          --desc: #9FB3CB;
-          --guide: #466188;
+          --bg: #252526;
+          --bd: #3E3E42;
+          --bar: #2F2F31;
+          --dir: #F0F0F2;
+          --file: #E4E4E7;
+          --desc: #A6A6AE;
+          --guide: #58585E;
 
-          --gold-st: #F6C25E;
-          --gold-tx: #FAD488;
-          --gold-bg: #2C2315;
-
-          --terra-st: #F28B82;
-          --terra-tx: #F9AAA3;
-
-          --sage-st: #6AD3A2;
-          --sage-tx: #8EE2BA;
-          --sage-bg: #122C26;
-
-          --pizarra-st: #74C6DF;
-          --pizarra-tx: #94D9EE;
-          --pizarra-bg: #132A3C;
+          --gold-st:    #FBBF24;   --gold-tx:    #FDE047;   --gold-bg:    #332A16;
+          --terra-st:   #FB7185;   --terra-tx:   #FDA4AF;
+          --sage-st:    #34D399; --sage-tx:    #6EE7B7; --sage-bg:    #163128;
+          --pizarra-st: #A78BFA;  --pizarra-tx: #C4B5FD;  --pizarra-bg: #27203B;
+          --client-st:  #FB923C;  --client-tx:  #FDBA74;
         }
       }
 
@@ -243,8 +225,8 @@
   <!-- CARPETA PuraSed.Client/ -->
   <g transform="translate(56, 554)">
     <line x1="-14" y1="10" x2="0" y2="10" class="tree-guide"/>
-    <path d="M 0 2 L 6 2 L 9 5 L 18 5 C 19 5 19.5 5.5 19.5 6.5 L 19.5 15 C 19.5 16 19 16.5 18 16.5 L 1.5 16.5 C 0.5 16.5 0 16 0 15 Z" fill="var(--sage-st)"/>
-    <text x="26" y="15" class="t-dir" style="fill: var(--sage-tx);">PuraSed.Client/</text>
+    <path d="M 0 2 L 6 2 L 9 5 L 18 5 C 19 5 19.5 5.5 19.5 6.5 L 19.5 15 C 19.5 16 19 16.5 18 16.5 L 1.5 16.5 C 0.5 16.5 0 16 0 15 Z" fill="var(--client-st)"/>
+    <text x="26" y="15" class="t-dir" style="fill: var(--client-tx);">PuraSed.Client/</text>
     <text x="415" y="15" class="t-desc"># Frontend: Blazor WebAssembly 10.0 (Cliente SPA)</text>
   </g>
 
@@ -252,14 +234,14 @@
 
   <g transform="translate(86, 578)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
-    <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="var(--sage-st)"/>
+    <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="var(--client-st)"/>
     <text x="20" y="12" class="t-file">Layout/, Pages/</text>
     <text x="385" y="12" class="t-desc"># Navegaci&#243;n y vistas Razor reactivas por rol</text>
   </g>
 
   <g transform="translate(86, 600)">
     <line x1="-14" y1="8" x2="0" y2="8" class="tree-guide"/>
-    <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="var(--sage-st)"/>
+    <path d="M 0 1 L 5 1 L 7 3 L 14 3 C 15 3 15 3.5 15 4.5 L 15 12 C 15 13 15 13 14 13 L 1 13 C 0 13 0 13 0 12 Z" fill="var(--client-st)"/>
     <text x="20" y="12" class="t-file">Properties/, wwwroot/</text>
     <text x="385" y="12" class="t-desc"># Perfiles HTTPS 7020 / HTTP 5068 y estilos CSS</text>
   </g>

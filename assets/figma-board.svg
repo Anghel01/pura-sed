@@ -1,51 +1,43 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 156" width="100%" height="100%" role="img" aria-labelledby="figmaTitle figmaDesc">
   <title id="figmaTitle">Prototipo Interactivo en Figma &#8212; PuraSed</title>
-  <desc id="figmaDesc">Acceso directo al workspace oficial de prototipos y sistema de dise&#241;o UI/UX de PuraSed en Figma.</desc>
+  <desc id="figmaDesc">Workspace oficial en Figma con est&#233;tica multicolor sobre superficies neutras Figma (Claro/Oscuro).</desc>
   <defs>
     <style>
       :root {
         --bg: #FFFFFF;
-        --bd: #D2E3F0;
-        --ink: #152336;
-        --muted: #4B6178;
-        --badge-bg: #E7F6FC;
-        --badge-bd: #A4D9EF;
-        --p1-bg: #E7F6FC;
-        --p1-bd: #A4D9EF;
-        --p1-tx: #0C5F7D;
-        --p2-bg: #F0F1FE;
-        --p2-bd: #C3C8FA;
-        --p2-tx: #3C43A1;
-        --p3-bg: #E8F9F1;
-        --p3-bd: #A4E2C5;
-        --p3-tx: #136740;
-        --cta-bg: #FFD9D5;
-        --cta-bd: #DF5E55;
-        --cta-tx: #781C16;
-        --accent: #2E98BE;
+        --bd: #E0E0E0;
+        --ink: #1E1E1E;
+        --muted: #595959;
+        --badge-bg: #F5F5F5;
+        --badge-bd: #BDBDBD;
+
+        --p1-bg: #FFF1F2;   --p1-bd: #FECDD3;   --p1-tx: #9F1239;   --p1-dot: #F24E1E;
+        --p2-bg: #F5F3FF;  --p2-bd: #DDD6FE;  --p2-tx: #5B21B6;
+        --p3-bg: #ECFDF5; --p3-bd: #A7F3D0; --p3-tx: #065F46;
+
+        --cta-bg: #D9380E;
+        --cta-bd: #D9380E;
+        --cta-tx: #FFFFFF;
+        --orbit: #A259FF;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #152033;
-          --bd: #2B3D59;
-          --ink: #F1F6FC;
-          --muted: #9FB3CB;
-          --badge-bg: #1C2A42;
-          --badge-bd: #74C6DF;
-          --p1-bg: #132A3C;
-          --p1-bd: #2E5B78;
-          --p1-tx: #94D9EE;
-          --p2-bg: #1D2240;
-          --p2-bd: #455088;
-          --p2-tx: #C1C6FB;
-          --p3-bg: #122C26;
-          --p3-bd: #2A6355;
-          --p3-tx: #8EE2BA;
-          --cta-bg: #F59990;
-          --cta-bd: #F28B82;
-          --cta-tx: #260C11;
-          --accent: #74C6DF;
+          --bg: #2C2C2C;
+          --bd: #484848;
+          --ink: #FFFFFF;
+          --muted: #B3B3B3;
+          --badge-bg: #1E1E1E;
+          --badge-bd: #636363;
+
+          --p1-bg: #381C23;   --p1-bd: #7A3041;   --p1-tx: #FDA4AF;   --p1-dot: #FF7262;
+          --p2-bg: #27203B;  --p2-bd: #554185;  --p2-tx: #C4B5FD;
+          --p3-bg: #163128; --p3-bd: #296A53; --p3-tx: #6EE7B7;
+
+          --cta-bg: #FF6B4A;
+          --cta-bd: #FF6B4A;
+          --cta-tx: #1A0703;
+          --orbit: #C4B5FD;
         }
       }
 
@@ -55,23 +47,13 @@
       .f-tag   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 11px; font-weight: 700; }
       .f-btn-t { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 12.5px; font-weight: 800; fill: var(--cta-tx); letter-spacing: 0.3px; }
 
-      @keyframes orbitSpin {
-        from { transform: rotate(0deg); }
-        to   { transform: rotate(360deg); }
-      }
-      @keyframes figmaFloat {
-        0%, 100% { transform: translateY(0px); }
-        50%      { transform: translateY(-2px); }
-      }
-      @keyframes radarPulse {
-        0%   { transform: scale(1); opacity: 0.85; }
-        70%  { transform: scale(2.2); opacity: 0; }
-        100% { transform: scale(2.2); opacity: 0; }
-      }
+      @keyframes orbitSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      @keyframes figmaFloat { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-2px); } }
+      @keyframes radarPulse { 0% { transform: scale(1); opacity: 0.85; } 70% { transform: scale(2.2); opacity: 0; } 100% { transform: scale(2.2); opacity: 0; } }
       @keyframes shimmerSweep {
-        0%   { transform: translateX(-80px) skewX(-22deg); opacity: 0; }
-        18%  { opacity: 0.32; }
-        42%  { transform: translateX(250px) skewX(-22deg); opacity: 0; }
+        0% { transform: translateX(-80px) skewX(-22deg); opacity: 0; }
+        18% { opacity: 0.28; }
+        42% { transform: translateX(250px) skewX(-22deg); opacity: 0; }
         100% { transform: translateX(250px) skewX(-22deg); opacity: 0; }
       }
 
@@ -90,13 +72,17 @@
   </defs>
 
   <rect class="card" x="6" y="8" width="948" height="140" rx="12"/>
+  <!-- Barra lateral multicolor oficial estilo Figma -->
   <g clip-path="url(#cardClip)">
-    <rect x="6" y="8" width="6" height="140" fill="var(--accent)"/>
+    <rect x="6" y="8"   width="6" height="35" fill="#F24E1E"/>
+    <rect x="6" y="43"  width="6" height="35" fill="#FF7262"/>
+    <rect x="6" y="78"  width="6" height="35" fill="#A259FF"/>
+    <rect x="6" y="113" width="6" height="35" fill="#0ACF83"/>
   </g>
 
-  <!-- Emblema Figma fresco y luminoso -->
+  <!-- Medallon Figma Multicolor -->
   <g>
-    <circle class="f-orbit" cx="74" cy="78" r="44" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 6" stroke-linecap="round" opacity="0.75"/>
+    <circle class="f-orbit" cx="74" cy="78" r="44" fill="none" stroke="var(--orbit)" stroke-width="1.5" stroke-dasharray="4 6" stroke-linecap="round" opacity="0.75"/>
     <circle cx="74" cy="78" r="35" fill="var(--badge-bg)" stroke="var(--badge-bd)" stroke-width="1.3"/>
     <g transform="translate(74, 78)">
       <g class="f-float">
@@ -116,8 +102,8 @@
 
     <g transform="translate(0, 62)">
       <rect x="0" y="0" width="142" height="26" rx="13" fill="var(--p1-bg)" stroke="var(--p1-bd)" stroke-width="1"/>
-      <circle class="f-radar" cx="15" cy="13" r="4" fill="var(--accent)"/>
-      <circle cx="15" cy="13" r="3" fill="var(--accent)"/>
+      <circle class="f-radar" cx="15" cy="13" r="4" fill="var(--p1-dot)"/>
+      <circle cx="15" cy="13" r="3" fill="var(--p1-dot)"/>
       <text class="f-tag" x="27" y="17" fill="var(--p1-tx)">Figma Workspace</text>
 
       <rect x="152" y="0" width="166" height="26" rx="13" fill="var(--p2-bg)" stroke="var(--p2-bd)" stroke-width="1"/>
@@ -126,25 +112,25 @@
       <text class="f-tag" x="182" y="17" fill="var(--p2-tx)">32 Pantallas Full HD</text>
 
       <rect x="328" y="0" width="214" height="26" rx="13" fill="var(--p3-bg)" stroke="var(--p3-bd)" stroke-width="1"/>
-      <circle cx="342" cy="13" r="3" fill="#46B8DC"/>
-      <circle cx="350" cy="13" r="3" fill="#EC6E65"/>
-      <circle cx="358" cy="13" r="3" fill="#3CC28A"/>
+      <circle cx="342" cy="13" r="3" fill="#F24E1E"/>
+      <circle cx="350" cy="13" r="3" fill="#A259FF"/>
+      <circle cx="358" cy="13" r="3" fill="#0ACF83"/>
       <text class="f-tag" x="370" y="17" fill="var(--p3-tx)">Angelo &#183; Jannys &#183; &#193;ngel</text>
     </g>
   </g>
 
-  <!-- Boton CTA Pastel Coral Vivo -->
+  <!-- CTA Rojo Coral Vivo Figma -->
   <g transform="translate(728, 56)">
     <g clip-path="url(#btnClip)">
       <rect width="204" height="44" rx="10" fill="var(--cta-bg)" stroke="var(--cta-bd)" stroke-width="1.25"/>
       <rect class="f-shimmer" x="0" y="-10" width="44" height="64" fill="#FFFFFF"/>
     </g>
-    <g transform="translate(28, 22) scale(0.42)">
-      <path d="M-7 -21H0V-7H-7A7 7 0 0 1-7-21Z" fill="#F24E1E"/>
-      <path d="M0 -21H7A7 7 0 0 1 7-7H0V-21Z" fill="#B83024"/>
-      <path d="M-7 -7H0V7H-7A7 7 0 0 1-7-7Z" fill="#7C3AED"/>
-      <circle cx="7" cy="0" r="7" fill="#0EA5E9"/>
-      <path d="M-7 7H0V14A7 7 0 1 1-7 7Z" fill="#059669"/>
+    <g transform="translate(26, 22) scale(0.42)">
+      <path d="M-7 -21H0V-7H-7A7 7 0 0 1-7-21Z" fill="var(--cta-tx)"/>
+      <path d="M0 -21H7A7 7 0 0 1 7-7H0V-21Z" fill="var(--cta-tx)" opacity="0.82"/>
+      <path d="M-7 -7H0V7H-7A7 7 0 0 1-7-7Z" fill="var(--cta-tx)" opacity="0.92"/>
+      <circle cx="7" cy="0" r="7" fill="var(--cta-tx)" opacity="0.72"/>
+      <path d="M-7 7H0V14A7 7 0 1 1-7 7Z" fill="var(--cta-tx)"/>
     </g>
     <text class="f-btn-t" x="116" y="26.5" text-anchor="middle">ABRIR EN FIGMA &#8594;</text>
   </g>

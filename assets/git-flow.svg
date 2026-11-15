@@ -1,55 +1,37 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 245" width="100%" height="100%" role="img" aria-labelledby="gitTitle gitDesc">
   <title id="gitTitle">Estrategia GitFlow PuraSed</title>
-  <desc id="gitDesc">Flujo animado de ramas GitFlow entre main, develop y ramas feature por historia de usuario en paleta suave y clara Brisa PuraSed.</desc>
+  <desc id="gitDesc">Flujo animado de ramas GitFlow entre main, develop y ramas feature por historia de usuario sobre superficie neutra con ramas en colores vivos diferenciados.</desc>
   <defs>
     <style>
       :root {
-        --bg: #F7FBFE;
-        --bar: #FFFFFF;
-        --bd: #D2E3F0;
-        --txt: #152336;
-        --sub: #4B6178;
-        --track: #DCE9F3;
+        --bg: #FFFFFF;
+        --bar: #EFEFF1;
+        --bd: #E0E0E4;
+        --txt: #18181B;
+        --sub: #52525B;
+        --track: #E0E0E4;
 
-        --main-st: #2BA36D;
-        --main-tx: #136740;
-        --main-bg: #E8F9F1;
-
-        --dev-st: #2E98BE;
-        --dev-tx: #0C5F7D;
-        --dev-bg: #E7F6FC;
-
-        --f1-st: #6D76E4;
-        --f1-tx: #3C43A1;
-        --f1-bg: #F0F1FE;
-
-        --f2-st: #DF5E55;
-        --f3-st: #D08414;
+        --main-st: #059669; --main-tx: #065F46; --main-bg: #ECFDF5;
+        --dev-st:  #EA580C;  --dev-tx:  #9A3412;  --dev-bg:  #FFF7ED;
+        --f1-st:   #7C3AED;  --f1-tx:   #5B21B6;  --f1-bg:   #F5F3FF;
+        --f2-st:   #E11D48;
+        --f3-st:   #DB2777;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #0E1626;
-          --bar: #152033;
-          --bd: #2B3D59;
-          --txt: #F1F6FC;
-          --sub: #9FB3CB;
-          --track: #2B3D59;
+          --bg: #2A2A2A;
+          --bar: #343434;
+          --bd: #444444;
+          --txt: #F3F3F3;
+          --sub: #A8A8AD;
+          --track: #444444;
 
-          --main-st: #6AD3A2;
-          --main-tx: #8EE2BA;
-          --main-bg: #122C26;
-
-          --dev-st: #74C6DF;
-          --dev-tx: #94D9EE;
-          --dev-bg: #132A3C;
-
-          --f1-st: #A1A8F7;
-          --f1-tx: #C1C6FB;
-          --f1-bg: #1D2240;
-
-          --f2-st: #F28B82;
-          --f3-st: #F6C25E;
+          --main-st: #34D399; --main-tx: #6EE7B7; --main-bg: #163128;
+          --dev-st:  #FB923C;  --dev-tx:  #FDBA74;  --dev-bg:  #362319;
+          --f1-st:   #A78BFA;  --f1-tx:   #C4B5FD;  --f1-bg:   #27203B;
+          --f2-st:   #FB7185;
+          --f3-st:   #F472B6;
         }
       }
 

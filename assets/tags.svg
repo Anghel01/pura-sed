@@ -5,51 +5,51 @@
     <style>
       :root {
         --bg: #FFFFFF;
-        --alt: #EFF7FC;
-        --bd: #D2E3F0;
-        --ink: #152336;
-        --muted: #4B6178;
+        --alt: #F3F1EC;
+        --bd: #E2DFD7;
+        --ink: #1C1917;
+        --muted: #57534E;
 
-        --gold-fill: #2E98BE;
-        --gold-tx: #0C5F7D;
-        --gold-bg: #E7F6FC;
+        --gold-fill: #7C3AED;
+        --gold-tx: #5B21B6;
+        --gold-bg: #F5F3FF;
 
-        --pizarra-fill: #6D76E4;
-        --pizarra-tx: #3C43A1;
-        --pizarra-bg: #F0F1FE;
+        --pizarra-fill: #EA580C;
+        --pizarra-tx: #9A3412;
+        --pizarra-bg: #FFF7ED;
 
-        --terra-fill: #DF5E55;
-        --terra-tx: #A62B23;
-        --terra-bg: #FFF0EF;
+        --terra-fill: #059669;
+        --terra-tx: #065F46;
+        --terra-bg: #ECFDF5;
 
-        --sage-fill: #2BA36D;
-        --sage-tx: #136740;
-        --sage-bg: #E8F9F1;
+        --sage-fill: #DB2777;
+        --sage-tx: #9D174D;
+        --sage-bg: #FDF2F8;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #152033;
-          --alt: #1C2A42;
-          --bd: #2B3D59;
-          --ink: #F1F6FC;
-          --muted: #9FB3CB;
+          --bg: #292826;
+          --alt: #33322E;
+          --bd: #45433F;
+          --ink: #F5F4EF;
+          --muted: #B0ADA6;
 
-          --gold-fill: #74C6DF;
-          --gold-tx: #94D9EE;
-          --gold-bg: #132A3C;
+          --gold-fill: #A78BFA;
+          --gold-tx: #C4B5FD;
+          --gold-bg: #27203B;
 
-          --pizarra-fill: #A1A8F7;
-          --pizarra-tx: #C1C6FB;
-          --pizarra-bg: #1D2240;
+          --pizarra-fill: #FB923C;
+          --pizarra-tx: #FDBA74;
+          --pizarra-bg: #362319;
 
-          --terra-fill: #F28B82;
-          --terra-tx: #F9AAA3;
-          --terra-bg: #2C1B24;
+          --terra-fill: #34D399;
+          --terra-tx: #6EE7B7;
+          --terra-bg: #163128;
 
-          --sage-fill: #6AD3A2;
-          --sage-tx: #8EE2BA;
-          --sage-bg: #122C26;
+          --sage-fill: #F472B6;
+          --sage-tx: #F9A8D4;
+          --sage-bg: #361B2B;
         }
       }
 

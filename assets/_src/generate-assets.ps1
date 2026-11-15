@@ -47,28 +47,28 @@ if (Test-Path $bannerJpg) {
     <style>
       svg {
         --card: #FFFFFF;
-        --panel: #EFF7FC;
-        --ink: #152336;
-        --muted: #4B6178;
-        --line: #D2E3F0;
-        --frame: #C2D8E8;
+        --panel: #F3F1EC;
+        --ink: #1C1917;
+        --muted: #57534E;
+        --line: #E2DFD7;
+        --frame: #D4D4D8;
         --accent: $lightAccent;
-        --chip-bg: #EFF7FC;
+        --chip-bg: #F3F1EC;
       }
       @media (prefers-color-scheme: dark) {
         svg {
-          --card: #152033;
-          --panel: #162639;
-          --ink: #F1F6FC;
-          --muted: #9FB3CB;
-          --line: #2B3D59;
-          --frame: #314563;
+          --card: #292826;
+          --panel: #2B2A28;
+          --ink: #F5F4EF;
+          --muted: #B0ADA6;
+          --line: #45433F;
+          --frame: #444448;
           --accent: $darkAccent;
-          --chip-bg: #1C2A42;
+          --chip-bg: #33322E;
         }
-        .ds { flood-color: #040914; flood-opacity: .55; }
+        .ds { flood-color: #000000; flood-opacity: .55; }
       }
-      .ds     { flood-color: #3E7294; flood-opacity: .14; }
+      .ds     { flood-color: #18181B; flood-opacity: .12; }
       .card   { fill: var(--card); }
       .panel  { fill: var(--panel); }
       .hole   { fill: var(--card); }

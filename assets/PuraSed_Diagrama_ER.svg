@@ -8,115 +8,70 @@
   </defs>
   <style>
     svg {
-      --canvas: #F7FBFE;
-      --grid: #CBE0EE;
+      --canvas: #FAFAFC;
+      --grid: #DCDCE2;
       --paper: #FFFFFF;
-      --paper-alt: #EFF7FC;
-      --border: #D2E3F0;
-      --divider: #E3EEF6;
-      --ink: #152336;
-      --ink-col: #1E2E42;
-      --muted: #4B6178;
-      --edge: #6C86A3;
-      --spine: #2E98BE;
-      --hdr-bar-bg: #EBF6FC;
-      --hdr-bar-ink: #152336;
-      --hdr-bar-muted: #4B6178;
-      --pill-bg: #FFFFFF;
-      --pill-bd: #BBD9EB;
-      --pill-tx: #152336;
-      --kicker-tx: #0C5F7D;
+      --paper-alt: #F4F4F6;
+      --border: #D8D8DF;
+      --divider: #E9E9EE;
+      --ink: #18181B;
+      --ink-col: #27272A;
+      --muted: #52525B;
+      --edge: #6B7280;
+      --spine: #EA580C;
+      --hdr-bar-bg: #FFFFFF;
+      --hdr-bar-ink: #18181B;
+      --hdr-bar-muted: #52525B;
+      --pill-bg: #F4F4F6;
+      --pill-bd: #D4D4DC;
+      --pill-tx: #18181B;
+      --kicker-tx: #9A3412;
 
-      /* 5 Soft-Vivid Domain Headers (banner-aligned, WCAG AA/AAA) */
-      --cat-bg: #CBEBFB;   --cat-fg: #094961;   --cat-tag: #0C5F7D;
-      --salon-bg: #FFD9D5; --salon-fg: #781C16; --salon-tag: #A62B23;
-      --fact-bg: #FFEAB8;  --fact-fg: #653700;  --fact-tag: #854D03;
-      --inv-bg: #C6F3DD;    --inv-fg: #0C5031;    --inv-tag: #136740;
-      --sec-bg: #D9DCFE;     --sec-fg: #292F7E;     --sec-tag: #3C43A1;
+      /* 5 Vivid Non-Blue Domain Headers on High-Contrast Light Canvas */
+      --cat-bg: #34D399;   --cat-fg: #022C22;   --cat-tag: #064E3B;
+      --salon-bg: #FB7185; --salon-fg: #4C0519; --salon-tag: #881337;
+      --fact-bg: #FBBF24;  --fact-fg: #422006;  --fact-tag: #78350F;
+      --inv-bg: #A3E635;   --inv-fg: #1A2E05;   --inv-tag: #365314;
+      --sec-bg: #C084FC;   --sec-fg: #2E1065;   --sec-tag: #581C87;
 
-      /* PK/FK Badges */
-      --pk-bg: #FFE8B3; --pk-fg: #703E00;
-      --fk-bg: #D9EFFA; --fk-fg: #0D5875;
+      /* PK/FK Badges (No Blue) */
+      --pk-bg: #FEF3C7; --pk-fg: #92400E;
+      --fk-bg: #F3E8FF; --fk-fg: #6B21A8;
 
       /* Legend */
-      --leg-hdr-bg: #E7F6FC; --leg-hdr-fg: #152336; --leg-sub-fg: #4B6178;
+      --leg-hdr-bg: #F4F4F6; --leg-hdr-fg: #18181B; --leg-sub-fg: #52525B;
     }
 
     @media (prefers-color-scheme: dark) {
-      svg {
-        --canvas: #0E1626;
-        --grid: #213047;
-        --paper: #152033;
-        --paper-alt: #1C2A42;
-        --border: #2B3D59;
-        --divider: #253650;
-        --ink: #F1F6FC;
-        --ink-col: #E6EEF8;
-        --muted: #9FB3CB;
-        --edge: #7E99B8;
-        --spine: #74C6DF;
-        --hdr-bar-bg: #142236;
-        --hdr-bar-ink: #F1F6FC;
-        --hdr-bar-muted: #9FB3CB;
-        --pill-bg: #1A2B44;
-        --pill-bd: #314C70;
-        --pill-tx: #F1F6FC;
-        --kicker-tx: #94D9EE;
-
-        --cat-bg: #78CCE6;     --cat-fg: #0B1A2B;     --cat-tag: #0B1A2B;
-        --salon-bg: #F59990; --salon-fg: #260C11; --salon-tag: #260C11;
-        --fact-bg: #F8CA6B;  --fact-fg: #261804;  --fact-tag: #261804;
-        --inv-bg: #73DBA9;    --inv-fg: #08241C;    --inv-tag: #08241C;
-        --sec-bg: #AAB1FA;     --sec-fg: #131636;     --sec-tag: #131636;
-
-        --pk-bg: #3D2E14; --pk-fg: #FAD488;
-        --fk-bg: #163347; --fk-fg: #94D9EE;
-
-        --leg-hdr-bg: #142236; --leg-hdr-fg: #F1F6FC; --leg-sub-fg: #9FB3CB;
-      }
+      /* Solo marco exterior se adapta sutilmente al gris del entorno oscuro */
+      svg { --border: #4A4A52; }
     }
 
     text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Helvetica, Arial, sans-serif; }
     .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
     .canvas-bg { fill: var(--canvas); }
-    .grid-dot { fill: var(--grid); opacity: 0.72; }
+    .grid-dot { fill: var(--grid); opacity: 0.78; }
     .outer-frame { fill: none; stroke: var(--border); stroke-width: 2; }
 
-    /* Top Header Bar */
-    .top-band { fill: var(--hdr-bar-bg); stroke: var(--border); stroke-width: 1.5; }
+    .top-band { fill: var(--hdr-bar-bg); stroke: #D8D8DF; stroke-width: 1.5; }
     .top-kicker { fill: var(--kicker-tx); font-size: 13px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; }
     .top-title { fill: var(--hdr-bar-ink); font-size: 26px; font-weight: 800; letter-spacing: -0.4px; }
     .top-sub { fill: var(--hdr-bar-muted); font-size: 13.5px; font-weight: 500; }
 
-    /* Entity Cards */
     .card-bg { fill: var(--paper); }
-    .card-border { stroke: var(--border); stroke-width: 1.4; }
+    .card-border { stroke: #C9C9D2; stroke-width: 1.4; }
     .row-alt { fill: var(--paper-alt); }
     .row-div { stroke: var(--divider); stroke-width: 1; }
 
-    .hdr-cat { fill: var(--cat-bg); }
-    .hdr-title-cat { fill: var(--cat-fg); }
-    .hdr-tag-cat { fill: var(--cat-tag); }
-
-    .hdr-salon { fill: var(--salon-bg); }
-    .hdr-title-salon { fill: var(--salon-fg); }
-    .hdr-tag-salon { fill: var(--salon-tag); }
-
-    .hdr-fact { fill: var(--fact-bg); }
-    .hdr-title-fact { fill: var(--fact-fg); }
-    .hdr-tag-fact { fill: var(--fact-tag); }
-
-    .hdr-inv { fill: var(--inv-bg); }
-    .hdr-title-inv { fill: var(--inv-fg); }
-    .hdr-tag-inv { fill: var(--inv-tag); }
-
-    .hdr-sec { fill: var(--sec-bg); }
-    .hdr-title-sec { fill: var(--sec-fg); }
-    .hdr-tag-sec { fill: var(--sec-tag); }
+    .hdr-cat { fill: var(--cat-bg); }   .hdr-title-cat { fill: var(--cat-fg); }   .hdr-tag-cat { fill: var(--cat-tag); }
+    .hdr-salon { fill: var(--salon-bg); } .hdr-title-salon { fill: var(--salon-fg); } .hdr-tag-salon { fill: var(--salon-tag); }
+    .hdr-fact { fill: var(--fact-bg); }   .hdr-title-fact { fill: var(--fact-fg); }   .hdr-tag-fact { fill: var(--fact-tag); }
+    .hdr-inv { fill: var(--inv-bg); }     .hdr-title-inv { fill: var(--inv-fg); }     .hdr-tag-inv { fill: var(--inv-tag); }
+    .hdr-sec { fill: var(--sec-bg); }     .hdr-title-sec { fill: var(--sec-fg); }     .hdr-tag-sec { fill: var(--sec-tag); }
 
     .hdr-title { font-size: 14px; font-weight: 800; letter-spacing: -0.1px; }
-    .hdr-tag { font-size: 9.2px; font-weight: 700; letter-spacing: 0.7px; opacity: 0.88; }
+    .hdr-tag { font-size: 9.2px; font-weight: 800; letter-spacing: 0.7px; }
 
     .badge-pk { fill: var(--pk-bg); }
     .badge-pk-txt { fill: var(--pk-fg); font-size: 8.8px; font-weight: 800; }
@@ -128,7 +83,6 @@
     .col-fk { font-weight: 600; }
     .col-type { fill: var(--muted); font-size: 9.6px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
-    /* Relationships */
     .er-edge path, .er-edge ellipse { stroke: var(--edge); stroke-width: 1.5; }
     .er-spine > path:first-child, .er-spine ellipse { stroke: var(--edge); stroke-width: 1.75; }
     .spine-flow {
@@ -139,23 +93,12 @@
       animation: er-flow 3.4s linear infinite;
     }
 
-    @keyframes er-flow {
-      to { stroke-dashoffset: -44; }
-    }
+    @keyframes er-flow { to { stroke-dashoffset: -44; } }
+    @keyframes beacon-pulse { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.45); opacity: 0.55; } }
 
-    @keyframes beacon-pulse {
-      0%, 100% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.45); opacity: 0.55; }
-    }
+    .schema-beacon { transform-box: fill-box; transform-origin: center; animation: beacon-pulse 2.4s ease-in-out infinite; }
 
-    .schema-beacon {
-      transform-box: fill-box;
-      transform-origin: center;
-      animation: beacon-pulse 2.4s ease-in-out infinite;
-    }
-
-    /* Legend */
-    .legend-card { fill: var(--paper); stroke: var(--border); stroke-width: 1.6; }
+    .legend-card { fill: var(--paper); stroke: #C9C9D2; stroke-width: 1.6; }
     .legend-hdr-cap { fill: var(--leg-hdr-bg); }
     .legend-title { fill: var(--leg-hdr-fg); font-size: 16px; font-weight: 800; letter-spacing: 0.5px; }
     .legend-sub { fill: var(--leg-sub-fg); font-size: 12px; font-weight: 600; }
@@ -172,7 +115,7 @@
   <rect x="0" y="0" width="3452" height="1444" rx="10" class="canvas-bg"/>
   <rect x="0" y="112" width="3452" height="1332" fill="url(#draft-grid)"/>
 
-  <!-- Brisa PuraSed ER Header -->
+  <!-- High-Contrast Light Canvas ER Header -->
   <g id="er-header">
     <rect x="14" y="12" width="3424" height="88" rx="12" class="top-band"/>
     <rect x="14" y="12" width="10" height="88" rx="5" fill="var(--spine)"/>
@@ -180,36 +123,14 @@
     <text x="42" y="38" class="top-kicker">ARQUITECTURA DE DATOS · SQL SERVER RELACIONAL (CODE-FIRST + ESQUEMA COMPLETO)</text>
     <text x="42" y="74" class="top-title">Modelo Entidad–Relación · PuraSed</text>
 
-    <!-- Domain Count Summary Pills on Right -->
-    <g>
-      <rect x="2186" y="28" width="230" height="30" rx="15" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/>
-      <circle cx="2202" cy="43" r="5" fill="#46B8DC"/>
-      <text x="2215" y="47.5" fill="var(--pill-tx)" font-size="12.5" font-weight="700">Catálogo y Recetas · 8</text>
-    </g>
-    <g>
-      <rect x="2428" y="28" width="224" height="30" rx="15" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/>
-      <circle cx="2444" cy="43" r="5" fill="#EA7B73"/>
-      <text x="2457" y="47.5" fill="var(--pill-tx)" font-size="12.5" font-weight="700">Salón y Comandas · 5</text>
-    </g>
-    <g>
-      <rect x="2664" y="28" width="254" height="30" rx="15" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/>
-      <circle cx="2680" cy="43" r="5" fill="#F0B143"/>
-      <text x="2693" y="47.5" fill="var(--pill-tx)" font-size="12.5" font-weight="700">Caja, Factura y Shows · 5</text>
-    </g>
-    <g>
-      <rect x="2930" y="28" width="214" height="30" rx="15" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/>
-      <circle cx="2946" cy="43" r="5" fill="#47C28A"/>
-      <text x="2959" y="47.5" fill="var(--pill-tx)" font-size="12.5" font-weight="700">Inventario y Stock · 2</text>
-    </g>
-    <g>
-      <rect x="3156" y="28" width="210" height="30" rx="15" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/>
-      <circle cx="3172" cy="43" r="5" fill="#8A93F2"/>
-      <text x="3185" y="47.5" fill="var(--pill-tx)" font-size="12.5" font-weight="700">RBAC y Bitácora · 3</text>
-    </g>
+    <g><rect x="2186" y="28" width="230" height="30" rx="15" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/><circle cx="2202" cy="43" r="5" fill="#10B981"/><text x="2215" y="47.5" fill="var(--pill-tx)" font-size="12.5" font-weight="700">Catálogo y Recetas · 8</text></g>
+    <g><rect x="2428" y="28" width="224" height="30" rx="15" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/><circle cx="2444" cy="43" r="5" fill="#F43F5E"/><text x="2457" y="47.5" fill="var(--pill-tx)" font-size="12.5" font-weight="700">Salón y Comandas · 5</text></g>
+    <g><rect x="2664" y="28" width="254" height="30" rx="15" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/><circle cx="2680" cy="43" r="5" fill="#F59E0B"/><text x="2693" y="47.5" fill="var(--pill-tx)" font-size="12.5" font-weight="700">Caja, Factura y Shows · 5</text></g>
+    <g><rect x="2930" y="28" width="214" height="30" rx="15" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/><circle cx="2946" cy="43" r="5" fill="#84CC16"/><text x="2959" y="47.5" fill="var(--pill-tx)" font-size="12.5" font-weight="700">Inventario y Stock · 2</text></g>
+    <g><rect x="3156" y="28" width="210" height="30" rx="15" fill="var(--pill-bg)" stroke="var(--pill-bd)" stroke-width="1"/><circle cx="3172" cy="43" r="5" fill="#A855F7"/><text x="3185" y="47.5" fill="var(--pill-tx)" font-size="12.5" font-weight="700">RBAC y Bitácora · 3</text></g>
 
-    <!-- Live Schema Status Pill -->
     <g>
-      <rect x="2930" y="66" width="490" height="24" rx="12" fill="var(--pill-bg)" stroke="var(--spine)" stroke-width="1.1"/>
+      <rect x="2930" y="66" width="490" height="24" rx="12" fill="var(--pill-bg)" stroke="var(--spine)" stroke-width="1.2"/>
       <circle cx="2948" cy="78" r="4.5" fill="var(--spine)" class="schema-beacon"/>
       <text x="2962" y="82" fill="var(--pill-tx)" font-size="11.5" font-weight="700" class="mono">23 TABLAS · 29 RELACIONES CROW'S FOOT · INTEGRIDAD TRANSACCIONAL</text>
     </g>

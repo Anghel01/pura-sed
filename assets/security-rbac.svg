@@ -4,54 +4,32 @@
   <defs>
     <style>
       :root {
-        --bg: #F7FBFE;
+        --bg: #F9F8F6;
         --card: #FFFFFF;
-        --alt: #EFF7FC;
-        --bd: #D2E3F0;
-        --ink: #152336;
-        --muted: #4B6178;
+        --alt: #F3F1EC;
+        --bd: #E2DFD7;
+        --ink: #1C1917;
+        --muted: #57534E;
 
-        --pizarra-st: #6D76E4;
-        --pizarra-tx: #3C43A1;
-        --pizarra-bg: #F0F1FE;
-
-        --sage-st: #2E98BE;
-        --sage-tx: #0C5F7D;
-        --sage-bg: #E7F6FC;
-
-        --gold-st: #2BA36D;
-        --gold-tx: #136740;
-        --gold-bg: #E8F9F1;
-
-        --terra-st: #DF5E55;
-        --terra-tx: #A62B23;
-        --terra-bg: #FFF0EF;
+        --pizarra-st: #7C3AED;  --pizarra-tx: #5B21B6;  --pizarra-bg: #F5F3FF;
+        --sage-st:    #059669; --sage-tx:    #065F46; --sage-bg:    #ECFDF5;
+        --gold-st:    #D97706;   --gold-tx:    #854D03;   --gold-bg:    #FFFBEB;
+        --terra-st:   #E11D48;   --terra-tx:   #9F1239;   --terra-bg:   #FFF1F2;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #0E1626;
-          --card: #152033;
-          --alt: #1C2A42;
-          --bd: #2B3D59;
-          --ink: #F1F6FC;
-          --muted: #9FB3CB;
+          --bg: #1F1E1C;
+          --card: #292826;
+          --alt: #33322E;
+          --bd: #45433F;
+          --ink: #F5F4EF;
+          --muted: #B0ADA6;
 
-          --pizarra-st: #A1A8F7;
-          --pizarra-tx: #C1C6FB;
-          --pizarra-bg: #1D2240;
-
-          --sage-st: #74C6DF;
-          --sage-tx: #94D9EE;
-          --sage-bg: #132A3C;
-
-          --gold-st: #6AD3A2;
-          --gold-tx: #8EE2BA;
-          --gold-bg: #122C26;
-
-          --terra-st: #F28B82;
-          --terra-tx: #F9AAA3;
-          --terra-bg: #2C1B24;
+          --pizarra-st: #A78BFA;  --pizarra-tx: #C4B5FD;  --pizarra-bg: #27203B;
+          --sage-st:    #34D399; --sage-tx:    #6EE7B7; --sage-bg:    #163128;
+          --gold-st:    #FBBF24;   --gold-tx:    #FDE047;   --gold-bg:    #332A16;
+          --terra-st:   #FB7185;   --terra-tx:   #FDA4AF;   --terra-bg:   #381C23;
         }
       }
 

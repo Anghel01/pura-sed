@@ -1,50 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" width="100%" height="100%" role="img" aria-labelledby="archTitle archDesc">
   <title id="archTitle">Arquitectura Monol&#237;tica Modular &#8212; PuraSed</title>
-  <desc id="archDesc">Diagrama interactivo de las 6 capas desacopladas del monolito .NET 10, persistencia en SQL Server, pasarela de pago y pipeline SignalR.</desc>
+  <desc id="archDesc">Diagrama de alto contraste sobre lienzo claro de las 6 capas desacopladas del monolito .NET 10 y flujo SignalR.</desc>
   <defs>
     <style>
       :root {
-        --bg: #F7FBFE;
+        --bg: #FAFAFC;
         --card: #FFFFFF;
-        --alt: #EFF7FC;
-        --bd: #D2E3F0;
-        --bd-strong: #98C1DB;
-        --ink: #152336;
-        --muted: #4B6178;
+        --alt: #F4F4F6;
+        --bd: #D8D8DF;
+        --bd-strong: #9E9EA9;
+        --ink: #18181B;
+        --muted: #52525B;
 
-        --sky-tx: #0C5F7D;     --sky-st: #2E98BE;     --sky-bg: #E7F6FC;     --sky-bd: #A4D9EF;
-        --coral-tx: #A62B23; --coral-st: #DF5E55; --coral-bg: #FFF0EF; --coral-bd: #F5BEBA;
-        --mint-tx: #136740;   --mint-st: #2BA36D;   --mint-bg: #E8F9F1;   --mint-bd: #A4E2C5;
-        --honey-tx: #854D03; --honey-st: #D08414; --honey-bg: #FFF7E4; --honey-bd: #F4D48E;
-        --lav-tx: #3C43A1;     --lav-st: #6D76E4;     --lav-bg: #F0F1FE;     --lav-bd: #C3C8FA;
-        --teal-tx: #0B635D;   --teal-st: #229D95;   --teal-bg: #E8FAF8;   --teal-bd: #A0E1DB;
-        --rose-tx: #992559;   --rose-st: #D65F93;   --rose-bg: #FFF0F6;   --rose-bd: #F2BAD2;
+        --c1-tx: #9F1239;   --c1-st: #E11D48;   --c1-bg: #FFF1F2;   --c1-bd: #FECDD3;
+        --c2-tx: #5B21B6;  --c2-st: #7C3AED;  --c2-bg: #F5F3FF;  --c2-bd: #DDD6FE;
+        --c3-tx: #065F46; --c3-st: #059669; --c3-bg: #ECFDF5; --c3-bd: #A7F3D0;
+        --c4-tx: #9A3412;  --c4-st: #EA580C;  --c4-bg: #FFF7ED;  --c4-bd: #FED7AA;
+        --c5-tx: #166534;   --c5-st: #16A34A;   --c5-bg: #F0FDF4;   --c5-bd: #BBF7D0;
+        --c6-tx: #86198F; --c6-st: #C026D3; --c6-bg: #FDF4FF; --c6-bd: #F5D0FE;
+        --amber-tx: #854D03; --amber-st: #D97706; --amber-bg: #FFFBEB; --amber-bd: #FDE68A;
+        --rose-tx: #9D174D;  --rose-st: #DB2777;  --rose-bg: #FDF2F8;  --rose-bd: #FBCFE8;
       }
 
+      /* En Modo Oscuro el marco exterior armoniza con el fondo gris oscuro, manteniendo la lamina clara para maximo contraste */
       @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #0E1626;
-          --card: #152033;
-          --alt: #1C2A42;
-          --bd: #2B3D59;
-          --bd-strong: #466188;
-          --ink: #F1F6FC;
-          --muted: #9FB3CB;
-
-          --sky-tx: #94D9EE;     --sky-st: #74C6DF;     --sky-bg: #132A3C;     --sky-bd: #2E5B78;
-          --coral-tx: #F9AAA3; --coral-st: #F28B82; --coral-bg: #2C1B24; --coral-bd: #6E3B43;
-          --mint-tx: #8EE2BA;   --mint-st: #6AD3A2;   --mint-bg: #122C26;   --mint-bd: #2A6355;
-          --honey-tx: #FAD488; --honey-st: #F6C25E; --honey-bg: #2C2315; --honey-bd: #6B5328;
-          --lav-tx: #C1C6FB;     --lav-st: #A1A8F7;     --lav-bg: #1D2240;     --lav-bd: #455088;
-          --teal-tx: #8CE2DA;   --teal-st: #5FD3C9;   --teal-bg: #112A2E;   --teal-bd: #295F64;
-          --rose-tx: #F7B3D0;   --rose-st: #EF8DB7;   --rose-bg: #2C1A2A;   --rose-bd: #6C385A;
-        }
+        :root { --bd: #46464D; --bd-strong: #6B6B76; }
       }
 
-      .canvas  { fill: var(--bg); stroke: var(--bd); stroke-width: 1.3; }
-      .monolith-boundary { fill: none; stroke: var(--bd-strong); stroke-width: 1.5; stroke-dasharray: 7 4; }
-      .subbox  { fill: var(--card); stroke-width: 1.15; }
-      .layer-c { stroke-width: 1.4; }
+      .canvas  { fill: var(--bg); stroke: var(--bd); stroke-width: 1.5; }
+      .monolith-boundary { fill: #FFFFFF; stroke: var(--bd-strong); stroke-width: 1.4; stroke-dasharray: 7 4; }
+      .subbox  { fill: var(--card); stroke-width: 1.25; }
+      .layer-c { stroke-width: 1.5; }
 
       .h1       { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 16.5px; font-weight: 800; fill: var(--ink); letter-spacing: -0.2px; }
       .h2       { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 11.5px; font-weight: 500; fill: var(--muted); }
@@ -54,220 +40,165 @@
       .lbl-pill { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 9.8px; font-weight: 700; letter-spacing: 0.4px; text-anchor: middle; }
       .code-tok { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 9.8px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
 
-      @keyframes dashFlow {
-        from { stroke-dashoffset: 24; }
-        to   { stroke-dashoffset: 0; }
-      }
-      @keyframes beaconPulse {
-        0%   { transform: scale(1); opacity: 0.85; }
-        70%  { transform: scale(2.2); opacity: 0; }
-        100% { transform: scale(2.2); opacity: 0; }
-      }
+      @keyframes dashFlow { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+      @keyframes beaconPulse { 0% { transform: scale(1); opacity: 0.85; } 70% { transform: scale(2.2); opacity: 0; } 100% { transform: scale(2.2); opacity: 0; } }
 
-      .arrow-sky   { fill: none; stroke: var(--sky-st);   stroke-width: 1.75; stroke-dasharray: 5 4; animation: dashFlow 1.6s linear infinite; }
-      .arrow-lav   { fill: none; stroke: var(--lav-st);   stroke-width: 1.75; stroke-dasharray: 5 4; animation: dashFlow 1.5s linear infinite; }
-      .arrow-mint  { fill: none; stroke: var(--mint-st);  stroke-width: 1.75; stroke-dasharray: 5 4; animation: dashFlow 1.7s linear infinite; }
-      .arrow-coral { fill: none; stroke: var(--coral-st); stroke-width: 1.75; stroke-dasharray: 5 4; animation: dashFlow 1.8s linear infinite; }
-      .arrow-teal  { fill: none; stroke: var(--teal-st);  stroke-width: 1.75; stroke-dasharray: 5 4; animation: dashFlow 1.6s linear infinite; }
-      .arrow-honey { fill: none; stroke: var(--honey-st); stroke-width: 1.75; stroke-dasharray: 5 4; animation: dashFlow 1.65s linear infinite; }
+      .arrow-coral   { fill: none; stroke: var(--c1-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.6s linear infinite; }
+      .arrow-violet  { fill: none; stroke: var(--c2-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.5s linear infinite; }
+      .arrow-emerald { fill: none; stroke: var(--c3-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.7s linear infinite; }
+      .arrow-orange  { fill: none; stroke: var(--c4-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.8s linear infinite; }
+      .arrow-green   { fill: none; stroke: var(--c5-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.6s linear infinite; }
+      .arrow-magenta { fill: none; stroke: var(--c6-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.65s linear infinite; }
 
-      .pulse-beacon {
-        transform-box: fill-box;
-        transform-origin: center;
-        animation: beaconPulse 2.2s ease-out infinite;
-      }
+      .pulse-beacon { transform-box: fill-box; transform-origin: center; animation: beaconPulse 2.2s ease-out infinite; }
 
       @media (prefers-reduced-motion: reduce) {
-        .arrow-sky, .arrow-lav, .arrow-mint, .arrow-coral, .arrow-teal, .arrow-honey, .pulse-beacon { animation: none; }
+        .arrow-coral, .arrow-violet, .arrow-emerald, .arrow-orange, .arrow-green, .arrow-magenta, .pulse-beacon { animation: none; }
       }
     </style>
 
-    <marker id="m-sky"   viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--sky-st)"/></marker>
-    <marker id="m-lav"   viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--lav-st)"/></marker>
-    <marker id="m-mint"  viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--mint-st)"/></marker>
-    <marker id="m-coral" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--coral-st)"/></marker>
-    <marker id="m-teal"  viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--teal-st)"/></marker>
-    <marker id="m-honey" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--honey-st)"/></marker>
+    <marker id="m-coral"   viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c1-st)"/></marker>
+    <marker id="m-violet"  viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c2-st)"/></marker>
+    <marker id="m-emerald" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c3-st)"/></marker>
+    <marker id="m-orange"  viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c4-st)"/></marker>
+    <marker id="m-green"   viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c5-st)"/></marker>
+    <marker id="m-magenta" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c6-st)"/></marker>
   </defs>
 
-  <!-- Lienzo Principal -->
   <rect class="canvas" x="2" y="2" width="996" height="756" rx="12"/>
 
   <!-- Cabecera Superior -->
   <rect x="2" y="2" width="996" height="62" rx="12" fill="var(--card)"/>
   <rect x="2" y="50" width="996" height="14" fill="var(--card)"/>
   <line x1="2" y1="64" x2="998" y2="64" stroke="var(--bd)" stroke-width="1.2"/>
-  <rect x="20" y="18" width="5" height="30" rx="2.5" fill="var(--sky-st)"/>
+  <rect x="20" y="18" width="5" height="30" rx="2.5" fill="var(--c2-st)"/>
   <text x="36" y="31" class="h1">Arquitectura Monol&#237;tica Modular en Capas &#183; PuraSed</text>
   <text x="36" y="48" class="h2">6 Capas Desacopladas (.NET 10) &#183; Persistencia Transaccional &#183; Tiempo Real SignalR</text>
 
-  <!-- Badge Estado Vivo -->
-  <rect x="748" y="20" width="228" height="26" rx="13" fill="var(--mint-bg)" stroke="var(--mint-bd)" stroke-width="1.1"/>
-  <circle class="pulse-beacon" cx="766" cy="33" r="4" fill="var(--mint-st)"/>
-  <circle cx="766" cy="33" r="3.5" fill="var(--mint-st)"/>
-  <text x="874" y="36.5" class="lbl-pill" fill="var(--mint-tx)">HTTPS &#183; JWT &#183; SIGNALR ACTIVO</text>
+  <rect x="748" y="20" width="228" height="26" rx="13" fill="var(--c3-bg)" stroke="var(--c3-st)" stroke-width="1.1"/>
+  <circle class="pulse-beacon" cx="766" cy="33" r="4" fill="var(--c3-st)"/>
+  <circle cx="766" cy="33" r="3.5" fill="var(--c3-st)"/>
+  <text x="874" y="36.5" class="lbl-pill" fill="var(--c3-tx)">HTTPS &#183; JWT &#183; SIGNALR ACTIVO</text>
 
   <!-- NIVEL 0: PERFILES DE USUARIO -->
   <g transform="translate(28, 76)">
     <rect width="944" height="48" rx="10" fill="var(--card)" stroke="var(--bd)" stroke-width="1.25"/>
-    <rect x="0" y="8" width="4" height="32" rx="2" fill="var(--honey-st)"/>
+    <rect x="0" y="8" width="4" height="32" rx="2" fill="var(--amber-st)"/>
     <text x="16" y="20" class="t-layer" fill="var(--ink)">USUARIOS DEL SISTEMA</text>
     <text x="16" y="36" class="c-sub" style="text-anchor: start;">Acceso unificado por navegador o tablet en mesa bajo HTTPS</text>
 
-    <!-- 6 pills con colores suaves variados por rol -->
-    <rect x="348" y="12" width="84" height="24" rx="12" fill="var(--honey-bg)" stroke="var(--honey-bd)"/><text x="390" y="27.5" class="lbl-pill" fill="var(--honey-tx)">Cliente</text>
-    <rect x="440" y="12" width="84" height="24" rx="12" fill="var(--sky-bg)"   stroke="var(--sky-bd)"/>  <text x="482" y="27.5" class="lbl-pill" fill="var(--sky-tx)">Mesero</text>
-    <rect x="532" y="12" width="96" height="24" rx="12" fill="var(--coral-bg)" stroke="var(--coral-bd)"/><text x="580" y="27.5" class="lbl-pill" fill="var(--coral-tx)">AdminCocina</text>
-    <rect x="636" y="12" width="88" height="24" rx="12" fill="var(--rose-bg)"  stroke="var(--rose-bd)"/> <text x="680" y="27.5" class="lbl-pill" fill="var(--rose-tx)">AdminBar</text>
-    <rect x="732" y="12" width="90" height="24" rx="12" fill="var(--mint-bg)"  stroke="var(--mint-bd)"/> <text x="777" y="27.5" class="lbl-pill" fill="var(--mint-tx)">Asistente</text>
-    <rect x="830" y="12" width="98" height="24" rx="12" fill="var(--lav-bg)"   stroke="var(--lav-bd)"/>  <text x="879" y="27.5" class="lbl-pill" fill="var(--lav-tx)">Admin / Super</text>
+    <rect x="348" y="12" width="84" height="24" rx="12" fill="var(--c4-bg)"   stroke="var(--c4-st)"   stroke-width="1"/><text x="390" y="27.5" class="lbl-pill" fill="var(--c4-tx)">Cliente</text>
+    <rect x="440" y="12" width="84" height="24" rx="12" fill="var(--c3-bg)"   stroke="var(--c3-st)"   stroke-width="1"/><text x="482" y="27.5" class="lbl-pill" fill="var(--c3-tx)">Mesero</text>
+    <rect x="532" y="12" width="96" height="24" rx="12" fill="var(--c1-bg)"   stroke="var(--c1-st)"   stroke-width="1"/><text x="580" y="27.5" class="lbl-pill" fill="var(--c1-tx)">AdminCocina</text>
+    <rect x="636" y="12" width="88" height="24" rx="12" fill="var(--rose-bg)" stroke="var(--rose-st)" stroke-width="1"/><text x="680" y="27.5" class="lbl-pill" fill="var(--rose-tx)">AdminBar</text>
+    <rect x="732" y="12" width="90" height="24" rx="12" fill="var(--c5-bg)"   stroke="var(--c5-st)"   stroke-width="1"/><text x="777" y="27.5" class="lbl-pill" fill="var(--c5-tx)">Asistente</text>
+    <rect x="830" y="12" width="98" height="24" rx="12" fill="var(--c2-bg)"   stroke="var(--c2-st)"   stroke-width="1"/><text x="879" y="27.5" class="lbl-pill" fill="var(--c2-tx)">Admin / Super</text>
   </g>
 
-  <!-- Flecha Usuarios -> Monolito -->
-  <path d="M 500 124 L 500 156" class="arrow-sky" marker-end="url(#m-sky)"/>
-  <rect x="456" y="129" width="88" height="17" rx="8.5" fill="var(--card)" stroke="var(--sky-bd)"/>
-  <text x="500" y="140.5" class="lbl-pill" fill="var(--sky-tx)">HTTPS SPA</text>
+  <path d="M 500 124 L 500 156" class="arrow-orange" marker-end="url(#m-orange)"/>
+  <rect x="456" y="129" width="88" height="17" rx="8.5" fill="var(--card)" stroke="var(--c4-st)" stroke-width="1"/>
+  <text x="500" y="140.5" class="lbl-pill" fill="var(--c4-tx)">HTTPS SPA</text>
 
   <!-- CONTENEDOR MONOLITO MODULAR -->
   <rect class="monolith-boundary" x="28" y="158" width="944" height="390" rx="12"/>
-  <rect x="46" y="148" width="332" height="20" rx="10" fill="var(--card)" stroke="var(--bd)" stroke-width="1"/>
-  <text x="212" y="161.5" class="lbl-pill" fill="var(--muted)">APLICACI&#211;N MONOL&#205;TICA MODULAR &#183; .NET 10</text>
+  <rect x="46" y="148" width="332" height="20" rx="10" fill="var(--card)" stroke="var(--bd-strong)" stroke-width="1"/>
+  <text x="212" y="161.5" class="lbl-pill" fill="var(--ink)">APLICACI&#211;N MONOL&#205;TICA MODULAR &#183; .NET 10</text>
 
-  <!-- CAPA 1: PRESENTACIÓN (CELESTE BRISA) -->
+  <!-- CAPA 1: PRESENTACIÓN (CORAL VIVO) -->
   <g transform="translate(46, 176)">
-    <rect class="layer-c" width="908" height="78" rx="9" fill="var(--sky-bg)" stroke="var(--sky-bd)"/>
-    <text x="16" y="20" class="t-layer" fill="var(--sky-tx)">1. PRESENTACI&#211;N &#183; BLAZOR WEBASSEMBLY (P&#193;GINAS POR ROL)</text>
+    <rect class="layer-c" width="908" height="78" rx="9" fill="var(--c1-bg)" stroke="var(--c1-st)"/>
+    <text x="16" y="20" class="t-layer" fill="var(--c1-tx)">1. PRESENTACI&#211;N &#183; BLAZOR WEBASSEMBLY (P&#193;GINAS POR ROL)</text>
 
-    <g transform="translate(16, 29)">
-      <rect class="subbox" width="210" height="38" rx="7" stroke="var(--sky-bd)"/>
-      <text x="105" y="16" class="c-title">Men&#250; Orbital &amp; POS Mesa</text>
-      <text x="105" y="30" class="c-sub">Cat&#225;logo 5 cap&#237;tulos, carrito, pago</text>
-    </g>
-    <g transform="translate(238, 29)">
-      <rect class="subbox" width="210" height="38" rx="7" stroke="var(--sky-bd)"/>
-      <text x="105" y="16" class="c-title">Sal&#243;n &amp; Mapa de Mesas</text>
-      <text x="105" y="30" class="c-sub">Mesero, reservas y estados</text>
-    </g>
-    <g transform="translate(460, 29)">
-      <rect class="subbox" width="210" height="38" rx="7" stroke="var(--sky-bd)"/>
-      <text x="105" y="16" class="c-title">KDS Cocina &amp; KDD Barra</text>
-      <text x="105" y="30" class="c-sub">Colas cronol&#243;gicas por &#225;rea</text>
-    </g>
-    <g transform="translate(682, 29)">
-      <rect class="subbox" width="210" height="38" rx="7" stroke="var(--sky-bd)"/>
-      <text x="105" y="16" class="c-title">Caja, Roles &amp; Anal&#237;tica</text>
-      <text x="105" y="30" class="c-sub">Arqueo, inventario y reportes</text>
-    </g>
+    <g transform="translate(16, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c1-st)"/><text x="105" y="16" class="c-title">Men&#250; Orbital &amp; POS Mesa</text><text x="105" y="30" class="c-sub">Cat&#225;logo 5 cap&#237;tulos, carrito, pago</text></g>
+    <g transform="translate(238, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c1-st)"/><text x="105" y="16" class="c-title">Sal&#243;n &amp; Mapa de Mesas</text><text x="105" y="30" class="c-sub">Mesero, reservas y estados</text></g>
+    <g transform="translate(460, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c1-st)"/><text x="105" y="16" class="c-title">KDS Cocina &amp; KDD Barra</text><text x="105" y="30" class="c-sub">Colas cronol&#243;gicas por &#225;rea</text></g>
+    <g transform="translate(682, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c1-st)"/><text x="105" y="16" class="c-title">Caja, Roles &amp; Anal&#237;tica</text><text x="105" y="30" class="c-sub">Arqueo, inventario y reportes</text></g>
   </g>
 
   <!-- CANAL BIDIRECCIONAL -->
-  <path d="M 210 254 L 210 292" class="arrow-lav" marker-end="url(#m-lav)"/>
-  <rect x="92" y="263" width="236" height="20" rx="10" fill="var(--card)" stroke="var(--lav-bd)"/>
-  <text x="210" y="276" class="lbl-pill" fill="var(--lav-tx)">HTTP / JSON + JWT BEARER &#8595;</text>
+  <path d="M 210 254 L 210 292" class="arrow-violet" marker-end="url(#m-violet)"/>
+  <rect x="92" y="263" width="236" height="20" rx="10" fill="var(--card)" stroke="var(--c2-st)" stroke-width="1.1"/>
+  <text x="210" y="276" class="lbl-pill" fill="var(--c2-tx)">HTTP / JSON + JWT BEARER &#8595;</text>
 
-  <rect x="356" y="263" width="288" height="20" rx="10" fill="var(--card)" stroke="var(--bd)"/>
-  <circle class="pulse-beacon" cx="373" cy="273" r="3.5" fill="var(--mint-st)"/>
-  <circle cx="373" cy="273" r="3" fill="var(--mint-st)"/>
+  <rect x="356" y="263" width="288" height="20" rx="10" fill="var(--card)" stroke="var(--bd-strong)"/>
+  <circle class="pulse-beacon" cx="373" cy="273" r="3.5" fill="var(--c3-st)"/>
+  <circle cx="373" cy="273" r="3" fill="var(--c3-st)"/>
   <text x="507" y="276.5" class="code-tok">HttpClient + AuthenticationStateProvider</text>
 
-  <path d="M 790 292 L 790 256" class="arrow-sky" marker-end="url(#m-sky)"/>
-  <rect x="674" y="263" width="232" height="20" rx="10" fill="var(--card)" stroke="var(--sky-bd)"/>
-  <text x="790" y="276" class="lbl-pill" fill="var(--sky-tx)">&#8593; WEBSOCKETS SIGNALR PUSH</text>
+  <path d="M 790 292 L 790 256" class="arrow-coral" marker-end="url(#m-coral)"/>
+  <rect x="674" y="263" width="232" height="20" rx="10" fill="var(--card)" stroke="var(--c1-st)" stroke-width="1.1"/>
+  <text x="790" y="276" class="lbl-pill" fill="var(--c1-tx)">&#8593; WEBSOCKETS SIGNALR PUSH</text>
 
-  <!-- CAPA 2: WEB API (LAVANDA SUAVE) -->
+  <!-- CAPA 2: WEB API (VIOLETA VIVO) -->
   <g transform="translate(46, 294)">
-    <rect class="layer-c" width="908" height="78" rx="9" fill="var(--lav-bg)" stroke="var(--lav-bd)"/>
-    <text x="16" y="20" class="t-layer" fill="var(--lav-tx)">2. WEB API &#183; ASP.NET CORE CONTROLLERS REST, DTOS, RBAC Y HUB SIGNALR</text>
+    <rect class="layer-c" width="908" height="78" rx="9" fill="var(--c2-bg)" stroke="var(--c2-st)"/>
+    <text x="16" y="20" class="t-layer" fill="var(--c2-tx)">2. WEB API &#183; ASP.NET CORE CONTROLLERS REST, DTOS, RBAC Y HUB SIGNALR</text>
 
-    <g transform="translate(16, 29)">
-      <rect class="subbox" width="210" height="38" rx="7" stroke="var(--lav-bd)"/>
-      <text x="105" y="16" class="c-title">Auth &amp; Roles.cs (RBAC)</text>
-      <text x="105" y="30" class="c-sub">JWT HMAC-SHA256 + 2FA admin</text>
-    </g>
-    <g transform="translate(238, 29)">
-      <rect class="subbox" width="210" height="38" rx="7" stroke="var(--lav-bd)"/>
-      <text x="105" y="16" class="c-title">Pedidos &amp; Mesas REST</text>
-      <text x="105" y="30" class="c-sub">Validaci&#243;n sin l&#243;gica de negocio</text>
-    </g>
-    <g transform="translate(460, 29)">
-      <rect class="subbox" width="210" height="38" rx="7" stroke="var(--lav-bd)"/>
-      <text x="105" y="16" class="c-title">Productos &amp; Pagos REST</text>
-      <text x="105" y="30" class="c-sub">Cat&#225;logo, caja y habilitaci&#243;n</text>
-    </g>
-    <g transform="translate(682, 29)">
-      <rect class="subbox" width="210" height="38" rx="7" stroke="var(--lav-bd)"/>
-      <text x="105" y="16" class="c-title">Hub SignalR Tiempo Real</text>
-      <text x="105" y="30" class="c-sub">Difusi&#243;n instant&#225;nea KDS / KDD</text>
-    </g>
+    <g transform="translate(16, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c2-st)"/><text x="105" y="16" class="c-title">Auth &amp; Roles.cs (RBAC)</text><text x="105" y="30" class="c-sub">JWT HMAC-SHA256 + 2FA admin</text></g>
+    <g transform="translate(238, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c2-st)"/><text x="105" y="16" class="c-title">Pedidos &amp; Mesas REST</text><text x="105" y="30" class="c-sub">Validaci&#243;n sin l&#243;gica de negocio</text></g>
+    <g transform="translate(460, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c2-st)"/><text x="105" y="16" class="c-title">Productos &amp; Pagos REST</text><text x="105" y="30" class="c-sub">Cat&#225;logo, caja y habilitaci&#243;n</text></g>
+    <g transform="translate(682, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c2-st)"/><text x="105" y="16" class="c-title">Hub SignalR Tiempo Real</text><text x="105" y="30" class="c-sub">Difusi&#243;n instant&#225;nea KDS / KDD</text></g>
   </g>
 
-  <!-- Conectores API -> Service/Domain -->
-  <path d="M 275 372 L 275 394" class="arrow-mint"  marker-end="url(#m-mint)"/>
-  <path d="M 500 372 L 500 394" class="arrow-mint"  marker-end="url(#m-mint)"/>
-  <path d="M 725 372 L 725 394" class="arrow-coral" marker-end="url(#m-coral)"/>
+  <path d="M 275 372 L 275 394" class="arrow-emerald" marker-end="url(#m-emerald)"/>
+  <path d="M 500 372 L 500 394" class="arrow-emerald" marker-end="url(#m-emerald)"/>
+  <path d="M 725 372 L 725 394" class="arrow-orange"  marker-end="url(#m-orange)"/>
 
-  <!-- CAPA 3 (MENTA FRESCA) + CAPA 4 (CORAL SUAVE) -->
+  <!-- CAPA 3 (ESMERALDA VIVO) + CAPA 4 (NARANJA VIVO) -->
   <g transform="translate(46, 396)">
     <g transform="translate(0, 0)">
-      <rect class="layer-c" width="540" height="68" rx="9" fill="var(--mint-bg)" stroke="var(--mint-bd)"/>
-      <text x="16" y="19" class="t-layer" fill="var(--mint-tx)">3. SERVICE LAYER &#183; REGLAS Y CASOS DE USO</text>
-      <rect class="subbox" x="16"  y="27" width="162" height="31" rx="7" stroke="var(--mint-bd)"/>
-      <text x="97"  y="46.5" class="c-title" style="font-size: 11px;">Pedido &amp; Men&#250; (*Service)</text>
-      <rect class="subbox" x="188" y="27" width="164" height="31" rx="7" stroke="var(--mint-bd)"/>
-      <text x="270" y="46.5" class="c-title" style="font-size: 11px;">Inventario &amp; Reservas</text>
-      <rect class="subbox" x="362" y="27" width="162" height="31" rx="7" stroke="var(--mint-bd)"/>
-      <text x="443" y="46.5" class="c-title" style="font-size: 11px;">Pago, Reporte &amp; Auth</text>
+      <rect class="layer-c" width="540" height="68" rx="9" fill="var(--c3-bg)" stroke="var(--c3-st)"/>
+      <text x="16" y="19" class="t-layer" fill="var(--c3-tx)">3. SERVICE LAYER &#183; REGLAS Y CASOS DE USO</text>
+      <rect class="subbox" x="16"  y="27" width="162" height="31" rx="7" stroke="var(--c3-st)"/><text x="97"  y="46.5" class="c-title" style="font-size: 11px;">Pedido &amp; Men&#250; (*Service)</text>
+      <rect class="subbox" x="188" y="27" width="164" height="31" rx="7" stroke="var(--c3-st)"/><text x="270" y="46.5" class="c-title" style="font-size: 11px;">Inventario &amp; Reservas</text>
+      <rect class="subbox" x="362" y="27" width="162" height="31" rx="7" stroke="var(--c3-st)"/><text x="443" y="46.5" class="c-title" style="font-size: 11px;">Pago, Reporte &amp; Auth</text>
     </g>
 
     <g transform="translate(556, 0)">
-      <rect class="layer-c" width="352" height="68" rx="9" fill="var(--coral-bg)" stroke="var(--coral-bd)"/>
-      <text x="16" y="19" class="t-layer" fill="var(--coral-tx)">4. DOMAIN LAYER &#183; N&#218;CLEO PURO</text>
-      <rect class="subbox" x="14"  y="27" width="156" height="31" rx="7" stroke="var(--coral-bd)"/>
-      <text x="92"  y="46.5" class="c-title" style="font-size: 11px;">Entidades &amp; Reglas C#</text>
-      <rect class="subbox" x="180" y="27" width="158" height="31" rx="7" stroke="var(--coral-bd)"/>
-      <text x="259" y="46.5" class="c-title" style="font-size: 11px;">I*Repository (DIP)</text>
+      <rect class="layer-c" width="352" height="68" rx="9" fill="var(--c4-bg)" stroke="var(--c4-st)"/>
+      <text x="16" y="19" class="t-layer" fill="var(--c4-tx)">4. DOMAIN LAYER &#183; N&#218;CLEO PURO</text>
+      <rect class="subbox" x="14"  y="27" width="156" height="31" rx="7" stroke="var(--c4-st)"/><text x="92"  y="46.5" class="c-title" style="font-size: 11px;">Entidades &amp; Reglas C#</text>
+      <rect class="subbox" x="180" y="27" width="158" height="31" rx="7" stroke="var(--c4-st)"/><text x="259" y="46.5" class="c-title" style="font-size: 11px;">I*Repository (DIP)</text>
     </g>
   </g>
 
-  <!-- Conectores hacia Datos e Infraestructura -->
-  <path d="M 275 464 L 275 486" class="arrow-teal"  marker-end="url(#m-teal)"/>
-  <path d="M 732 464 L 732 486" class="arrow-honey" marker-end="url(#m-honey)"/>
+  <path d="M 275 464 L 275 486" class="arrow-green"   marker-end="url(#m-green)"/>
+  <path d="M 732 464 L 732 486" class="arrow-magenta" marker-end="url(#m-magenta)"/>
 
-  <!-- CAPA 5 (AGUAMARINA TEAL) + CAPA 6 (MIEL DORADA) -->
+  <!-- CAPA 5 (VERDE VIVO) + CAPA 6 (MAGENTA VIVO) -->
   <g transform="translate(46, 488)">
     <g transform="translate(0, 0)">
-      <rect class="layer-c" width="444" height="48" rx="9" fill="var(--teal-bg)" stroke="var(--teal-bd)"/>
-      <text x="16" y="18" class="t-layer" fill="var(--teal-tx)">5. ACCESO A DATOS &#183; EF CORE 10</text>
+      <rect class="layer-c" width="444" height="48" rx="9" fill="var(--c5-bg)" stroke="var(--c5-st)"/>
+      <text x="16" y="18" class="t-layer" fill="var(--c5-tx)">5. ACCESO A DATOS &#183; EF CORE 10</text>
       <text x="16" y="35" class="c-sub" style="text-anchor: start;">PuraSedDbContext, Repositorios y Code-First Migrations</text>
     </g>
     <g transform="translate(464, 0)">
-      <rect class="layer-c" width="444" height="48" rx="9" fill="var(--honey-bg)" stroke="var(--honey-bd)"/>
-      <text x="16" y="18" class="t-layer" fill="var(--honey-tx)">6. INFRASTRUCTURE LAYER &#183; TRANSVERSALES</text>
+      <rect class="layer-c" width="444" height="48" rx="9" fill="var(--c6-bg)" stroke="var(--c6-st)"/>
+      <text x="16" y="18" class="t-layer" fill="var(--c6-tx)">6. INFRASTRUCTURE LAYER &#183; TRANSVERSALES</text>
       <text x="16" y="35" class="c-sub" style="text-anchor: start;">Hash contrase&#241;as, Bit&#225;cora, Facturas PDF, Excel y Comprobantes</text>
     </g>
   </g>
 
-  <!-- Conectores Monolito -> Servicios Externos -->
-  <path d="M 268 536 L 268 564" class="arrow-teal"  marker-end="url(#m-teal)"/>
+  <path d="M 268 536 L 268 564" class="arrow-green" marker-end="url(#m-green)"/>
   <path d="M 732 536 L 732 564" class="arrow-coral" marker-end="url(#m-coral)"/>
 
   <!-- SERVICIOS EXTERNOS -->
   <g transform="translate(46, 566)">
-    <rect class="subbox" width="444" height="58" rx="9" stroke="var(--teal-bd)" stroke-width="1.35"/>
-    <circle cx="36" cy="29" r="18" fill="var(--teal-bg)"/>
+    <rect class="subbox" width="444" height="58" rx="9" stroke="var(--c5-st)" stroke-width="1.4"/>
+    <circle cx="36" cy="29" r="18" fill="var(--c5-bg)"/>
     <g transform="translate(22, 13)">
-      <ellipse cx="14" cy="6" rx="10" ry="4" fill="none" stroke="var(--teal-st)" stroke-width="1.8"/>
-      <path d="M4 6 V24 C4 26.5 8.5 28 14 28 C19.5 28 24 26.5 24 24 V6" fill="none" stroke="var(--teal-st)" stroke-width="1.8"/>
-      <path d="M4 15 C4 17.5 8.5 19 14 19 C19.5 19 24 17.5 24 15" fill="none" stroke="var(--teal-st)" stroke-width="1.6"/>
+      <ellipse cx="14" cy="6" rx="10" ry="4" fill="none" stroke="var(--c5-st)" stroke-width="1.8"/>
+      <path d="M4 6 V24 C4 26.5 8.5 28 14 28 C19.5 28 24 26.5 24 24 V6" fill="none" stroke="var(--c5-st)" stroke-width="1.8"/>
+      <path d="M4 15 C4 17.5 8.5 19 14 19 C19.5 19 24 17.5 24 15" fill="none" stroke="var(--c5-st)" stroke-width="1.6"/>
     </g>
     <text x="66" y="25" class="c-title" style="text-anchor: start;">Microsoft SQL Server 2022 (Servicio Externo)</text>
     <text x="66" y="42" class="c-sub" style="text-anchor: start;">Base &#250;nica en la nube &#183; 23 Entidades &#183; Respaldos autom&#225;ticos</text>
 
-    <rect class="subbox" x="464" y="0" width="444" height="58" rx="9" stroke="var(--coral-bd)" stroke-width="1.35" stroke-dasharray="5 3"/>
-    <circle cx="500" cy="29" r="18" fill="var(--coral-bg)"/>
+    <rect class="subbox" x="464" y="0" width="444" height="58" rx="9" stroke="var(--c1-st)" stroke-width="1.4" stroke-dasharray="5 3"/>
+    <circle cx="500" cy="29" r="18" fill="var(--c1-bg)"/>
     <g transform="translate(486, 16)">
-      <rect x="2" y="4" width="24" height="17" rx="3" fill="none" stroke="var(--coral-st)" stroke-width="1.8"/>
-      <line x1="2" y1="10" x2="26" y2="10" stroke="var(--coral-st)" stroke-width="1.8"/>
+      <rect x="2" y="4" width="24" height="17" rx="3" fill="none" stroke="var(--c1-st)" stroke-width="1.8"/>
+      <line x1="2" y1="10" x2="26" y2="10" stroke="var(--c1-st)" stroke-width="1.8"/>
     </g>
     <text x="530" y="25" class="c-title" style="text-anchor: start;">Pasarela de Pago Externa (API Bancaria)</text>
     <text x="530" y="42" class="c-sub" style="text-anchor: start;">Solo conserva referencia de transacci&#243;n &#183; Cero almacenamiento PCI</text>
@@ -275,48 +206,44 @@
 
   <!-- PIPELINE SIGNALR EN TIEMPO REAL -->
   <g transform="translate(28, 638)">
-    <rect width="944" height="104" rx="10" fill="var(--card)" stroke="var(--bd)" stroke-width="1.3"/>
-    <circle class="pulse-beacon" cx="26" cy="22" r="4.5" fill="var(--sky-st)"/>
-    <circle cx="26" cy="22" r="4" fill="var(--sky-st)"/>
+    <rect width="944" height="104" rx="10" fill="var(--card)" stroke="var(--bd-strong)" stroke-width="1.3"/>
+    <circle class="pulse-beacon" cx="26" cy="22" r="4.5" fill="var(--c1-st)"/>
+    <circle cx="26" cy="22" r="4" fill="var(--c1-st)"/>
     <text x="40" y="26" class="t-layer" fill="var(--ink)">CICLO DE VIDA DE COMANDA EN TIEMPO REAL (SIGNALR EVENT STREAM)</text>
 
-    <!-- Etapa 1 -->
     <g transform="translate(18, 37)">
-      <rect width="206" height="54" rx="8" fill="var(--alt)" stroke="var(--honey-bd)" stroke-width="1.25"/>
+      <rect width="206" height="54" rx="8" fill="var(--alt)" stroke="var(--c4-st)" stroke-width="1.3"/>
       <text x="103" y="18" class="c-title">1. Cliente / Mesero Pide</text>
       <text x="103" y="31.5" class="c-sub">Enrutamiento por &#225;rea</text>
-      <rect x="64" y="37" width="78" height="13" rx="6.5" fill="var(--honey-bg)" stroke="var(--honey-bd)" stroke-width="0.8"/>
-      <text x="103" y="46.2" class="lbl-pill" fill="var(--honey-tx)" style="font-size: 8.2px;">PENDIENTE</text>
+      <rect x="64" y="37" width="78" height="13" rx="6.5" fill="var(--c4-bg)" stroke="var(--c4-st)" stroke-width="0.9"/>
+      <text x="103" y="46.2" class="lbl-pill" fill="var(--c4-tx)" style="font-size: 8.2px;">PENDIENTE</text>
     </g>
-    <path d="M 228 64 L 252 64" class="arrow-honey" marker-end="url(#m-honey)"/>
+    <path d="M 228 64 L 252 64" class="arrow-orange" marker-end="url(#m-orange)"/>
 
-    <!-- Etapa 2 -->
     <g transform="translate(256, 37)">
-      <rect width="206" height="54" rx="8" fill="var(--alt)" stroke="var(--coral-bd)" stroke-width="1.25"/>
+      <rect width="206" height="54" rx="8" fill="var(--alt)" stroke="var(--c1-st)" stroke-width="1.3"/>
       <text x="103" y="18" class="c-title">2. Cocina Paila &amp; Barra</text>
       <text x="103" y="31.5" class="c-sub">Colas KDS / KDD en vivo</text>
-      <rect x="52" y="37" width="102" height="13" rx="6.5" fill="var(--coral-bg)" stroke="var(--coral-bd)" stroke-width="0.8"/>
-      <text x="103" y="46.2" class="lbl-pill" fill="var(--coral-tx)" style="font-size: 8.2px;">EN PREPARACI&#211;N</text>
+      <rect x="52" y="37" width="102" height="13" rx="6.5" fill="var(--c1-bg)" stroke="var(--c1-st)" stroke-width="0.9"/>
+      <text x="103" y="46.2" class="lbl-pill" fill="var(--c1-tx)" style="font-size: 8.2px;">EN PREPARACI&#211;N</text>
     </g>
     <path d="M 466 64 L 490 64" class="arrow-coral" marker-end="url(#m-coral)"/>
 
-    <!-- Etapa 3 -->
     <g transform="translate(494, 37)">
-      <rect width="206" height="54" rx="8" fill="var(--alt)" stroke="var(--sky-bd)" stroke-width="1.25"/>
+      <rect width="206" height="54" rx="8" fill="var(--alt)" stroke="var(--c2-st)" stroke-width="1.3"/>
       <text x="103" y="18" class="c-title">3. Mesero de Sala</text>
       <text x="103" y="31.5" class="c-sub">Notificaci&#243;n y despacho</text>
-      <rect x="70" y="37" width="66" height="13" rx="6.5" fill="var(--sky-bg)" stroke="var(--sky-bd)" stroke-width="0.8"/>
-      <text x="103" y="46.2" class="lbl-pill" fill="var(--sky-tx)" style="font-size: 8.2px;">LISTO</text>
+      <rect x="70" y="37" width="66" height="13" rx="6.5" fill="var(--c2-bg)" stroke="var(--c2-st)" stroke-width="0.9"/>
+      <text x="103" y="46.2" class="lbl-pill" fill="var(--c2-tx)" style="font-size: 8.2px;">LISTO</text>
     </g>
-    <path d="M 704 64 L 728 64" class="arrow-sky" marker-end="url(#m-sky)"/>
+    <path d="M 704 64 L 728 64" class="arrow-violet" marker-end="url(#m-violet)"/>
 
-    <!-- Etapa 4 -->
     <g transform="translate(732, 37)">
-      <rect width="194" height="54" rx="8" fill="var(--alt)" stroke="var(--mint-bd)" stroke-width="1.25"/>
+      <rect width="194" height="54" rx="8" fill="var(--alt)" stroke="var(--c3-st)" stroke-width="1.3"/>
       <text x="97" y="18" class="c-title">4. Cobro y Cierre</text>
       <text x="97" y="31.5" class="c-sub">Factura y rese&#241;a de mesa</text>
-      <rect x="56" y="37" width="82" height="13" rx="6.5" fill="var(--mint-bg)" stroke="var(--mint-bd)" stroke-width="0.8"/>
-      <text x="97" y="46.2" class="lbl-pill" fill="var(--mint-tx)" style="font-size: 8.2px;">ENTREGADO</text>
+      <rect x="56" y="37" width="82" height="13" rx="6.5" fill="var(--c3-bg)" stroke="var(--c3-st)" stroke-width="0.9"/>
+      <text x="97" y="46.2" class="lbl-pill" fill="var(--c3-tx)" style="font-size: 8.2px;">ENTREGADO</text>
     </g>
   </g>
 </svg>

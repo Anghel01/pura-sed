@@ -3,28 +3,28 @@
     <style>
       svg {
         --card: #FFFFFF;
-        --panel: #EDF7FC;
-        --ink: #152336;
-        --muted: #4B6178;
-        --line: #D2E3F0;
-        --frame: #C2D8E8;
-        --accent: #0C5F7D;
-        --chip-bg: #EFF7FC;
+        --panel: #FFF6EE;
+        --ink: #1C1917;
+        --muted: #57534E;
+        --line: #E2DFD7;
+        --frame: #D4D4D8;
+        --accent: #9A3412;
+        --chip-bg: #F3F1EC;
       }
       @media (prefers-color-scheme: dark) {
         svg {
-          --card: #152033;
-          --panel: #162639;
-          --ink: #F1F6FC;
-          --muted: #9FB3CB;
-          --line: #2B3D59;
-          --frame: #314563;
-          --accent: #74C6DF;
-          --chip-bg: #1C2A42;
+          --card: #292826;
+          --panel: #2B241E;
+          --ink: #F5F4EF;
+          --muted: #B0ADA6;
+          --line: #45433F;
+          --frame: #444448;
+          --accent: #FB923C;
+          --chip-bg: #33322E;
         }
-        .ds { flood-color: #040914; flood-opacity: .55; }
+        .ds { flood-color: #000000; flood-opacity: .55; }
       }
-      .ds     { flood-color: #3E7294; flood-opacity: .14; }
+      .ds     { flood-color: #18181B; flood-opacity: .12; }
       .card   { fill: var(--card); }
       .panel  { fill: var(--panel); }
       .hole   { fill: var(--card); }

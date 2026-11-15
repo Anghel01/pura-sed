@@ -1,60 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 590" width="100%" height="100%" role="img" aria-labelledby="ucTitle ucDesc">
   <title id="ucTitle">Diagrama de Casos de Uso &#8212; PuraSed</title>
-  <desc id="ucDesc">Diagrama UML 2.5 interactivo de PuraSed con 5 actores operativos, 12 casos de uso y relaciones include/extend en paleta suave y clara Brisa PuraSed.</desc>
+  <desc id="ucDesc">Diagrama UML 2.5 interactivo de PuraSed con 5 actores operativos, 12 casos de uso y relaciones include/extend sobre lienzo claro de alto contraste con 5 actores en colores vivos.</desc>
   <defs>
     <style>
       :root {
-        --bg: #F7FBFE;
+        --bg: #FAFAFC;
         --canvas: #FFFFFF;
-        --alt: #EFF7FC;
-        --bd: #D2E3F0;
-        --bd-strong: #98C1DB;
-        --ink: #152336;
-        --muted: #4B6178;
-        --gold-tx: #0C5F7D;
-        --gold-stroke: #2E98BE;
-        --gold-fill: #E7F6FC;
-        --chicha-tx: #854D03;
-        --chicha-stroke: #D08414;
-        --chicha-fill: #FFF7E4;
-        --terra-tx: #A62B23;
-        --terra-stroke: #DF5E55;
-        --terra-fill: #FFF0EF;
-        --sage-tx: #136740;
-        --sage-stroke: #2BA36D;
-        --sage-fill: #E8F9F1;
-        --pizarra-tx: #3C43A1;
-        --pizarra-stroke: #6D76E4;
-        --pizarra-fill: #F0F1FE;
-        --sys-bg: rgba(235, 246, 252, 0.55);
+        --alt: #F4F4F6;
+        --bd: #D8D8DF;
+        --bd-strong: #9E9EA9;
+        --ink: #18181B;
+        --muted: #52525B;
+
+        /* 5 Actores con colores vivos sin azul */
+        --gold-tx: #9A3412;     --gold-stroke: #EA580C;     --gold-fill: #FFF7ED;
+        --chicha-tx: #854D03;    --chicha-stroke: #D97706;    --chicha-fill: #FFFBEB;
+        --terra-tx: #9F1239;     --terra-stroke: #E11D48;     --terra-fill: #FFF1F2;
+        --sage-tx: #065F46;    --sage-stroke: #059669;    --sage-fill: #ECFDF5;
+        --pizarra-tx: #5B21B6;  --pizarra-stroke: #7C3AED;  --pizarra-fill: #F5F3FF;
+        --sys-bg: #FFFFFF;
       }
 
       @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #0E1626;
-          --canvas: #152033;
-          --alt: #1C2A42;
-          --bd: #2B3D59;
-          --bd-strong: #466188;
-          --ink: #F1F6FC;
-          --muted: #9FB3CB;
-          --gold-tx: #94D9EE;
-          --gold-stroke: #74C6DF;
-          --gold-fill: #132A3C;
-          --chicha-tx: #FAD488;
-          --chicha-stroke: #F6C25E;
-          --chicha-fill: #2C2315;
-          --terra-tx: #F9AAA3;
-          --terra-stroke: #F28B82;
-          --terra-fill: #2C1B24;
-          --sage-tx: #8EE2BA;
-          --sage-stroke: #6AD3A2;
-          --sage-fill: #122C26;
-          --pizarra-tx: #C1C6FB;
-          --pizarra-stroke: #A1A8F7;
-          --pizarra-fill: #1D2240;
-          --sys-bg: rgba(23, 33, 51, 0.65);
-        }
+        :root { --bd: #46464D; --bd-strong: #6B6B76; }
       }
 
       .frame    { fill: var(--bg); stroke: var(--bd); stroke-width: 1.3; }
