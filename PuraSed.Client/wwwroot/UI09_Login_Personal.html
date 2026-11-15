@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sereno Moreno — UI-09 Acceso de Personal y Marcación de Turno</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-chalk: #121614;
+      --paper-cream: #FAF7EC;
+      --paper-inset: #F2EDE0;
+      --paper-border: #D5CDC0;
+      --ink-dark: #1E1712;
+      --ink-muted: #5A524C;
+      --c-chicha: #D47E2F;
+      --c-pida: #9E4429;
+      --c-lleve: #546652;
+      --c-merch: #344B5C;
+      --ticket-tooth-w: 10px;
+      --ticket-tooth-h: 5px;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-sans: 'Space Grotesk', sans-serif;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      font-family: var(--font-sans);
+      color: var(--paper-cream);
+      /* Mundo Pizarra Cultural & Terracota de Sereno Moreno */
+      background: radial-gradient(circle at 28% 50%, #4A271D 0%, #1F2421 58%, #121614 100%); /* taste-skill-ignore */
+      -webkit-font-smoothing: antialiased;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chalkboard-grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Grabados serigráficos de fondo */
+    .bg-woodcut-left {
+      position: fixed;
+      bottom: -35px;
+      left: -25px;
+      width: 360px;
+      height: auto;
+      opacity: 0.14;
+      pointer-events: none;
+      z-index: 1;
+      filter: invert(1) sepia(0.25) opacity(0.65);
+    }
+
+    .bg-woodcut-right {
+      position: fixed;
+      top: 65px;
+      right: -30px;
+      width: 330px;
+      height: auto;
+      opacity: 0.12;
+      pointer-events: none;
+      z-index: 1;
+      filter: invert(1) sepia(0.3) opacity(0.6);
+    }
+
+    /* CABECERA OPERATIVA */
+    .expanded-header {
+      position: relative;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 36px 8px;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .btn-back-orbital {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #141615;
+      color: #FAF7EC;
+      border: 2px solid rgba(250, 247, 236, 0.35);
+      padding: 7px 15px;
+      border-radius: 3px;
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .btn-back-orbital:hover {
+      background: #FAF7EC;
+      color: #141615;
+      border-color: #FAF7EC;
+    }
+
+    .shift-status-strip {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: rgba(15, 18, 16, 0.85);
+      padding: 6px 16px;
+      border-radius: 3px;
+      border: 1px solid rgba(250, 247, 236, 0.16); /* taste-skill-ignore */
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: rgba(250, 247, 236, 0.82);
+    }
+
+    .shift-status-strip strong {
+      font-family: var(--font-display);
+      font-size: 0.96rem;
+      letter-spacing: 0.1em;
+      color: #F8AD00;
+    }
+
+    .floating-table-badge {
+      background: #121614;
+      border: 2px solid #FAF7EC;
+      padding: 5px 14px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.38); /* taste-skill-ignore */
+    }
+
+    /* ESCENARIO 2 COLUMNAS: TABLERO DE ESTACIONES + TARJETA DE MARCACIÓN EN PAPEL MARFIL */
+    .workspace {
+      position: relative;
+      z-index: 10;
+      flex: 1;
+      display: grid;
+      grid-template-columns: 48% 52%;
+      gap: 30px;
+      padding: 8px 36px 18px;
+      min-height: 0;
+      align-items: center;
+    }
+
+    /* COLUMNA IZQUIERDA: IDENTIDAD OPERATIVA Y TARJETAS DE TURNO / ESTACIÓN (CERO EMOJIS) */
+    .stations-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding: 6px 4px;
+    }
+
+    .brand-masthead {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    .brand-masthead img {
+      height: 50px;
+      width: auto;
+    }
+
+    .masthead-tag {
+      display: inline-block;
+      background: #BA3C2A;
+      color: #FAF7EC;
+      font-family: var(--font-display);
+      font-size: 0.86rem;
+      letter-spacing: 0.14em;
+      padding: 3px 10px;
+      border-radius: 2px;
+      margin-bottom: 4px;
+    }
+
+    .stations-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 3.8vw, 3.5rem);
+      line-height: 0.92;
+      letter-spacing: 0.03em;
+      color: var(--paper-cream);
+    }
+
+    .stations-desc {
+      font-size: 0.86rem;
+      color: rgba(250, 247, 236, 0.78);
+      line-height: 1.45;
+      margin-top: 6px;
+      max-width: 54ch;
+    }
+
+    /* LISTA DE ESTACIONES / ROLES CON DISEÑO DE FICHA IMPRESA */
+    .station-cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin: 10px 0;
+    }
+
+    .station-card {
+      background: rgba(18, 22, 20, 0.86);
+      border: 2px solid rgba(250, 247, 236, 0.22);
+      border-left: 6px solid #D47E2F;
+      padding: 10px 14px;
+      border-radius: 3px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+      color: var(--paper-cream);
+      transition: all 0.16s ease;
+    }
+
+    .station-card:hover {
+      border-color: rgba(250, 247, 236, 0.55);
+      background: rgba(26, 32, 29, 0.95);
+    }
+
+    .station-card.active {
+      background: var(--paper-cream);
+      color: var(--ink-dark);
+      border-color: var(--paper-cream);
+      border-left: 6px solid #BA3C2A;
+      box-shadow: 4px 4px 0px #D47E2F; /* taste-skill-ignore */
+    }
+
+    .st-code {
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      color: #F8AD00;
+      display: block;
+    }
+    .station-card.active .st-code {
+      color: #BA3C2A;
+    }
+
+    .st-name {
+      font-family: var(--font-display);
+      font-size: 1.28rem;
+      letter-spacing: 0.05em;
+      line-height: 1.05;
+      margin-top: 1px;
+    }
+
+    .st-person {
+      font-size: 0.78rem;
+      opacity: 0.82;
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    .st-pin-badge {
+      font-family: var(--font-display);
+      font-size: 0.96rem;
+      letter-spacing: 0.1em;
+      padding: 5px 11px;
+      border: 1.5px solid rgba(250, 247, 236, 0.35);
+      border-radius: 2px;
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    .station-card.active .st-pin-badge {
+      background: var(--ink-dark);
+      color: #F8AD00;
+      border-color: var(--ink-dark);
+    }
+
+    .audit-footer-note {
+      background: rgba(15, 18, 16, 0.88);
+      border: 1.5px dashed rgba(250, 247, 236, 0.25);
+      padding: 9px 14px;
+      font-size: 0.75rem;
+      color: rgba(250, 247, 236, 0.75);
+      line-height: 1.38;
+    }
+
+    /* COLUMNA DERECHA: TARJETA DE MARCACIÓN EN PAPEL MARFIL DENTADO (#FAF7EC) */
+    .timecard-paper-sheet {
+      width: 100%;
+      max-height: 100%;
+      background-color: var(--paper-cream);
+      color: var(--ink-dark);
+      padding: calc(var(--ticket-tooth-h) + 16px) 30px calc(var(--ticket-tooth-h) + 16px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+            --tooth-w: 10px;
+      --tooth-h: 5px;
+      -webkit-mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+      mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+      filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.55)); /* taste-skill-ignore */
+    }
+
+    .sheet-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px dashed var(--paper-border);
+      padding-bottom: 9px;
+      margin-bottom: 10px;
+    }
+
+    .sheet-title {
+      font-family: var(--font-display);
+      font-size: 1.95rem;
+      letter-spacing: 0.04em;
+      line-height: 0.95;
+      color: var(--ink-dark);
+    }
+
+    .rubber-stamp {
+      border: 2px solid #BA3C2A;
+      color: #BA3C2A;
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      padding: 2px 9px;
+      transform: rotate(2deg);
+      background: rgba(186, 60, 42, 0.06);
+    }
+
+    /* SELECTOR DE MODALIDAD EN PAPEL */
+    .paper-mode-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .paper-tab-btn {
+      background: var(--paper-inset);
+      border: 1.5px solid var(--ink-dark);
+      color: var(--ink-muted);
+      padding: 7px 10px;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .paper-tab-btn.active {
+      background: var(--ink-dark);
+      color: var(--paper-cream);
+      box-shadow: 2px 2px 0px #BA3C2A; /* taste-skill-ignore */
+    }
+
+    /* RECUADRO DE ESTACIÓN ACTIVA Y CASILLAS MECÁNICAS DE PIN (CERO CÍRCULOS OSCUROS) */
+    .active-role-banner {
+      background: var(--paper-inset);
+      border: 1.5px solid var(--paper-border);
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .active-role-banner span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--ink-muted);
+    }
+
+    .active-role-banner strong {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.06em;
+      color: #BA3C2A;
+    }
+
+    .pin-slots-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .pin-slot-box {
+      height: 50px;
+      background: #FFFFFF;
+      border: 2px solid var(--ink-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      color: var(--ink-dark);
+      position: relative;
+    }
+
+    .pin-slot-box::after {
+      content: attr(data-slot);
+      position: absolute;
+      top: 3px;
+      left: 6px;
+      font-family: var(--font-sans);
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+    }
+
+    .pin-slot-box.filled {
+      background: var(--ink-dark);
+      color: #F8AD00;
+      box-shadow: 2px 2px 0px #BA3C2A; /* taste-skill-ignore */
+    }
+
+    .pin-slot-box.error {
+      border-color: #BA3C2A;
+      background: rgba(186, 60, 42, 0.12);
+      color: #BA3C2A;
+    }
+
+    .status-strip-msg {
+      min-height: 22px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-align: center;
+      letter-spacing: 0.04em;
+      color: var(--ink-muted);
+      margin-bottom: 8px;
+    }
+
+    /* TECLADO MECÁNICO IMPRESO EN PAPEL MARFIL */
+    .keypad-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .key-btn {
+      height: 46px;
+      background: #FFFFFF;
+      border: 2px solid var(--ink-dark);
+      border-radius: 2px;
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      color: var(--ink-dark);
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--ink-dark); /* taste-skill-ignore */
+      transition: transform 0.08s ease, background 0.12s ease;
+    }
+
+    .key-btn:hover {
+      background: var(--paper-inset);
+    }
+
+    .key-btn:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--ink-dark); /* taste-skill-ignore */
+    }
+
+    .key-btn.action-clear {
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      color: #BA3C2A;
+      border-color: #BA3C2A;
+      box-shadow: 2px 2px 0px #BA3C2A; /* taste-skill-ignore */
+    }
+
+    .key-btn.action-enter {
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      background: var(--ink-dark);
+      color: #F8AD00;
+      box-shadow: 2px 2px 0px #BA3C2A; /* taste-skill-ignore */
+    }
+
+    /* FORMULARIO DE CREDENCIALES EN PAPEL */
+    .cred-panel {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      padding: 6px 0;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--ink-muted);
+      margin-bottom: 4px;
+    }
+
+    .field-group input,
+    .field-group select {
+      width: 100%;
+      background: #FFFFFF;
+      border: 2px solid var(--ink-dark);
+      padding: 9px 12px;
+      font-family: var(--font-sans);
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--ink-dark);
+      border-radius: 2px;
+    }
+
+    .btn-cred-submit {
+      width: 100%;
+      padding: 12px 16px;
+      background: var(--ink-dark);
+      color: #F8AD00;
+      border: 2px solid var(--ink-dark);
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      box-shadow: 3px 3px 0px #BA3C2A; /* taste-skill-ignore */
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chalkboard-grid-overlay"></div>
+
+  <!-- Grabados serigráficos de fondo -->
+  <img src="catalogo_imagenes/drawings/draw0.webp" alt="" class="bg-woodcut-left" onerror="this.style.display='none'" />
+  <img src="catalogo_imagenes/drawings/draw3.webp" alt="" class="bg-woodcut-right" onerror="this.style.display='none'" />
+
+  <!-- CABECERA OPERATIVA -->
+  <header class="expanded-header">
+    <a href="01_menu_orbital_pos.html" class="btn-back-orbital">
+      ← IR A TERMINAL COMENSAL (MESA 04)
+    </a>
+
+    <div class="shift-status-strip">
+      <span>SUCURSAL: <strong>CENTRO HISTÓRICO — LA RONDA</strong></span>
+      <span>•</span>
+      <span>TURNO ACTIVO: <strong>VESPERTINO (17:00 - 23:30)</strong></span>
+    </div>
+
+    <div class="floating-table-badge">
+      <span style="font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 0.08em; color: #FAF7EC;">TERMINAL POS-01</span>
+      <span style="background: #2D6A4F; color: #FAF7EC; padding: 3px 10px; border-radius: 2px; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.06em;">AUDITORÍA ACTIVA</span>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <!-- COLUMNA IZQUIERDA: TABLERO DE ESTACIONES Y SELECCIÓN RÁPIDA DE TURNO (CERO EMOJIS) -->
+    <section class="stations-col">
+      <div>
+        <div class="brand-masthead">
+          <img src="catalogo_imagenes/drawings/logosm.svg" alt="Sereno Moreno" onerror="this.style.display='none'" />
+          <div>
+            <span class="masthead-tag">MÓDULO 02 · CONTROL INTERNO DE PERSONAL</span>
+            <h1 class="stations-title">TERMINAL OPERATIVA POS & KDS</h1>
+          </div>
+        </div>
+        <p class="stations-desc">
+          Selecciona tu estación de trabajo o digita tu PIN de 4 dígitos en la tarjeta de marcación para abrir tu consola asignada.
+        </p>
+      </div>
+
+      <div class="station-cards-list" id="stationList">
+        <button type="button" class="station-card active" onclick="selectStation(this, 'SALÓN Y MESAS', 'MATEO VILLACRÉS', '1234', '01_menu_orbital_pos.html')">
+          <div>
+            <span class="st-code">ESTACIÓN 01 · ATENCIÓN EN SALA</span>
+            <div class="st-name">SALÓN Y MESAS — MATEO VILLACRÉS</div>
+            <div class="st-person">4 mesas activas en salón • Llamados de Mesa 04 sincronizados</div>
+          </div>
+          <span class="st-pin-badge">PIN: 1234</span>
+        </button>
+
+        <button type="button" class="station-card" onclick="selectStation(this, 'COCINA DE PAILA (KDS)', 'DAVID CHICAIZA', '2222', 'UI05_Timeline_Pedido.html')">
+          <div>
+            <span class="st-code">ESTACIÓN 02 · COMANDAS DE FOGÓN</span>
+            <div class="st-name">COCINA DE PAILA — DAVID CHICAIZA</div>
+            <div class="st-person">Monitor KDS en tiempo real (SignalR) • 3 órdenes en preparación</div>
+          </div>
+          <span class="st-pin-badge">PIN: 2222</span>
+        </button>
+
+        <button type="button" class="station-card" onclick="selectStation(this, 'BARRA DE FERMENTOS', 'ANDRÉS MORENO', '3333', 'UI05_Timeline_Pedido.html')">
+          <div>
+            <span class="st-code">ESTACIÓN 03 · CHICHERÍA Y BEBIDAS</span>
+            <div class="st-name">BARRA DE FERMENTOS — ANDRÉS MORENO</div>
+            <div class="st-person">Despacho de chicha en vasija, botellas y coctelería de jora</div>
+          </div>
+          <span class="st-pin-badge">PIN: 3333</span>
+        </button>
+
+        <button type="button" class="station-card" onclick="selectStation(this, 'CAJA Y FACTURACIÓN SRI', 'CAMILA RIVERA', '4444', 'UI06_Pasarela_Pago.html')">
+          <div>
+            <span class="st-code">ESTACIÓN 04 · RECAUDACIÓN Y CIERRE</span>
+            <div class="st-name">CAJA Y FACTURACIÓN SRI — CAMILA RIVERA</div>
+            <div class="st-person">Arqueo de turno, cobro en efectivo/tarjeta y emisión RIDE SRI</div>
+          </div>
+          <span class="st-pin-badge">PIN: 4444</span>
+        </button>
+      </div>
+
+      <div class="audit-footer-note">
+        <strong>BITÁCORA DE AUDITORÍA INMUTABLE:</strong> Todo ingreso de personal, cambio de estado de comanda y cobro de mesa queda registrado con sello de tiempo y operador responsable.
+      </div>
+    </section>
+
+    <!-- COLUMNA DERECHA: TARJETA DE MARCACIÓN EN PAPEL MARFIL DENTADO (#FAF7EC) -->
+    <section class="timecard-paper-sheet">
+      <div>
+        <div class="sheet-top">
+          <div>
+            <div style="font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.14em; color: #BA3C2A; margin-bottom: 2px;">
+              TARJETA DE MARCACIÓN DE TURNO • SERENO MORENO
+            </div>
+            <h2 class="sheet-title">AUTENTICACIÓN DE OPERADOR</h2>
+          </div>
+          <div class="rubber-stamp">TURNO 02 • ACTIVO</div>
+        </div>
+
+        <div class="paper-mode-tabs" role="tablist">
+          <button type="button" class="paper-tab-btn active" id="tabPin" onclick="switchMode('pin')">
+            01 · PIN TÁCTIL DE 4 DÍGITOS
+          </button>
+          <button type="button" class="paper-tab-btn" id="tabCred" onclick="switchMode('cred')">
+            02 · CREDENCIALES DE SISTEMA
+          </button>
+        </div>
+
+        <!-- MODO 1: PIN TÁCTIL RÁPIDO -->
+        <div id="pinModePanel">
+          <div class="active-role-banner">
+            <span>OPERADOR SELECCIONADO:</span>
+            <strong id="selectedStationLabel">SALÓN Y MESAS — MATEO VILLACRÉS</strong>
+          </div>
+
+          <div class="pin-slots-row" id="pinSlots">
+            <div class="pin-slot-box" data-slot="DÍGITO 01"></div>
+            <div class="pin-slot-box" data-slot="DÍGITO 02"></div>
+            <div class="pin-slot-box" data-slot="DÍGITO 03"></div>
+            <div class="pin-slot-box" data-slot="DÍGITO 04"></div>
+          </div>
+
+          <div class="status-strip-msg" id="statusMsg">
+            DIGITA LOS 4 NÚMEROS DE TU PIN O PULSA UNA ESTACIÓN A LA IZQUIERDA
+          </div>
+
+          <div class="keypad-grid">
+            <button type="button" class="key-btn" onclick="pressDigit('1')">1</button>
+            <button type="button" class="key-btn" onclick="pressDigit('2')">2</button>
+            <button type="button" class="key-btn" onclick="pressDigit('3')">3</button>
+            <button type="button" class="key-btn" onclick="pressDigit('4')">4</button>
+            <button type="button" class="key-btn" onclick="pressDigit('5')">5</button>
+            <button type="button" class="key-btn" onclick="pressDigit('6')">6</button>
+            <button type="button" class="key-btn" onclick="pressDigit('7')">7</button>
+            <button type="button" class="key-btn" onclick="pressDigit('8')">8</button>
+            <button type="button" class="key-btn" onclick="pressDigit('9')">9</button>
+            <button type="button" class="key-btn action-clear" onclick="clearPin()">LIMPIAR</button>
+            <button type="button" class="key-btn" onclick="pressDigit('0')">0</button>
+            <button type="button" class="key-btn action-enter" onclick="verifyPin()">INGRESAR →</button>
+          </div>
+        </div>
+
+        <!-- MODO 2: CREDENCIALES DE SISTEMA -->
+        <div class="cred-panel" id="credModePanel">
+          <div class="field-group">
+            <label for="userInp">Usuario o Correo Institucional</label>
+            <input id="userInp" type="text" value="mateo.villacres@serenomoreno.ec" />
+          </div>
+          <div class="field-group">
+            <label for="passInp">Contraseña de Turno</label>
+            <input id="passInp" type="password" value="••••••••••••" />
+          </div>
+          <div class="field-group">
+            <label for="stationSel">Consola de Destino</label>
+            <select id="stationSel">
+              <option value="01_menu_orbital_pos.html">Estación 01 — Salón y Mesas (Mesa 04)</option>
+              <option value="UI05_Timeline_Pedido.html">Estación 02 — Monitor KDS Cocina de Paila</option>
+              <option value="UI05_Timeline_Pedido.html">Estación 03 — Barra de Fermentos</option>
+              <option value="UI06_Pasarela_Pago.html">Estación 04 — Caja y Facturación SRI</option>
+            </select>
+          </div>
+          <button type="button" class="btn-cred-submit" onclick="loginWithCredentials()">
+            AUTENTICAR Y ABRIR CONSOLA OPERATIVA →
+          </button>
+        </div>
+      </div>
+
+      <div style="border-top: 2px solid var(--ink-dark); padding-top: 8px; margin-top: 10px; display: flex; justify-content: space-between; font-size: 0.72rem; font-weight: 700; color: var(--ink-muted);">
+        <span>SERENO MORENO • SISTEMA PURASED v2.4</span>
+        <span>CONEXIÓN SEGURA TLS • SQL SERVER</span>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    let currentPin = '';
+    const staffDirectory = {
+      '1234': { role: 'SALÓN Y MESAS', name: 'MATEO VILLACRÉS', target: '01_menu_orbital_pos.html' },
+      '2222': { role: 'COCINA DE PAILA (KDS)', name: 'DAVID CHICAIZA', target: 'UI05_Timeline_Pedido.html' },
+      '3333': { role: 'BARRA DE FERMENTOS', name: 'ANDRÉS MORENO', target: 'UI05_Timeline_Pedido.html' },
+      '4444': { role: 'CAJA Y FACTURACIÓN SRI', name: 'CAMILA RIVERA', target: 'UI06_Pasarela_Pago.html' }
+    };
+
+    function switchMode(mode) {
+      document.getElementById('tabPin').classList.toggle('active', mode === 'pin');
+      document.getElementById('tabCred').classList.toggle('active', mode === 'cred');
+      document.getElementById('pinModePanel').style.display = mode === 'pin' ? 'block' : 'none';
+      document.getElementById('credModePanel').style.display = mode === 'cred' ? 'flex' : 'none';
+    }
+
+    function updateSlots(state) {
+      const slots = document.querySelectorAll('#pinSlots .pin-slot-box');
+      slots.forEach((slot, i) => {
+        slot.classList.remove('filled', 'error');
+        if (i < currentPin.length) {
+          slot.classList.add('filled');
+          slot.textContent = '*';
+        } else {
+          slot.textContent = '';
+        }
+        if (state === 'error') {
+          slot.classList.add('error');
+        }
+      });
+    }
+
+    function pressDigit(d) {
+      if (currentPin.length >= 4) return;
+      currentPin += d;
+      updateSlots();
+      if (currentPin.length === 4) {
+        setTimeout(verifyPin, 160);
+      }
+    }
+
+    function clearPin() {
+      currentPin = '';
+      updateSlots();
+      const msg = document.getElementById('statusMsg');
+      msg.style.color = '#5A524C';
+      msg.textContent = 'DIGITA LOS 4 NÚMEROS DE TU PIN O PULSA UNA ESTACIÓN A LA IZQUIERDA';
+    }
+
+    function selectStation(cardEl, role, name, pin, target) {
+      document.querySelectorAll('.station-card').forEach(c => c.classList.remove('active'));
+      cardEl.classList.add('active');
+      document.getElementById('selectedStationLabel').textContent = role + ' — ' + name;
+      switchMode('pin');
+      currentPin = pin;
+      updateSlots();
+      verifyPin();
+    }
+
+    function verifyPin() {
+      const msg = document.getElementById('statusMsg');
+      const match = staffDirectory[currentPin];
+      if (match) {
+        msg.style.color = '#2D6A4F';
+        msg.textContent = 'ACCESO AUTORIZADO: ' + match.name + ' (' + match.role + ') — ABRIENDO CONSOLA...';
+        setTimeout(() => {
+          window.location.href = match.target;
+        }, 700);
+      } else {
+        updateSlots('error');
+        msg.style.color = '#BA3C2A';
+        msg.textContent = 'PIN NO RECONOCIDO — PRUEBA 1234 (SALÓN), 2222 (COCINA), 3333 (BARRA) O 4444 (CAJA)';
+        setTimeout(() => {
+          currentPin = '';
+          updateSlots();
+        }, 900);
+      }
+    }
+
+    function loginWithCredentials() {
+      const dest = document.getElementById('stationSel').value;
+      window.location.href = dest;
+    }
+  </script>
+</body>
+</html>

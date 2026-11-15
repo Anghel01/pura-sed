@@ -37,8 +37,8 @@ Entregables/Mockups_Figma/
 
 Para revisión directa, inspección de capas vectoriales, componentes y pruebas del prototipo interactivo:
 
-* **Tablero Oficial de Diseño (Figma Workspace):** `[INSERTAR_ENLACE_A_FIGMA_AQUÍ]`
-* **Prototipo Interactivo (Modo Presentación):** `[INSERTAR_ENLACE_AL_PROTOTIPO_AQUÍ]`
+* **Tablero Oficial de Diseño (Figma Workspace):** [https://www.figma.com/design/DsNPoA8toR0BhSr1jCQvq1/Pura-Sed?node-id=0-1&t=fsQYngq4znHIIZzZ-1](https://www.figma.com/design/DsNPoA8toR0BhSr1jCQvq1/Pura-Sed?node-id=0-1&t=fsQYngq4znHIIZzZ-1)
+* **Prototipo Interactivo (Modo Presentación):** [https://www.figma.com/proto/DsNPoA8toR0BhSr1jCQvq1/Pura-Sed?node-id=0-1&t=fsQYngq4znHIIZzZ-1](https://www.figma.com/proto/DsNPoA8toR0BhSr1jCQvq1/Pura-Sed?node-id=0-1&t=fsQYngq4znHIIZzZ-1)
 
 ---
 

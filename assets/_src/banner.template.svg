@@ -3,8 +3,8 @@
   <desc id="bd">Una botella de cerveza sirve un vaso que desborda espuma sobre una mesa coral con pistachos, sobre fondo celeste. A la derecha, el nombre PuraSed.</desc>
   <defs>
     <style>
-      .frame { fill: none; stroke: #1F3A4D; stroke-opacity: .12; stroke-width: 1; }
-      .ds    { flood-color: #1F3A4D; flood-opacity: .20; }
+      .frame { fill: none; stroke: #D4D4D8; stroke-opacity: .55; stroke-width: 1.5; }
+      .ds    { flood-color: #18181B; flood-opacity: .14; }
       .bubble { fill: #FFF7E3; opacity: 0; animation-name: rise; animation-timing-function: ease-in; animation-iteration-count: infinite; }
       @keyframes rise {
         0%   { transform: translate(0, 0);        opacity: 0; }
@@ -14,8 +14,8 @@
         100% { transform: translate(-1px, -{{RISE}}px); opacity: 0; }
       }
       @media (prefers-color-scheme: dark) {
-        .frame { stroke: #FFFFFF; stroke-opacity: .10; }
-        .ds    { flood-color: #000000; flood-opacity: .55; }
+        .frame { stroke: #52525B; stroke-opacity: .50; }
+        .ds    { flood-color: #000000; flood-opacity: .50; }
       }
       @media (prefers-reduced-motion: reduce) {
         .bubble { animation: none; opacity: 0; }
@@ -25,14 +25,14 @@
       <feDropShadow class="ds" dx="0" dy="10" stdDeviation="12"/>
     </filter>
     <clipPath id="round">
-      <rect x="{{X}}" y="{{Y}}" width="{{W}}" height="{{H}}" rx="22"/>
+      <rect x="{{X}}" y="{{Y}}" width="{{W}}" height="{{H}}" rx="10"/>
     </clipPath>
     <clipPath id="glass">
       <rect x="{{GX}}" y="{{GY}}" width="{{GW}}" height="{{GH}}" rx="6"/>
     </clipPath>
   </defs>
 
-  <rect x="{{X}}" y="{{Y}}" width="{{W}}" height="{{H}}" rx="22" fill="#86BDD0" filter="url(#shadow)"/>
+  <rect x="{{X}}" y="{{Y}}" width="{{W}}" height="{{H}}" rx="10" fill="#86BDD0" filter="url(#shadow)"/>
 
   <g clip-path="url(#round)">
     <image xlink:href="data:image/jpeg;base64,{{BANNER}}" x="{{X}}" y="{{Y}}" width="{{W}}" height="{{H}}" preserveAspectRatio="xMidYMid slice"/>
@@ -41,5 +41,5 @@
     </g>
   </g>
 
-  <rect class="frame" x="{{FX}}" y="{{FY}}" width="{{FW}}" height="{{FH}}" rx="21.5"/>
+  <rect class="frame" x="{{FX}}" y="{{FY}}" width="{{FW}}" height="{{FH}}" rx="9.5"/>
 </svg>

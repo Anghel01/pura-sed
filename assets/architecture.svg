@@ -1,345 +1,249 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 730" width="100%" height="100%" role="img" aria-labelledby="archTitle archDesc">
-  <title id="archTitle">Arquitectura del Sistema PuraSed</title>
-  <desc id="archDesc">Arquitectura en capas desacoplada con fondo blanco puro, bordes animados de cuadr&#237;culas y flujo continuo de peticiones SignalR.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" width="100%" height="100%" role="img" aria-labelledby="archTitle archDesc">
+  <title id="archTitle">Arquitectura Monol&#237;tica Modular &#8212; PuraSed</title>
+  <desc id="archDesc">Diagrama de alto contraste sobre lienzo claro de las 6 capas desacopladas del monolito .NET 10 y flujo SignalR.</desc>
   <defs>
     <style>
-      .t-main  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 14px; font-weight: 700; fill: #0F172A; }
-      .t-box   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 700; fill: #0F172A; }
-      .c-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; fill: #0F172A; text-anchor: middle; }
-      .c-sub   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 10.5px; font-weight: 500; fill: #64748B; text-anchor: middle; }
-      .p-tag   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; fill: #475569; text-anchor: middle; }
-      .proto   { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 700; fill: #0284C7; letter-spacing: 0.5px; }
+      :root {
+        --bg: #FAFAFC;
+        --card: #FFFFFF;
+        --alt: #F4F4F6;
+        --bd: #D8D8DF;
+        --bd-strong: #9E9EA9;
+        --ink: #18181B;
+        --muted: #52525B;
 
-      /* Animaci&#243;n de bordes de las cuadr&#237;culas */
-      @keyframes borderMarch {
-        from { stroke-dashoffset: 0; }
-        to   { stroke-dashoffset: -32; }
+        --c1-tx: #9F1239;   --c1-st: #E11D48;   --c1-bg: #FFF1F2;   --c1-bd: #FECDD3;
+        --c2-tx: #5B21B6;  --c2-st: #7C3AED;  --c2-bg: #F5F3FF;  --c2-bd: #DDD6FE;
+        --c3-tx: #065F46; --c3-st: #059669; --c3-bg: #ECFDF5; --c3-bd: #A7F3D0;
+        --c4-tx: #9A3412;  --c4-st: #EA580C;  --c4-bg: #FFF7ED;  --c4-bd: #FED7AA;
+        --c5-tx: #166534;   --c5-st: #16A34A;   --c5-bg: #F0FDF4;   --c5-bd: #BBF7D0;
+        --c6-tx: #86198F; --c6-st: #C026D3; --c6-bg: #FDF4FF; --c6-bd: #F5D0FE;
+        --amber-tx: #854D03; --amber-st: #D97706; --amber-bg: #FFFBEB; --amber-bd: #FDE68A;
+        --rose-tx: #9D174D;  --rose-st: #DB2777;  --rose-bg: #FDF2F8;  --rose-bd: #FBCFE8;
       }
 
-      .animated-border-front {
-        stroke: #10B981;
-        stroke-width: 1.8;
-        stroke-dasharray: 8 6;
-        animation: borderMarch 4s linear infinite;
+      /* En Modo Oscuro el marco exterior armoniza con el fondo gris oscuro, manteniendo la lamina clara para maximo contraste */
+      @media (prefers-color-scheme: dark) {
+        :root { --bd: #46464D; --bd-strong: #6B6B76; }
       }
 
-      .animated-border-back {
-        stroke: #6366F1;
-        stroke-width: 1.8;
-        stroke-dasharray: 8 6;
-        animation: borderMarch 4s linear infinite;
-      }
+      .canvas  { fill: var(--bg); stroke: var(--bd); stroke-width: 1.5; }
+      .monolith-boundary { fill: #FFFFFF; stroke: var(--bd-strong); stroke-width: 1.4; stroke-dasharray: 7 4; }
+      .subbox  { fill: var(--card); stroke-width: 1.25; }
+      .layer-c { stroke-width: 1.5; }
 
-      .animated-border-pipe {
-        stroke: #0284C7;
-        stroke-width: 1.8;
-        stroke-dasharray: 8 6;
-        animation: borderMarch 4s linear infinite;
-      }
+      .h1       { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 16.5px; font-weight: 800; fill: var(--ink); letter-spacing: -0.2px; }
+      .h2       { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+      .t-layer  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 11.5px; font-weight: 800; letter-spacing: 0.45px; }
+      .c-title  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 12px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
+      .c-sub    { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 10px; font-weight: 500; fill: var(--muted); text-anchor: middle; }
+      .lbl-pill { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 9.8px; font-weight: 700; letter-spacing: 0.4px; text-anchor: middle; }
+      .code-tok { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 9.8px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
 
-      /* Animaci&#243;n de flujo de flechas */
-      @keyframes arrowFlow {
-        from { stroke-dashoffset: 24; }
-        to   { stroke-dashoffset: 0; }
-      }
+      @keyframes dashFlow { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
+      @keyframes beaconPulse { 0% { transform: scale(1); opacity: 0.85; } 70% { transform: scale(2.2); opacity: 0; } 100% { transform: scale(2.2); opacity: 0; } }
 
-      .flow-arrow-blue {
-        stroke: #0284C7;
-        stroke-width: 2.2;
-        stroke-dasharray: 6 5;
-        animation: arrowFlow 1.2s linear infinite;
-      }
+      .arrow-coral   { fill: none; stroke: var(--c1-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.6s linear infinite; }
+      .arrow-violet  { fill: none; stroke: var(--c2-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.5s linear infinite; }
+      .arrow-emerald { fill: none; stroke: var(--c3-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.7s linear infinite; }
+      .arrow-orange  { fill: none; stroke: var(--c4-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.8s linear infinite; }
+      .arrow-green   { fill: none; stroke: var(--c5-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.6s linear infinite; }
+      .arrow-magenta { fill: none; stroke: var(--c6-st); stroke-width: 1.85; stroke-dasharray: 5 4; animation: dashFlow 1.65s linear infinite; }
 
-      .flow-arrow-green {
-        stroke: #10B981;
-        stroke-width: 2.2;
-        stroke-dasharray: 6 5;
-        animation: arrowFlow 1.2s linear infinite;
-      }
+      .pulse-beacon { transform-box: fill-box; transform-origin: center; animation: beaconPulse 2.2s ease-out infinite; }
 
-      .flow-arrow-purple {
-        stroke: #8B5CF6;
-        stroke-width: 2.2;
-        stroke-dasharray: 6 5;
-        animation: arrowFlow 1.2s linear infinite;
-      }
-
-      /* Pulso de telemetr&#237;a */
-      @keyframes pulseDot {
-        0%, 100% { transform: scale(1); opacity: 1; }
-        50%      { transform: scale(1.4); opacity: 0.4; }
-      }
-
-      .pulse-beacon {
-        transform-origin: center;
-        animation: pulseDot 1.8s ease-in-out infinite;
+      @media (prefers-reduced-motion: reduce) {
+        .arrow-coral, .arrow-violet, .arrow-emerald, .arrow-orange, .arrow-green, .arrow-magenta, .pulse-beacon { animation: none; }
       }
     </style>
 
-    <!-- Marcadores de flechas para cada flujo -->
-    <marker id="arr-blue" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#0284C7" />
-    </marker>
-    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#10B981" />
-    </marker>
-    <marker id="arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M 0 1 L 8 5 L 0 9 z" fill="#8B5CF6" />
-    </marker>
-
-    <!-- Filtro de sombra suave -->
-    <filter id="soft-card-shadow" x="-3%" y="-3%" width="106%" height="108%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.06"/>
-    </filter>
+    <marker id="m-coral"   viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c1-st)"/></marker>
+    <marker id="m-violet"  viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c2-st)"/></marker>
+    <marker id="m-emerald" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c3-st)"/></marker>
+    <marker id="m-orange"  viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c4-st)"/></marker>
+    <marker id="m-green"   viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c5-st)"/></marker>
+    <marker id="m-magenta" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M1 1 L7 4 L1 7 z" fill="var(--c6-st)"/></marker>
   </defs>
 
-  <!-- Lienzo principal blanco puro -->
-  <rect width="1000" height="730" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#soft-card-shadow)"/>
+  <rect class="canvas" x="2" y="2" width="996" height="756" rx="12"/>
 
-  <!-- ========================================== -->
-  <!-- CAPA 1: DISPOSITIVOS Y ACTORES (y: 20 a 90) -->
-  <!-- ========================================== -->
-  <!-- Cliente -->
-  <g transform="translate(40, 20)">
-    <rect width="200" height="66" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
-    <circle cx="28" cy="33" r="14" fill="#E0F2FE" />
-    <path d="M24 37v-1.5a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3v1.5M28 27a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" fill="none" stroke="#0284C7" stroke-width="1.6" stroke-linecap="round"/>
-    <text x="115" y="30" class="c-title">Cliente (Comensal)</text>
-    <text x="115" y="48" class="c-sub">Smartphone / Escaneo QR</text>
+  <!-- Cabecera Superior -->
+  <rect x="2" y="2" width="996" height="62" rx="12" fill="var(--card)"/>
+  <rect x="2" y="50" width="996" height="14" fill="var(--card)"/>
+  <line x1="2" y1="64" x2="998" y2="64" stroke="var(--bd)" stroke-width="1.2"/>
+  <rect x="20" y="18" width="5" height="30" rx="2.5" fill="var(--c2-st)"/>
+  <text x="36" y="31" class="h1">Arquitectura Monol&#237;tica Modular en Capas &#183; PuraSed</text>
+  <text x="36" y="48" class="h2">6 Capas Desacopladas (.NET 10) &#183; Persistencia Transaccional &#183; Tiempo Real SignalR</text>
+
+  <rect x="748" y="20" width="228" height="26" rx="13" fill="var(--c3-bg)" stroke="var(--c3-st)" stroke-width="1.1"/>
+  <circle class="pulse-beacon" cx="766" cy="33" r="4" fill="var(--c3-st)"/>
+  <circle cx="766" cy="33" r="3.5" fill="var(--c3-st)"/>
+  <text x="874" y="36.5" class="lbl-pill" fill="var(--c3-tx)">HTTPS &#183; JWT &#183; SIGNALR ACTIVO</text>
+
+  <!-- NIVEL 0: PERFILES DE USUARIO -->
+  <g transform="translate(28, 76)">
+    <rect width="944" height="48" rx="10" fill="var(--card)" stroke="var(--bd)" stroke-width="1.25"/>
+    <rect x="0" y="8" width="4" height="32" rx="2" fill="var(--amber-st)"/>
+    <text x="16" y="20" class="t-layer" fill="var(--ink)">USUARIOS DEL SISTEMA</text>
+    <text x="16" y="36" class="c-sub" style="text-anchor: start;">Acceso unificado por navegador o tablet en mesa bajo HTTPS</text>
+
+    <rect x="348" y="12" width="84" height="24" rx="12" fill="var(--c4-bg)"   stroke="var(--c4-st)"   stroke-width="1"/><text x="390" y="27.5" class="lbl-pill" fill="var(--c4-tx)">Cliente</text>
+    <rect x="440" y="12" width="84" height="24" rx="12" fill="var(--c3-bg)"   stroke="var(--c3-st)"   stroke-width="1"/><text x="482" y="27.5" class="lbl-pill" fill="var(--c3-tx)">Mesero</text>
+    <rect x="532" y="12" width="96" height="24" rx="12" fill="var(--c1-bg)"   stroke="var(--c1-st)"   stroke-width="1"/><text x="580" y="27.5" class="lbl-pill" fill="var(--c1-tx)">AdminCocina</text>
+    <rect x="636" y="12" width="88" height="24" rx="12" fill="var(--rose-bg)" stroke="var(--rose-st)" stroke-width="1"/><text x="680" y="27.5" class="lbl-pill" fill="var(--rose-tx)">AdminBar</text>
+    <rect x="732" y="12" width="90" height="24" rx="12" fill="var(--c5-bg)"   stroke="var(--c5-st)"   stroke-width="1"/><text x="777" y="27.5" class="lbl-pill" fill="var(--c5-tx)">Asistente</text>
+    <rect x="830" y="12" width="98" height="24" rx="12" fill="var(--c2-bg)"   stroke="var(--c2-st)"   stroke-width="1"/><text x="879" y="27.5" class="lbl-pill" fill="var(--c2-tx)">Admin / Super</text>
   </g>
 
-  <!-- Mesero -->
-  <g transform="translate(280, 20)">
-    <rect width="200" height="66" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
-    <circle cx="28" cy="33" r="14" fill="#FEF3C7" />
-    <path d="M24 37v-1.5a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3v1.5M28 27a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" fill="none" stroke="#D97706" stroke-width="1.6" stroke-linecap="round"/>
-    <text x="115" y="30" class="c-title">Mesero de Sala</text>
-    <text x="115" y="48" class="c-sub">Tablet / Comandero M&#243;vil</text>
+  <path d="M 500 124 L 500 156" class="arrow-orange" marker-end="url(#m-orange)"/>
+  <rect x="456" y="129" width="88" height="17" rx="8.5" fill="var(--card)" stroke="var(--c4-st)" stroke-width="1"/>
+  <text x="500" y="140.5" class="lbl-pill" fill="var(--c4-tx)">HTTPS SPA</text>
+
+  <!-- CONTENEDOR MONOLITO MODULAR -->
+  <rect class="monolith-boundary" x="28" y="158" width="944" height="390" rx="12"/>
+  <rect x="46" y="148" width="332" height="20" rx="10" fill="var(--card)" stroke="var(--bd-strong)" stroke-width="1"/>
+  <text x="212" y="161.5" class="lbl-pill" fill="var(--ink)">APLICACI&#211;N MONOL&#205;TICA MODULAR &#183; .NET 10</text>
+
+  <!-- CAPA 1: PRESENTACIÓN (CORAL VIVO) -->
+  <g transform="translate(46, 176)">
+    <rect class="layer-c" width="908" height="78" rx="9" fill="var(--c1-bg)" stroke="var(--c1-st)"/>
+    <text x="16" y="20" class="t-layer" fill="var(--c1-tx)">1. PRESENTACI&#211;N &#183; BLAZOR WEBASSEMBLY (P&#193;GINAS POR ROL)</text>
+
+    <g transform="translate(16, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c1-st)"/><text x="105" y="16" class="c-title">Men&#250; Orbital &amp; POS Mesa</text><text x="105" y="30" class="c-sub">Cat&#225;logo 5 cap&#237;tulos, carrito, pago</text></g>
+    <g transform="translate(238, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c1-st)"/><text x="105" y="16" class="c-title">Sal&#243;n &amp; Mapa de Mesas</text><text x="105" y="30" class="c-sub">Mesero, reservas y estados</text></g>
+    <g transform="translate(460, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c1-st)"/><text x="105" y="16" class="c-title">KDS Cocina &amp; KDD Barra</text><text x="105" y="30" class="c-sub">Colas cronol&#243;gicas por &#225;rea</text></g>
+    <g transform="translate(682, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c1-st)"/><text x="105" y="16" class="c-title">Caja, Roles &amp; Anal&#237;tica</text><text x="105" y="30" class="c-sub">Arqueo, inventario y reportes</text></g>
   </g>
 
-  <!-- Cocina y Bar -->
-  <g transform="translate(520, 20)">
-    <rect width="200" height="66" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
-    <circle cx="28" cy="33" r="14" fill="#F3E8FF" />
-    <path d="M23 35h10M25 25v10M31 25v10M24 23h8" fill="none" stroke="#7C3AED" stroke-width="1.6" stroke-linecap="round"/>
-    <text x="115" y="30" class="c-title">Cocina y Barra</text>
-    <text x="115" y="48" class="c-sub">Pantallas KDS / Comandas</text>
+  <!-- CANAL BIDIRECCIONAL -->
+  <path d="M 210 254 L 210 292" class="arrow-violet" marker-end="url(#m-violet)"/>
+  <rect x="92" y="263" width="236" height="20" rx="10" fill="var(--card)" stroke="var(--c2-st)" stroke-width="1.1"/>
+  <text x="210" y="276" class="lbl-pill" fill="var(--c2-tx)">HTTP / JSON + JWT BEARER &#8595;</text>
+
+  <rect x="356" y="263" width="288" height="20" rx="10" fill="var(--card)" stroke="var(--bd-strong)"/>
+  <circle class="pulse-beacon" cx="373" cy="273" r="3.5" fill="var(--c3-st)"/>
+  <circle cx="373" cy="273" r="3" fill="var(--c3-st)"/>
+  <text x="507" y="276.5" class="code-tok">HttpClient + AuthenticationStateProvider</text>
+
+  <path d="M 790 292 L 790 256" class="arrow-coral" marker-end="url(#m-coral)"/>
+  <rect x="674" y="263" width="232" height="20" rx="10" fill="var(--card)" stroke="var(--c1-st)" stroke-width="1.1"/>
+  <text x="790" y="276" class="lbl-pill" fill="var(--c1-tx)">&#8593; WEBSOCKETS SIGNALR PUSH</text>
+
+  <!-- CAPA 2: WEB API (VIOLETA VIVO) -->
+  <g transform="translate(46, 294)">
+    <rect class="layer-c" width="908" height="78" rx="9" fill="var(--c2-bg)" stroke="var(--c2-st)"/>
+    <text x="16" y="20" class="t-layer" fill="var(--c2-tx)">2. WEB API &#183; ASP.NET CORE CONTROLLERS REST, DTOS, RBAC Y HUB SIGNALR</text>
+
+    <g transform="translate(16, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c2-st)"/><text x="105" y="16" class="c-title">Auth &amp; Roles.cs (RBAC)</text><text x="105" y="30" class="c-sub">JWT HMAC-SHA256 + 2FA admin</text></g>
+    <g transform="translate(238, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c2-st)"/><text x="105" y="16" class="c-title">Pedidos &amp; Mesas REST</text><text x="105" y="30" class="c-sub">Validaci&#243;n sin l&#243;gica de negocio</text></g>
+    <g transform="translate(460, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c2-st)"/><text x="105" y="16" class="c-title">Productos &amp; Pagos REST</text><text x="105" y="30" class="c-sub">Cat&#225;logo, caja y habilitaci&#243;n</text></g>
+    <g transform="translate(682, 29)"><rect class="subbox" width="210" height="38" rx="7" stroke="var(--c2-st)"/><text x="105" y="16" class="c-title">Hub SignalR Tiempo Real</text><text x="105" y="30" class="c-sub">Difusi&#243;n instant&#225;nea KDS / KDD</text></g>
   </g>
 
-  <!-- Administrador -->
-  <g transform="translate(760, 20)">
-    <rect width="200" height="66" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" />
-    <circle cx="28" cy="33" r="14" fill="#DCFCE7" />
-    <path d="M22 36h12M24 24h8v8h-8z" fill="none" stroke="#16A34A" stroke-width="1.6" stroke-linecap="round"/>
-    <text x="115" y="30" class="c-title">Administrador / Cajero</text>
-    <text x="115" y="48" class="c-sub">Terminal POS / Dashboard</text>
-  </g>
+  <path d="M 275 372 L 275 394" class="arrow-emerald" marker-end="url(#m-emerald)"/>
+  <path d="M 500 372 L 500 394" class="arrow-emerald" marker-end="url(#m-emerald)"/>
+  <path d="M 725 372 L 725 394" class="arrow-orange"  marker-end="url(#m-orange)"/>
 
-  <!-- Flechas verticales hacia Frontend (Capa 1 -> Capa 2) -->
-  <path d="M 140 86 L 140 128" class="flow-arrow-blue" marker-end="url(#arr-blue)"/>
-  <path d="M 380 86 L 380 128" class="flow-arrow-blue" marker-end="url(#arr-blue)"/>
-  <path d="M 620 86 L 620 128" class="flow-arrow-blue" marker-end="url(#arr-blue)"/>
-  <path d="M 860 86 L 860 128" class="flow-arrow-blue" marker-end="url(#arr-blue)"/>
-
-  <!-- ========================================== -->
-  <!-- CAPA 2: FRONTEND SPA BLAZOR (y: 130 a 225)  -->
-  <!-- ========================================== -->
-  <g transform="translate(40, 130)">
-    <!-- Contenedor con borde animado verde esmeralda -->
-    <rect width="920" height="96" rx="12" fill="#F0FDF4" />
-    <rect width="920" height="96" rx="12" fill="none" class="animated-border-front" />
-
-    <text x="20" y="24" class="t-box" fill="#065F46">Frontend SPA &#183; Blazor WebAssembly (.NET 10)</text>
-
-    <!-- Sub-módulos Blazor -->
-    <g transform="translate(20, 36)">
-      <rect width="205" height="46" rx="8" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
-      <text x="102" y="20" class="c-title">Portal Cliente</text>
-      <text x="102" y="35" class="c-sub">Carta digital, pedidos y pago</text>
+  <!-- CAPA 3 (ESMERALDA VIVO) + CAPA 4 (NARANJA VIVO) -->
+  <g transform="translate(46, 396)">
+    <g transform="translate(0, 0)">
+      <rect class="layer-c" width="540" height="68" rx="9" fill="var(--c3-bg)" stroke="var(--c3-st)"/>
+      <text x="16" y="19" class="t-layer" fill="var(--c3-tx)">3. SERVICE LAYER &#183; REGLAS Y CASOS DE USO</text>
+      <rect class="subbox" x="16"  y="27" width="162" height="31" rx="7" stroke="var(--c3-st)"/><text x="97"  y="46.5" class="c-title" style="font-size: 11px;">Pedido &amp; Men&#250; (*Service)</text>
+      <rect class="subbox" x="188" y="27" width="164" height="31" rx="7" stroke="var(--c3-st)"/><text x="270" y="46.5" class="c-title" style="font-size: 11px;">Inventario &amp; Reservas</text>
+      <rect class="subbox" x="362" y="27" width="162" height="31" rx="7" stroke="var(--c3-st)"/><text x="443" y="46.5" class="c-title" style="font-size: 11px;">Pago, Reporte &amp; Auth</text>
     </g>
 
-    <g transform="translate(245, 36)">
-      <rect width="205" height="46" rx="8" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
-      <text x="102" y="20" class="c-title">Portal Mesero</text>
-      <text x="102" y="35" class="c-sub">Gesti&#243;n de mesas y alertas</text>
-    </g>
-
-    <g transform="translate(470, 36)">
-      <rect width="205" height="46" rx="8" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
-      <text x="102" y="20" class="c-title">KDS Cocina y Bar</text>
-      <text x="102" y="35" class="c-sub">Cola de despacho en vivo</text>
-    </g>
-
-    <g transform="translate(695, 36)">
-      <rect width="205" height="46" rx="8" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.2"/>
-      <text x="102" y="20" class="c-title">Panel Administrativo</text>
-      <text x="102" y="35" class="c-sub">Caja, auditor&#237;a y reportes</text>
-    </g>
-  </g>
-
-  <!-- Enlace Inter-capa: HTTPS / JSON / WebSockets SignalR -->
-  <g transform="translate(370, 230)">
-    <path d="M 130 0 L 130 38" class="flow-arrow-green" marker-end="url(#arr-green)"/>
-    <path d="M 124 38 L 124 0" class="flow-arrow-purple" marker-end="url(#arr-purple)"/>
-    <rect x="-110" y="8" width="480" height="22" rx="11" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.2"/>
-    <circle cx="-95" cy="19" r="4" fill="#10B981" class="pulse-beacon"/>
-    <text x="130" y="23" text-anchor="middle" class="proto">HTTPS REST API &#183; JSON &#183; WebSockets SignalR Hub</text>
-  </g>
-
-  <!-- ========================================== -->
-  <!-- CAPA 3: BACKEND ASP.NET CORE (y: 275 a 420) -->
-  <!-- ========================================== -->
-  <g transform="translate(40, 275)">
-    <!-- Contenedor con borde animado índigo violeta -->
-    <rect width="920" height="145" rx="12" fill="#F5F3FF" />
-    <rect width="920" height="145" rx="12" fill="none" class="animated-border-back" />
-
-    <text x="20" y="24" class="t-box" fill="#4338CA">Backend &#183; ASP.NET Core Web API (.NET 10 M&#243;dulos de Negocio)</text>
-
-    <!-- Fila 1 de Módulos Backend -->
-    <g transform="translate(20, 36)">
-      <rect width="205" height="42" rx="7" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2"/>
-      <text x="102" y="18" class="c-title">Seguridad y Roles</text>
-      <text x="102" y="32" class="c-sub">JWT, RBAC y autorizaci&#243;n</text>
-    </g>
-
-    <g transform="translate(245, 36)">
-      <rect width="205" height="42" rx="7" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2"/>
-      <text x="102" y="18" class="c-title">Men&#250; e Inventario</text>
-      <text x="102" y="32" class="c-sub">Stock por recetas e insumos</text>
-    </g>
-
-    <g transform="translate(470, 36)">
-      <rect width="205" height="42" rx="7" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2"/>
-      <text x="102" y="18" class="c-title">Mesas y Comandas</text>
-      <text x="102" y="32" class="c-sub">Enrutamiento barra y cocina</text>
-    </g>
-
-    <g transform="translate(695, 36)">
-      <rect width="205" height="42" rx="7" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2"/>
-      <text x="102" y="18" class="c-title">Hub SignalR Tiempo Real</text>
-      <text x="102" y="32" class="c-sub">Broadcasting de pedidos</text>
-    </g>
-
-    <!-- Fila 2 de Módulos Backend -->
-    <g transform="translate(20, 88)">
-      <rect width="205" height="42" rx="7" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2"/>
-      <text x="102" y="18" class="c-title">Reservas y Pagos</text>
-      <text x="102" y="32" class="c-sub">Facturaci&#243;n y conciliaci&#243;n</text>
-    </g>
-
-    <g transform="translate(245, 88)">
-      <rect width="205" height="42" rx="7" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2"/>
-      <text x="102" y="18" class="c-title">Bit&#225;cora y Auditor&#237;a</text>
-      <text x="102" y="32" class="c-sub">Trazabilidad inmutable de eventos</text>
-    </g>
-
-    <g transform="translate(470, 88)">
-      <rect width="205" height="42" rx="7" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2"/>
-      <text x="102" y="18" class="c-title">Servicio de Archivos</text>
-      <text x="102" y="32" class="c-sub">Comprobantes y cartas PDF</text>
-    </g>
-
-    <g transform="translate(695, 88)">
-      <rect width="205" height="42" rx="7" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.2"/>
-      <text x="102" y="18" class="c-title">M&#233;tricas y Cierre</text>
-      <text x="102" y="32" class="c-sub">Arqueo de caja y reportes</text>
+    <g transform="translate(556, 0)">
+      <rect class="layer-c" width="352" height="68" rx="9" fill="var(--c4-bg)" stroke="var(--c4-st)"/>
+      <text x="16" y="19" class="t-layer" fill="var(--c4-tx)">4. DOMAIN LAYER &#183; N&#218;CLEO PURO</text>
+      <rect class="subbox" x="14"  y="27" width="156" height="31" rx="7" stroke="var(--c4-st)"/><text x="92"  y="46.5" class="c-title" style="font-size: 11px;">Entidades &amp; Reglas C#</text>
+      <rect class="subbox" x="180" y="27" width="158" height="31" rx="7" stroke="var(--c4-st)"/><text x="259" y="46.5" class="c-title" style="font-size: 11px;">I*Repository (DIP)</text>
     </g>
   </g>
 
-  <!-- Flechas hacia Persistencia y Servicios Externos -->
-  <path d="M 190 420 L 190 460" class="flow-arrow-purple" marker-end="url(#arr-purple)"/>
-  <path d="M 500 420 L 500 460" class="flow-arrow-purple" marker-end="url(#arr-purple)"/>
-  <path d="M 810 420 L 810 460" class="flow-arrow-purple" marker-end="url(#arr-purple)"/>
+  <path d="M 275 464 L 275 486" class="arrow-green"   marker-end="url(#m-green)"/>
+  <path d="M 732 464 L 732 486" class="arrow-magenta" marker-end="url(#m-magenta)"/>
 
-  <!-- ========================================== -->
-  <!-- CAPA 4: PERSISTENCIA Y SERVICIOS EXTERNOS (y: 462 a 532) -->
-  <!-- ========================================== -->
-  <!-- SQL Server -->
-  <g transform="translate(40, 462)">
-    <rect width="290" height="70" rx="10" fill="#F0FDFA" stroke="#99F6E4" stroke-width="1.4"/>
-    <circle cx="34" cy="35" r="16" fill="#CCFBF1"/>
-    <path d="M26 27c0-2.5 3.5-4 8-4s8 1.5 8 4v16c0 2.5-3.5 4-8 4s-8-1.5-8-4z" fill="none" stroke="#0D9488" stroke-width="1.6"/>
-    <ellipse cx="34" cy="27" rx="8" ry="3" fill="none" stroke="#0D9488" stroke-width="1.6"/>
-    <path d="M26 35c0 2 3.5 3.5 8 3.5s8-1.5 8-3.5" fill="none" stroke="#0D9488" stroke-width="1.6"/>
-    <text x="165" y="30" class="c-title">Microsoft SQL Server 2022</text>
-    <text x="165" y="48" class="c-sub">Entity Framework Core 10 (Transaccional)</text>
+  <!-- CAPA 5 (VERDE VIVO) + CAPA 6 (MAGENTA VIVO) -->
+  <g transform="translate(46, 488)">
+    <g transform="translate(0, 0)">
+      <rect class="layer-c" width="444" height="48" rx="9" fill="var(--c5-bg)" stroke="var(--c5-st)"/>
+      <text x="16" y="18" class="t-layer" fill="var(--c5-tx)">5. ACCESO A DATOS &#183; EF CORE 10</text>
+      <text x="16" y="35" class="c-sub" style="text-anchor: start;">PuraSedDbContext, Repositorios y Code-First Migrations</text>
+    </g>
+    <g transform="translate(464, 0)">
+      <rect class="layer-c" width="444" height="48" rx="9" fill="var(--c6-bg)" stroke="var(--c6-st)"/>
+      <text x="16" y="18" class="t-layer" fill="var(--c6-tx)">6. INFRASTRUCTURE LAYER &#183; TRANSVERSALES</text>
+      <text x="16" y="35" class="c-sub" style="text-anchor: start;">Hash contrase&#241;as, Bit&#225;cora, Facturas PDF, Excel y Comprobantes</text>
+    </g>
   </g>
 
-  <!-- Almacén de Archivos -->
-  <g transform="translate(355, 462)">
-    <rect width="290" height="70" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.4"/>
-    <circle cx="34" cy="35" r="16" fill="#E2E8F0"/>
-    <path d="M26 28h16v14H26zM26 32h16" fill="none" stroke="#475569" stroke-width="1.6"/>
-    <text x="165" y="30" class="c-title">Almac&#233;n Local de Archivos</text>
-    <text x="165" y="48" class="c-sub">Comprobantes bancarios y recursos multimedia</text>
+  <path d="M 268 536 L 268 564" class="arrow-green" marker-end="url(#m-green)"/>
+  <path d="M 732 536 L 732 564" class="arrow-coral" marker-end="url(#m-coral)"/>
+
+  <!-- SERVICIOS EXTERNOS -->
+  <g transform="translate(46, 566)">
+    <rect class="subbox" width="444" height="58" rx="9" stroke="var(--c5-st)" stroke-width="1.4"/>
+    <circle cx="36" cy="29" r="18" fill="var(--c5-bg)"/>
+    <g transform="translate(22, 13)">
+      <ellipse cx="14" cy="6" rx="10" ry="4" fill="none" stroke="var(--c5-st)" stroke-width="1.8"/>
+      <path d="M4 6 V24 C4 26.5 8.5 28 14 28 C19.5 28 24 26.5 24 24 V6" fill="none" stroke="var(--c5-st)" stroke-width="1.8"/>
+      <path d="M4 15 C4 17.5 8.5 19 14 19 C19.5 19 24 17.5 24 15" fill="none" stroke="var(--c5-st)" stroke-width="1.6"/>
+    </g>
+    <text x="66" y="25" class="c-title" style="text-anchor: start;">Microsoft SQL Server 2022 (Servicio Externo)</text>
+    <text x="66" y="42" class="c-sub" style="text-anchor: start;">Base &#250;nica en la nube &#183; 23 Entidades &#183; Respaldos autom&#225;ticos</text>
+
+    <rect class="subbox" x="464" y="0" width="444" height="58" rx="9" stroke="var(--c1-st)" stroke-width="1.4" stroke-dasharray="5 3"/>
+    <circle cx="500" cy="29" r="18" fill="var(--c1-bg)"/>
+    <g transform="translate(486, 16)">
+      <rect x="2" y="4" width="24" height="17" rx="3" fill="none" stroke="var(--c1-st)" stroke-width="1.8"/>
+      <line x1="2" y1="10" x2="26" y2="10" stroke="var(--c1-st)" stroke-width="1.8"/>
+    </g>
+    <text x="530" y="25" class="c-title" style="text-anchor: start;">Pasarela de Pago Externa (API Bancaria)</text>
+    <text x="530" y="42" class="c-sub" style="text-anchor: start;">Solo conserva referencia de transacci&#243;n &#183; Cero almacenamiento PCI</text>
   </g>
 
-  <!-- Pasarela Externa -->
-  <g transform="translate(670, 462)">
-    <rect width="290" height="70" rx="10" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.4" stroke-dasharray="4 3"/>
-    <circle cx="34" cy="35" r="16" fill="#E2E8F0"/>
-    <rect x="25" y="28" width="18" height="14" rx="2" fill="none" stroke="#475569" stroke-width="1.6"/>
-    <line x1="25" y1="32" x2="43" y2="32" stroke="#475569" stroke-width="1.4"/>
-    <text x="165" y="30" class="c-title">Pasarela de Pagos Externa</text>
-    <text x="165" y="48" class="c-sub">Verificaci&#243;n de tarjeta / API Bancaria</text>
-  </g>
+  <!-- PIPELINE SIGNALR EN TIEMPO REAL -->
+  <g transform="translate(28, 638)">
+    <rect width="944" height="104" rx="10" fill="var(--card)" stroke="var(--bd-strong)" stroke-width="1.3"/>
+    <circle class="pulse-beacon" cx="26" cy="22" r="4.5" fill="var(--c1-st)"/>
+    <circle cx="26" cy="22" r="4" fill="var(--c1-st)"/>
+    <text x="40" y="26" class="t-layer" fill="var(--ink)">CICLO DE VIDA DE COMANDA EN TIEMPO REAL (SIGNALR EVENT STREAM)</text>
 
-  <!-- ========================================== -->
-  <!-- CAPA 5: FLUJO EN TIEMPO REAL SIGNALR (y: 556 a 696) -->
-  <!-- ========================================== -->
-  <g transform="translate(40, 556)">
-    <!-- Contenedor con borde animado azul cerúleo -->
-    <rect width="920" height="136" rx="12" fill="#F0F9FF" />
-    <rect width="920" height="136" rx="12" fill="none" class="animated-border-pipe" />
-
-    <!-- Título con baliza parpadeante -->
-    <circle cx="28" cy="24" r="5" fill="#0284C7" class="pulse-beacon"/>
-    <text x="42" y="28" class="t-box" fill="#0369A1">Pipeline de Comandas en Tiempo Real (Ciclo de Vida SignalR Event Stream)</text>
-
-    <!-- Etapa 1: Cliente Pide -->
-    <g transform="translate(20, 44)">
-      <rect width="185" height="70" rx="8" fill="#FFFFFF" stroke="#BAE6FD" stroke-width="1.4"/>
-      <text x="92" y="28" class="c-title">1. Cliente Pide</text>
-      <text x="92" y="46" class="c-sub">Ordena desde su mesa QR</text>
-      <rect x="52" y="52" width="80" height="14" rx="7" fill="#E0F2FE"/>
-      <text x="92" y="63" class="p-tag" fill="#0284C7">PENDIENTE</text>
+    <g transform="translate(18, 37)">
+      <rect width="206" height="54" rx="8" fill="var(--alt)" stroke="var(--c4-st)" stroke-width="1.3"/>
+      <text x="103" y="18" class="c-title">1. Cliente / Mesero Pide</text>
+      <text x="103" y="31.5" class="c-sub">Enrutamiento por &#225;rea</text>
+      <rect x="64" y="37" width="78" height="13" rx="6.5" fill="var(--c4-bg)" stroke="var(--c4-st)" stroke-width="0.9"/>
+      <text x="103" y="46.2" class="lbl-pill" fill="var(--c4-tx)" style="font-size: 8.2px;">PENDIENTE</text>
     </g>
+    <path d="M 228 64 L 252 64" class="arrow-orange" marker-end="url(#m-orange)"/>
 
-    <!-- Flecha 1 -> 2 -->
-    <path d="M 210 79 L 246 79" class="flow-arrow-blue" marker-end="url(#arr-blue)"/>
-
-    <!-- Etapa 2: Cocina y Bar -->
-    <g transform="translate(252, 44)">
-      <rect width="185" height="70" rx="8" fill="#FFFFFF" stroke="#DDD6FE" stroke-width="1.4"/>
-      <text x="92" y="28" class="c-title">2. Cocina y Bar</text>
-      <text x="92" y="46" class="c-sub">Despacho en pantalla KDS</text>
-      <rect x="42" y="52" width="100" height="14" rx="7" fill="#EDE9FE"/>
-      <text x="92" y="63" class="p-tag" fill="#7C3AED">EN PREPARACI&#211;N</text>
+    <g transform="translate(256, 37)">
+      <rect width="206" height="54" rx="8" fill="var(--alt)" stroke="var(--c1-st)" stroke-width="1.3"/>
+      <text x="103" y="18" class="c-title">2. Cocina Paila &amp; Barra</text>
+      <text x="103" y="31.5" class="c-sub">Colas KDS / KDD en vivo</text>
+      <rect x="52" y="37" width="102" height="13" rx="6.5" fill="var(--c1-bg)" stroke="var(--c1-st)" stroke-width="0.9"/>
+      <text x="103" y="46.2" class="lbl-pill" fill="var(--c1-tx)" style="font-size: 8.2px;">EN PREPARACI&#211;N</text>
     </g>
+    <path d="M 466 64 L 490 64" class="arrow-coral" marker-end="url(#m-coral)"/>
 
-    <!-- Flecha 2 -> 3 -->
-    <path d="M 442 79 L 478 79" class="flow-arrow-blue" marker-end="url(#arr-blue)"/>
-
-    <!-- Etapa 3: Mesero Entrega -->
-    <g transform="translate(484, 44)">
-      <rect width="185" height="70" rx="8" fill="#FFFFFF" stroke="#FDE68A" stroke-width="1.4"/>
-      <text x="92" y="28" class="c-title">3. Mesero de Sala</text>
-      <text x="92" y="46" class="c-sub">Notificaci&#243;n y entrega</text>
-      <rect x="57" y="52" width="70" height="14" rx="7" fill="#FEF3C7"/>
-      <text x="92" y="63" class="p-tag" fill="#B45309">LISTO</text>
+    <g transform="translate(494, 37)">
+      <rect width="206" height="54" rx="8" fill="var(--alt)" stroke="var(--c2-st)" stroke-width="1.3"/>
+      <text x="103" y="18" class="c-title">3. Mesero de Sala</text>
+      <text x="103" y="31.5" class="c-sub">Notificaci&#243;n y despacho</text>
+      <rect x="70" y="37" width="66" height="13" rx="6.5" fill="var(--c2-bg)" stroke="var(--c2-st)" stroke-width="0.9"/>
+      <text x="103" y="46.2" class="lbl-pill" fill="var(--c2-tx)" style="font-size: 8.2px;">LISTO</text>
     </g>
+    <path d="M 704 64 L 728 64" class="arrow-violet" marker-end="url(#m-violet)"/>
 
-    <!-- Flecha 3 -> 4 -->
-    <path d="M 674 79 L 710 79" class="flow-arrow-blue" marker-end="url(#arr-blue)"/>
-
-    <!-- Etapa 4: Cobro y Cierre -->
-    <g transform="translate(716, 44)">
-      <rect width="185" height="70" rx="8" fill="#FFFFFF" stroke="#A7F3D0" stroke-width="1.4"/>
-      <text x="92" y="28" class="c-title">4. Cobro y Calificaci&#243;n</text>
-      <text x="92" y="46" class="c-sub">Pago digital y rese&#241;a</text>
-      <rect x="52" y="52" width="80" height="14" rx="7" fill="#DCFCE7"/>
-      <text x="92" y="63" class="p-tag" fill="#15803D">ENTREGADO</text>
+    <g transform="translate(732, 37)">
+      <rect width="194" height="54" rx="8" fill="var(--alt)" stroke="var(--c3-st)" stroke-width="1.3"/>
+      <text x="97" y="18" class="c-title">4. Cobro y Cierre</text>
+      <text x="97" y="31.5" class="c-sub">Factura y rese&#241;a de mesa</text>
+      <rect x="56" y="37" width="82" height="13" rx="6.5" fill="var(--c3-bg)" stroke="var(--c3-st)" stroke-width="0.9"/>
+      <text x="97" y="46.2" class="lbl-pill" fill="var(--c3-tx)" style="font-size: 8.2px;">ENTREGADO</text>
     </g>
   </g>
 </svg>

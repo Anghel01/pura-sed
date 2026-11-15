@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>PuraSed &bull; Sereno Moreno — Liquidación y Pago en Mesa (UI-06)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper-ivory: #FAF7EC;
+      --paper-inset: #F2EDE0;
+      --ink-dark: #1E1712;
+      --ink-basalt: #121614;
+      --ink-muted: #5C5248;
+      --border-paper: #D5CDC0;
+      --amber-gold: #E59F38;
+      --inti-gold: #F8AD00;
+      --stamp-red: #BA3C2A;
+      --stamp-green: #2D6A4F;
+      --chalk-cream: #F5EADB;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'Space Grotesk', -apple-system, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100dvh;
+      overflow: hidden;
+      background: radial-gradient(circle at 65% 50%, #637761 0%, #546652 55%, #3D4C3B 100%); /* taste-skill-ignore */
+      color: var(--chalk-cream);
+      font-family: var(--font-body);
+      user-select: none;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .chalkboard-grid-overlay {
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px); /* taste-skill-ignore */
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .bg-woodcut-left {
+      position: fixed;
+      left: -15px;
+      bottom: -15px;
+      height: 80dvh;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.22;
+      mix-blend-mode: multiply;
+      filter: contrast(1.8) brightness(0.2);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .bg-woodcut-right {
+      position: fixed;
+      right: 16%;
+      bottom: -20px;
+      height: 56dvh;
+      width: auto;
+      object-fit: contain;
+      opacity: 0.16;
+      mix-blend-mode: multiply;
+      filter: contrast(1.8) brightness(0.2);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    /* CABECERA COMPACTA OFICIAL DE SERENO MORENO */
+    .expanded-header {
+      width: 100%;
+      height: 54px;
+      padding: 8px 2.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 40;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .btn-collapse-back {
+      background: #121614;
+      color: #F5EADB;
+      border: 1.5px solid rgba(245, 234, 219, 0.28); /* taste-skill-ignore */
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      height: 36px;
+      padding: 0 18px;
+      border-radius: 3px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4); /* taste-skill-ignore */
+      transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+    .btn-collapse-back:hover {
+      background: #E59F38;
+      color: #121614;
+      border-color: #E59F38;
+      transform: translateY(-1px);
+    }
+
+    .expanded-nav-tabs {
+      display: flex;
+      gap: 4px;
+      background: #121614;
+      border: 1.5px solid rgba(245, 234, 219, 0.22); /* taste-skill-ignore */
+      padding: 3px;
+      border-radius: 3px;
+      box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.35); /* taste-skill-ignore */
+    }
+
+    .expanded-tab-btn {
+      background: transparent;
+      border: none;
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      letter-spacing: 1.2px;
+      color: #A39D95;
+      height: 28px;
+      padding: 0 14px;
+      border-radius: 2px;
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      transition: background-color 0.18s ease, color 0.18s ease;
+    }
+    .expanded-tab-btn:hover {
+      color: #F5EADB;
+    }
+    .expanded-tab-btn.active {
+      background: #2D6A4F;
+      color: #FFF8ED;
+      font-weight: 700;
+    }
+
+    .floating-table-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #121614;
+      border: 1.5px solid rgba(255, 255, 255, 0.22); /* taste-skill-ignore */
+      border-radius: 3px;
+      padding: 4px 8px 4px 12px;
+      box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.4); /* taste-skill-ignore */
+    }
+
+    .badge-waiter-trigger {
+      background: rgba(229, 159, 56, 0.14);
+      border: 1px solid rgba(229, 159, 56, 0.5); /* taste-skill-ignore */
+      border-radius: 2px;
+      color: #E59F38;
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      letter-spacing: 1.2px;
+      padding: 3px 10px;
+      cursor: pointer;
+      transition: background-color 0.18s ease, color 0.18s ease;
+    }
+    .badge-waiter-trigger:hover {
+      background: #E59F38;
+      color: #121614;
+    }
+    .badge-waiter-trigger.is-called {
+      background: #2D6A4F;
+      color: #FAF7EC;
+      border-color: #52B788;
+    }
+
+    .badge-craft-sep {
+      width: 1px;
+      height: 18px;
+      background: rgba(245, 234, 219, 0.2);
+    }
+
+    .badge-table-num {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 1.5px;
+      color: #F5EADB;
+    }
+
+    .badge-order-stamp {
+      background: #E59F38;
+      color: #121614;
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+
+    /* ESCENARIO CENTRAL DE 2 COLUMNAS */
+    .stage-workspace {
+      flex: 1;
+      min-height: 0;
+      width: 100%;
+      max-width: 1460px;
+      margin: 0 auto;
+      padding: 8px 2.2rem 18px 2.2rem;
+      display: grid;
+      grid-template-columns: 1fr 415px;
+      gap: 28px;
+      z-index: 10;
+      position: relative;
+      align-items: stretch;
+    }
+
+    /* PLIEGO IZQUIERDO DE LIQUIDACIÓN EN PAPEL MARFIL DENTADO */
+    .paper-sheet-card {
+      background: var(--paper-ivory);
+      color: var(--ink-dark);
+      border-left: 1px solid #E2DCCF; /* taste-skill-ignore */
+      border-right: 1px solid #E2DCCF; /* taste-skill-ignore */
+      padding: 20px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.48); /* taste-skill-ignore */
+      --tooth-w: 10px;
+      --tooth-h: 5px;
+      -webkit-mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+      mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--tooth-w) var(--tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--tooth-w) var(--tooth-h) repeat-x;
+    }
+
+    .sheet-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px dashed var(--border-paper);
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+    }
+
+    .sheet-brand-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .sheet-logo-ink {
+      height: 34px;
+      width: auto;
+      background: #121614; padding: 5px 10px; border-radius: 2px;
+    }
+
+    .sheet-title-block h1 {
+      font-family: var(--font-display);
+      font-size: 1.9rem;
+      letter-spacing: 1.2px;
+      color: var(--ink-dark);
+      line-height: 0.95;
+    }
+
+    .sheet-sub-meta {
+      font-size: 0.76rem;
+      font-weight: 700;
+      color: var(--ink-muted);
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .stamp-cierre {
+      border: 1.5px solid var(--stamp-green);
+      color: var(--stamp-green);
+      background: rgba(45, 106, 79, 0.08);
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      padding: 3px 10px;
+      letter-spacing: 1px;
+      font-weight: 700;
+      border-radius: 2px;
+      transform: rotate(-2deg);
+    }
+
+    /* SELECTOR DE 3 MODALIDADES TIPO TALÓN SERIGRÁFICO (CERO EMOJIS) */
+    .payment-modes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .pay-mode-tab {
+      background: var(--paper-inset);
+      border: 1.5px solid #C8C0B0;
+      border-radius: 2px;
+      padding: 10px 14px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+    }
+    .pay-mode-tab:hover {
+      border-color: var(--ink-dark);
+    }
+    .pay-mode-tab.is-active {
+      background: var(--ink-basalt);
+      color: var(--paper-ivory);
+      border-color: var(--ink-basalt);
+      box-shadow: 3px 3px 0px var(--amber-gold); /* taste-skill-ignore */
+    }
+
+    .mode-code-tag {
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      letter-spacing: 1.2px;
+      color: var(--stamp-red);
+      font-weight: 700;
+    }
+    .pay-mode-tab.is-active .mode-code-tag {
+      color: var(--inti-gold);
+    }
+
+    .mode-main-name {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+      color: var(--ink-dark);
+      line-height: 1;
+    }
+    .pay-mode-tab.is-active .mode-main-name {
+      color: #FAF7EC;
+    }
+
+    .mode-sub-caption {
+      font-size: 0.72rem;
+      color: var(--ink-muted);
+      font-weight: 600;
+    }
+    .pay-mode-tab.is-active .mode-sub-caption {
+      color: #D5CDC0;
+    }
+
+    /* PANEL DE FORMULARIO ESTILO LIBRO CONTABLE SOBRE PAPEL */
+    .ledger-form-box {
+      background: var(--paper-inset);
+      border: 1.5px solid var(--ink-dark);
+      padding: 14px 16px;
+      border-radius: 2px;
+      margin-bottom: 14px;
+    }
+
+    .form-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+    .field-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .field-label {
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      letter-spacing: 1px;
+      color: var(--ink-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .field-stamp-mini {
+      font-size: 0.72rem;
+      padding: 0 6px;
+      background: var(--ink-dark);
+      color: var(--paper-ivory);
+      border-radius: 2px;
+    }
+
+    .ledger-input {
+      width: 100%;
+      background: #FFFFFF;
+      border: 1.5px solid #B8AFA0;
+      border-radius: 2px;
+      padding: 8px 12px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--ink-dark);
+      outline: none;
+      font-variant-numeric: tabular-nums;
+    }
+    .ledger-input:focus {
+      border-color: var(--ink-dark);
+      background: #FFFDF7;
+    }
+
+    .rnf-security-strip {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: rgba(45, 106, 79, 0.1);
+      border-left: 3px solid var(--stamp-green);
+      font-size: 0.76rem;
+      color: #1E4633;
+      line-height: 1.35;
+    }
+
+    /* RECONOCIMIENTO / PROPINA VOLUNTARIA */
+    .tip-section-box {
+      border-top: 2px dashed var(--border-paper);
+      padding-top: 12px;
+    }
+
+    .tip-header-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .tip-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      letter-spacing: 1px;
+      color: var(--ink-dark);
+    }
+
+    .tip-subtitle {
+      font-size: 0.75rem;
+      color: var(--ink-muted);
+      font-weight: 600;
+    }
+
+    .tip-pills-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .btn-tip-stamp {
+      background: var(--paper-inset);
+      border: 1.5px solid #B8AFA0;
+      border-radius: 2px;
+      padding: 7px 10px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      letter-spacing: 0.8px;
+      color: var(--ink-dark);
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .btn-tip-stamp:hover {
+      border-color: var(--ink-dark);
+    }
+    .btn-tip-stamp.is-active {
+      background: var(--ink-basalt);
+      color: var(--inti-gold);
+      border-color: var(--ink-basalt);
+      font-weight: 700;
+      box-shadow: 2px 2px 0px var(--amber-gold); /* taste-skill-ignore */
+    }
+
+    /* COLUMNA DERECHA: TICKET DE LIQUIDACIÓN EN PAPEL MARFIL DENTADO */
+    .paper-ticket-card {
+      width: 100%;
+      height: 100%;
+      background: var(--paper-ivory);
+      color: var(--ink-dark);
+      border-left: 1px solid #E2DCCF; /* taste-skill-ignore */
+      border-right: 1px solid #E2DCCF; /* taste-skill-ignore */
+      padding: 18px 20px;
+      transform: rotate(1deg);
+      transform-origin: top right;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.55); /* taste-skill-ignore */
+      --ticket-tooth-w: 10px;
+      --ticket-tooth-h: 5px;
+      -webkit-mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--ticket-tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x;
+      mask:
+        radial-gradient(circle 3.5px at 50% 0, #0000 98%, #000) 50% 0 / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x,
+        linear-gradient(#000 0 0) 50% 50% / 100% calc(100% - var(--ticket-tooth-h) * 2) no-repeat,
+        radial-gradient(circle 3.5px at 50% 100%, #0000 98%, #000) 50% 100% / var(--ticket-tooth-w) var(--ticket-tooth-h) repeat-x;
+    }
+
+    .ticket-header-line {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      border-bottom: 2px dashed var(--border-paper);
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+    }
+
+    .ticket-title {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      letter-spacing: 1.2px;
+      color: var(--ink-dark);
+      line-height: 1;
+    }
+
+    .ticket-sub {
+      font-size: 0.74rem;
+      color: var(--ink-muted);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .ticket-stamp {
+      border: 1.5px solid var(--stamp-red);
+      color: var(--stamp-red);
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      padding: 2px 8px;
+      letter-spacing: 1px;
+      font-weight: 700;
+      border-radius: 2px;
+      transform: rotate(-2deg);
+    }
+
+    .ticket-lines-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .ticket-item-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.84rem;
+      padding-bottom: 5px;
+      border-bottom: 1px dashed #E2DACB; /* taste-skill-ignore */
+    }
+
+    .ticket-item-line.cover-line {
+      background: rgba(186, 60, 42, 0.08);
+      padding: 5px 7px;
+      border-left: 3px solid var(--stamp-red);
+      border-bottom: none;
+      color: var(--stamp-red);
+      font-weight: 700;
+    }
+
+    .ticket-math-block {
+      border-top: 2px dashed var(--border-paper);
+      padding-top: 10px;
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      font-size: 0.8rem;
+      color: var(--ink-muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .math-row {
+      display: flex;
+      justify-content: space-between;
+    }
+    .math-row.discount {
+      color: var(--stamp-green);
+      font-weight: 700;
+    }
+    .math-row.cover-row {
+      color: var(--stamp-red);
+      font-weight: 700;
+    }
+    .math-row.tip-row {
+      color: var(--ink-dark);
+      font-weight: 700;
+    }
+
+    .ticket-grand-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      border-top: 2px solid var(--ink-dark);
+      padding-top: 8px;
+      margin-top: 6px;
+    }
+
+    .grand-lbl {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      letter-spacing: 1px;
+      color: var(--ink-dark);
+    }
+
+    .grand-val {
+      font-family: var(--font-display);
+      font-size: 2.25rem;
+      letter-spacing: 1px;
+      color: var(--ink-dark);
+      line-height: 1;
+    }
+
+    .ticket-cta-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .btn-ticket-pay {
+      background: var(--ink-basalt);
+      color: var(--paper-ivory);
+      border: 2px solid var(--ink-basalt);
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      letter-spacing: 1.8px;
+      padding: 12px 16px;
+      border-radius: 3px;
+      text-decoration: none;
+      text-align: center;
+      font-weight: 700;
+      box-shadow: 3px 3px 0px var(--amber-gold); /* taste-skill-ignore */
+      transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+    }
+    .btn-ticket-pay:hover {
+      background: var(--amber-gold);
+      color: var(--ink-basalt);
+      border-color: var(--ink-basalt);
+      transform: translateY(-1px);
+    }
+
+    .artisan-quick-toast {
+      position: fixed;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: var(--paper-ivory);
+      border: 1.5px solid #D5CEBE;
+      border-left: 4px solid var(--amber-gold);
+      color: var(--ink-dark);
+      padding: 8px 16px;
+      border-radius: 3px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45); /* taste-skill-ignore */
+      z-index: 2500;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    .artisan-quick-toast.is-visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .artisan-toast-stamp {
+      border: 1px solid var(--stamp-red); /* taste-skill-ignore */
+      color: var(--stamp-red);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      padding: 1px 7px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+    }
+    .artisan-toast-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: 0.8px;
+      color: var(--ink-dark);
+    }
+    .artisan-toast-desc {
+      font-size: 0.82rem;
+      color: var(--ink-muted);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="chalkboard-grid-overlay" aria-hidden="true"></div>
+  <img src="catalogo_imagenes/drawings/recurso-18.png" class="bg-woodcut-left" alt="" aria-hidden="true" />
+  <img src="catalogo_imagenes/drawings/draw1.webp" class="bg-woodcut-right" alt="" aria-hidden="true" />
+
+  <!-- CABECERA OFICIAL SERENO MORENO -->
+  <header class="expanded-header">
+    <a href="UI05_Timeline_Pedido.html" class="btn-collapse-back">
+      <span>&larr; VOLVER AL MONITOR</span>
+    </a>
+
+    <nav class="expanded-nav-tabs" aria-label="Etapas del pedido">
+      <a href="01_menu_orbital_pos.html?view=expanded&col=1&item=0" class="expanded-tab-btn">01 CARTA</a>
+      <a href="UI05_Timeline_Pedido.html" class="expanded-tab-btn">02 MONITOR KDS</a>
+      <span class="expanded-tab-btn active">03 LIQUIDACIÓN</span>
+      <a href="UI07_Factura_Digital.html" class="expanded-tab-btn">04 FACTURA SRI</a>
+      <a href="UI08_Encuesta_Satisfaccion.html" class="expanded-tab-btn">05 CIERRE</a>
+    </nav>
+
+    <div class="floating-table-badge">
+      <button type="button" class="badge-waiter-trigger" id="waiterCallBtn" onclick="callWaiter()">
+        LLAMAR MESERO
+      </button>
+      <div class="badge-craft-sep" aria-hidden="true"></div>
+      <span class="badge-table-num">MESA 04</span>
+      <div class="badge-craft-sep" aria-hidden="true"></div>
+      <span class="badge-order-stamp">ORDEN #284</span>
+    </div>
+  </header>
+
+  <main class="stage-workspace">
+
+    <!-- COLUMNA IZQUIERDA: PLIEGO DE LIQUIDACIÓN EN PAPEL MARFIL -->
+    <section class="paper-sheet-card" aria-label="Selección de modalidad de pago">
+      <div>
+        <div class="sheet-header-row">
+          <div class="sheet-brand-group">
+            <img src="catalogo_imagenes/drawings/logosm.svg" class="sheet-logo-ink" alt="Sereno Moreno" />
+            <div class="sheet-title-block">
+              <h1>LIQUIDACIÓN DE CUENTA UNIFICADA</h1>
+              <div class="sheet-sub-meta">TODOS LOS CARGOS DE COCINA, BARRA Y AGENDA CULTURAL CONSOLIDADOS AL CIERRE</div>
+            </div>
+          </div>
+          <span class="stamp-cierre">CUENTA CONSOLIDADA</span>
+        </div>
+
+        <!-- 3 MODALIDADES SERIGRÁFICAS (SIN EMOJIS) -->
+        <div class="payment-modes-grid">
+          <button type="button" class="pay-mode-tab is-active" id="tabCard" onclick="selectPayMode('card')">
+            <span class="mode-code-tag">MODALIDAD 01</span>
+            <span class="mode-main-name">TARJETA BANCARIA</span>
+            <span class="mode-sub-caption">Crédito o Débito (Pasarela TLS)</span>
+          </button>
+
+          <button type="button" class="pay-mode-tab" id="tabTransfer" onclick="selectPayMode('transfer')">
+            <span class="mode-code-tag">MODALIDAD 02</span>
+            <span class="mode-main-name">TRANSFERENCIA / QR</span>
+            <span class="mode-sub-caption">Banco Pichincha / DeUna</span>
+          </button>
+
+          <button type="button" class="pay-mode-tab" id="tabCash" onclick="selectPayMode('cash')">
+            <span class="mode-code-tag">MODALIDAD 03</span>
+            <span class="mode-main-name">EFECTIVO EN MESA</span>
+            <span class="mode-sub-caption">Cobro directo con Mateo V.</span>
+          </button>
+        </div>
+
+        <!-- PANEL 1: TARJETA -->
+        <div class="ledger-form-box" id="panelCard">
+          <div class="field-group">
+            <label class="field-label" for="cardHolder">
+              <span>TITULAR DE LA TARJETA</span>
+              <span class="field-stamp-mini">OBLIGATORIO</span>
+            </label>
+            <input type="text" id="cardHolder" class="ledger-input" value="ANGELO CONTERÓN SANTILLÁN" />
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="cardNumber">
+              <span>NÚMERO DE TARJETA (TOKENIZADO RNF-02)</span>
+              <span class="field-stamp-mini">VISA / MASTERCARD</span>
+            </label>
+            <input type="text" id="cardNumber" class="ledger-input" value="4532 •••• •••• 8819" />
+          </div>
+
+          <div class="form-grid-2col">
+            <div class="field-group" style="margin-bottom:0;">
+              <label class="field-label" for="cardExp"><span>FECHA DE EXPIRACIÓN</span></label>
+              <input type="text" id="cardExp" class="ledger-input" value="08 / 28" />
+            </div>
+            <div class="field-group" style="margin-bottom:0;">
+              <label class="field-label" for="cardCvv"><span>CÓDIGO CVV / CVC</span></label>
+              <input type="password" id="cardCvv" class="ledger-input" value="842" />
+            </div>
+          </div>
+
+          <div class="rnf-security-strip">
+            <strong>CUMPLIMIENTO RNF-02 (TLS 1.3):</strong> El cobro se procesa mediante pasarela bancaria externa certificada. Sereno Moreno no almacena números completos ni códigos CVV en su base de datos.
+          </div>
+        </div>
+
+        <!-- PANEL 2: TRANSFERENCIA -->
+        <div class="ledger-form-box" id="panelTransfer" style="display: none;">
+          <div class="form-grid-2col" style="margin-bottom: 10px;">
+            <div>
+              <div style="font-size: 0.74rem; color: var(--ink-muted); font-weight: 700;">ENTIDAD BANCARIA OFICIAL:</div>
+              <div style="font-family: var(--font-display); font-size: 1.25rem; color: var(--ink-dark);">BANCO PICHINCHA &bull; CTA. CORRIENTE</div>
+              <div style="font-size: 0.88rem; font-weight: 700; color: var(--stamp-red);">NRO. 2100284910</div>
+            </div>
+            <div>
+              <div style="font-size: 0.74rem; color: var(--ink-muted); font-weight: 700;">TITULAR Y R.U.C.:</div>
+              <div style="font-family: var(--font-display); font-size: 1.25rem; color: var(--ink-dark);">SERENO MORENO S.A.S.</div>
+              <div style="font-size: 0.84rem; font-weight: 700; color: var(--ink-dark);">R.U.C.: 1793123456001</div>
+            </div>
+          </div>
+          <div class="field-group" style="margin-bottom: 0;">
+            <label class="field-label" for="transferRef">
+              <span>NÚMERO DE COMPROBANTE BANCARIO / DEUNA</span>
+              <span class="field-stamp-mini">VERIFICACIÓN EN CAJA</span>
+            </label>
+            <input type="text" id="transferRef" class="ledger-input" value="COMP-BP-9482014" />
+          </div>
+        </div>
+
+        <!-- PANEL 3: EFECTIVO -->
+        <div class="ledger-form-box" id="panelCash" style="display: none;">
+          <div class="field-group">
+            <label class="field-label" for="cashAmount">
+              <span>MONTO EN EFECTIVO QUE ENTREGARÁS A MATEO V.</span>
+              <span class="field-stamp-mini">CÁLCULO DE VUELTO</span>
+            </label>
+            <input type="text" id="cashAmount" class="ledger-input" value="$40.00 (Dos billetes de $20.00)" />
+          </div>
+          <div class="rnf-security-strip" style="background: rgba(186, 60, 42, 0.08); border-left-color: var(--stamp-red); color: var(--ink-dark);">
+            <strong>CAMBIO EXACTO EN CAMINO:</strong> Al confirmar, tu mesero <strong>Mateo V.</strong> se acercará a la Mesa 04 con tu vuelto exacto de <strong>$6.54</strong> y el comprobante impreso.
+          </div>
+        </div>
+      </div>
+
+      <!-- PROPINA VOLUNTARIA -->
+      <div class="tip-section-box">
+        <div class="tip-header-line">
+          <span class="tip-title">RECONOCIMIENTO VOLUNTARIO PARA EL EQUIPO</span>
+          <span class="tip-subtitle">Distribuido entre cocina de paila, barra de fermentos y servicio de salón</span>
+        </div>
+
+        <div class="tip-pills-row">
+          <button type="button" class="btn-tip-stamp" id="tip0" onclick="setTip(0, 'tip0')">SIN PROPINA ($0.00)</button>
+          <button type="button" class="btn-tip-stamp is-active" id="tip10" onclick="setTip(2.49, 'tip10')">10% SUGERIDO (+$2.49)</button>
+          <button type="button" class="btn-tip-stamp" id="tip15" onclick="setTip(3.74, 'tip15')">15% (+$3.74)</button>
+          <button type="button" class="btn-tip-stamp" id="tip20" onclick="setTip(4.99, 'tip20')">20% (+$4.99)</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLUMNA DERECHA: TICKET DE LIQUIDACIÓN EN PAPEL MARFIL DENTADO -->
+    <aside class="paper-ticket-card" aria-label="Resumen de liquidación Orden 284">
+      <div>
+        <div class="ticket-header-line">
+          <div>
+            <div class="ticket-title">LIQUIDACIÓN FINAL</div>
+            <div class="ticket-sub">ORDEN #284 &bull; MESA UNIFICADA</div>
+          </div>
+          <span class="ticket-stamp">MESA 04</span>
+        </div>
+
+        <div class="ticket-lines-wrap">
+          <div class="ticket-item-line">
+            <span>1x Locrito de Papa Tradicional</span>
+            <strong>$5.50</strong>
+          </div>
+          <div class="ticket-item-line">
+            <span>1x Alitas Caseras a la Leña</span>
+            <strong>$8.50</strong>
+          </div>
+          <div class="ticket-item-line">
+            <span>2x Mucha Chicha Maíz (Roja)</span>
+            <strong>$8.00</strong>
+          </div>
+          <div class="ticket-item-line cover-line">
+            <span>2x Cover Cultural: Máquina Camaleón</span>
+            <strong>$6.00</strong>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="ticket-math-block">
+          <div class="math-row">
+            <span>Consumo Cocina y Barra</span>
+            <span>$22.00</span>
+          </div>
+          <div class="math-row discount">
+            <span>Descuento Happy Hour (10%)</span>
+            <span>-$2.20</span>
+          </div>
+          <div class="math-row">
+            <span>Subtotal Neto Consumo</span>
+            <span>$19.80</span>
+          </div>
+          <div class="math-row">
+            <span>Servicio de Mesa (10%)</span>
+            <span>$2.20</span>
+          </div>
+          <div class="math-row">
+            <span>I.V.A. Ecuador (15%)</span>
+            <span>$2.97</span>
+          </div>
+          <div class="math-row cover-row">
+            <span>Cover Espectáculo Cultural (0% IVA)</span>
+            <span>+$6.00</span>
+          </div>
+          <div class="math-row tip-row">
+            <span>Propina Voluntaria Equipo</span>
+            <span id="tipAmountCell">+$2.49</span>
+          </div>
+        </div>
+
+        <div class="ticket-grand-row">
+          <span class="grand-lbl">TOTAL FINAL</span>
+          <span class="grand-val" id="finalTotalCell">$33.46</span>
+        </div>
+
+        <div class="ticket-cta-stack">
+          <a href="UI07_Factura_Digital.html" class="btn-ticket-pay" id="btnConfirmPay">
+            CONFIRMAR PAGO ($33.46) &rarr;
+          </a>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+
+  <div class="artisan-quick-toast" id="waiterToast">
+    <span class="artisan-toast-stamp">ASISTENCIA MESA 04</span>
+    <span class="artisan-toast-name">MATEO V. NOTIFICADO</span>
+    <span class="artisan-toast-desc">en camino a tu mesa (~1 min)</span>
+  </div>
+
+  <script>
+    function selectPayMode(mode) {
+      document.getElementById('tabCard').classList.toggle('is-active', mode === 'card');
+      document.getElementById('tabTransfer').classList.toggle('is-active', mode === 'transfer');
+      document.getElementById('tabCash').classList.toggle('is-active', mode === 'cash');
+
+      document.getElementById('panelCard').style.display = mode === 'card' ? 'block' : 'none';
+      document.getElementById('panelTransfer').style.display = mode === 'transfer' ? 'block' : 'none';
+      document.getElementById('panelCash').style.display = mode === 'cash' ? 'block' : 'none';
+    }
+
+    const baseWithoutTip = 30.97;
+    function setTip(tipVal, btnId) {
+      ['tip0', 'tip10', 'tip15', 'tip20'].forEach(id => {
+        document.getElementById(id).classList.toggle('is-active', id === btnId);
+      });
+      const total = (baseWithoutTip + tipVal).toFixed(2);
+      document.getElementById('tipAmountCell').textContent = '+$' + tipVal.toFixed(2);
+      document.getElementById('finalTotalCell').textContent = '$' + total;
+      document.getElementById('btnConfirmPay').innerHTML = 'CONFIRMAR PAGO ($' + total + ') &rarr;';
+    }
+
+    function callWaiter() {
+      const btn = document.getElementById('waiterCallBtn');
+      const toast = document.getElementById('waiterToast');
+      btn.classList.add('is-called');
+      btn.textContent = 'MESERO EN CAMINO';
+      toast.style.display = 'inline-flex';
+      requestAnimationFrame(() => toast.classList.add('is-visible'));
+
+      setTimeout(() => {
+        toast.classList.remove('is-visible');
+        setTimeout(() => { toast.style.display = 'none'; }, 260);
+      }, 4000);
+
+      setTimeout(() => {
+        btn.classList.remove('is-called');
+        btn.textContent = 'LLAMAR MESERO';
+      }, 5000);
+    }
+  </script>
+</body>
+</html>

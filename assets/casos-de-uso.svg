@@ -1,261 +1,346 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 550" width="100%" height="100%" role="img" aria-labelledby="ucTitle ucDesc">
-  <title id="ucTitle">Diagrama de Casos de Uso Animado &#8212; Sistema PuraSed</title>
-  <desc id="ucDesc">Diagrama UML formal con fondo blanco puro, bordes animados y conexiones fluidas entre actores y casos de uso.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 590" width="100%" height="100%" role="img" aria-labelledby="ucTitle ucDesc">
+  <title id="ucTitle">Diagrama de Casos de Uso &#8212; PuraSed</title>
+  <desc id="ucDesc">Diagrama UML 2.5 interactivo de PuraSed con 5 actores operativos, 12 casos de uso y relaciones include/extend sobre lienzo claro de alto contraste con 5 actores en colores vivos.</desc>
   <defs>
     <style>
-      .t-bound { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 1.5px; fill: #475569; }
-      .a-name  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; fill: #0F172A; text-anchor: middle; }
-      .a-sub   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 10px; font-weight: 500; fill: #64748B; text-anchor: middle; }
-      .uc-txt  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: #0F172A; text-anchor: middle; }
+      :root {
+        --bg: #FAFAFC;
+        --canvas: #FFFFFF;
+        --alt: #F4F4F6;
+        --bd: #D8D8DF;
+        --bd-strong: #9E9EA9;
+        --ink: #18181B;
+        --muted: #52525B;
 
-      /* Animaci&#243;n de bordes de la cuadr&#237;cula del sistema */
-      @keyframes borderMarch {
-        from { stroke-dashoffset: 0; }
-        to   { stroke-dashoffset: -32; }
+        /* 5 Actores con colores vivos sin azul */
+        --gold-tx: #9A3412;     --gold-stroke: #EA580C;     --gold-fill: #FFF7ED;
+        --chicha-tx: #854D03;    --chicha-stroke: #D97706;    --chicha-fill: #FFFBEB;
+        --terra-tx: #9F1239;     --terra-stroke: #E11D48;     --terra-fill: #FFF1F2;
+        --sage-tx: #065F46;    --sage-stroke: #059669;    --sage-fill: #ECFDF5;
+        --pizarra-tx: #5B21B6;  --pizarra-stroke: #7C3AED;  --pizarra-fill: #F5F3FF;
+        --sys-bg: #FFFFFF;
       }
 
-      .animated-boundary {
-        stroke: #0284C7;
-        stroke-width: 1.8;
-        stroke-dasharray: 8 6;
-        animation: borderMarch 4s linear infinite;
+      @media (prefers-color-scheme: dark) {
+        :root { --bd: #46464D; --bd-strong: #6B6B76; }
       }
 
-      /* Animaci&#243;n de pulsos en las l&#237;neas de asociaci&#243;n */
-      @keyframes flowPulse {
+      .frame    { fill: var(--bg); stroke: var(--bd); stroke-width: 1.3; }
+      .sys-box  { fill: var(--sys-bg); stroke: var(--bd-strong); stroke-width: 1.4; stroke-dasharray: 6 4; }
+      .uc-card  { fill: var(--canvas); stroke-width: 1.4; }
+      .title    { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 16.5px; font-weight: 800; fill: var(--ink); letter-spacing: 0.2px; }
+      .sub      { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11.5px; font-weight: 500; fill: var(--muted); }
+      .sys-lbl  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 10px; font-weight: 700; fill: var(--muted); letter-spacing: 0.7px; }
+      .actor-t  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 700; text-anchor: middle; }
+      .actor-s  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 9.5px; font-weight: 600; fill: var(--muted); text-anchor: middle; }
+      .uc-id    { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; font-weight: 800; letter-spacing: 0.6px; }
+      .uc-txt   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11.5px; font-weight: 700; fill: var(--ink); }
+      .uc-sub   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 10px; font-weight: 500; fill: var(--muted); }
+      .stereo   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 9px; font-weight: 700; fill: var(--muted); text-anchor: middle; }
+
+      @keyframes dashMove {
         from { stroke-dashoffset: 24; }
         to   { stroke-dashoffset: 0; }
       }
-
-      .flow-line-blue {
-        stroke: #0284C7;
-        stroke-width: 1.8;
-        stroke-dasharray: 6 5;
-        animation: flowPulse 1.2s linear infinite;
-      }
-
-      .flow-line-amber {
-        stroke: #D97706;
-        stroke-width: 1.8;
-        stroke-dasharray: 6 5;
-        animation: flowPulse 1.2s linear infinite;
-      }
-
-      .flow-line-purple {
-        stroke: #7C3AED;
-        stroke-width: 1.8;
-        stroke-dasharray: 6 5;
-        animation: flowPulse 1.2s linear infinite;
-      }
-
-      .flow-line-green {
-        stroke: #059669;
-        stroke-width: 1.8;
-        stroke-dasharray: 6 5;
-        animation: flowPulse 1.2s linear infinite;
-      }
-
-      .flow-line-indigo {
-        stroke: #4F46E5;
-        stroke-width: 1.8;
-        stroke-dasharray: 6 5;
-        animation: flowPulse 1.2s linear infinite;
-      }
-
-      /* Halo pulsante del actor */
       @keyframes actorPulse {
-        0%, 100% { transform: scale(1); opacity: 0.8; }
-        50%      { transform: scale(1.15); opacity: 0.2; }
+        0%, 100% { transform: scale(1); opacity: 0.45; }
+        50%      { transform: scale(1.22); opacity: 0.14; }
+      }
+      @keyframes liveDot {
+        0%   { transform: scale(1); opacity: 0.85; }
+        70%  { transform: scale(2.2); opacity: 0; }
+        100% { transform: scale(2.2); opacity: 0; }
       }
 
       .actor-halo {
+        transform-box: fill-box;
         transform-origin: center;
-        animation: actorPulse 2.5s ease-in-out infinite;
+        animation: actorPulse 3.2s ease-in-out infinite;
+      }
+      .beacon-ring {
+        transform-box: fill-box;
+        transform-origin: center;
+        animation: liveDot 2.4s ease-out infinite;
+      }
+
+      .flow-gold    { fill: none; stroke: var(--gold-stroke);    stroke-width: 1.5; stroke-dasharray: 5 4; animation: dashMove 2.0s linear infinite; }
+      .flow-sage    { fill: none; stroke: var(--sage-stroke);    stroke-width: 1.5; stroke-dasharray: 5 4; animation: dashMove 2.2s linear infinite; }
+      .flow-terra   { fill: none; stroke: var(--terra-stroke);   stroke-width: 1.5; stroke-dasharray: 5 4; animation: dashMove 1.9s linear infinite; }
+      .flow-chicha  { fill: none; stroke: var(--chicha-stroke);  stroke-width: 1.5; stroke-dasharray: 5 4; animation: dashMove 2.3s linear infinite; }
+      .flow-pizarra { fill: none; stroke: var(--pizarra-stroke); stroke-width: 1.5; stroke-dasharray: 5 4; animation: dashMove 2.1s linear infinite; }
+      .flow-uml     { fill: none; stroke: var(--bd-strong);      stroke-width: 1.3; stroke-dasharray: 3 3; animation: dashMove 2.8s linear infinite; }
+
+      @media (prefers-reduced-motion: reduce) {
+        .actor-halo, .beacon-ring, .flow-gold, .flow-sage, .flow-terra, .flow-chicha, .flow-pizarra, .flow-uml { animation: none; }
       }
     </style>
 
-    <!-- Marcadores de flechas UML -->
-    <marker id="dot-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4">
-      <circle cx="5" cy="5" r="4" fill="#0284C7"/>
-    </marker>
-    <marker id="dot-amber" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4">
-      <circle cx="5" cy="5" r="4" fill="#D97706"/>
-    </marker>
-    <marker id="dot-purple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4">
-      <circle cx="5" cy="5" r="4" fill="#7C3AED"/>
-    </marker>
-    <marker id="dot-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4">
-      <circle cx="5" cy="5" r="4" fill="#059669"/>
-    </marker>
-    <marker id="dot-indigo" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4">
-      <circle cx="5" cy="5" r="4" fill="#4F46E5"/>
-    </marker>
-
-    <!-- Sombra suave para tarjetas -->
-    <filter id="soft-shadow" x="-5%" y="-5%" width="110%" height="110%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.05"/>
-    </filter>
+    <marker id="dot-gold"    viewBox="0 0 8 8" refX="4" refY="4" markerWidth="5" markerHeight="5"><circle cx="4" cy="4" r="3" fill="var(--gold-stroke)"/></marker>
+    <marker id="dot-sage"    viewBox="0 0 8 8" refX="4" refY="4" markerWidth="5" markerHeight="5"><circle cx="4" cy="4" r="3" fill="var(--sage-stroke)"/></marker>
+    <marker id="dot-terra"   viewBox="0 0 8 8" refX="4" refY="4" markerWidth="5" markerHeight="5"><circle cx="4" cy="4" r="3" fill="var(--terra-stroke)"/></marker>
+    <marker id="dot-chicha"  viewBox="0 0 8 8" refX="4" refY="4" markerWidth="5" markerHeight="5"><circle cx="4" cy="4" r="3" fill="var(--chicha-stroke)"/></marker>
+    <marker id="dot-pizarra" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="5" markerHeight="5"><circle cx="4" cy="4" r="3" fill="var(--pizarra-stroke)"/></marker>
+    <marker id="arr-uml"     viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto"><path d="M 1 1 L 7 4 L 1 7 z" fill="var(--bd-strong)"/></marker>
   </defs>
 
-  <!-- Fondo blanco puro del lienzo -->
-  <rect width="960" height="550" rx="16" fill="#FFFFFF" stroke="#E2E8F0" stroke-width="1.5" filter="url(#soft-shadow)"/>
+  <!-- Lienzo Exterior -->
+  <rect class="frame" x="2" y="2" width="996" height="586" rx="10"/>
 
-  <!-- L&#237;mite del Sistema (System Boundary) con borde animado -->
-  <g transform="translate(190, 20)">
-    <rect width="580" height="510" rx="14" fill="#F8FAFC" />
-    <rect width="580" height="510" rx="14" fill="none" class="animated-boundary" />
-    <text x="25" y="30" class="t-bound">L&#205;MITE DEL SISTEMA: PURASED CORE (BLAZOR &amp; WEB API)</text>
+  <!-- Cabecera Brisa PuraSed -->
+  <rect x="2" y="2" width="996" height="62" rx="10" fill="var(--canvas)"/>
+  <line x1="2" y1="64" x2="998" y2="64" stroke="var(--bd)" stroke-width="1.2"/>
+  <rect x="20" y="18" width="5" height="30" rx="2" fill="var(--gold-stroke)"/>
+  <text x="36" y="31" class="title">Casos de Uso &#183; Plataforma Operativa PuraSed</text>
+  <text x="36" y="48" class="sub">5 Actores de Negocio &#183; 12 Flujos Funcionales &#183; L&#237;mite Transaccional RBAC</text>
+
+  <!-- Pill Estado Derecha -->
+  <rect x="748" y="20" width="228" height="26" rx="13" fill="var(--sage-fill)" stroke="var(--sage-stroke)" stroke-width="1"/>
+  <circle class="beacon-ring" cx="768" cy="33" r="4" fill="var(--sage-stroke)"/>
+  <circle cx="768" cy="33" r="3.5" fill="var(--sage-stroke)"/>
+  <text x="780" y="36.5" class="sys-lbl" style="fill: var(--sage-tx); letter-spacing: 0.3px;">UML 2.5 &#183; ENLACES VERIFICADOS</text>
+
+  <!-- Limite del Sistema -->
+  <rect class="sys-box" x="195" y="78" width="610" height="492" rx="8"/>
+  <rect x="211" y="69" width="290" height="18" rx="3" fill="var(--canvas)" stroke="var(--bd)" stroke-width="1"/>
+  <text x="220" y="81.5" class="sys-lbl">SISTEMA PURASED &#183; MONOLITO .NET 10</text>
+
+  <!-- ========================================================= -->
+  <!-- CONECTORES DE ACTORES Y RELACIONES INCLUDE/EXTEND (CAPA BAJA) -->
+  <!-- ========================================================= -->
+
+  <!-- Actor 1: Cliente (salida derecha x=126, y=155) -->
+  <path d="M 126 155 L 212 124" class="flow-gold" marker-end="url(#dot-gold)"/>
+  <path d="M 126 160 L 212 186" class="flow-gold" marker-end="url(#dot-gold)"/>
+  <path d="M 126 165 L 170 248 L 212 248" class="flow-gold" marker-end="url(#dot-gold)"/>
+  <path d="M 126 172 L 160 310 L 212 310" class="flow-gold" marker-end="url(#dot-gold)"/>
+  <path d="M 126 178 L 148 388 L 212 388" class="flow-gold" marker-end="url(#dot-gold)"/>
+
+  <!-- Actor 2: Mesero (salida derecha x=126, y=335) -->
+  <path d="M 126 326 L 170 198 L 212 198" class="flow-sage" marker-end="url(#dot-sage)"/>
+  <path d="M 126 335 L 212 322" class="flow-sage" marker-end="url(#dot-sage)"/>
+  <path d="M 126 344 L 174 434 L 496 434 L 496 274 L 530 274" class="flow-sage" marker-end="url(#dot-sage)"/>
+
+  <!-- Actor 3: Asistente (salida derecha x=126, y=492) -->
+  <path d="M 126 492 L 212 492" class="flow-chicha" marker-end="url(#dot-chicha)"/>
+  <!-- Cliente tambien reserva desde web -->
+  <path d="M 112 205 L 112 446 L 212 478" class="flow-gold" marker-end="url(#dot-gold)" opacity="0.65"/>
+
+  <!-- Actor 4: Cocina / Bar (salida izquierda x=874, y=195) -->
+  <path d="M 874 186 L 788 142" class="flow-terra" marker-end="url(#dot-terra)"/>
+  <path d="M 874 195 L 788 206" class="flow-terra" marker-end="url(#dot-terra)"/>
+  <path d="M 874 205 L 830 346 L 788 346" class="flow-terra" marker-end="url(#dot-terra)"/>
+
+  <!-- Actor 5: Administrador (salida izquierda x=874, y=435) -> SOLO a CU-10, CU-11, CU-12 existentes! -->
+  <path d="M 874 424 L 826 362 L 788 362" class="flow-pizarra" marker-end="url(#dot-pizarra)"/>
+  <path d="M 874 435 L 788 424" class="flow-pizarra" marker-end="url(#dot-pizarra)"/>
+  <path d="M 874 446 L 788 492" class="flow-pizarra" marker-end="url(#dot-pizarra)"/>
+
+  <!-- Estereotipos UML internos -->
+  <!-- CU-02 -> CU-07 / CU-08 (Enrutamiento SignalR a Cocina/Bar) -->
+  <path d="M 466 182 L 530 144" class="flow-uml" marker-end="url(#arr-uml)"/>
+  <path d="M 466 196 L 530 206" class="flow-uml" marker-end="url(#arr-uml)"/>
+  <rect x="468" y="152" width="60" height="14" rx="3" fill="var(--canvas)" stroke="var(--bd)" stroke-width="0.9"/>
+  <text x="498" y="162" class="stereo">&#171;include&#187;</text>
+
+  <!-- CU-04 -> CU-05 (Cobro -> Factura y Encuesta) -->
+  <path d="M 339 336 L 339 366" class="flow-uml" marker-end="url(#arr-uml)"/>
+  <rect x="348" y="344" width="60" height="14" rx="3" fill="var(--canvas)" stroke="var(--bd)" stroke-width="0.9"/>
+  <text x="378" y="354" class="stereo">&#171;include&#187;</text>
+
+  <!-- CU-07/08 -> CU-09 (KDS Listo -> Alerta Mesero) -->
+  <path d="M 659 228 L 659 250" class="flow-uml" marker-end="url(#arr-uml)"/>
+  <rect x="668" y="232" width="56" height="14" rx="3" fill="var(--canvas)" stroke="var(--bd)" stroke-width="0.9"/>
+  <text x="696" y="242" class="stereo">&#171;extend&#187;</text>
+
+  <!-- ========================================================= -->
+  <!-- ACTORES EXTERNOS -->
+  <!-- ========================================================= -->
+
+  <!-- Actor 1: Cliente -->
+  <g transform="translate(88, 128)">
+    <circle class="actor-halo" cx="0" cy="0" r="19" fill="var(--gold-stroke)"/>
+    <circle cx="0" cy="0" r="11" fill="var(--canvas)" stroke="var(--gold-stroke)" stroke-width="2.2"/>
+    <line x1="0" y1="11" x2="0" y2="33" stroke="var(--gold-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="-13" y1="19" x2="13" y2="19" stroke="var(--gold-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="33" x2="-10" y2="48" stroke="var(--gold-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="33" x2="10" y2="48" stroke="var(--gold-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <text x="0" y="64" class="actor-t" fill="var(--gold-tx)">Cliente</text>
+    <text x="0" y="76" class="actor-s">Comensal / QR</text>
   </g>
 
-  <!-- ========================================== -->
-  <!-- L&#205;NEAS DE ASOCIACI&#211;N ANIMADAS ACTORES -> CASOS -->
-  <!-- ========================================== -->
-  <!-- Desde Cliente (x: 170, y: 110) -->
-  <path d="M 170 110 L 260 90" class="flow-line-blue" marker-end="url(#dot-blue)"/>
-  <path d="M 170 110 L 260 155" class="flow-line-blue" marker-end="url(#dot-blue)"/>
-  <path d="M 170 110 L 260 220" class="flow-line-blue" marker-end="url(#dot-blue)"/>
-
-  <!-- Desde Mesero (x: 170, y: 390) -->
-  <path d="M 170 390 L 260 285" class="flow-line-amber" marker-end="url(#dot-amber)"/>
-  <path d="M 170 390 L 260 350" class="flow-line-amber" marker-end="url(#dot-amber)"/>
-  <path d="M 170 390 L 260 415" class="flow-line-amber" marker-end="url(#dot-amber)"/>
-
-  <!-- Desde Cocina y Bar (x: 790, y: 100) -->
-  <path d="M 790 100 L 700 90" class="flow-line-purple" marker-end="url(#dot-purple)"/>
-  <path d="M 790 100 L 700 155" class="flow-line-purple" marker-end="url(#dot-purple)"/>
-
-  <!-- Desde Asistente (x: 790, y: 260) -->
-  <path d="M 790 260 L 700 220" class="flow-line-green" marker-end="url(#dot-green)"/>
-  <path d="M 790 260 L 700 285" class="flow-line-green" marker-end="url(#dot-green)"/>
-
-  <!-- Desde Administrador (x: 790, y: 420) -->
-  <path d="M 790 420 L 700 350" class="flow-line-indigo" marker-end="url(#dot-indigo)"/>
-  <path d="M 790 420 L 700 415" class="flow-line-indigo" marker-end="url(#dot-indigo)"/>
-  <path d="M 790 420 L 580 475" class="flow-line-indigo" marker-end="url(#dot-indigo)"/>
-
-  <!-- ========================================== -->
-  <!-- CASOS DE USO (&#211;VALOS UML) DENTRO DEL L&#205;MITE -->
-  <!-- ========================================== -->
-  <!-- Columna Izquierda (x: 230 a 460) -->
-  <!-- CU-01: Escaneo QR y Catálogo -->
-  <g transform="translate(230, 70)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-01: Escanear QR y Men&#250;</text>
+  <!-- Actor 2: Mesero -->
+  <g transform="translate(88, 306)">
+    <circle class="actor-halo" cx="0" cy="0" r="19" fill="var(--sage-stroke)"/>
+    <circle cx="0" cy="0" r="11" fill="var(--canvas)" stroke="var(--sage-stroke)" stroke-width="2.2"/>
+    <line x1="0" y1="11" x2="0" y2="33" stroke="var(--sage-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="-13" y1="19" x2="13" y2="19" stroke="var(--sage-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="33" x2="-10" y2="48" stroke="var(--sage-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="33" x2="10" y2="48" stroke="var(--sage-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <text x="0" y="64" class="actor-t" fill="var(--sage-tx)">Mesero</text>
+    <text x="0" y="76" class="actor-s">Atenci&#243;n Sal&#243;n</text>
   </g>
 
-  <!-- CU-02: Generar Comanda -->
-  <g transform="translate(230, 135)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-02: Realizar Pedido por Mesa</text>
+  <!-- Actor 3: Asistente -->
+  <g transform="translate(88, 464)">
+    <circle class="actor-halo" cx="0" cy="0" r="19" fill="var(--chicha-stroke)"/>
+    <circle cx="0" cy="0" r="11" fill="var(--canvas)" stroke="var(--chicha-stroke)" stroke-width="2.2"/>
+    <line x1="0" y1="11" x2="0" y2="33" stroke="var(--chicha-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="-13" y1="19" x2="13" y2="19" stroke="var(--chicha-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="33" x2="-10" y2="48" stroke="var(--chicha-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="33" x2="10" y2="48" stroke="var(--chicha-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <text x="0" y="64" class="actor-t" fill="var(--chicha-tx)">Asistente</text>
+    <text x="0" y="76" class="actor-s">Host / Reservas</text>
   </g>
 
-  <!-- CU-03: Seguimiento SignalR -->
-  <g transform="translate(230, 200)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-03: Rastrear Estado en Vivo</text>
+  <!-- Actor 4: Cocina / Bar -->
+  <g transform="translate(912, 166)">
+    <circle class="actor-halo" cx="0" cy="0" r="19" fill="var(--terra-stroke)"/>
+    <circle cx="0" cy="0" r="11" fill="var(--canvas)" stroke="var(--terra-stroke)" stroke-width="2.2"/>
+    <line x1="0" y1="11" x2="0" y2="33" stroke="var(--terra-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="-13" y1="19" x2="13" y2="19" stroke="var(--terra-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="33" x2="-10" y2="48" stroke="var(--terra-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="33" x2="10" y2="48" stroke="var(--terra-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <text x="0" y="64" class="actor-t" fill="var(--terra-tx)">Cocina / Bar</text>
+    <text x="0" y="76" class="actor-s">AdminCocina &#183; Bar</text>
   </g>
 
-  <!-- CU-04: Gestión de Mesas -->
-  <g transform="translate(230, 265)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-04: Atender y Asignar Mesas</text>
+  <!-- Actor 5: Administrador -->
+  <g transform="translate(912, 406)">
+    <circle class="actor-halo" cx="0" cy="0" r="19" fill="var(--pizarra-stroke)"/>
+    <circle cx="0" cy="0" r="11" fill="var(--canvas)" stroke="var(--pizarra-stroke)" stroke-width="2.2"/>
+    <line x1="0" y1="11" x2="0" y2="33" stroke="var(--pizarra-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="-13" y1="19" x2="13" y2="19" stroke="var(--pizarra-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="33" x2="-10" y2="48" stroke="var(--pizarra-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <line x1="0" y1="33" x2="10" y2="48" stroke="var(--pizarra-stroke)" stroke-width="2.2" stroke-linecap="round"/>
+    <text x="0" y="64" class="actor-t" fill="var(--pizarra-tx)">Administrador</text>
+    <text x="0" y="76" class="actor-s">Admin &#183; SuperAdmin</text>
   </g>
 
-  <!-- CU-05: Modificar Comanda -->
-  <g transform="translate(230, 330)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-05: Modificar / Anular Pedido</text>
+  <!-- ========================================================= -->
+  <!-- CASOS DE USO COLUMNA IZQUIERDA (COMENSAL, SALON Y PAGOS) -->
+  <!-- ========================================================= -->
+
+  <!-- CU-01 -->
+  <g transform="translate(212, 102)">
+    <rect class="uc-card" width="254" height="44" rx="5" stroke="var(--gold-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--gold-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--gold-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--gold-tx)">CU-01</text>
+    <text x="64" y="20" class="uc-txt">Consultar Men&#250; 3D y Stock</text>
+    <text x="64" y="34" class="uc-sub">Cat&#225;logo 5 cap&#237;tulos sin registro</text>
   </g>
 
-  <!-- CU-09: Cobro y Cierre -->
-  <g transform="translate(230, 395)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-09: Cobro y Cierre de Mesa</text>
+  <!-- CU-02 -->
+  <g transform="translate(212, 166)">
+    <rect class="uc-card" width="254" height="44" rx="5" stroke="var(--gold-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--gold-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--gold-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--gold-tx)">CU-02</text>
+    <text x="64" y="20" class="uc-txt">Registrar Pedido por Mesa</text>
+    <text x="64" y="34" class="uc-sub">Variantes, notas y validaci&#243;n (HU-13)</text>
   </g>
 
-  <!-- Columna Derecha (x: 500 a 730) -->
-  <!-- CU-06: Despacho KDS -->
-  <g transform="translate(500, 70)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-06: Despachar Comandas KDS</text>
+  <!-- CU-03 -->
+  <g transform="translate(212, 228)">
+    <rect class="uc-card" width="254" height="44" rx="5" stroke="var(--gold-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--gold-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--gold-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--gold-tx)">CU-03</text>
+    <text x="64" y="20" class="uc-txt">Seguir Comanda en Vivo</text>
+    <text x="64" y="34" class="uc-sub">Timeline SignalR en tiempo real</text>
   </g>
 
-  <!-- CU-07: Control de Existencias -->
-  <g transform="translate(500, 135)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-07: Alerta Stock e Insumos</text>
+  <!-- CU-04 -->
+  <g transform="translate(212, 292)">
+    <rect class="uc-card" width="254" height="44" rx="5" stroke="var(--sage-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--sage-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--sage-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--sage-tx)">CU-04</text>
+    <text x="64" y="20" class="uc-txt">Habilitar y Cobrar Cuenta</text>
+    <text x="64" y="34" class="uc-sub">Tarjeta, transferencia o efectivo (HU-23)</text>
   </g>
 
-  <!-- CU-08: Gestión de Reservas -->
-  <g transform="translate(500, 200)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#059669" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-08: Gesti&#243;n de Reservaciones</text>
+  <!-- CU-05 -->
+  <g transform="translate(212, 366)">
+    <rect class="uc-card" width="254" height="44" rx="5" stroke="var(--gold-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--gold-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--gold-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--gold-tx)">CU-05</text>
+    <text x="64" y="20" class="uc-txt">Emitir Factura y Calificar</text>
+    <text x="64" y="34" class="uc-sub">Comprobante PDF y rese&#241;a de servicio</text>
   </g>
 
-  <!-- CU-10: Arqueo y Caja -->
-  <g transform="translate(500, 265)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#059669" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-10: Arqueo y Cuadre de Caja</text>
+  <!-- CU-06 -->
+  <g transform="translate(212, 470)">
+    <rect class="uc-card" width="254" height="44" rx="5" stroke="var(--chicha-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--chicha-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--chicha-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--chicha-tx)">CU-06</text>
+    <text x="64" y="20" class="uc-txt">Gestionar Reservas y Mesas</text>
+    <text x="64" y="34" class="uc-sub">Agenda sin solapamientos (HU-18)</text>
   </g>
 
-  <!-- CU-11: Administración Global -->
-  <g transform="translate(500, 330)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-11: Administrar Cat&#225;logo y Roles</text>
+  <!-- ========================================================= -->
+  <!-- CASOS DE USO COLUMNA DERECHA (COCINA, BAR Y GERENCIA) -->
+  <!-- ========================================================= -->
+
+  <!-- CU-07 -->
+  <g transform="translate(530, 118)">
+    <rect class="uc-card" width="258" height="44" rx="5" stroke="var(--terra-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--terra-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--terra-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--terra-tx)">CU-07</text>
+    <text x="64" y="20" class="uc-txt">Operar Panel KDS Cocina</text>
+    <text x="64" y="34" class="uc-sub">Platos de paila en orden cronol&#243;gico</text>
   </g>
 
-  <!-- CU-12: Reportes y Métricas -->
-  <g transform="translate(365, 455)">
-    <rect width="230" height="42" rx="21" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <text x="115" y="26" class="uc-txt">CU-12: Reportes y Anal&#237;tica de Ventas</text>
+  <!-- CU-08 -->
+  <g transform="translate(530, 184)">
+    <rect class="uc-card" width="258" height="44" rx="5" stroke="var(--terra-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--terra-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--terra-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--terra-tx)">CU-08</text>
+    <text x="64" y="20" class="uc-txt">Operar Panel KDD Barra</text>
+    <text x="64" y="34" class="uc-sub">Chichas, fermentos y cocteler&#237;a</text>
   </g>
 
-  <!-- ========================================== -->
-  <!-- ACTORES EXTERNOS CON TARJETAS Y AVATARES   -->
-  <!-- ========================================== -->
-  <!-- Actor 1: Cliente (Izquierda Superior) -->
-  <g transform="translate(25, 75)">
-    <rect width="145" height="74" rx="10" fill="#FFFFFF" stroke="#0284C7" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <circle cx="72" cy="24" r="14" fill="#E0F2FE" />
-    <path d="M68 28v-1.5a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3v1.5M72 18a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" fill="none" stroke="#0284C7" stroke-width="1.6" stroke-linecap="round"/>
-    <text x="72" y="52" class="a-name">Cliente</text>
-    <text x="72" y="65" class="a-sub">Comensal m&#243;vil</text>
+  <!-- CU-09 -->
+  <g transform="translate(530, 250)">
+    <rect class="uc-card" width="258" height="44" rx="5" stroke="var(--sage-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--sage-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--sage-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--sage-tx)">CU-09</text>
+    <text x="64" y="20" class="uc-txt">Notificar Platos Listos</text>
+    <text x="64" y="34" class="uc-sub">Alertas instant&#225;neas de despacho a sala</text>
   </g>
 
-  <!-- Actor 2: Mesero (Izquierda Inferior) -->
-  <g transform="translate(25, 350)">
-    <rect width="145" height="74" rx="10" fill="#FFFFFF" stroke="#D97706" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <circle cx="72" cy="24" r="14" fill="#FEF3C7" />
-    <path d="M68 28v-1.5a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3v1.5M72 18a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z" fill="none" stroke="#D97706" stroke-width="1.6" stroke-linecap="round"/>
-    <text x="72" y="52" class="a-name">Mesero</text>
-    <text x="72" y="65" class="a-sub">Atenci&#243;n en mesa</text>
+  <!-- CU-10 -->
+  <g transform="translate(530, 332)">
+    <rect class="uc-card" width="258" height="44" rx="5" stroke="var(--terra-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--terra-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--terra-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--terra-tx)">CU-10</text>
+    <text x="64" y="20" class="uc-txt">Controlar Stock y Agotados</text>
+    <text x="64" y="34" class="uc-sub">Descuento por receta y bloqueo (HU-15)</text>
   </g>
 
-  <!-- Actor 3: Cocina y Bar (Derecha Superior) -->
-  <g transform="translate(790, 65)">
-    <rect width="145" height="74" rx="10" fill="#FFFFFF" stroke="#7C3AED" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <circle cx="72" cy="24" r="14" fill="#F3E8FF" />
-    <path d="M67 26h10M69 16v10M75 16v10M68 14h8" fill="none" stroke="#7C3AED" stroke-width="1.6" stroke-linecap="round"/>
-    <text x="72" y="52" class="a-name">Cocina y Bar</text>
-    <text x="72" y="65" class="a-sub">Despacho KDS</text>
+  <!-- CU-11 -->
+  <g transform="translate(530, 402)">
+    <rect class="uc-card" width="258" height="44" rx="5" stroke="var(--pizarra-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--pizarra-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--pizarra-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--pizarra-tx)">CU-11</text>
+    <text x="64" y="20" class="uc-txt">Configurar Men&#250; y Shows</text>
+    <text x="64" y="34" class="uc-sub">Combos, promos y covers por evento</text>
   </g>
 
-  <!-- Actor 4: Asistente / Cajero (Derecha Media) -->
-  <g transform="translate(790, 225)">
-    <rect width="145" height="74" rx="10" fill="#FFFFFF" stroke="#059669" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <circle cx="72" cy="24" r="14" fill="#DCFCE7" />
-    <rect x="64" y="17" width="16" height="12" rx="2" fill="none" stroke="#059669" stroke-width="1.5"/>
-    <line x1="64" y1="21" x2="80" y2="21" stroke="#059669" stroke-width="1.2"/>
-    <text x="72" y="52" class="a-name">Asistente</text>
-    <text x="72" y="65" class="a-sub">Reservas y caja</text>
-  </g>
-
-  <!-- Actor 5: Administrador (Derecha Inferior) -->
-  <g transform="translate(790, 385)">
-    <rect width="145" height="74" rx="10" fill="#FFFFFF" stroke="#4F46E5" stroke-width="1.4" filter="url(#soft-shadow)"/>
-    <circle cx="72" cy="24" r="14" fill="#EDE9FE" />
-    <path d="M66 28h12M68 16h8v8h-8z" fill="none" stroke="#4F46E5" stroke-width="1.6" stroke-linecap="round"/>
-    <text x="72" y="52" class="a-name">Administrador</text>
-    <text x="72" y="65" class="a-sub">Gesti&#243;n global</text>
+  <!-- CU-12 -->
+  <g transform="translate(530, 470)">
+    <rect class="uc-card" width="258" height="44" rx="5" stroke="var(--pizarra-stroke)"/>
+    <rect x="0" y="0" width="4" height="44" rx="2" fill="var(--pizarra-stroke)"/>
+    <rect x="12" y="13" width="42" height="18" rx="3" fill="var(--pizarra-fill)"/>
+    <text x="33" y="25.5" text-anchor="middle" class="uc-id" fill="var(--pizarra-tx)">CU-12</text>
+    <text x="64" y="20" class="uc-txt">Arqueo, Roles y Bit&#225;cora</text>
+    <text x="64" y="34" class="uc-sub">Reportes de jornada y auditor&#237;a RBAC</text>
   </g>
 </svg>
