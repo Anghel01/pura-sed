@@ -2,29 +2,29 @@
   <defs>
     <style>
       svg {
-        --card: #FFFDF9;
-        --panel: #F2EDE0;
-        --ink: #1A201C;
-        --muted: #574F49;
-        --line: #DFD7C8;
-        --frame: #CFC5B4;
-        --accent: #3D523B;
-        --chip-bg: #F2EDE0;
+        --card: #FFFFFF;
+        --panel: #EEFAF4;
+        --ink: #152336;
+        --muted: #4B6178;
+        --line: #D2E3F0;
+        --frame: #C2D8E8;
+        --accent: #136740;
+        --chip-bg: #EFF7FC;
       }
       @media (prefers-color-scheme: dark) {
         svg {
-          --card: #1F2421;
-          --panel: #161A17;
-          --ink: #F5EADB;
-          --muted: #B5AA99;
-          --line: #313934;
-          --frame: #363F39;
-          --accent: #9EC09B;
-          --chip-bg: #151916;
+          --card: #152033;
+          --panel: #162736;
+          --ink: #F1F6FC;
+          --muted: #9FB3CB;
+          --line: #2B3D59;
+          --frame: #314563;
+          --accent: #6AD3A2;
+          --chip-bg: #1C2A42;
         }
-        .ds { flood-color: #000000; flood-opacity: .55; }
+        .ds { flood-color: #040914; flood-opacity: .55; }
       }
-      .ds     { flood-color: #1A201C; flood-opacity: .14; }
+      .ds     { flood-color: #3E7294; flood-opacity: .14; }
       .card   { fill: var(--card); }
       .panel  { fill: var(--panel); }
       .hole   { fill: var(--card); }
@@ -36,11 +36,11 @@
       .ring   { fill: none; stroke: var(--accent); stroke-width: 2.8; }
       .orbit  { fill: none; stroke: var(--accent); stroke-width: 1.6; stroke-dasharray: 2 7; stroke-linecap: round; transform-box: fill-box; transform-origin: center; animation: spin 32s linear infinite; }
       .dot    { fill: var(--accent); transform-box: fill-box; transform-origin: center; animation: pulse 2.6s ease-in-out infinite; }
-      .name   { font-family: Georgia, 'Times New Roman', serif; font-size: 27px; font-weight: 700; fill: var(--ink); letter-spacing: -0.3px; }
-      .role   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 1.8px; fill: var(--accent); }
-      .txt    { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 14.5px; font-weight: 400; fill: var(--muted); }
-      .foot   { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13.5px; font-weight: 600; fill: var(--accent); }
-      .mono   { font-family: Georgia, 'Times New Roman', serif; font-size: 38px; font-weight: 700; fill: var(--accent); }
+      .name   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Helvetica, sans-serif; font-size: 25px; font-weight: 800; fill: var(--ink); letter-spacing: -0.45px; }
+      .role   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 10.5px; font-weight: 800; letter-spacing: 1.5px; fill: var(--accent); }
+      .txt    { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 400; fill: var(--muted); }
+      .foot   { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 13px; font-weight: 700; fill: var(--accent); }
+      .mono   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, sans-serif; font-size: 34px; font-weight: 800; fill: var(--accent); letter-spacing: -1px; }
       @keyframes spin { to { transform: rotate(360deg); } }
       @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(0.78); } }
       @media (prefers-reduced-motion: reduce) { .orbit, .dot { animation: none; } }
@@ -64,7 +64,7 @@
   <image clip-path="url(#avatarClip)" xlink:href="data:image/jpeg;base64,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" x="48" y="57" width="112" height="112" preserveAspectRatio="xMidYMid slice"/>
   <circle class="ring" cx="104" cy="113" r="56"/>
 
-  <rect class="chip" x="218" y="30" width="136" height="26" rx="4"/>
+  <rect class="chip" x="218" y="30" width="136" height="26" rx="13"/>
   <circle class="dot" cx="231" cy="43" r="3.2"/>
   <text class="role" x="242" y="47">DESARROLLO</text>
   <text class="name" x="218" y="96">Angel Chicaiza</text>

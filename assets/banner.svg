@@ -3,8 +3,8 @@
   <desc id="bannerDesc">Plataforma digital para bar nocturno y restaurante: pedidos por mesa, comanda a barra y cocina, y control de jornada.</desc>
   <defs>
     <style>
-      .frame { fill: none; stroke: #1A201C; stroke-opacity: .20; stroke-width: 1.5; }
-      .ds    { flood-color: #1A201C; flood-opacity: .22; }
+      .frame { fill: none; stroke: #85B9CA; stroke-opacity: .45; stroke-width: 1.5; }
+      .ds    { flood-color: #488CA3; flood-opacity: .18; }
       
       /* Efervescencia de burbujas en el cuerpo de la cerveza */
       .bubble {
@@ -49,8 +49,8 @@
       }
 
       @media (prefers-color-scheme: dark) {
-        .frame { stroke: #E59F38; stroke-opacity: .38; }
-        .ds    { flood-color: #000000; flood-opacity: .60; }
+        .frame { stroke: #74C6DF; stroke-opacity: .42; }
+        .ds    { flood-color: #050B16; flood-opacity: .55; }
       }
       @media (prefers-reduced-motion: reduce) {
         .bubble, .fizz { animation: none; opacity: 0.4; }

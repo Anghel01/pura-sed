@@ -1,67 +1,67 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 290" width="100%" height="100%" role="img" aria-labelledby="modTitle modDesc">
   <title id="modTitle">Arquitectura Modular del Prototipo en Figma &#8212; PuraSed</title>
-  <desc id="modDesc">Distribuci&#243;n interactiva de pantallas en Figma divididas en 3 subsistemas del equipo en paleta Sereno Moreno.</desc>
+  <desc id="modDesc">Distribuci&#243;n interactiva de pantallas en Figma divididas en 3 subsistemas del equipo en paleta suave y clara Brisa PuraSed.</desc>
   <defs>
     <style>
       :root {
-        --card-bg: #FFFDF9;
-        --card-bd: #D5CDC0;
-        --title-clr: #1A201C;
-        --muted-clr: #574F49;
-        --line-clr: #E5DDD0;
-        --chip-bg: #F2EDE0;
-        --chip-bd: #D5CDC0;
-        --chip-tx: #1A201C;
-        --foot-bg: #FAF7EC;
-        --wire-clr: #D5CDC0;
+        --card-bg: #FFFFFF;
+        --card-bd: #D2E3F0;
+        --title-clr: #152336;
+        --muted-clr: #4B6178;
+        --line-clr: #E3EEF6;
+        --chip-bg: #EFF7FC;
+        --chip-bd: #D2E3F0;
+        --chip-tx: #152336;
+        --foot-bg: #F7FBFE;
+        --wire-clr: #98C1DB;
 
-        --m1-st: #C27416;
-        --m1-tx: #9E5B08;
-        --m1-bg: rgba(229, 159, 56, 0.15);
+        --m1-st: #2E98BE;
+        --m1-tx: #0C5F7D;
+        --m1-bg: #E7F6FC;
 
-        --m2-st: #B85335;
-        --m2-tx: #9E3E22;
-        --m2-bg: rgba(184, 83, 53, 0.13);
+        --m2-st: #DF5E55;
+        --m2-tx: #A62B23;
+        --m2-bg: #FFF0EF;
 
-        --m3-st: #50694E;
-        --m3-tx: #3D523B;
-        --m3-bg: rgba(99, 119, 97, 0.15);
+        --m3-st: #2BA36D;
+        --m3-tx: #136740;
+        --m3-bg: #E8F9F1;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --card-bg: #1F2421;
-          --card-bd: #313934;
-          --title-clr: #F5EADB;
-          --muted-clr: #B5AA99;
-          --line-clr: #313934;
-          --chip-bg: #171C19;
-          --chip-bd: #313934;
-          --chip-tx: #F5EADB;
-          --foot-bg: #121614;
-          --wire-clr: #313934;
+          --card-bg: #152033;
+          --card-bd: #2B3D59;
+          --title-clr: #F1F6FC;
+          --muted-clr: #9FB3CB;
+          --line-clr: #2B3D59;
+          --chip-bg: #1C2A42;
+          --chip-bd: #2B3D59;
+          --chip-tx: #F1F6FC;
+          --foot-bg: #0E1626;
+          --wire-clr: #466188;
 
-          --m1-st: #E59F38;
-          --m1-tx: #F8AD00;
-          --m1-bg: rgba(229, 159, 56, 0.18);
+          --m1-st: #74C6DF;
+          --m1-tx: #94D9EE;
+          --m1-bg: #132A3C;
 
-          --m2-st: #D46C4E;
-          --m2-tx: #E68A6E;
-          --m2-bg: rgba(184, 83, 53, 0.18);
+          --m2-st: #F28B82;
+          --m2-tx: #F9AAA3;
+          --m2-bg: #2C1B24;
 
-          --m3-st: #7C9D79;
-          --m3-tx: #9EC09B;
-          --m3-bg: rgba(99, 119, 97, 0.20);
+          --m3-st: #6AD3A2;
+          --m3-tx: #8EE2BA;
+          --m3-bg: #122C26;
         }
       }
 
       .m-card  { fill: var(--card-bg); stroke: var(--card-bd); stroke-width: 1.3; }
       .m-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 17.5px; font-weight: 800; fill: var(--title-clr); }
       .m-owner { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; font-weight: 600; }
-      .m-pill  { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; }
+      .m-pill  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 9.5px; font-weight: 800; letter-spacing: 0.6px; }
       .m-chip  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: var(--chip-tx); }
       .m-foot  { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; font-weight: 600; fill: var(--muted-clr); }
-      .m-proto { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 9px; font-weight: 700; fill: var(--muted-clr); letter-spacing: 0.6px; }
+      .m-proto { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 8.8px; font-weight: 800; fill: var(--muted-clr); letter-spacing: 0.5px; }
 
       @keyframes flowDash {
         from { stroke-dashoffset: 24; }

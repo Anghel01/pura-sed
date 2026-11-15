@@ -1,57 +1,57 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 658" width="100%" height="100%" role="img" aria-labelledby="strTitle strDesc">
   <title id="strTitle">Estructura del Proyecto PuraSed</title>
-  <desc id="strDesc">&#193;rbol estructurado de la soluci&#243;n .NET 10 con arquitectura SOLID, taller Figma UI/UX y documentos en paleta Sereno Moreno.</desc>
+  <desc id="strDesc">&#193;rbol estructurado de la soluci&#243;n .NET 10 con arquitectura SOLID, taller Figma UI/UX y documentos.</desc>
   <defs>
     <style>
       :root {
-        --bg: #FFFDF9;
-        --bd: #D5CDC0;
-        --bar: #F2EDE0;
-        --dir: #1A201C;
-        --file: #2D2621;
-        --desc: #574F49;
-        --guide: #D5CDC0;
+        --bg: #FFFFFF;
+        --bd: #D2E3F0;
+        --bar: #EFF7FC;
+        --dir: #152336;
+        --file: #1E3048;
+        --desc: #4B6178;
+        --guide: #CFE0EE;
 
-        --gold-st: #C27416;
-        --gold-tx: #9E5B08;
-        --gold-bg: rgba(229, 159, 56, 0.14);
+        --gold-st: #D08414;
+        --gold-tx: #854D03;
+        --gold-bg: #FFF7E4;
 
-        --terra-st: #B85335;
-        --terra-tx: #9E3E22;
+        --terra-st: #DF5E55;
+        --terra-tx: #A62B23;
 
-        --sage-st: #50694E;
-        --sage-tx: #3D523B;
-        --sage-bg: rgba(99, 119, 97, 0.15);
+        --sage-st: #2BA36D;
+        --sage-tx: #136740;
+        --sage-bg: #E8F9F1;
 
-        --pizarra-st: #405A6E;
-        --pizarra-tx: #2F4658;
-        --pizarra-bg: rgba(64, 90, 110, 0.14);
+        --pizarra-st: #2E98BE;
+        --pizarra-tx: #0C5F7D;
+        --pizarra-bg: #E7F6FC;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #1F2421;
-          --bd: #313934;
-          --bar: #171C19;
-          --dir: #F5EADB;
-          --file: #E6DAC8;
-          --desc: #B5AA99;
-          --guide: #39423D;
+          --bg: #152033;
+          --bd: #2B3D59;
+          --bar: #1C2A42;
+          --dir: #F1F6FC;
+          --file: #DBE6F5;
+          --desc: #9FB3CB;
+          --guide: #466188;
 
-          --gold-st: #E59F38;
-          --gold-tx: #F8AD00;
-          --gold-bg: rgba(229, 159, 56, 0.18);
+          --gold-st: #F6C25E;
+          --gold-tx: #FAD488;
+          --gold-bg: #2C2315;
 
-          --terra-st: #D46C4E;
-          --terra-tx: #E68A6E;
+          --terra-st: #F28B82;
+          --terra-tx: #F9AAA3;
 
-          --sage-st: #7C9D79;
-          --sage-tx: #9EC09B;
-          --sage-bg: rgba(99, 119, 97, 0.20);
+          --sage-st: #6AD3A2;
+          --sage-tx: #8EE2BA;
+          --sage-bg: #122C26;
 
-          --pizarra-st: #6D93B0;
-          --pizarra-tx: #8EB2CE;
-          --pizarra-bg: rgba(64, 90, 110, 0.22);
+          --pizarra-st: #74C6DF;
+          --pizarra-tx: #94D9EE;
+          --pizarra-bg: #132A3C;
         }
       }
 
@@ -80,7 +80,7 @@
   <circle cx="54" cy="20" r="4.5" fill="var(--sage-st)"/>
   <text x="76" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12px" font-weight="700" fill="var(--desc)">Explorador de la Soluci&#243;n .NET 10 &#183; pura-sed</text>
 
-  <rect x="766" y="9" width="196" height="22" rx="4" fill="var(--sage-bg)" stroke="var(--sage-st)" stroke-width="1"/>
+  <rect x="766" y="9" width="196" height="22" rx="11" fill="var(--sage-bg)" stroke="var(--sage-st)" stroke-width="1"/>
   <circle class="build-dot" cx="781" cy="20" r="4" fill="var(--sage-st)"/>
   <circle cx="781" cy="20" r="3" fill="var(--sage-st)"/>
   <text x="793" y="24" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5px" font-weight="700" fill="var(--sage-tx)">Build Verified &#183; 0 Warnings</text>
@@ -107,7 +107,7 @@
     <rect x="0" y="2" width="16" height="18" rx="2" fill="var(--gold-bg)" stroke="var(--gold-st)" stroke-width="1.2"/>
     <text x="8" y="15" text-anchor="middle" font-size="8px" font-weight="bold" fill="var(--gold-tx)">&#10003;</text>
     <text x="26" y="15" class="t-file">README.md</text>
-    <text x="415" y="15" class="t-desc"># Documentaci&#243;n visual e identidad Sereno Moreno</text>
+    <text x="415" y="15" class="t-desc"># Documentaci&#243;n t&#233;cnica y visual del sistema</text>
   </g>
 
   <g transform="translate(56, 138)">

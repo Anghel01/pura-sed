@@ -69,7 +69,7 @@ El desarrollo se gestiona bajo el marco de trabajo **Scrum**, con responsabilida
 | `02` | [**Arquitectura del Sistema**](#arquitectura-del-sistema) | Monolito modular de 6 capas, flujo SignalR y pasarela externa |
 | `03` | [**Casos de Uso**](#casos-de-uso) | Diagrama UML 2.5 interactivo, 5 actores operativos y 12 flujos funcionales |
 | `04` | [**Modelo de Base de Datos – Diagrama Entidad-Relación**](#modelo-de-base-de-datos--diagrama-entidad-relación) | Esquema relacional SQL Server (23 entidades en 5 dominios) y avance Code-First |
-| `05` | [**Prototipo Interactivo y Diseño en Figma**](#prototipo-interactivo-y-diseño-en-figma) | Lienzo oficial en 3 subsistemas, identidad Sereno Moreno y capturas del taller |
+| `05` | [**Prototipo Interactivo y Diseño en Figma**](#prototipo-interactivo-y-diseño-en-figma) | Lienzo oficial en 3 subsistemas y capturas interactivas del taller UI |
 | `06` | [**Seguridad, Identity JWT y Matriz de Roles**](#seguridad-identity-jwt-y-matriz-de-roles) | Autenticación Bearer, catálogo DRY `Roles.cs` y cuentas sembradas |
 | `07` | [**Estructura de la Solución .NET**](#estructura-de-la-solución-net) | Explorador visual de carpetas, capas de WebApi y Blazor WebAssembly |
 | `08` | [**Guía de Ejecución Local**](#guía-de-ejecución-local) | Requisitos previos (.NET 10, SQL Server), sembrado automático y Swagger UI |
@@ -176,7 +176,7 @@ El modelo completo de **PuraSed** en SQL Server comprende **23 entidades** y **2
 
 ## <img src="./assets/icons/figma.svg" width="22" height="22" align="absmiddle" /> Prototipo Interactivo y Diseño en Figma
 
-El sistema visual de **PuraSed** encarna la estética de **Taller Indie Craft & Herencia Andina** (*Sereno Moreno*, Centro Histórico de Quito), alejándose de plantillas genéricas. En Figma se diseñaron **32 pantallas Full HD (1920×1080)** con flujos navegables completos divididos en 3 módulos coordinados:
+El prototipo interactivo de **PuraSed** en Figma comprende **32 pantallas Full HD (1920×1080)** con flujos navegables completos divididos en 3 módulos coordinados:
 
 <p align="center">
   <a href="https://www.figma.com/design/DsNPoA8toR0BhSr1jCQvq1/Pura-Sed?node-id=0-1&t=fsQYngq4znHIIZzZ-1" target="_blank" rel="noopener noreferrer">
@@ -197,7 +197,7 @@ El sistema visual de **PuraSed** encarna la estética de **Taller Indie Craft & 
 | **3. Back-Office: Caja, Stock y Analítica** | **Ángel Chicaiza** (*Backend Architect*) | Punto de caja y arqueo diario, validación de transferencias, inventario y conmutación de platos agotados (HU-10), promociones, matriz de 8 roles, bitácora y reportes. |
 
 <details>
-<summary><b>Ver capturas reales del taller UI y tokens visuales Sereno Moreno</b></summary>
+<summary><b>Ver capturas archivadas del taller UI (Prototipos HTML / Three.js)</b></summary>
 <br/>
 
 * **Paleta e Identidad (*Taller Indie Craft*):** Fondo basalto (`#121614` / `#1F2421`), Oro Inti (`#E59F38`), Blanco Tiza (`#FFFDF9`), Terracota Paila (`#B85335`) y Verde Sabia (`#637761`). Referencia completa en [`Guia_Diseno_UI_UX_PuraSed.md`](./Entregables/Guia_Diseno_UI_UX_PuraSed.md).

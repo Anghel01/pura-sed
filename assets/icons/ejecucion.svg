@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <style>
-    .ic { stroke: #3D523B; }
-    @media (prefers-color-scheme: dark) { .ic { stroke: #9EC09B; } }
+    .ic { stroke: #2BA36D; }
+    @media (prefers-color-scheme: dark) { .ic { stroke: #6AD3A2; } }
   </style>
   <g class="ic"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></g>
 </svg>

@@ -1,55 +1,55 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 245" width="100%" height="100%" role="img" aria-labelledby="gitTitle gitDesc">
   <title id="gitTitle">Estrategia GitFlow PuraSed</title>
-  <desc id="gitDesc">Flujo animado de ramas GitFlow entre main, develop y ramas feature por historia de usuario en paleta Sereno Moreno.</desc>
+  <desc id="gitDesc">Flujo animado de ramas GitFlow entre main, develop y ramas feature por historia de usuario en paleta suave y clara Brisa PuraSed.</desc>
   <defs>
     <style>
       :root {
-        --bg: #FAF7EC;
-        --bar: #FFFDF9;
-        --bd: #D5CDC0;
-        --txt: #1A201C;
-        --sub: #574F49;
-        --track: #D5CDC0;
+        --bg: #F7FBFE;
+        --bar: #FFFFFF;
+        --bd: #D2E3F0;
+        --txt: #152336;
+        --sub: #4B6178;
+        --track: #DCE9F3;
 
-        --main-st: #50694E;
-        --main-tx: #3D523B;
-        --main-bg: rgba(99, 119, 97, 0.14);
+        --main-st: #2BA36D;
+        --main-tx: #136740;
+        --main-bg: #E8F9F1;
 
-        --dev-st: #C27416;
-        --dev-tx: #9E5B08;
-        --dev-bg: rgba(229, 159, 56, 0.15);
+        --dev-st: #2E98BE;
+        --dev-tx: #0C5F7D;
+        --dev-bg: #E7F6FC;
 
-        --f1-st: #405A6E;
-        --f1-tx: #2F4658;
-        --f1-bg: rgba(64, 90, 110, 0.14);
+        --f1-st: #6D76E4;
+        --f1-tx: #3C43A1;
+        --f1-bg: #F0F1FE;
 
-        --f2-st: #B85335;
-        --f3-st: #9E5B08;
+        --f2-st: #DF5E55;
+        --f3-st: #D08414;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #121614;
-          --bar: #1F2421;
-          --bd: #313934;
-          --txt: #F5EADB;
-          --sub: #B5AA99;
-          --track: #313934;
+          --bg: #0E1626;
+          --bar: #152033;
+          --bd: #2B3D59;
+          --txt: #F1F6FC;
+          --sub: #9FB3CB;
+          --track: #2B3D59;
 
-          --main-st: #7C9D79;
-          --main-tx: #9EC09B;
-          --main-bg: rgba(99, 119, 97, 0.20);
+          --main-st: #6AD3A2;
+          --main-tx: #8EE2BA;
+          --main-bg: #122C26;
 
-          --dev-st: #E59F38;
-          --dev-tx: #F8AD00;
-          --dev-bg: rgba(229, 159, 56, 0.18);
+          --dev-st: #74C6DF;
+          --dev-tx: #94D9EE;
+          --dev-bg: #132A3C;
 
-          --f1-st: #6D93B0;
-          --f1-tx: #8EB2CE;
-          --f1-bg: rgba(64, 90, 110, 0.22);
+          --f1-st: #A1A8F7;
+          --f1-tx: #C1C6FB;
+          --f1-bg: #1D2240;
 
-          --f2-st: #D46C4E;
-          --f3-st: #E8923E;
+          --f2-st: #F28B82;
+          --f3-st: #F6C25E;
         }
       }
 
@@ -86,7 +86,7 @@
   </g>
 
   <text x="24" y="26" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="13px" font-weight="800" fill="var(--txt)">Modelo GitFlow &#183; Flujo de Integraci&#243;n Continua</text>
-  <rect x="716" y="10" width="260" height="22" rx="4" fill="var(--dev-bg)" stroke="var(--dev-st)" stroke-width="1"/>
+  <rect x="716" y="10" width="260" height="22" rx="11" fill="var(--dev-bg)" stroke="var(--dev-st)" stroke-width="1"/>
   <circle class="g-head-ring" cx="731" cy="21" r="4" fill="var(--dev-st)"/>
   <circle cx="731" cy="21" r="3" fill="var(--dev-st)"/>
   <text x="743" y="25" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10.5px" font-weight="700" fill="var(--dev-tx)">Rama Activa: develop (HEAD Sprint 3)</text>
@@ -149,6 +149,6 @@
 
   <!-- HEAD develop -->
   <circle class="g-head-ring" cx="875" cy="140" r="7" fill="var(--dev-st)"/>
-  <circle cx="875" cy="140" r="7.5" fill="var(--dev-st)" stroke="#FFFDF9" stroke-width="2"/>
+  <circle cx="875" cy="140" r="7.5" fill="var(--dev-st)" stroke="#FFFFFF" stroke-width="2"/>
   <text x="875" y="162" class="g-node-t" style="fill: var(--dev-tx);">HEAD</text>
 </svg>

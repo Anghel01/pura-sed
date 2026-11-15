@@ -4,54 +4,54 @@
   <defs>
     <style>
       :root {
-        --bg: #FAF7EC;
-        --card: #FFFDF9;
-        --alt: #F2EDE0;
-        --bd: #D5CDC0;
-        --ink: #1A201C;
-        --muted: #574F49;
+        --bg: #F7FBFE;
+        --card: #FFFFFF;
+        --alt: #EFF7FC;
+        --bd: #D2E3F0;
+        --ink: #152336;
+        --muted: #4B6178;
 
-        --pizarra-st: #405A6E;
-        --pizarra-tx: #2F4658;
-        --pizarra-bg: rgba(64, 90, 110, 0.12);
+        --pizarra-st: #6D76E4;
+        --pizarra-tx: #3C43A1;
+        --pizarra-bg: #F0F1FE;
 
-        --sage-st: #50694E;
-        --sage-tx: #3D523B;
-        --sage-bg: rgba(99, 119, 97, 0.14);
+        --sage-st: #2E98BE;
+        --sage-tx: #0C5F7D;
+        --sage-bg: #E7F6FC;
 
-        --gold-st: #C27416;
-        --gold-tx: #9E5B08;
-        --gold-bg: rgba(229, 159, 56, 0.14);
+        --gold-st: #2BA36D;
+        --gold-tx: #136740;
+        --gold-bg: #E8F9F1;
 
-        --terra-st: #B85335;
-        --terra-tx: #9E3E22;
-        --terra-bg: rgba(184, 83, 53, 0.12);
+        --terra-st: #DF5E55;
+        --terra-tx: #A62B23;
+        --terra-bg: #FFF0EF;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #121614;
-          --card: #1F2421;
-          --alt: #171C19;
-          --bd: #313934;
-          --ink: #F5EADB;
-          --muted: #B5AA99;
+          --bg: #0E1626;
+          --card: #152033;
+          --alt: #1C2A42;
+          --bd: #2B3D59;
+          --ink: #F1F6FC;
+          --muted: #9FB3CB;
 
-          --pizarra-st: #6D93B0;
-          --pizarra-tx: #8EB2CE;
-          --pizarra-bg: rgba(64, 90, 110, 0.22);
+          --pizarra-st: #A1A8F7;
+          --pizarra-tx: #C1C6FB;
+          --pizarra-bg: #1D2240;
 
-          --sage-st: #7C9D79;
-          --sage-tx: #9EC09B;
-          --sage-bg: rgba(99, 119, 97, 0.18);
+          --sage-st: #74C6DF;
+          --sage-tx: #94D9EE;
+          --sage-bg: #132A3C;
 
-          --gold-st: #E59F38;
-          --gold-tx: #F8AD00;
-          --gold-bg: rgba(229, 159, 56, 0.18);
+          --gold-st: #6AD3A2;
+          --gold-tx: #8EE2BA;
+          --gold-bg: #122C26;
 
-          --terra-st: #D46C4E;
-          --terra-tx: #E68A6E;
-          --terra-bg: rgba(184, 83, 53, 0.18);
+          --terra-st: #F28B82;
+          --terra-tx: #F9AAA3;
+          --terra-bg: #2C1B24;
         }
       }
 
@@ -66,8 +66,8 @@
       .s-chip    { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 600; fill: var(--ink); text-anchor: middle; }
       .s-foot    { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 10px; font-weight: 600; fill: var(--muted); text-anchor: middle; }
       .s-mono    { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; font-weight: 700; fill: var(--ink); text-anchor: middle; }
-      .s-lbl     { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.6px; }
-      .s-flowlbl { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; font-weight: 800; letter-spacing: 0.8px; text-anchor: middle; }
+      .s-lbl     { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 9.5px; font-weight: 800; letter-spacing: 0.5px; }
+      .s-flowlbl { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 9px; font-weight: 800; letter-spacing: 0.7px; text-anchor: middle; }
 
       @keyframes shieldOrbit { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
       @keyframes tokenFlow   { from { stroke-dashoffset: 24; } to { stroke-dashoffset: 0; } }
@@ -97,13 +97,13 @@
     <circle class="sec-orbit" cx="0" cy="0" r="22" fill="none" stroke="var(--pizarra-st)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.85"/>
     <circle cx="0" cy="0" r="16" fill="var(--pizarra-bg)"/>
     <path d="M 0 -10 L 8 -6.5 V 1 C 8 6.2 4.5 10.4 0 12 C -4.5 10.4 -8 6.2 -8 1 V -6.5 Z" fill="var(--pizarra-st)"/>
-    <path d="M -3 1 L -0.8 3.2 L 3.8 -1.8" fill="none" stroke="#FFFDF9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M -3 1 L -0.8 3.2 L 3.8 -1.8" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
   </g>
 
   <text x="86" y="40" class="s-h1">Seguridad JWT Bearer &amp; Matriz de Roles RBAC</text>
   <text x="86" y="59" class="s-h2">ASP.NET Core Identity &#183; Firma HMAC-SHA256 &#183; Pol&#237;ticas DRY centralizadas en Roles.cs</text>
 
-  <rect x="920" y="28" width="252" height="28" rx="4" fill="var(--sage-bg)" stroke="var(--sage-st)" stroke-width="1"/>
+  <rect x="920" y="28" width="252" height="28" rx="14" fill="var(--sage-bg)" stroke="var(--sage-st)" stroke-width="1"/>
   <circle class="sec-radar" cx="938" cy="42" r="4" fill="var(--sage-st)"/>
   <circle cx="938" cy="42" r="3.2" fill="var(--sage-st)"/>
   <text x="950" y="46" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11.5px" font-weight="700" fill="var(--sage-tx)">8 Roles &#183; IdentitySeeder Activo</text>

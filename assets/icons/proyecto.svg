@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
   <style>
-    .ic { stroke: #9E3E22; }
-    @media (prefers-color-scheme: dark) { .ic { stroke: #E68A6E; } }
+    .ic { stroke: #DF5E55; }
+    @media (prefers-color-scheme: dark) { .ic { stroke: #F28B82; } }
   </style>
   <g class="ic"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></g>
 </svg>

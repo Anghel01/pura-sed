@@ -1,59 +1,59 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 156" width="100%" height="100%" role="img" aria-labelledby="figmaTitle figmaDesc">
   <title id="figmaTitle">Prototipo Interactivo en Figma &#8212; PuraSed</title>
-  <desc id="figmaDesc">Acceso directo al workspace oficial de prototipos y sistema de dise&#241;o UI/UX de PuraSed (Sereno Moreno) en Figma.</desc>
+  <desc id="figmaDesc">Acceso directo al workspace oficial de prototipos y sistema de dise&#241;o UI/UX de PuraSed en Figma.</desc>
   <defs>
     <style>
       :root {
-        --bg: #FFFDF9;
-        --bd: #D5CDC0;
-        --ink: #1A201C;
-        --muted: #574F49;
-        --badge-bg: #171C19;
-        --badge-bd: #C27416;
-        --p1-bg: rgba(229, 159, 56, 0.14);
-        --p1-bd: rgba(194, 116, 22, 0.45);
-        --p1-tx: #9E5B08;
-        --p2-bg: rgba(184, 83, 53, 0.12);
-        --p2-bd: rgba(184, 83, 53, 0.40);
-        --p2-tx: #9E3E22;
-        --p3-bg: #F2EDE0;
-        --p3-bd: #D5CDC0;
-        --p3-tx: #1A201C;
-        --cta-bg: #E59F38;
-        --cta-bd: #B57214;
-        --cta-tx: #141816;
-        --accent: #C27416;
+        --bg: #FFFFFF;
+        --bd: #D2E3F0;
+        --ink: #152336;
+        --muted: #4B6178;
+        --badge-bg: #E7F6FC;
+        --badge-bd: #A4D9EF;
+        --p1-bg: #E7F6FC;
+        --p1-bd: #A4D9EF;
+        --p1-tx: #0C5F7D;
+        --p2-bg: #F0F1FE;
+        --p2-bd: #C3C8FA;
+        --p2-tx: #3C43A1;
+        --p3-bg: #E8F9F1;
+        --p3-bd: #A4E2C5;
+        --p3-tx: #136740;
+        --cta-bg: #FFD9D5;
+        --cta-bd: #DF5E55;
+        --cta-tx: #781C16;
+        --accent: #2E98BE;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #1F2421;
-          --bd: #313934;
-          --ink: #F5EADB;
-          --muted: #B5AA99;
-          --badge-bg: #121614;
-          --badge-bd: #E59F38;
-          --p1-bg: rgba(229, 159, 56, 0.16);
-          --p1-bd: rgba(229, 159, 56, 0.42);
-          --p1-tx: #F8AD00;
-          --p2-bg: rgba(184, 83, 53, 0.18);
-          --p2-bd: rgba(212, 108, 78, 0.45);
-          --p2-tx: #E68A6E;
-          --p3-bg: #171C19;
-          --p3-bd: #313934;
-          --p3-tx: #F5EADB;
-          --cta-bg: #E59F38;
-          --cta-bd: #F8AD00;
-          --cta-tx: #121614;
-          --accent: #E59F38;
+          --bg: #152033;
+          --bd: #2B3D59;
+          --ink: #F1F6FC;
+          --muted: #9FB3CB;
+          --badge-bg: #1C2A42;
+          --badge-bd: #74C6DF;
+          --p1-bg: #132A3C;
+          --p1-bd: #2E5B78;
+          --p1-tx: #94D9EE;
+          --p2-bg: #1D2240;
+          --p2-bd: #455088;
+          --p2-tx: #C1C6FB;
+          --p3-bg: #122C26;
+          --p3-bd: #2A6355;
+          --p3-tx: #8EE2BA;
+          --cta-bg: #F59990;
+          --cta-bd: #F28B82;
+          --cta-tx: #260C11;
+          --accent: #74C6DF;
         }
       }
 
       .card    { fill: var(--bg); stroke: var(--bd); stroke-width: 1.4; }
-      .f-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 18px; font-weight: 800; fill: var(--ink); }
-      .f-desc  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12.5px; font-weight: 400; fill: var(--muted); }
-      .f-tag   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 11px; font-weight: 700; }
-      .f-btn-t { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 13px; font-weight: 800; fill: var(--cta-tx); letter-spacing: 0.3px; }
+      .f-title { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 18px; font-weight: 800; fill: var(--ink); letter-spacing: -0.2px; }
+      .f-desc  { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 12.5px; font-weight: 400; fill: var(--muted); }
+      .f-tag   { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 11px; font-weight: 700; }
+      .f-btn-t { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, Roboto, sans-serif; font-size: 12.5px; font-weight: 800; fill: var(--cta-tx); letter-spacing: 0.3px; }
 
       @keyframes orbitSpin {
         from { transform: rotate(0deg); }
@@ -64,13 +64,13 @@
         50%      { transform: translateY(-2px); }
       }
       @keyframes radarPulse {
-        0%   { transform: scale(1); opacity: 0.8; }
+        0%   { transform: scale(1); opacity: 0.85; }
         70%  { transform: scale(2.2); opacity: 0; }
         100% { transform: scale(2.2); opacity: 0; }
       }
       @keyframes shimmerSweep {
         0%   { transform: translateX(-80px) skewX(-22deg); opacity: 0; }
-        18%  { opacity: 0.25; }
+        18%  { opacity: 0.32; }
         42%  { transform: translateX(250px) skewX(-22deg); opacity: 0; }
         100% { transform: translateX(250px) skewX(-22deg); opacity: 0; }
       }
@@ -85,26 +85,26 @@
       }
     </style>
 
-    <clipPath id="cardClip"><rect x="6" y="8" width="948" height="140" rx="8"/></clipPath>
-    <clipPath id="btnClip"><rect x="0" y="0" width="204" height="44" rx="5"/></clipPath>
+    <clipPath id="cardClip"><rect x="6" y="8" width="948" height="140" rx="12"/></clipPath>
+    <clipPath id="btnClip"><rect x="0" y="0" width="204" height="44" rx="10"/></clipPath>
   </defs>
 
-  <rect class="card" x="6" y="8" width="948" height="140" rx="8"/>
+  <rect class="card" x="6" y="8" width="948" height="140" rx="12"/>
   <g clip-path="url(#cardClip)">
     <rect x="6" y="8" width="6" height="140" fill="var(--accent)"/>
   </g>
 
-  <!-- Emblema Figma sobre medalla basalto con anillo Oro Inti -->
+  <!-- Emblema Figma fresco y luminoso -->
   <g>
     <circle class="f-orbit" cx="74" cy="78" r="44" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 6" stroke-linecap="round" opacity="0.75"/>
-    <circle cx="74" cy="78" r="35" fill="var(--badge-bg)" stroke="var(--badge-bd)" stroke-width="1.4"/>
+    <circle cx="74" cy="78" r="35" fill="var(--badge-bg)" stroke="var(--badge-bd)" stroke-width="1.3"/>
     <g transform="translate(74, 78)">
       <g class="f-float">
-        <path d="M-7 -21H0V-7H-7A7 7 0 0 1-7-21Z" fill="#B85335"/>
-        <path d="M0 -21H7A7 7 0 0 1 7-7H0V-21Z" fill="#E8923E"/>
-        <path d="M-7 -7H0V7H-7A7 7 0 0 1-7-7Z" fill="#E59F38"/>
-        <circle cx="7" cy="0" r="7" fill="#6D93B0"/>
-        <path d="M-7 7H0V14A7 7 0 1 1-7 7Z" fill="#7C9D79"/>
+        <path d="M-7 -21H0V-7H-7A7 7 0 0 1-7-21Z" fill="#F24E1E"/>
+        <path d="M0 -21H7A7 7 0 0 1 7-7H0V-21Z" fill="#FF7262"/>
+        <path d="M-7 -7H0V7H-7A7 7 0 0 1-7-7Z" fill="#A259FF"/>
+        <circle cx="7" cy="0" r="7" fill="#1ABCFE"/>
+        <path d="M-7 7H0V14A7 7 0 1 1-7 7Z" fill="#0ACF83"/>
       </g>
     </g>
   </g>
@@ -112,39 +112,39 @@
   <!-- Bloque Central -->
   <g transform="translate(138, 30)">
     <text class="f-title" x="0" y="20">Prototipo Oficial y Sistema de Dise&#241;o &#183; Figma</text>
-    <text class="f-desc" x="0" y="44">Identidad Sereno Moreno (Taller Indie Craft) &#183; Maquetado navegable POS, KDS/KDD y Caja.</text>
+    <text class="f-desc" x="0" y="44">Maquetado interactivo Full HD (32 pantallas) dividido en POS Comensal, KDS/KDD y Caja.</text>
 
     <g transform="translate(0, 62)">
-      <rect x="0" y="0" width="142" height="26" rx="4" fill="var(--p1-bg)" stroke="var(--p1-bd)" stroke-width="1"/>
+      <rect x="0" y="0" width="142" height="26" rx="13" fill="var(--p1-bg)" stroke="var(--p1-bd)" stroke-width="1"/>
       <circle class="f-radar" cx="15" cy="13" r="4" fill="var(--accent)"/>
       <circle cx="15" cy="13" r="3" fill="var(--accent)"/>
       <text class="f-tag" x="27" y="17" fill="var(--p1-tx)">Figma Workspace</text>
 
-      <rect x="152" y="0" width="166" height="26" rx="4" fill="var(--p2-bg)" stroke="var(--p2-bd)" stroke-width="1"/>
+      <rect x="152" y="0" width="166" height="26" rx="13" fill="var(--p2-bg)" stroke="var(--p2-bd)" stroke-width="1"/>
       <rect x="163" y="7" width="12" height="9" rx="1.5" fill="none" stroke="var(--p2-tx)" stroke-width="1.4"/>
       <line x1="166" y1="19" x2="172" y2="19" stroke="var(--p2-tx)" stroke-width="1.4" stroke-linecap="round"/>
       <text class="f-tag" x="182" y="17" fill="var(--p2-tx)">32 Pantallas Full HD</text>
 
-      <rect x="328" y="0" width="214" height="26" rx="4" fill="var(--p3-bg)" stroke="var(--p3-bd)" stroke-width="1"/>
-      <circle cx="342" cy="13" r="3" fill="#E59F38"/>
-      <circle cx="350" cy="13" r="3" fill="#B85335"/>
-      <circle cx="358" cy="13" r="3" fill="#637761"/>
+      <rect x="328" y="0" width="214" height="26" rx="13" fill="var(--p3-bg)" stroke="var(--p3-bd)" stroke-width="1"/>
+      <circle cx="342" cy="13" r="3" fill="#46B8DC"/>
+      <circle cx="350" cy="13" r="3" fill="#EC6E65"/>
+      <circle cx="358" cy="13" r="3" fill="#3CC28A"/>
       <text class="f-tag" x="370" y="17" fill="var(--p3-tx)">Angelo &#183; Jannys &#183; &#193;ngel</text>
     </g>
   </g>
 
-  <!-- Botón CTA Oficial Oro Inti (match directo con botoneria Sereno Moreno) -->
+  <!-- Boton CTA Pastel Coral Vivo -->
   <g transform="translate(728, 56)">
     <g clip-path="url(#btnClip)">
-      <rect width="204" height="44" rx="5" fill="var(--cta-bg)" stroke="var(--cta-bd)" stroke-width="1.3"/>
-      <rect class="f-shimmer" x="0" y="-10" width="44" height="64" fill="#FFFDF9"/>
+      <rect width="204" height="44" rx="10" fill="var(--cta-bg)" stroke="var(--cta-bd)" stroke-width="1.25"/>
+      <rect class="f-shimmer" x="0" y="-10" width="44" height="64" fill="#FFFFFF"/>
     </g>
-    <g transform="translate(26, 22) scale(0.42)">
-      <path d="M-7 -21H0V-7H-7A7 7 0 0 1-7-21Z" fill="#141816"/>
-      <path d="M0 -21H7A7 7 0 0 1 7-7H0V-21Z" fill="#B85335"/>
-      <path d="M-7 -7H0V7H-7A7 7 0 0 1-7-7Z" fill="#141816"/>
-      <circle cx="7" cy="0" r="7" fill="#405A6E"/>
-      <path d="M-7 7H0V14A7 7 0 1 1-7 7Z" fill="#3D523B"/>
+    <g transform="translate(28, 22) scale(0.42)">
+      <path d="M-7 -21H0V-7H-7A7 7 0 0 1-7-21Z" fill="#F24E1E"/>
+      <path d="M0 -21H7A7 7 0 0 1 7-7H0V-21Z" fill="#B83024"/>
+      <path d="M-7 -7H0V7H-7A7 7 0 0 1-7-7Z" fill="#7C3AED"/>
+      <circle cx="7" cy="0" r="7" fill="#0EA5E9"/>
+      <path d="M-7 7H0V14A7 7 0 1 1-7 7Z" fill="#059669"/>
     </g>
     <text class="f-btn-t" x="116" y="26.5" text-anchor="middle">ABRIR EN FIGMA &#8594;</text>
   </g>
